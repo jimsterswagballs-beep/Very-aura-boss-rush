@@ -48,3 +48,11 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 - Boss 4 rebuilt: three phases driven by combined health, Alliance Link (survivor heals 25% and enrages when one partner falls), choreographed movement per phase, new Link Beam attack.
 - Boss 1: remade Steam, new Dumpling Flower, Steam Piston, Chopstick Cross. Boss 2: new Sniper Lines, Bullet Rings, Pipe Storm. Boss 3: remade Bubble Spray.
 - New ambient effects: boss auras, drifting motes, vignette.
+
+## Menus, achievements and Purge update
+
+- Fixed a load-order bug that left the game blank on open (Link Beam was registered before the attack table existed).
+- New title screen with Play, Host Online, Join Room (paste a link or code), Achievements and Music Credits.
+- Achievements (12) are saved in the browser and shown as pop-up toasts. Music credits list every track. Add original artist names to the `MC` list in `index.html`.
+- Rebuilt multiplayer lobby: room code chip, copy link, player slots with host marker, styled character cards, room settings, pulsing Start and a Leave button.
+- Phase 4.5: 12 attack waves instead of 8, attack pace follows the music's intensity, and effects scale through CALM, RISING, FRENZY and OVERDRIVE (edge sparks, lightning, chromatic rings, strobe lines, comets, screen shake).
