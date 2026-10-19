@@ -6,6 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script>
 'use strict';
+window.addEventListener('error',e=>{let d=document.getElementById('err');if(!d){d=document.createElement('pre');d.id='err';d.style.cssText='position:fixed;left:0;top:0;right:0;margin:0;padding:8px;background:#600;color:#fff;font:12px monospace;z-index:9;white-space:pre-wrap';document.body.appendChild(d)}d.textContent='Game error: '+e.message+' (line '+e.lineno+')\n'+d.textContent});
 const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=W;cv.height=H;g.imageSmoothingEnabled=false;
 const R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d);
 const F={start:'startbutton.png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png'};
@@ -14,53 +15,54 @@ const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp
 const CH={cg:{n:'Coolguy15',hp:100,spd:230,i:['cgi1','cgi2'],w:['cgw1','cgw2'],ab:['Brick Toss','Overclock','Roll'],dsc:['Hurl a huge piercing brick','4s of double fire rate','Invulnerable dash'],wp:'Gun: aim with mouse, hold click to shoot'},
  zach:{n:'Zach',hp:130,spd:250,i:['zi1','zi2'],w:['zw1','zw2'],ab:['Burger Break','Knife Whirl','Lunge'],dsc:['Throw a burger, heal 15% HP','Spin-slash everything nearby','Dash-stab through the boss'],wp:'Knife: click to stab toward mouse, parries shots'}};
 const CD={cg:[6,12,5],zach:[9,8,5]};
-const BD=[{n:'Xiao Long Bao',title:'The Steamed Tyrant',img:'xlb',hp:2800,sz:150,col:['#ffe08a','#ff8a1f'],bg:['#4a2a12','#1a0f08'],mus:'m1'},
-  {n:'UnCoolguy16',title:'The Uncool Twin',img:'ucg',hp:4100,sz:150,col:['#ff6060','#7a0010'],bg:['#2a0c18','#07040a'],mus:'m2'},
- {n:'Evil Spong',title:'The Bubblebound Abyss',img:'sp1',hp:5600,sz:165,col:['#44eaff','#bd55ff'],bg:['#092d48','#090b26'],mus:'m3'},
- {n:'The Unlikely Alliance',title:'Bao & UnCoolguy16',img:'xlb',hp:5400,hp2:5400,sz:150,col:['#ffe08a','#ff5a5a'],bg:['#301622','#080b1b'],mus:'m4'},
- {n:'Evil Zach',title:'The Human-Controlled Nightmare',img:'ez',hp:7000,sz:158,col:['#f9e84c','#fa3152'],bg:['#241423','#080711'],mus:'m5'}];
-const SC={'Xiao Long Bao':'#ffcf5a','UnCoolguy16':'#ff5a5a','Evil Zach':'#f9e84c','Coolguy15':'#8fd8ff','Zach':'#ffe14a'};
-const PORT={'Xiao Long Bao':'xlb','UnCoolguy16':'ucg','Evil Zach':'ez','Coolguy15':'cgi1','Zach':'zi1'};
+const BD=[{n:'Xiao Long Bao',title:'The Steamed Tyrant',img:'xlb',hp:2400,sz:150,col:['#ffe08a','#ff8a1f'],bg:['#4a2a12','#1a0f08'],mus:'m1'},
+  {n:'UnCoolguy16',title:'The Uncool Twin',img:'ucg',hp:3500,sz:150,col:['#ff6060','#7a0010'],bg:['#2a0c18','#07040a'],mus:'m2'},
+ {n:'Evil Spong',title:'The Bubblebound Abyss',img:'sp1',hp:4800,sz:165,col:['#44eaff','#bd55ff'],bg:['#092d48','#090b26'],mus:'m3'},
+ {n:'The Unlikely Alliance',title:'Bao & UnCoolguy16',img:'xlb',hp:4600,hp2:4600,sz:150,col:['#ffe08a','#ff5a5a'],bg:['#301622','#080b1b'],mus:'m4'},
+ {n:'Evil Zach',title:'The Human-Controlled Nightmare',img:'ez',hp:6000,sz:158,col:['#f9e84c','#fa3152'],bg:['#241423','#080711'],mus:'m5'}];
+const SC={'Xiao Long Bao':'#ffcf5a','UnCoolguy16':'#ff5a5a','Evil Zach':'#f9e84c','Coolguy15':'#8fd8ff','Zach':'#ffe14a','Evil Spong':'#44eaff'};
+const PORT={'Xiao Long Bao':'xlb','UnCoolguy16':'ucg','Evil Zach':'ez','Coolguy15':'cgi1','Zach':'zi1','Evil Spong':'sp1'};
 // ===== LORE: THE GRAND STEAMER =====
-// The arena runs on the Hearth Core. It feeds on fights, so every boss is either feeding it, guarding it, or copied by it.
+// The Hearth Core grants power to whoever feeds it fights. Everyone here wants you dead, and nobody here likes each other.
+// BAO: theatrical, vain chef. UNCOOL: bitter deadpan sneak, jealous of "cool". SPONG: cold, formal warden. EVIL ZACH: smug mimic.
 const INTRO=[
-{open:[["Xiao Long Bao","Welcome to the Grand Steamer, the only kitchen where the diners fight back!"],["Xiao Long Bao","Deep below us, the Hearth Core is hungry. It feeds on every duel, and I keep it calm with a steady menu of challengers."],["Xiao Long Bao","Today's special is YOU. Try not to overcook."]],
- cg:[["Coolguy15","Hearth Core? The invitation never mentioned that."],["Xiao Long Bao","Fine print is the best seasoning!"]],
- zach:[["Zach","I brought a knife and a burger. Dumpling, you're on the menu."],["Xiao Long Bao","SOUP dumpling! Learn the difference before you die!"]],
+{open:[["Xiao Long Bao","Ah, fresh ingredients! Welcome to my kitchen, the Grand Steamer!"],["Xiao Long Bao","The Hearth Core pays handsomely for every challenger I serve it. You will be my finest dish yet."],["Xiao Long Bao","Nobody leaves my kitchen alive. Dinner is the only exit!"]],
+ cg:[["Coolguy15","We just came for the tournament."],["Xiao Long Bao","The tournament is a menu, and you are both on it!"]],
+ zach:[["Zach","I brought a knife and a burger. Dumpling, you're on the menu."],["Xiao Long Bao","SOUP dumpling! Learn the difference before I boil you!"]],
  duo:[["Coolguy15","Zach, you stab. I'll shoot."],["Zach","Deal. Don't shoot my burger."]]},
-{open:[["UnCoolguy16","Bao kept the Core's regulator locked in his kitchen. I took it, because the Core only listens to whoever holds it."],["Xiao Long Bao","(weakly) The regulator balances the Core's pressure. It isn't a trophy!"],["UnCoolguy16","It cracked when I forced it open. How bad can one little pulse be?"],["UnCoolguy16","Bad enough that you'll have to fight me to find out."]],
- cg:[["Coolguy15","You stole a safety device because it looked important?"],["UnCoolguy16","I stole it because it WAS important. The explosion was a surprise."]],
- zach:[["Zach","You broke the one thing keeping this place from blowing up?"],["UnCoolguy16","I was aiming for dramatic. The disaster is a bonus."]],
- duo:[["Zach","We beat him, fix the regulator, and don't drown."],["Coolguy15","First sensible plan you've made."]]},
-{open:[["Evil Spong","Halt. I am the Warden of the Ward Chambers. Every bubble down here holds back the deep water."],["Evil Spong","UnCoolguy16's crack woke the Hearth Core. It is feeding on your fight, and my wards are the only thing keeping the arena dry."],["Evil Spong","I can't trust anyone who storms in swinging. Prove you can survive the pressure, and I'll let you reach the Core."]],
- cg:[["Coolguy15","We're here to fix it, not break it."],["Evil Spong","Then bring me proof, not promises."]],
- zach:[["Zach","So the bubbles are the good guys?"],["Evil Spong","The bubbles are pressure. Treat each one like a loaded weapon."]],
- duo:[["Coolguy15","Pop the unstable wards, keep the stable ones intact."],["Zach","Easy. Don't pop the wrong bubble. Cool."]]},
-{open:[["Xiao Long Bao","Those aren't us. The Core copied our battle records and built guardians out of them."],["UnCoolguy16","So I'm fighting myself, with Bao. Wonderful."],["Xiao Long Bao","Truce. My steam, your pipe. We show the echoes what the originals never managed together."],["UnCoolguy16","Don't call it friendship. I just refuse to lose to a copy."]],
+{open:[["UnCoolguy16","Hm. Bao, in his spotlight, with his kitchen, with his Core. Not for much longer."],["UnCoolguy16","I'm the one who cracked the regulator. Let the Core go hungry. Let everyone go hungry."],["UnCoolguy16","And you two will feed it. You look... unbearably cool. I'll fix that."]],
+ cg:[["Coolguy15","You look like me. Just worse."],["UnCoolguy16","You said that like it's an insult. It's the whole problem."]],
+ zach:[["Zach","Who even are you?"],["UnCoolguy16","Exactly. Nobody ever asks."]],
+ duo:[["Zach","He's mad at everyone."],["Coolguy15","Good. Then he's predictable."]]},
+{open:[["Evil Spong","Specimens. Two of them. Hm."],["Evil Spong","I am the Warden of the Ward Chambers. I held back the deep water until a vandal cracked the regulator and a vain chef refused to repair it."],["Evil Spong","Every intruder is a leak. I will seal you out. Permanently."]],
+ cg:[["Coolguy15","We can help fix the leak."],["Evil Spong","Specimens do not volunteer. They are removed."]],
+ zach:[["Zach","So you want to kill us too?"],["Evil Spong","Efficiently."]],
+ duo:[["Coolguy15","Pop the unstable wards, keep the stable ones."],["Zach","Don't pop the wrong bubble. Got it."]]},
+{open:[["Xiao Long Bao","Those aren't the real us. The Core copied our records, kept the grudges, and sent us after you."],["UnCoolguy16","So I get to fight alongside Steamy again. Joy."],["Xiao Long Bao","DON'T call me Steamy, you dishwasher! I carry this fight!"],["UnCoolguy16","Kill them first, Bao. Then I'll kill you."]],
  cg:[["Coolguy15","Two health bars, linked. Lose one and the other gets angry."]],
- zach:[["Zach","You two teamed up?"],["Xiao Long Bao","We teamed up with the emergency. Not with each other."]],
- duo:[["UnCoolguy16","I'll take the left."],["Xiao Long Bao","I'll take the steam. Try not to crack anything else."]]},
-{open:[["Evil Zach","The Hearth Core kept one pattern for last: a real player."],["Evil Zach","It built me from every dodge, every panic roll and every habit you repeated."],["Evil Zach","I'm not here to wreck the arena. I'm here to test whether you deserve to shut it down."]],
- cg:[["Coolguy15","So you're a training dummy with an attitude."],["Evil Zach","A dummy that dodges back."]],
- zach:[["Zach","That's my face, my footwork and a very rude knife."],["Evil Zach","I kept the useful parts."]],
- duo:[["Evil Zach","No more arena rules. Surprise me or lose."]]}];
+ zach:[["Zach","They hate each other more than they hate us."],["Xiao Long Bao","We hate you at the SAME time. It's efficient!"]],
+ duo:[["UnCoolguy16","I'll take the left. Try not to hog the spotlight."],["Xiao Long Bao","The spotlight was MINE first!"]]},
+{open:[["Evil Zach","Welcome to the finale. The Core studied the real hero and built me."],["Evil Zach","Bao, the dishwasher, the sponge. Old builds. Practice rounds. I'm the one who actually kills you."],["Evil Zach","Then I take your place. Somebody has to be the player."]],
+ cg:[["Coolguy15","So you're a training dummy with an attitude."],["Evil Zach","Dummies don't carve you up."]],
+ zach:[["Zach","That's my face, my footwork and a very rude knife."],["Evil Zach","I kept the useful parts. You were never using them anyway."]],
+ duo:[["Evil Zach","No more arena rules. Surprise me or die."]]}];
 const PH=[
-[null,{b:[["Xiao Long Bao","You cracked my wrapper! Now feel the STEAM!"]],cg:[["Coolguy15","Is he... hotter now?"]],zach:[["Zach","Honestly? Smells good."]]},
- {b:[["Xiao Long Bao","The Core is pulling heat out of me! UnCoolguy16, I know you're watching!"],["UnCoolguy16","You're doing great, Bao. Keep going."]],cg:[["Coolguy15","Someone else is in here..."]],zach:[["Zach","Boss two is watching. Great."]]}],
-[null,{b:[["UnCoolguy16","Hm. You hit like you mean it. Good. So do I."]],cg:[["Coolguy15","I don't want to fight you!"],["UnCoolguy16","Too late, nice guy."]],zach:[["Zach","He talks a lot for a guy with one bullet sprite."]]},
- {b:[["UnCoolguy16","The regulator's heating up. NO MORE GAMES. THE PIPE. THE GUN. EVERYTHING."]],cg:[["Coolguy15","He's scared of what he cracked!"]],zach:[["Zach","Last phase. Burgers ready."]]}],
-[null,{b:[["Evil Spong","The outer ward is gone. Fine. I'll steer the pressure myself."],["Evil Spong","Watch the helix. Watch the mines. Watch ME."]],cg:[["Coolguy15","He's weaving bubbles on purpose. Look for the gaps."]],zach:[["Zach","The big ones are mines, right? Please say yes."]]},
- {b:[["Evil Spong","The Core is draining my last seal! I can't hold the chamber AND fight you!"],["Evil Spong","End this fast, before the Core takes my wards from me!"]],cg:[["Coolguy15","He isn't our enemy. The Core is. Finish it, then run."]],zach:[["Zach","Beat the warden, dodge the flood, reach the Core. I hate three-step plans."]]}],
-[null,{b:[["Xiao Long Bao","They're copying our timing! Stop repeating yourself, UnCoolguy16!"],["UnCoolguy16","Stop being predictable, Bao!"]],cg:[["Coolguy15","Their crossfire is lining up. Move before it syncs."]],zach:[["Zach","Our rivals are arguing with their own clones. Good for us."]]},
- {b:[["UnCoolguy16","The Core is overclocking them! Bao, the beam between us is spiking!"],["Xiao Long Bao","Then it's close to overload. Break them NOW!"]],cg:[["Coolguy15","Their duo attacks are synced to the Core. Break the rhythm."]],zach:[["Zach","Last echo phase. Then we run."]]}],
+[null,{b:[["Xiao Long Bao","You cracked my wrapper! Now you'll taste the STEAM!"]],cg:[["Coolguy15","Is he... hotter now?"]],zach:[["Zach","Honestly? Smells good."]]},
+ {b:[["Xiao Long Bao","ENOUGH! Dishwasher! I know you're lurking! Come HELP me!"],["UnCoolguy16","You're doing great, Steamy. Keep going."]],cg:[["Coolguy15","Someone else is in here..."]],zach:[["Zach","Boss two is watching. Great."]]}],
+[null,{b:[["UnCoolguy16","You hit like you mean it. Good. I mean it too."]],cg:[["Coolguy15","I don't want to fight you!"],["UnCoolguy16","Nobody asked what you wanted."]],zach:[["Zach","He talks a lot for a guy with one bullet sprite."]]},
+ {b:[["UnCoolguy16","The regulator is heating up. Fine. NO MORE GAMES. THE PIPE. THE GUN. EVERYTHING."],["Xiao Long Bao","(weakly) Dishwasher... you traitor..."]],cg:[["Coolguy15","He's scared of what he cracked!"]],zach:[["Zach","Last phase. Burgers ready."]]}],
+[null,{b:[["Evil Spong","The outer ward is gone. Very well. I will shape the pressure myself."],["Evil Spong","You will be the first thing it crushes."]],cg:[["Coolguy15","He's weaving bubbles on purpose. Look for the gaps."]],zach:[["Zach","The big ones are mines, right? Please say yes."]]},
+ {b:[["Evil Spong","My last seal is draining. That vandal and that vain chef did this."],["Evil Spong","At least I will drown YOU before I fall."]],cg:[["Coolguy15","He's angrier at them than at us."]],zach:[["Zach","Great, we're the consolation prize."]]}],
+[null,{b:[["Xiao Long Bao","Stop stealing my attacks, dishwasher!"],["UnCoolguy16","Stop being predictable, Steamy."]],cg:[["Coolguy15","Their crossfire is lining up. Move before it syncs."]],zach:[["Zach","Our rivals are arguing with their own clones. Good for us."]]},
+ {b:[["UnCoolguy16","The beam between us is spiking. Bao, this is YOUR fault."],["Xiao Long Bao","Everything is your fault! Just kill them!"]],cg:[["Coolguy15","Their duo attacks are synced to the Core. Break the rhythm."]],zach:[["Zach","Last echo phase. Then we run."]]}],
 [null,{b:[["Evil Zach","Too slow. You almost had me."],["Evil Zach","My afterimages learned that from you."]],cg:[["Coolguy15","He's baiting the same dodge every time!"]],zach:[["Zach","Stop stealing my playbook!"]]},
- {b:[["Evil Zach","Prediction mode: ON. I know where you'll step before you do."],["Evil Zach","Break your own habits. That's the only way through."]],cg:[["Coolguy15","Then we stop being predictable. Switch it up!"]],zach:[["Zach","Fine. New plan: chaos."]]}]];
+ {b:[["Evil Zach","Prediction mode: ON. I know where you'll step before you do."],["Evil Zach","Break your habits, or die in them."]],cg:[["Coolguy15","Then we stop being predictable. Switch it up!"]],zach:[["Zach","Fine. New plan: chaos."]]}]];
 const OUTRO=[
-[["Xiao Long Bao","I'm... steamed out. The Hearth Core was never mine to tame..."],["UnCoolguy16","Rest, Bao. You were the warm-up."]],
-[["UnCoolguy16","The regulator's balancing ring is cracked. The pulse went straight into the ward chambers."],["Xiao Long Bao","Find Evil Spong. His bubble wards are the only thing slowing the flood."],["UnCoolguy16","I wanted the Core's power, not a disaster. Don't let the pressure reach the surface."]],
-[["Evil Spong","The last seal is down... but I wasn't the cause. The Core pulled my wards apart to wake its guardians."],["Evil Spong","It rebuilt two old fighters from its battle records. They'll move exactly like the originals."],["Evil Spong","Beat them and the Core starts its PURGE. Survive the whole song. When the music ends, so does its timing."]],
-[["Xiao Long Bao","The echoes are shattered, but the Core just woke the Purge. Every pulse hunts the exit."],["UnCoolguy16","So we survive the song. Truce stays until the music stops."],["Xiao Long Bao","When Overdue ends, the purge loses its timing signal. That's our window to reach the regulator."]],
-[["Evil Zach","No way. I read every move... except the ones you invented just now."],["Evil Zach","The Core wanted a player who could change. You did. It's shutting down."]]];
+[["Xiao Long Bao","I... am steamed out. The kitchen... was supposed to be MINE..."],["UnCoolguy16","Rest, Steamy. You were the warm-up."]],
+[["UnCoolguy16","The regulator cracked. The pulse went straight into the ward chambers. Oops."],["UnCoolguy16","Spong is going to be furious. Good. Let him drown you for me."]],
+[["Evil Spong","The last seal falls. I told that fool the cracks would spread."],["Evil Spong","Hm. The Core is awake and has copied the dishwasher and the chef from its records, grudges included. Let them bicker their way to your throats."],["Evil Spong","When they fall, the Purge begins. Survive the whole song, specimens. I want to see you try."]],
+[["Xiao Long Bao","Impossible... this is all the dishwasher's fault..."],["UnCoolguy16","Typical. I'd have won alone."],["Evil Zach","Old builds, dissolving on schedule. Run the Purge, little players. I'll be waiting at the end. Try to keep up."]],
+[["Evil Zach","No way. I read every move... except the ones you invented just now."],["Evil Zach","Tch. The Core wanted a player who could change. Don't let it go to your head."]]];
 // ===== END LORE =====
 const WIN={cg:[["Coolguy15","...Did we just win?"]],zach:[["Zach","Boss rush cleared. Burgers are on me."]]};
 const UP=[
@@ -80,8 +82,8 @@ const UP=[
 /* ---------- STATE ---------- */
 const IM={};let host=true,me='host',peer=null,conn=null,conns={},room=null,scr='title',S=null,V=null,BT=[],EV=[],NETOUT=[],PT=[],DN=[],RG=[],SH=0,FL=0,FLc='#fff',DP={},frame=0,unlocked=false,curMus=null,trail=1,cutT=0,joinMsg='';
 const keys={};let mx=W/2,my=H/2,mdown=false,pend=[0,0,0],showHitboxes=false;
-const PLAYER_HIT_R=20,BOSS2_HIT_R=55,PICKUP_HIT_R=18;
-const bossHitRadius=b=>Math.max(12,(b.sz||140)*.38);
+const PLAYER_HIT_R=15,BOSS2_HIT_R=44,PICKUP_HIT_R=18;
+const bossHitRadius=b=>Math.max(12,(b.sz||140)*.31);
 function bossTargets(){if(!S||!S.bs)return[];const b=S.bs,out=[];if(b.hp>0&&!b.inv)out.push({id:'main',x:b.x,y:b.y,r:bossHitRadius(b)});if(b.idx===3&&S.bs2&&b.hp2>0&&!b.inv)out.push({id:'ally',x:S.bs2.x,y:S.bs2.y,r:BOSS2_HIT_R});return out}
 function bossTargetAt(x,y,r=0){const hits=bossTargets().filter(t=>dist(x,y,t.x,t.y)<=r+t.r);hits.sort((a,b)=>dist(x,y,a.x,a.y)-dist(x,y,b.x,b.y));return hits[0]||null}
 function drawCircleHit(x,y,r,color){g.save();g.strokeStyle=color;g.fillStyle=color.replace('1)', '.10)');g.lineWidth=2;g.beginPath();g.arc(x,y,Math.max(1,r),0,PI*2);g.fill();g.stroke();g.restore()}
@@ -137,13 +139,13 @@ function dmgB(v,x,y,col,crit,p,target='main'){const b=S.bs;if(!b||b.inv)return;a
   const f=(b.hp+b.hp2)/(b.max+b.max2),th=b.ph===0?.66:.33;if(b.ph<2&&f<=th&&!b.inv)startCut();return}if(b.hp<=0)return;b.hp-=v;b.fl=.12;fx(['d',x,y,v,col,crit]);X(crit?'crit':'hit');if(p)p.dd+=v;if(p&&p.m&&p.m.ls)p.hp=Math.min(p.max,p.hp+v*p.m.ls);
  const th=b.max*(1-(b.ph+1)/3);if(b.ph<2&&b.hp<=th){b.hp=th;startCut()}else if(b.hp<=0&&b.ph>=2){b.hp=0;bossDead()}}
 function hitB(p,base,x,y,kind,target='main'){const d=pd(p,base);dmgB(d.v,x,y,d.c?'#ffe14a':'#fff',d.c,p,target);fx(['p',x,y,6,'#fff',170,.4,4]);if(p.m.expl&&kind==='b')boom(x,y,60,d.v*.4,'p','#ffb347')}
-function hitP(p,dmg){if(p.dead||p.inv>0)return;if(p.sh){p.sh=0;p.inv=.8;X('shield');fx(['r',p.x,p.y,50,'#6cf']);return}dmg=Math.round(dmg*[.75,1,1.4][S.set.diff]*(1+.15*lp()));p.hp-=dmg;p.tk+=dmg;X('hurt');p.inv=.7;p.rage=p.m.rush?5:0;fx(['d',p.x,p.y-30,'-'+dmg,'#ff5050',0]);fx(['p',p.x,p.y,10,'#f55',200,.5,4]);fx(['s',6]);
+function hitP(p,dmg){if(p.dead||p.inv>0)return;if(p.sh){p.sh=0;p.inv=.8;X('shield');fx(['r',p.x,p.y,50,'#6cf']);return}dmg=Math.round(dmg*.88*[.75,1,1.4][S.set.diff]*(1+.15*lp()));p.hp-=dmg;p.tk+=dmg;X('hurt');p.inv=.7;p.rage=p.m.rush?5:0;fx(['d',p.x,p.y-30,'-'+dmg,'#ff5050',0]);fx(['p',p.x,p.y,10,'#f55',200,.5,4]);fx(['s',6]);
  if(p.hp<=0){if(p.m.revive&&!p.revived){p.revived=1;p.hp=p.max*.5;p.inv=2;X('revive');fx(['r',p.x,p.y,90,'#ff0'])}else{p.dead=1;p.hp=0;fx(['p',p.x,p.y,24,'#fff',300,.8,5]);X('die');if(!alive().length){S.st='over';X('lose')}}}}
 function boom(x,y,r,dmg,own,col){X('boom');fx(['r',x,y,r,col||'#fff']);fx(['p',x,y,16,col||'#fff',260,.5,5]);fx(['s',own==='b'?5:3]);
  if(own==='b')alive().forEach(p=>{if(dist(x,y,p.x,p.y)<r+PLAYER_HIT_R)hitP(p,dmg)});else{const target=bossTargetAt(x,y,r);if(target)dmgB(dmg,x,y,col||'#ffa',0,null,target.id)}}
 function proj(o){S.pr.push(Object.assign({id:S.id++,rot:0,spin:0,life:3,own:'b',pierce:0,hit:[],r:10,sz:30,dmg:10,img:'dump'},o))}
-const bp=(x,y,a,sp,o)=>proj(Object.assign({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,rot:a},o));
-const warn=o=>S.wr.push(Object.assign({t:0,dur:1,k:'c',r:50,a:0},o));
+const bp=(x,y,a,sp,o)=>{if(!(o&&o.own==='p'))sp*=.92;return proj(Object.assign({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,rot:a},o))};
+const warn=o=>S.wr.push(Object.assign({t:0,dur:1,k:'c',r:50,a:0},o,{dur:(o&&o.dur!=null?o.dur:1)*1.1}));
 function nearest(x,y){let b=null,bd=1e9;alive().forEach(p=>{const d=dist(x,y,p.x,p.y);if(d<bd){bd=d;b=p}});return b}
 function ang2(a,b){const d=Math.abs(a-b)%(2*PI);return d>PI?2*PI-d:d}
 function attack(p){const m=p.m,rate=(p.buf>0?2:1)*m.rate;
@@ -276,6 +278,29 @@ ATK[3]=[['steam','chop','ring','soup','steamjet','dumplingrain','twinSweep','ech
  ['spiral','cage','roll','dumplingBarrage','steamSurge','dumplingOrbit','steamerCollapse','steamCrossfire','pincer','allianceRain','steamBlossom','regulatorOverload','twinSweep','echoCrossfire','linkBeam']];
 // ===== END ATTACK REMAKES =====
 
+// ===== MELEE ATTACKS + BOSS 1 EXPANSION =====
+const meleeStep=(b,x,y,r,dmg,col,dur,extra,img)=>warn({x,y,r,dur,img,fn:()=>{b.x=x;b.y=y;boom(x,y,r,dmg,'b',col);fx(['p',x,y,18,col,300,.5,5]);if(extra)extra(x,y)}});
+const meleeCombo=(b,t,n,r,dmg,col,extra,img)=>{X('warn');for(let i=0;i<n;i++){const f=(i+1)/n;meleeStep(b,cl(b.x+(t.x-b.x)*f,70,890),cl(b.y+(t.y-b.y)*f,150,480),r,dmg,col,.6+i*.38,extra,img)}};
+Object.assign(A,{
+ ladleCombo(b,t){meleeCombo(b,t,3,115,22,'#ffcf5a',(x,y)=>{for(let k=0;k<8;k++)bp(x,y,k*PI/4,200,{img:'dump',sz:50,r:15,dmg:11,life:3})});b.cd=3.4},
+ rollingPin(b){X('warn');meleeStep(b,b.x,b.y,170,26,'#ffe08a',.8);meleeStep(b,b.x,b.y,235,22,'#ffb347',1.7);b.cd=3.4},
+ dumplingBounce(b,t){X('eshoot');const a=Math.atan2(t.y-b.y,t.x-b.x);for(let k=0;k<5;k++)bp(b.x,b.y,a+(k-2)*.3,260,{img:'dump',sz:60,r:18,dmg:13,life:6,bounce:4,spin:3});b.cd=2.6},
+ steamValve(b){X('warn');[[60,130],[900,130],[60,480],[900,480]].forEach(([x,y],i)=>warn({x,y,r:40,dur:.8+i*.1,img:'dump',fn:()=>{const a=Math.atan2(290-y,480-x);for(let j=0;j<8;j++)warn({x,y,r:6,dur:j*.12,fn:()=>bp(x,y,a+rnd(-.25,.25),280,{img:'dump',sz:48,r:14,dmg:12,life:4})});fx(['r',x,y,70,'#ffe08a'])}}));b.cd=3.2},
+ brothTide(b){X('bubble');for(let i=0;i<7;i++){const x=90+i*130,y=rnd(180,460);warn({x,y,r:56,dur:.7+i*.18,img:'dump',fn:()=>{S.zn.push({x,y,r:56,life:3,max:3,col:'#ffcf5a',dmg:13});fx(['p',x,y,12,'#ffe9a8',200,.6,5])}})}b.cd=3},
+ pipeSmash(b,t){meleeCombo(b,t,2,130,26,'#ff6060',(x,y)=>{for(let k=-2;k<=2;k++)bp(x,y,PI/2+k*.4,260,{img:'pipe',sz:60,r:17,dmg:12,life:2.5,spin:5})});b.cd=3},
+ gunWhip(b,t){meleeCombo(b,t,3,95,20,'#ff9a5a',(x,y)=>{const p=nearest(x,y)||t,a=Math.atan2(p.y-y,p.x-x);for(let k=-1;k<=1;k++)bp(x,y,a+k*.18,420,{img:'ebul',sz:44,r:15,dmg:12})});b.cd=3},
+ spatulaSlap(b,t){meleeCombo(b,t,3,110,22,'#44eaff',(x,y)=>{for(let k=0;k<10;k++)bp(x,y,k*2*PI/10,170,{img:'bubble3',sz:46,r:14,dmg:11,life:3.4})},'spat');b.cd=3.2},
+ spatulaSpin(b){X('whoosh');for(let w=0;w<3;w++)warn({x:b.x,y:b.y,r:14,dur:.1+w*.5,img:'spat',fn:()=>{const n=7,off=w*.4;for(let k=0;k<n;k++)bp(b.x,b.y,off+k*2*PI/n,200+w*30,{img:'spat',sz:78,r:19,dmg:15,spin:8,life:4.5});fx(['r',b.x,b.y,70,'#44eaff'])}});b.cd=3},
+ tagTeamSmash(b,t){meleeCombo(b,t,2,120,22,'#ffd34a');const q=ally();if(q)meleeCombo(q,t,2,120,22,'#ff5a5a');b.cd=3.4},
+ knifeFlurry(b,t){meleeCombo(b,t,4,90,20,'#f9e84c',(x,y)=>{const p=nearest(x,y)||t,a=Math.atan2(p.y-y,p.x-x);for(let k=-2;k<=2;k++)bp(x,y,a+k*.2,340,{img:'eknife',sz:56,r:14,dmg:13,life:3,rot:a+k*.2})});b.cd=3.2}
+});
+ATK[0].forEach(l=>l.push('ladleCombo','dumplingBounce'));ATK[0][1].push('rollingPin','steamValve','brothTide');ATK[0][2].push('rollingPin','steamValve','brothTide');
+// UnCoolguy16 (boss 2, and his half of boss 4) favours his gun: duplicate gun attacks so they are picked more often.
+ATK[1].forEach(l=>l.push('pipeSmash','gunWhip','pistol','fanShot','crossfire','ghostMagazine'));ATK[1][1].push('hell','ricochet');ATK[1][2].push('hell','sniperLines','pistol');
+ATK[2].forEach(l=>l.push('spatulaSlap','spat'));ATK[2][0].push('spatulaSpin','spat','spatulaSlap');ATK[2][1].push('spatulaSpin');ATK[3].forEach(l=>l.push('tagTeamSmash'));ATK[4].forEach(l=>l.push('knifeFlurry'));
+// ===== END MELEE =====
+
+
 const M={
  chop(b,dt,t){b.mt-=dt;if(b.mt<=0){const a=Math.atan2(t.y-b.y,t.x-b.x)+rnd(-.18,.18);X('chop');bp(b.x,b.y,a,400,{img:'chop',sz:90,r:13,dmg:14,rot:a+PI/2});b.n--;b.mt=.14;if(b.n<=0){b.mode=null;b.cd=2}}},
  ring(b,dt){b.mt-=dt;if(b.mt<=0){const n=14+b.ph*4,off=rnd(0,PI*2),gap=rnd(0,PI*2);for(let k=0;k<n;k++){const a=off+k*2*PI/n;if(ang2(a,gap)<.45)continue;bp(b.x,b.y,a,190,{img:'dump',sz:58,r:17,dmg:14,life:5})}fx(['r',b.x,b.y,70,'#ffe08a']);X('ring');b.n--;b.mt=.9;if(b.n<=0){b.mode=null;b.cd=2.2}}},
@@ -368,12 +393,12 @@ function snap(){const b=S.bs,D=S.dlg;return{st:S.st,bi:bidx(),loop:lp(),paused:S
  wr:S.wr.map(w=>[w.k,w.x|0,w.y|0,+w.a.toFixed(2),w.r,+(w.t/w.dur).toFixed(2),w.img||'']),
  dlg:D&&{who:D.L[D.i][0],text:D.L[D.i][1],t:D.t,i:D.i,intro:D.next==='fight'}}}
 function myIn(){const kx=(keys.d||keys.arrowright?1:0)-(keys.a||keys.arrowleft?1:0),ky=(keys.s||keys.arrowdown?1:0)-(keys.w||keys.arrowup?1:0);const pl=V&&V.pl.find(p=>p.id===me),px=pl?pl.x:W/2,py=pl?pl.y:H/2;return{kx,ky,ang:Math.atan2(my-py,mx-px),d:mdown?1:0,a:pend.slice()}}
-function startHost(){host=true;me='host';S=newS();addPl('host');room=null;scr='game';
+function startHost(){if(typeof Peer==='undefined'){alert('Online play needs the PeerJS library, which could not load (offline or blocked).');return}host=true;me='host';S=newS();addPl('host');room=null;scr='game';
  peer=new Peer();peer.on('open',id=>{room=id});peer.on('error',e=>console.warn(e));
  peer.on('connection',c=>{c.on('open',()=>{if(S.st!=='lobby'||nPl()>=S.set.max){c.send({t:'full'});setTimeout(()=>c.close(),400);return}conns[c.peer]=c;addPl(c.peer)});
   c.on('data',d=>{const p=S.pl[c.peer];if(!p)return;if(d.t==='in'){const a=p.in.a;p.in=d.i;p.in.a=p.in.a.map((v,k)=>v||a[k])}else if(d.t==='pick'&&S.st==='lobby'&&CH[d.c])p.ch=d.c;else if(d.t==='vote'&&S.st==='up'&&d.i>=0&&d.i<3)S.votes[c.peer]=d.i});
   c.on('close',()=>{delete conns[c.peer];delete S.pl[c.peer];if(S.st==='fight'&&!alive().length&&nPl())S.st='over'})})}
-function joinRoom(id){host=false;scr='game';V=null;joinMsg='Connecting to room...';peer=new Peer();me=null;
+function joinRoom(id){if(typeof Peer==='undefined'){alert('Online play needs the PeerJS library, which could not load (offline or blocked).');scr='title';return}host=false;scr='game';V=null;joinMsg='Connecting to room...';peer=new Peer();me=null;
  peer.on('open',pid=>{me=pid;conn=peer.connect(id,{reliable:true});conn.on('data',d=>{if(d.t==='full'){alert('Room is full or already in a run.');location.href=location.pathname}else if(d.t==='s'){V=d.s;procEv(d.s.ev||[])}});conn.on('close',()=>{joinMsg='Disconnected from host.';V=null});conn.on('error',()=>joinMsg='Connection error.')});
  peer.on('error',()=>joinMsg='Could not reach that room.')}
 const send=m=>{if(conn&&conn.open)conn.send(m)};
@@ -571,7 +596,7 @@ function drawViz(t,v,pct){
  const tn=['CALM','RISING','FRENZY','OVERDRIVE'][tier];g.fillStyle='rgba(0,0,0,.5)';g.fillRect(W-150,506,130,10);g.fillStyle='hsl('+VZ.hue+',100%,60%)';g.fillRect(W-150,506,130*lv,10);TS(tn,W-85,494,13,'#fff')
 }
 // ===== END VISUALIZER =====
-function render(now,dt){render0(now,dt);warnMiss();drawToasts()}
+function render(now,dt){render0(now,dt);warnMiss();drawToasts();if(loaded<keysF.length){g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,H-30,W,30);g.fillStyle='#ffd34a';g.fillRect(0,H-30,W*loaded/keysF.length,30);T('Loading '+loaded+'/'+keysF.length+'...',W/2,H-15,14,'#fff','center')}}
 function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];
  if(scr==='title'){WM='title';music('title');drawTitle(now);return}
  if(scr==='credits'){WM='title';music('title');drawCredits(now);return}
@@ -628,5 +653,6 @@ function loop(now){requestAnimationFrame(loop);const dt=Math.min(.05,(now-last)/
  updFx(dt);render(now,dt)}
 const RM=new URLSearchParams(location.search).get('room');
 let loaded=0;const MISS=[];const keysF=Object.keys(F);
-keysF.forEach(k=>{const i=new Image();const done=()=>{if(++loaded===keysF.length){if(RM)joinRoom(RM);requestAnimationFrame(loop)}};i.onload=done;i.onerror=()=>{MISS.push(F[k]);done()};i.src=encodeURI(F[k]);IM[k]=i});
+keysF.forEach(k=>{const i=new Image();const done=()=>{if(++loaded===keysF.length&&RM)joinRoom(RM)};i.onload=done;i.onerror=()=>{MISS.push(F[k]);done()};i.src=encodeURI(F[k]);IM[k]=i});
+requestAnimationFrame(loop);
 </script></body></html>

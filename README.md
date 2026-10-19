@@ -56,3 +56,18 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 - Achievements (12) are saved in the browser and shown as pop-up toasts. Music credits list every track. Add original artist names to the `MC` list in `index.html`.
 - Rebuilt multiplayer lobby: room code chip, copy link, player slots with host marker, styled character cards, room settings, pulsing Start and a Leave button.
 - Phase 4.5: 12 attack waves instead of 8, attack pace follows the music's intensity, and effects scale through CALM, RISING, FRENZY and OVERDRIVE (edge sparks, lightning, chromatic rings, strobe lines, comets, screen shake).
+
+## Balance and robustness update
+
+- Boss health reduced about 15%. Boss attacks are slightly easier (damage x0.88, projectiles 8% slower, telegraphs 10% longer).
+- Boss 1 gains Ladle Combo, Rolling Pin, Dumpling Bounce, Steam Valve and Broth Tide.
+- New melee attacks: Pipe Smash and Gun Whip (boss 2), Spatula Slap (boss 3), Tag Team Smash (boss 4), Knife Flurry (boss 5).
+- UnCoolguy16 picks gun attacks more often.
+- The game now draws immediately with a loading bar, shows a red error banner if the script fails, and explains when PeerJS cannot load.
+
+## Hitbox, Evil Spong and lore update
+
+- Evil Spong now shows his own portrait in dialogue (it used Bao's before).
+- Evil Spong uses his spatula in phase 1: Spatula Throw, Spatula Spin and Spatula Slap.
+- Player hitbox 20 to 15 px. Boss hitboxes about 18% smaller (boss 4 partner 55 to 44 px). Press H in game to see them.
+- Lore rewritten: every boss wants the players dead. Bao is a vain theatrical chef, UnCoolguy16 a bitter deadpan saboteur jealous of "cool", Evil Spong a cold formal warden, Evil Zach a smug mimic. Their grudges against each other drive the dialogue.
