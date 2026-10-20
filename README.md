@@ -98,3 +98,11 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 - Reworked Zach's stab into a visible pull-back, fast forward lunge, and recovery/recoil pose.
 - Replaced smooth glowing thrust ribbons with grid-aligned pixel tiles, chunky hit flashes, square debris and pixel foot-dust.
 - Made stab hit particles render as crisp square pixels with a warm gold/orange/ivory palette.
+
+## Encore, Evil Zach and maps remake
+
+- **Dialogue** rewritten to be lighter and funnier. All Core / Purge / Warden lore is gone: Bao and UnCoolguy16 simply team up for a rematch, and Phase 4.5 is their entrance-music encore.
+- **Phase 4.5 remake ("The Encore")**: Bao and UnCoolguy16 now stand in the top corners and throw 12 waves built from their own attacks. Boss 1: Dumpling Downpour, Chopstick Crossing, Steam Pistons. Boss 2: Bullet Curtain, Pipe Lattice, Sniper Alley. Boss 4 duo moves: Twin Sweep, Steam Blossom, Regulator Overload, Echo Crossfire, Alliance Spiral, and Ladle & Pipe Smash.
+- **Visualizer remake**: gold (Bao) and red (UnCoolguy16) stage with spotlights, kitchen steam, a dumpling-and-bullet equalizer, a sound ribbon linking the two hosts, and a dumpling and bullet orbiting the centre. It is drawn behind players and projectiles so it never hides attacks. The OVERDRIVE bar and label are removed (the loud-music effects still scale with intensity).
+- **Boss 5 remake**: Evil Zach keeps dodging player fire, but fights with stolen Zach moves. Combo Strike is a telegraphed slash, reverse slash and stab. The rest are Knife Whirl, Copycat Trail (ghost stabs where you recently stood), Burger Toss, Knife Juggle, Clone Circle, Backstab and Final Cut (phase 3), alongside some of his old knife attacks.
+- **Boss maps**: each arena now has its own set dressing. Kitchen (tiles, lanterns, steamers, stove flames), pipe room (pipes, warning lamps, vents, hazard stripes), underwater (light rays, kelp, coral, jellyfish, bubbles), alliance stage (banners, footlights, split floor) and Evil Zach's dojo (mirrors, spotlights, knife scars, audience).
