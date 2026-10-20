@@ -106,3 +106,11 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 - **Visualizer remake**: gold (Bao) and red (UnCoolguy16) stage with spotlights, kitchen steam, a dumpling-and-bullet equalizer, a sound ribbon linking the two hosts, and a dumpling and bullet orbiting the centre. It is drawn behind players and projectiles so it never hides attacks. The OVERDRIVE bar and label are removed (the loud-music effects still scale with intensity).
 - **Boss 5 remake**: Evil Zach keeps dodging player fire, but fights with stolen Zach moves. Combo Strike is a telegraphed slash, reverse slash and stab. The rest are Knife Whirl, Copycat Trail (ghost stabs where you recently stood), Burger Toss, Knife Juggle, Clone Circle, Backstab and Final Cut (phase 3), alongside some of his old knife attacks.
 - **Boss maps**: each arena now has its own set dressing. Kitchen (tiles, lanterns, steamers, stove flames), pipe room (pipes, warning lamps, vents, hazard stripes), underwater (light rays, kelp, coral, jellyfish, bubbles), alliance stage (banners, footlights, split floor) and Evil Zach's dojo (mirrors, spotlights, knife scars, audience).
+
+
+## Evil Zach ultimate, cactus attack & last stand update
+
+- The pre-Phase 4.5 dialogue is rewritten as a desperate last stand.
+- Boss 2 can call down falling cactus hazards with warning markers and green pixel-style effects. During the pipe spin, UnCoolguy16 actively closes distance on the player instead of staying planted.
+- When Evil Zach reaches 0 HP, he interrupts the defeat with the line “Let’s larp.” He teleports to the far-left center, flashes the ultimate artwork with a 3-second fade, charges for 1 second, then fires a 16-second, full-width layered laser. The laser shakes/flashes the screen and has a tiny marked safe pocket at the far-right center. Outside that pocket, it deals 5 damage every 0.05 seconds and locks player movement. Evil Zach is defeated when the beam ends.
+- The ultimate uses the included `Nande (evil zach ultimate).mp3` track and pauses the boss music while firing. Music pauses while the game is paused, Settings is open, or the browser tab is unfocused.
