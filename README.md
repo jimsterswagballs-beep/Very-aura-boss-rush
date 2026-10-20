@@ -1,4 +1,4 @@
-# Boss Rush — Lore, Boss Combat & Phase 4.5 Update
+# Boss Rush — Evil Zach Combat & Ultimate Fix (v12)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
@@ -42,10 +42,15 @@ Audio playback starts after the first click or key press because browsers requir
 - Multiplayer snapshots include Zach's M1 animation and hitbox state so other players can see the combo.
 - Attack particles now render as context-appropriate bubbles, shards, sparks, streaks, healing crosses, and diamonds instead of uniform squares. Projectile trails and glows are tinted to match their projectile type.
 
+## Balance and party-dialogue update
+
+- Boss 4's Bao now starts at **2,400 HP**, matching Boss 1, and UnCoolguy16 starts at **3,500 HP**, matching Boss 2. Difficulty, multiplayer, and loop scaling still apply. The Alliance Link no longer heals the surviving boss above those baseline health totals; the survivor gets its next attack sooner and keeps the existing faster movement behaviour.
+- Boss dialogue now branches for solo, two-player, and larger-party runs. Coolguy15 and Zach each have their own reactions; mixed-character parties get both voices, while unselected character dialogue is not added. This also updates the Phase 4.5 last-stand response and the victory conversation.
+
 ## Update highlights
 
 - Revised story continuity: UnCoolguy16's broken regulator causes the pressure pulse; Evil Spong's bubble wards contain the flood; the core creates two combat echoes; defeating them begins the timed purge; Evil Zach is the core's final player-like combat echo.
-- Boss health increased across the roster.
+- Boss health is balanced across the roster, including Boss 4 returning to the Boss 1 / Boss 2 health baselines.
 - Each boss has extra attack patterns. Evil Spong's active attack pool is bubble-based: aimed bubble sprays, pressure mines, radial waves, bubble prisons, rotating bubble patterns, tsunami volleys, bubble meteors, tornadoes, popping bubbles, geysers, and refraction volleys.
 - Boss 4's two enemies have separate health bars and use their original solo attack pools, with additional coordinated duo attacks.
 - Phase 4.5 is a 93.179-second survival phase timed to the supplied *Overdue* MP3. It cycles through eight map-wide attack patterns, updates warnings, hazards, and projectiles during the phase, and draws a live audio-reactive spectrum with additional arena effects.
@@ -114,3 +119,14 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 - Boss 2 can call down falling cactus hazards with warning markers and green pixel-style effects. During the pipe spin, UnCoolguy16 actively closes distance on the player instead of staying planted.
 - When Evil Zach reaches 0 HP, he interrupts the defeat with the line “Let’s larp.” He teleports to the far-left center, flashes the ultimate artwork with a 3-second fade, charges for 1 second, then fires a 16-second, full-width layered laser. The laser shakes/flashes the screen and has a tiny marked safe pocket at the far-right center. Outside that pocket, it deals 5 damage every 0.05 seconds and locks player movement. Evil Zach is defeated when the beam ends.
 - The ultimate uses the included `Nande (evil zach ultimate).mp3` track and pauses the boss music while firing. Music pauses while the game is paused, Settings is open, or the browser tab is unfocused.
+
+
+## Evil Zach combat and ultimate fix (v12)
+
+- **Smaller laser:** Evil Zach's ultimate beam is now a narrow horizontal lane rather than a screen-filling column of damage. The visible core and collision band match more closely, and the safe zone is clearly marked at the right-center edge. Players outside the beam are not damaged by it. Players intersecting the beam take 5 damage every 0.05 seconds and are locked while caught in it.
+- **Ultimate timing/audio:** after the “Let's larp” dialogue and teleport to the far-left center, the ultimate artwork flashes and fades over 3 seconds, followed by a 1-second charge and a 16-second laser. The supplied `Nande (evil zach ultimate).mp3` track fades from 10 seconds into silence at 13 seconds; the laser continues to 16 seconds. Boss music remains muted during the beam. Audio pauses while the game is paused, Settings is open, or the browser tab is unfocused.
+- **Boss select/music:** the lobby's “Start at boss” control now cycles through all five bosses. The chosen boss track is restarted when a run starts, including Boss 2's `m2` music.
+- **More aggressive Evil Zach:** his movement closes distance sooner, and he selects the three-hit M1 combo more often with a shorter recovery.
+- **Black Flash:** a new telegraphed dash attack aims toward the active player. A confirmed hit deals damage and triggers a 2.65-second impact cutscene with impact-frame flashes, speed lines, jagged red/white cursed-energy bolts, screen shake, and a bold BLACK FLASH title. A missed dash does not trigger the cinematic.
+
+The game remains a flat-file project: keep `index.html`, every image, every soundtrack, and this README together in the repository root.
