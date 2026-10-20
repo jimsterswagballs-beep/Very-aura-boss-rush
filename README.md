@@ -139,3 +139,10 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 - **Black Flash:** a new telegraphed dash attack aims toward the active player. A confirmed hit deals damage and triggers a 2.65-second impact cutscene with impact-frame flashes, speed lines, jagged red/white cursed-energy bolts, screen shake, and a bold BLACK FLASH title. A missed dash does not trigger the cinematic.
 
 The game remains a flat-file project: keep `index.html`, every image, every soundtrack, and this README together in the repository root.
+
+
+## Boss Rush update (v13)
+
+- **Tomato sauce puddles:** staying in a ketchup puddle now deals 1 damage every 0.25 seconds. Damage ticks while the player remains inside; shields still absorb one tick.
+- **Evil Zach ultimate:** the horizontal laser is much wider and brighter, with a larger, clearly labelled safe pocket at the far right. Screen shake, rapid flashes, and excess beam particles have been toned down. The ultimate track stays audible for the full 16-second beam and fades during its final 0.35 seconds.
+- **Fella, boss six:** added bouncing baseball-bat volleys, delayed multi-point sauce geysers that launch extra globs, and a two-pass stampede that paints damaging sauce trails. The new attacks have warning cues so players can react and dodge.
