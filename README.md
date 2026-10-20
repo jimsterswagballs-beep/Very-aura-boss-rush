@@ -1,6 +1,15 @@
-# Boss Rush — Evil Zach Combat & Ultimate Fix (v12)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v13)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
+
+
+## Version 13 — Black Flash, laser, and Boss 6
+
+- Evil Zach's Black Flash is rebuilt around a committed, aimed dash. The attack only triggers its full-screen impact-frame cinematic on a confirmed hit; the cutscene uses stark black/white/red frames, a black-core slash, fractured cursed-energy lightning, manga speed panels, impact shock rings, and a `BLACK FLASH / 黒閃` title.
+- Evil Zach uses his M1 slash / reverse slash / stab combo more frequently and pressures the player more aggressively.
+- Evil Zach's ultimate laser has a new compressed-singularity charge, a narrow layered beam with red/black energy strands, fast pixel slugs, lens glints, electrical cuts, strong source flare, arena shake, and a clearly preserved safe pocket on the right. The actual hit lane is narrow and matches the slim core; players caught by it take 5 damage at each 0.05-second tick and are temporarily movement-locked. The ultimate track fades to silence by 10 seconds while the laser continues for 16 seconds.
+- Added **Fella**, Boss 6, with the supplied sprite and `Vs. Randy boss 6.mp3` soundtrack, a baseball stadium arena, baseball-bat three-hit combo, telegraphed rush, heavy slam, ketchup volleys / sauce curtains, and minion throws. Ketchup puddles slow movement while inside them rather than causing hidden repeated damage.
+- Added Fella's dialogue, phase interactions, character-specific / party-size taunts, boss-select entry, and achievement. Network snapshots now carry slow-puddle state and Fella's attack animation state.
 
 ## Publish with GitHub Pages
 
