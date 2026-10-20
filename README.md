@@ -1,4 +1,4 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v13)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v14)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
@@ -141,8 +141,8 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 The game remains a flat-file project: keep `index.html`, every image, every soundtrack, and this README together in the repository root.
 
 
-## Boss Rush update (v13)
-
-- **Tomato sauce puddles:** staying in a ketchup puddle now deals 1 damage every 0.25 seconds. Damage ticks while the player remains inside; shields still absorb one tick.
-- **Evil Zach ultimate:** the horizontal laser is much wider and brighter, with a larger, clearly labelled safe pocket at the far right. Screen shake, rapid flashes, and excess beam particles have been toned down. The ultimate track stays audible for the full 16-second beam and fades during its final 0.35 seconds.
-- **Fella, boss six:** added bouncing baseball-bat volleys, delayed multi-point sauce geysers that launch extra globs, and a two-pass stampede that paints damaging sauce trails. The new attacks have warning cues so players can react and dodge.
+## Version 14 updates
+- Rebuilt dialogue composition for one, two, three, and four players. Dialogues react to the selected Coolguy15/Zach roster, and several sequences include boss-to-boss banter and continuity cameos.
+- Evil Zach Black Flash now deals a flat 44 damage, has a distinct lethal FINISHER cutscene, and includes new impact, crack, boom, and finisher sound cues.
+- Evil Zach's ultimate now fills the central band of the arena, leaving upper and lower escape corridors; the center-right safe pocket has been removed.
+- Reworked Fella into The Grand Slam Menace with a stadium arena, ketchup-pitch slow shots, Grand Slam multi-lane bat projectiles, and a Home Run finisher-style swing, with phase-specific visuals and higher health.
