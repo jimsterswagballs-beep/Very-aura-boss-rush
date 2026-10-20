@@ -11,6 +11,8 @@ This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all 
 
 ## Controls
 
+Default keys (all of them can be rebound in **Settings → Controls**, two slots per action):
+
 - **WASD / Arrow keys** — move
 - **Mouse / Click** — aim and attack
 - **Q / E / R** — character abilities
@@ -18,6 +20,17 @@ This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all 
 - **M** — mute or unmute
 - **P** — pause in solo boss fights
 - **1 / 2 / 3** — select an upgrade
+- **Esc** — open or close Settings (also the SET button in a fight, or SETTINGS on the title screen)
+
+## Settings menu
+
+Everything saves automatically in the browser (localStorage) and is client-side only, so it is safe in multiplayer.
+
+- **Audio** — Master, Music and Sound Effects volume from 0% to 200%, mute, mute when the window is unfocused, test sound.
+- **Gameplay** — Auto Shoot, Auto-Use Abilities, Auto Aim (strength 10–100%, target priority, target marker), fire button (any / left / right), solo game speed 50–150%, auto-pause on focus loss, skip dialogue (host), hitbox view.
+- **Visual** — screen shake 0–200%, flash intensity, particle amount, glow, ambient sparkles, boss auras, vignette, damage flash, low-HP pulse, damage numbers and size, FPS counter, control hints, crosshair style / size / color, hide system cursor, Performance and Quality presets.
+- **Controls** — rebind movement, abilities, keyboard attack, upgrade voting, pause, mute, hitboxes, and keys that toggle Auto Shoot / Auto Aim / FPS.
+- Opening Settings pauses a solo fight. In multiplayer the game keeps running, but your character stops responding while the menu is open.
 
 Audio playback starts after the first click or key press because browsers require a user interaction before audio can play. The Phase 4.5 visualizer reads the soundtrack's live frequency data when the browser's Web Audio API is available.
 
