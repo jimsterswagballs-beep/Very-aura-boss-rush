@@ -21,6 +21,14 @@ This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all 
 
 Audio playback starts after the first click or key press because browsers require a user interaction before audio can play. The Phase 4.5 visualizer reads the soundtrack's live frequency data when the browser's Web Audio API is available.
 
+
+## Zach M1 and attack-effect remake
+
+- Zach's basic knife attack is now a repeating **slash → reverse slash → stab** combo. The two slash animations travel in opposite directions; the stab has a forward-thrust animation and a 1.25-second recovery after the animation.
+- Each M1 strike creates its own directional hitbox. Press **H** to see the hitbox for the current strike, and each strike can hit a boss only once.
+- Multiplayer snapshots include Zach's M1 animation and hitbox state so other players can see the combo.
+- Attack particles now render as context-appropriate bubbles, shards, sparks, streaks, healing crosses, and diamonds instead of uniform squares. Projectile trails and glows are tinted to match their projectile type.
+
 ## Update highlights
 
 - Revised story continuity: UnCoolguy16's broken regulator causes the pressure pulse; Evil Spong's bubble wards contain the flood; the core creates two combat echoes; defeating them begins the timed purge; Evil Zach is the core's final player-like combat echo.
