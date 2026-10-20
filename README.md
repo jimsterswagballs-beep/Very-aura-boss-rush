@@ -79,3 +79,9 @@ The game uses PeerJS for online rooms and needs a working internet connection fo
 - Evil Spong uses his spatula in phase 1: Spatula Throw, Spatula Spin and Spatula Slap.
 - Player hitbox 20 to 15 px. Boss hitboxes about 18% smaller (boss 4 partner 55 to 44 px). Press H in game to see them.
 - Lore rewritten: every boss wants the players dead. Bao is a vain theatrical chef, UnCoolguy16 a bitter deadpan saboteur jealous of "cool", Evil Spong a cold formal warden, Evil Zach a smug mimic. Their grudges against each other drive the dialogue.
+
+## Zach pixel stab animation update
+
+- Reworked Zach's stab into a visible pull-back, fast forward lunge, and recovery/recoil pose.
+- Replaced smooth glowing thrust ribbons with grid-aligned pixel tiles, chunky hit flashes, square debris and pixel foot-dust.
+- Made stab hit particles render as crisp square pixels with a warm gold/orange/ivory palette.
