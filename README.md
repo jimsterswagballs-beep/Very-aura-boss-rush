@@ -1,7 +1,17 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v23)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v25)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 25 — Hateful Doom overhaul, pause menu, admin panel
+
+- **Hateful Doom cutscene:** Will and Jackson are at their last HP. Mason walks up to Will and strikes him, Will collapses, then Mason strikes Jackson and he collapses too. Will's last words, "your not mason", play from the ground. Mason then turns dark through a red and blue flash and the secret stage fades in.
+- **Hateful Doom transition:** a short blackout, a red flash, the dark sprite swap and the switch to the secret music, all in one timed sequence.
+- **Projectile fix:** projectiles keep moving during the secret fight. They used to freeze because the secret branch returned before the projectile update.
+- **Pause menu (Esc):** opens Resume, Settings, Restart Run, Back to Lobby (in multiplayer, host only, shown in a run), and Title Screen. Esc or Resume closes it. Solo fights pause; multiplayer fights are only overlaid. Settings returns you to the pause menu.
+- **Admin panel:** type `coolguy186` on any screen to open it. Options: God mode, infinite abilities, full heal, clear upgrades, give any upgrade to every player, kill the current boss, and start any boss. Esc closes it.
+- **Hateful Doom timer:** a large red clock. Under 60 s it pulses faster, under 20 s it glitches and shakes, and it plays a warning tick each second under 30 s.
+- **Harder Hateful Doom:** faster enrage (1.35x), more and faster projectile volleys, shorter telegraphs, wider sweeps, bigger sweep damage (24), and 30% more damage taken from all sources.
 
 ## Version 24 — Terry tweak, achievements rebuilt
 
