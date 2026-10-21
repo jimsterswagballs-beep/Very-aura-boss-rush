@@ -47,7 +47,7 @@ const INTRO=[
  cg:[["Coolguy15","So... a Zach cosplayer with an attitude."],["Evil Zach","Cosplay? I'm a PREMIUM knockoff."]],
  zach:[["Zach","That's my face, my footwork, and a very rude knife."],["Evil Zach","I kept the good parts. You weren't using them anyway."]],
  duo:[["Evil Zach","More challengers? Great, I brought enough knives for everybody."]]},
-{open:[["Fella","Welcome to the cleanup crew. I brought a bat, a bottle of ketchup, and absolutely no plan B."],["Fella","Don't get tagged, don't get sauced, and definitely don't ask what's in the sauce."]],cg:[["Coolguy15","Is that ketchup?"],["Fella","It's a slow-cooked secret recipe. Mostly because it slows YOU down."]],zach:[["Zach","You brought a baseball bat to a boss rush?"],["Fella","And ketchup. Never underestimate either."]],duo:[["Fella","Two players? Great. One can run while the other gets turned into a hot dog."]]}];
+{open:[["Fella","Welcome to the Walk-Off Ballpark. Ground rules: I swing, I bunt, I slide, and you get sticky."],["Fella","Sauce bunts bounce off the walls twice, and slide trails stay sticky. Watch the ground, not just me."]],cg:[["Coolguy15","Is that ketchup?"],["Fella","It's a slow-cooked secret recipe. Mostly because it slows YOU down."]],zach:[["Zach","You brought a baseball bat to a boss rush?"],["Fella","And a pitching machine. Never underestimate either."]],duo:[["Fella","Two players? Great. One can run the bases while the other gets turned into a hot dog."]]}];
 const PH=[
 [null,{b:[["Xiao Long Bao","You cracked my wrapper! Now you'll feel the STEAM!"]],cg:[["Coolguy15","Is he... hotter now?"]],zach:[["Zach","Honestly? Smells good."]]},
  {b:[["Xiao Long Bao","ENOUGH! Dishwasher! I know you're lurking! Come help me!"],["UnCoolguy16","You're doing great, Steamy. Keep going."]],cg:[["Coolguy15","Someone else is in here..."]],zach:[["Zach","Boss two is watching. Great."]]}],
@@ -59,14 +59,14 @@ const PH=[
  {b:[["UnCoolguy16","The beam between us is getting dangerous. Bao, this is YOUR fault."],["Xiao Long Bao","Everything is your fault! Just hit them!"]],cg:[["Coolguy15","Their duo attacks are synced up. Break the rhythm."]],zach:[["Zach","Almost there. Keep dodging."]]}],
 [null,{b:[["Evil Zach","Too slow! You almost had me."],["Evil Zach","I learned that from you, by the way. Thanks!"]],cg:[["Coolguy15","He's dodging the same way every time!"]],zach:[["Zach","Stop stealing my moves!"]]},
  {b:[["Evil Zach","Okay, I'm done messing around. Time for the FULL combo."],["Evil Zach","Slash, reverse slash, stab. Look familiar?"]],cg:[["Coolguy15","He's doing YOUR combo, Zach!"]],zach:[["Zach","Hey! That's my combo! Somebody call a lawyer!"]]}],
-[null,{b:[["Fella","First inning is over! I was measuring your footwork. Now I throw CURVEBALLS."]],cg:[["Coolguy15","The sauce is curving in mid-air. Watch its trail, not just its aim."]],zach:[["Zach","Ketchup should not be able to bend around corners. That feels illegal."]]}, {b:[["Fella","BOTTOM OF THE NINTH! WALK-OFF MODE! Every base is mine, and the field is closed!"]],cg:[["Coolguy15","The whole diamond is active now. Find the clean lane before the warnings finish."]],zach:[["Zach","He's treating the entire arena like home plate. We need to move before he swings."]]}]];
+[null,{b:[["Fella","Warm-up's over! I was reading your footwork. The BULLPEN is open!"]],cg:[["Coolguy15","The sauce is curving in mid-air. Watch its trail, not just its aim."]],zach:[["Zach","Ketchup should not be able to bend around corners. That feels illegal."]]}, {b:[["Fella","WALK-OFF TIME! Bases loaded, the crowd is on its feet, and I'm swinging for the fences!"]],cg:[["Coolguy15","The whole diamond is active now. Find the clean lane before the warnings finish."]],zach:[["Zach","He's treating the entire arena like home plate. We need to move before he swings."]]}]];
 const OUTRO=[
 [["Xiao Long Bao","I'm... steamed out. Tell my dumplings... I loved them."],["UnCoolguy16","Rest, Steamy. You were the warm-up."]],
 [["UnCoolguy16","Okay, okay, you win. I'm not even mad. (I'm a little mad.)"],["UnCoolguy16","Go bother the sponge. He has bubbles and a bad attitude."]],
 [["Evil Spong","My bubbles... all popped... and I just waxed them."],["Xiao Long Bao","Hold on, we're not done! Dishwasher, assemble!"],["UnCoolguy16","Ugh. Fine. For the record, this is a bad idea."]],
 [["Xiao Long Bao","No... no, this can’t be it. We have one chance left, and I refuse to let it end here!"],["UnCoolguy16","Save the speech. We’re battered, we’re out of tricks, and that thing is still standing."],["Xiao Long Bao","Then we stand too. One last round. No retreat, no more jokes—if we fall, we fall fighting!"],["UnCoolguy16","...For once, I agree. Everyone, give it everything. This is our last stand."]],
 [["Evil Zach","No way. I read every move... except the ones you just made up."],["Evil Zach","Okay, okay. You win. Tell nobody I lost to my own face."]],
-[["Fella","The bat's retired. The ketchup's... mostly cleaned up."],["Fella","I'm calling this a draw. I'd call it a win, but my shoes are sticky."]]];
+[["Fella","The bat's retired. The sauce is... mostly cleaned up."],["Fella","I'm calling this a walk-off. For YOU. My shoes are still sticky, though."]]];
 // ===== END STORY =====
 const WIN={cg:[["Coolguy15","...Did we just win?"]],zach:[["Zach","Boss rush cleared. Burgers are on me."]]};
 // Party-aware story barks. The script adapts to solo, duo, or squad runs.
@@ -78,7 +78,7 @@ const PARTY_TAUNTS={
   {solo:["Evil Spong","One guest? That's still a crowd in my bubble."],duo:["Evil Spong","Two guests? My personal space is under attack!"],squad:["Evil Spong","A whole party? This bubble has an occupancy limit!"]},
   {solo:["Xiao Long Bao","One challenger against both of us. ...That's actually pretty unfair."],duo:["UnCoolguy16","Two of you, two of us. Finally, a balanced argument."],squad:["Xiao Long Bao","A full squad? Great. We were running out of people to blame."]},
   {solo:["Evil Zach","Going solo? I respect the confidence. I don't respect your survival odds."],duo:["Evil Zach","Two challengers? I only rehearsed this against one."],squad:["Evil Zach","A whole crowd? Good, my victory speech needs an audience."]},
-  {solo:["Fella","One player? This should be a clean 1v1. Shame about the ketchup."],duo:["Fella","Two opponents? I'll slow one and swing at the other."],squad:["Fella","More players means more targets. I brought industrial-sized ketchup."]}
+  {solo:["Fella","One player? A clean 1-on-1 at the plate. My favorite kind of game."],duo:["Fella","Two opponents? I'll slide into one and swing at the other."],squad:["Fella","More players means more targets. I brought a bigger pitching machine."]}
  ],
  phase:[
   [
@@ -102,8 +102,8 @@ const PARTY_TAUNTS={
    {solo:["Evil Zach","No backup, no excuses. Here's the real combo."],duo:["Evil Zach","You keep helping each other. It's honestly ruining my show."],squad:["Evil Zach","Everyone gets the premium combo! Wait, I only have two arms!"]}
   ],
   [
-   {solo:["Fella","No backup? Then there's nowhere to hide from the sauce."],duo:["Fella","You're covering each other? Fine. I'll paint the floor red."],squad:["Fella","The whole crew is still standing? BATTER UP—AND I MEAN THAT LITERALLY."]},
-   {solo:["Fella","Final cleanup. The bat's going full speed now!"],duo:["Fella","Stay together all you want. You'll all be moving in slow motion."],squad:["Fella","EVERYBODY GETS KETCHUP! This is a very messy team sport."]}
+   {solo:["Fella","No backup? Then the sauce bunts have nowhere to bounce but you."],duo:["Fella","You're covering each other? Fine. I'll paint the floor red."],squad:["Fella","The whole crew is still standing? Then the pitching machine goes full speed!"]},
+   {solo:["Fella","Final inning. The bat's going full speed now!"],duo:["Fella","Stay together all you want. The sauce rain covers everybody."],squad:["Fella","EVERYBODY GETS A WALK-OFF! This is a very messy team sport."]}
   ]
  ]
 };
@@ -143,6 +143,8 @@ const UP=[
 const IM={};let host=true,me='host',peer=null,conn=null,conns={},room=null,scr='title',S=null,V=null,BT=[],EV=[],NETOUT=[],PT=[],DN=[],RG=[],SH=0,FL=0,FLc='#fff',DP={},frame=0,unlocked=false,curMus=null,trail=1,cutT=0,joinMsg='';
 const keys={};let mx=W/2,my=H/2,mdown=false,pend=[0,0,0],showHitboxes=false;
 const PLAYER_HIT_R=13,BOSS2_HIT_R=41,PICKUP_HIT_R=18;
+// v16: every boss attack collision radius is 12% smaller than its drawn shape. Player and boss bodies are unchanged.
+const ATK_HIT=.88;
 const bossHitRadius=b=>Math.max(12,(b.sz||140)*.295);
 function bossTargets(){if(!S||!S.bs)return[];const b=S.bs,out=[];if(b.hp>0&&!b.inv)out.push({id:'main',x:b.x,y:b.y,r:bossHitRadius(b)});if(b.idx===3&&S.bs2&&b.hp2>0&&!b.inv)out.push({id:'ally',x:S.bs2.x,y:S.bs2.y,r:BOSS2_HIT_R});return out}
 function bossTargetAt(x,y,r=0){const hits=bossTargets().filter(t=>dist(x,y,t.x,t.y)<=r+t.r);hits.sort((a,b)=>dist(x,y,a.x,a.y)-dist(x,y,b.x,b.y));return hits[0]||null}
@@ -155,16 +157,16 @@ function drawHitboxes(v,t){if(!showHitboxes)return;g.save();g.setLineDash([5,4])
  if(v.b&&v.b.hp>0)drawCircleHit(v.b.x,v.b.y,bossHitRadius(v.b),'rgba(255,70,70,1)');
  if(v.bs2&&v.bs2.hp>0)drawCircleHit(v.bs2.x,v.bs2.y,BOSS2_HIT_R,'rgba(255,70,170,1)');
  // Every moving projectile uses the same radius as its collision check.
- v.pr.forEach(q=>{const r=q[7]||Math.max(8,(q[5]||30)*.25);drawCircleHit(q[2],q[3],r,q[6]==='b'?'rgba(255,80,80,1)':'rgba(255,240,80,1)')});
+ v.pr.forEach(q=>{const r=(q[7]||Math.max(8,(q[5]||30)*.25))*(q[6]==='b'?ATK_HIT:1);drawCircleHit(q[2],q[3],r,q[6]==='b'?'rgba(255,80,80,1)':'rgba(255,240,80,1)')});
  // Pickups and persistent area hazards.
- v.pk.forEach(([x,y])=>drawCircleHit(x,y,PICKUP_HIT_R,'rgba(80,255,100,1)'));v.zn.forEach(([x,y,r])=>drawCircleHit(x,y,r,'rgba(255,150,40,1)'));
+ v.pk.forEach(([x,y])=>drawCircleHit(x,y,PICKUP_HIT_R,'rgba(80,255,100,1)'));v.zn.forEach(([x,y,r])=>drawCircleHit(x,y,r*ATK_HIT,'rgba(255,150,40,1)'));
  // Warning areas are shown as dashed collision previews.
  v.wr.forEach(([k,x,y,a,r])=>{g.strokeStyle='rgba(255,220,40,.95)';g.lineWidth=2;if(k==='c'){g.beginPath();g.arc(x,y,r,0,PI*2);g.stroke()}else if(k==='l'){g.save();g.translate(x,y);g.rotate(a);g.strokeRect(0,-30,1500,60);g.restore()}});
  // Beam and rotating pipe collision lanes.
  if(v.ezUlt&&v.ezUlt.stage==='beam'){g.strokeStyle='rgba(255,0,80,.95)';g.lineWidth=2;g.strokeRect(0,162,W,216)}
- if(v.b&&v.b.beam!=null){g.save();g.translate(v.b.x,v.b.y);g.rotate(v.b.beam);g.strokeStyle='rgba(255,70,70,.95)';g.lineWidth=2;g.strokeRect(0,-(30+PLAYER_HIT_R),1500,60+PLAYER_HIT_R*2);g.restore()}
- if(v.b&&v.b.pipe!=null){[60,100,140,185].forEach(rad=>drawCircleHit(v.b.x+Math.cos(v.b.pipe)*rad,v.b.y+Math.sin(v.b.pipe)*rad,30+PLAYER_HIT_R,'rgba(255,80,80,1)'))}
- if(v.b&&v.b.mode==='charge'&&v.b.cdash>0)drawCircleHit(v.b.x,v.b.y,65+PLAYER_HIT_R,'rgba(255,60,60,1)');if(v.b&&v.b.sp)drawCircleHit(v.b.x,v.b.y,75+PLAYER_HIT_R,'rgba(255,60,60,1)');
+ if(v.b&&v.b.beam!=null){g.save();g.translate(v.b.x,v.b.y);g.rotate(v.b.beam);g.strokeStyle='rgba(255,70,70,.95)';g.lineWidth=2;g.strokeRect(0,-(30*ATK_HIT+PLAYER_HIT_R),1500,60*ATK_HIT+PLAYER_HIT_R*2);g.restore()}
+ if(v.b&&v.b.pipe!=null){[60,100,140,185].forEach(rad=>drawCircleHit(v.b.x+Math.cos(v.b.pipe)*rad,v.b.y+Math.sin(v.b.pipe)*rad,30*ATK_HIT+PLAYER_HIT_R,'rgba(255,80,80,1)'))}
+ if(v.b&&v.b.mode==='charge'&&v.b.cdash>0)drawCircleHit(v.b.x,v.b.y,65*ATK_HIT+PLAYER_HIT_R,'rgba(255,60,60,1)');if(v.b&&v.b.sp)drawCircleHit(v.b.x,v.b.y,75*ATK_HIT+PLAYER_HIT_R,'rgba(255,60,60,1)');
  g.setLineDash([]);g.restore()}
 
 function newS(){return{st:'lobby',pl:{},bs:null,pr:[],wr:[],bi:0,dlg:null,opts:null,votes:{},vt:0,ups:[],set:{diff:1,start:0,max:4},t:0,id:1,slowm:1,zn:[],pk:[],pkT:10,bdT:0,paused:0,survT:0,survMax:93.179,bs2:null,ezUlt:null,bfCut:null}}
@@ -191,7 +193,7 @@ const STORY_OPEN=[
  [["Evil Spong","Welcome to my pressure chamber. The bubbles are soundproof, so nobody can hear you complain."],["Evil Spong","I was promised a quiet boss rush. Then you showed up." ]],
  [["Xiao Long Bao","You made it to the rematch! Dishwasher, cue the dramatic entrance!"],["UnCoolguy16","I told you I wasn't your dishwasher."],["Xiao Long Bao","You're wearing the apron."],["UnCoolguy16","It's a warning label." ]],
  [["Evil Zach","Finally. The real main event. I even practiced your confused face."],["Evil Zach","Don't worry; I'll make this look like an accident. A very stylish accident." ]],
- [["Fella","Welcome to the championship diamond. I brought a bat, elite footwork, and an unreasonable amount of ketchup."],["Fella","Three strikes and you're out. Get sauced once and you'll be moving like a shopping cart with one bad wheel." ]]
+ [["Fella","Welcome to the Walk-Off Ballpark. I brought a bat, a pitching machine, and an unreasonable amount of ketchup."],["Fella","Three strikes and you're out. Get sauced once and you'll be moving like a shopping cart with one bad wheel." ]]
 ];
 const STORY_PARTY={
  intro:[
@@ -200,7 +202,7 @@ const STORY_PARTY={
   {solo:[["Evil Spong","One person inside my bubble? I can still call that an audience."],["UnCoolguy16","Don't pop the walls. I'm using that bubble to watch from a safe distance."]],duo:[["Evil Spong","Two challengers. Bubble etiquette says one person at a time!"],["Xiao Long Bao","Ignore the sign. It was written in soap."]],trio:[["Evil Spong","Three opponents? My bubble has a strict capacity of two and a half."],["UnCoolguy16","That's not how bubbles work. Or numbers."]],squad:[["Evil Spong","Four of you? I'm filing a noise complaint with the laws of physics."],["Xiao Long Bao","Make it a group complaint! We love group activities."]] },
   {solo:[["Xiao Long Bao","One fighter against both of us. That's unfair."],["UnCoolguy16","You noticed that after I signed the contract?"],["Xiao Long Bao","I thought the contract was a menu!"]],duo:[["UnCoolguy16","Two on two. No cheap tricks, Bao."],["Xiao Long Bao","Agreed. My expensive tricks cost extra." ]],trio:[["Xiao Long Bao","Three challengers. We need teamwork."],["UnCoolguy16","You call yelling my name from across the arena teamwork?"],["Xiao Long Bao","It's my leadership style!"]],squad:[["UnCoolguy16","Four opponents means we can't cover every angle."],["Xiao Long Bao","Then cover two angles each!"],["UnCoolguy16","That's... disturbingly sensible."]] },
   {solo:[["Evil Zach","One challenger? I can focus on ruining one life at a time."],["Evil Zach","Hey, original Zach. Watch closely. This is your face with better timing."]],duo:[["Evil Zach","Two players. I'll make you argue about who got hit first."],["Evil Zach","Teamwork is adorable. I'll cut right through it."]],trio:[["Evil Zach","Three challengers? I can steal a move from each of you."],["Evil Zach","Don't worry, I won't credit you in the victory speech."]],squad:[["Evil Zach","Four challengers. Perfect. A live audience for my greatest hits."],["Evil Zach","Try to survive long enough to applaud."]] },
-  {solo:[["Fella","One batter steps up. I like a clean matchup."],["Fella","The ketchup is still absolutely part of the rules. I wrote the rules."]],duo:[["Fella","Two challengers? One draws the pitch, one gets the swing. Let's see who panics first."],["Fella","You may discuss strategy during the brief interval between sauce splats."]],trio:[["Fella","Three on the field! I'll put the sauce where your backup plans are."],["Fella","Runner on every base. This is getting interesting."]],squad:[["Fella","Four opponents. Bases loaded, crowd roaring, ketchup bottle uncapped."],["Fella","Let's see if teamwork survives a very sticky infield."]] }
+  {solo:[["Fella","One batter steps up. I like a clean matchup."],["Fella","The ketchup is still absolutely part of the rules. I wrote the rules."]],duo:[["Fella","Two challengers? One draws the pitch, one gets the bat. Let's see who panics first."],["Fella","You may discuss strategy during the brief interval between sauce splats."]],trio:[["Fella","Three on the field! I'll put the sauce where your backup plans are."],["Fella","The bases are loaded and the pitching machine is warm. This is getting interesting."]],squad:[["Fella","Four opponents. Bases loaded, crowd roaring, ketchup bottle uncapped."],["Fella","Let's see if teamwork survives a very sticky infield."]] }
  ],
  phase:[
   [ {solo:["Xiao Long Bao","You cracked my wrapper alone? I'll turn the heat up until the basket sings!"],duo:["Xiao Long Bao","Two of you still standing? Double steam, double trouble!"],trio:["Xiao Long Bao","Three challengers and not one of you has read the safety card!"],squad:["Xiao Long Bao","Four of you in my kitchen? EVERYONE gets the special steam!"]}, {solo:["Xiao Long Bao","No backup. No mercy. The pressure cooker is now a pressure catastrophe!"],duo:["Xiao Long Bao","Stop trading turns! I'll steam both halves of the arena!"],trio:["Xiao Long Bao","Three at once? Fine—I'll season the whole battlefield."],squad:["Xiao Long Bao","Four challengers and I am still the best chef here! I THINK!"]} ],
@@ -208,7 +210,7 @@ const STORY_PARTY={
   [ {solo:["Evil Spong","You're popping bubbles alone? I admire the commitment. I resent it, too."],duo:["Evil Spong","Two bubble-poppers! This is targeted harassment of my hobby."],trio:["Evil Spong","Three of you against my bubbles? I'm contacting the bubble union."],squad:["Evil Spong","Four opponents! I need a bigger bubble and a lawyer."]}, {solo:["Evil Spong","No teammates to hide behind. Now you get the deluxe bubble treatment."],duo:["Evil Spong","Stay together if you want. My bubbles have a wide splash radius!"],trio:["Evil Spong","Three targets, one bubble budget. I'm going over budget."],squad:["Evil Spong","EVERYBODY gets a bubble! Nobody asked for a refund!"]} ],
   [ {solo:["Xiao Long Bao","One challenger, two bosses. This is the part where we should feel guilty."],duo:["UnCoolguy16","Two on two. Bao, please don't ruin the symmetry."],trio:["Xiao Long Bao","Three opponents! Uncool, use the plan!"],squad:["UnCoolguy16","Four challengers. Spread out, Bao—this is not a queue at your restaurant."]}, {solo:["UnCoolguy16","Still standing alone? I almost respect it. Don't make me say that again."],duo:["Xiao Long Bao","Two of them, one of me, and he keeps stealing my good attacks!"],trio:["UnCoolguy16","Three still up. Bao, cover the top lane; I'll take the bottom."],squad:["Xiao Long Bao","Four challengers! Uncool, this is our last stand!" ]} ],
   [ {solo:["Evil Zach","You're still here alone? Fine. I'll stop pretending I need a warm-up."],duo:["Evil Zach","Two challengers. One distraction, one target. Guess which is which."],trio:["Evil Zach","Three players. I can fake out one, dash through one, and annoy the last one."],squad:["Evil Zach","Four opponents and you're STILL interrupting my combo. Rude."]}, {solo:["Evil Zach","No backup is coming. This is where the imitation becomes the original."],duo:["Evil Zach","Covering each other? Cute. I'll make the floor your third teammate."],trio:["Evil Zach","Three of you, one me. The math is ugly. Fortunately, so am I."],squad:["Evil Zach","Four challengers. I'm about to make this look embarrassingly easy."]} ],
-  [ {solo:["Fella","Warm-up is over. Watch my shoulders—the bat tells you where the hit is going."],duo:["Fella","One draws the swing, the other gets the ketchup. That's the playbook."],trio:["Fella","Three runners on base. I can cover the whole diamond now."],squad:["Fella","Four runners! Bases loaded means the next hit is going to be spectacular."]}, {solo:["Fella","FINAL INNING! No backup, no excuses, no clean shoes."],duo:["Fella","Stay in pairs if you like. The Grand Slam hits both sides."],trio:["Fella","Three runners left? I'm closing every lane but one."],squad:["Fella","FOUR OF YOU? Fine. I'm turning the whole field into a strike zone!"]} ]
+  [ {solo:["Fella","Warm-up is over. Watch my shoulders—the bat tells you where the hit is going."],duo:["Fella","One draws the bat, the other gets the bunt. That's the playbook."],trio:["Fella","Three on the field. I can cover the whole diamond now."],squad:["Fella","Four on the field! Bases loaded means the next hit is going to be spectacular."]}, {solo:["Fella","WALK-OFF TIME! No backup, no excuses, no clean shoes."],duo:["Fella","Stay in pairs if you like. The sauce rain hits both sides."],trio:["Fella","Three runners left? Every pitch lane but one is mine."],squad:["Fella","FOUR OF YOU? Fine. I'm turning the whole field into a strike zone!"]} ]
  ],
  outro:[
   {solo:["Xiao Long Bao","One challenger defeated my best recipe. I'm rewriting the cookbook."],duo:["Xiao Long Bao","Two of you ruined dinner. I'm charging you both for the table."],trio:["Xiao Long Bao","Three challengers. Three stars. I refuse to give you five."],squad:["Xiao Long Bao","Four challengers and not one complimentary review. Unbelievable."]},
@@ -216,7 +218,7 @@ const STORY_PARTY={
   {solo:["Evil Spong","My bubble is gone. Don't tell anyone I named it Kevin."],duo:["Evil Spong","Two challengers popped the whole bubble. Kevin deserved better."],trio:["Evil Spong","Three of you? I want a rematch and a new bubble budget."],squad:["Evil Spong","Four challengers. I have been bubble-bullied by a committee."]},
   {solo:["Xiao Long Bao","We lost to one person. Uncool, was our plan just yelling?"],duo:["UnCoolguy16","Two of them beat two of us. That's fair. Don't write it down."],trio:["Xiao Long Bao","Three opponents got through. Uncool, we owe each other an apology."],squad:["UnCoolguy16","Four challengers beat us. Bao, no sequel. I'm serious." ]},
   {solo:["Evil Zach","One person saw through my act. That was not in the script."],duo:["Evil Zach","Two challengers ruined my perfect camera angle. I hate cinema."],trio:["Evil Zach","Three players and all of you have terrible taste in villains."],squad:["Evil Zach","Four challengers. Fine, you can keep your faces. For now."]},
-  {solo:["Fella","One batter cleared the diamond. I'm retiring the sauce bottle. Maybe."],duo:["Fella","Two challengers beat the cleanup crew. The locker room is going to hear about this."],trio:["Fella","Three runners crossed home. That's a clean sweep. I hate clean sweeps."],squad:["Fella","Four players and the whole stadium watched me lose. Great. Fantastic."]}
+  {solo:["Fella","One batter cleared the diamond. I'm retiring the sauce bottle. Maybe."],duo:["Fella","Two challengers beat the cleanup crew. The locker room is going to hear about this."],trio:["Fella","Three of you crossed home. That's a clean sweep. I hate clean sweeps."],squad:["Fella","Four players and the whole stadium watched me lose. Great. Fantastic."]}
  ]
 };
 const STORY_PLAYER={
@@ -261,13 +263,13 @@ function compose(_old,event='intro',level=0){
   if(d&&d[bucket])add(d[bucket]);
   if(ci===3){if(bucket==='solo')add([["Xiao Long Bao","Our one opponent is staring at us."],["UnCoolguy16","I'm staring because you forgot the plan. Again."]]);else if(bucket==='duo')add([["Xiao Long Bao","Two versus two. No excuses."],["UnCoolguy16","You will find several excuses. I'll list them after."]]);}
   if(ci===4)add([["Evil Zach",count===1?'No partner means every bad decision is yours. Convenient.':`I see ${count} challengers. That is ${count} chances to watch me win.`]]);
-  if(ci===5&&count>=3)add([["Fella","Runner count confirmed. I'm switching to full-field coverage."]]);
+  if(ci===5&&count>=3)add([["Fella","Crowd count confirmed. Switching to full-field pitching."]]);
   if(mix)add(STORY_PLAYER.intro.mixed);else if(hasCg)add([STORY_PLAYER.intro.cg]);else if(hasZach)add([STORY_PLAYER.intro.zach]);
  }else if(event==='phase'){
   const lv=Math.max(0,Math.min(1,level-1));
   const arr=STORY_PARTY.phase[ci][lv];if(arr&&arr[bucket])add([arr[bucket]]);
   if(ci===3){if(lv===0)add([["Xiao Long Bao","Uncool, use the synchronized attack!"],["UnCoolguy16","We synchronized one thing: our dislike of your plan."]]);else add([["UnCoolguy16","This is the last stand, Bao. Cover the bottom!"],["Xiao Long Bao","I am covering everything!"],["UnCoolguy16","That's why we keep getting hit!"]]);}
-  if(ci===5&&lv===1)add([["Fella","The scoreboard says final inning. The scoreboard has never been wrong. Except all those times."]]);
+  if(ci===5&&lv===1)add([["Fella","The scoreboard says WALK-OFF. The scoreboard has never been wrong. Except all those times."]]);
   if(mix)add(STORY_PLAYER.phase.mixed);else if(hasCg)add([STORY_PLAYER.phase.cg]);else if(hasZach)add([STORY_PLAYER.phase.zach]);
  }else if(event==='outro'){
   if(d&&d[bucket])add([d[bucket]]);
@@ -324,7 +326,7 @@ function stepEvilZachUltimate(dt){
   const ua=MA.ezUlt;if(ua)ua.volume=ultimateMusicVolume(u.beamT);
   // The beam is a thin horizontal line; only players intersecting its collision band are hit.
   while(u.damageT>=.05){u.damageT-=.05;for(const p of alive()){
-   const laneTop=162,laneBottom=378;
+   const laneTop=140,laneBottom=400;
    const inBeam=p.x>=18&&p.x<=W-18&&p.y+PLAYER_HIT_R>laneTop&&p.y-PLAYER_HIT_R<laneBottom;
    if(inBeam){p.laserLock=Math.max(p.laserLock||0,.115);p.dash=0;p.hp-=5;p.tk+=5;fx(['d',p.x,p.y-22,'-5','#ffecff',0]);fx(['p',p.x,p.y,2,'#fff',75,.15,5,'pixel']);if(p.hp<=0){p.hp=0;p.dead=1;X('die')}}
   }}
@@ -333,12 +335,12 @@ function stepEvilZachUltimate(dt){
    if(R()<.28)fx(['s',4]);
   }
   if(!alive().length){u.stage='end';if(MA.ezUlt)MA.ezUlt.pause();S.st='over';return}
-  if(u.beamT>=15.99){u.stage='end';u.t=0;if(MA.ezUlt)MA.ezUlt.pause();bossDead()}
+  if(u.beamT>=16.99){u.stage='end';u.t=0;if(MA.ezUlt)MA.ezUlt.pause();bossDead()}
  }
 }
 function drawEvilZachUltimate(now,netU){
  const u=netU||(S&&S.ezUlt);if(!u)return;if(u.stage==='dialog')return;
- const sec=now/1000,y=H/2,cx=46,top=162,bottom=378,height=bottom-top;
+ const sec=now/1000,y=H/2,cx=46,top=140,bottom=400,height=bottom-top;
  g.save();
  if(u.stage==='flash'){
   const a=cl(1-u.t/2.99,0,1),pulse=.5+.5*Math.sin(sec*58);
@@ -368,17 +370,17 @@ function drawEvilZachUltimate(now,netU){
   g.globalCompositeOperation='lighter';
   // Multiple pixel-energy filaments bend across the central rift.
   for(let i=0;i<27;i++){const base=top+9+i*(height-18)/26,amp=4+(i%5)*2.8,phase=i*1.71;g.globalAlpha=(.12+(i%4)*.055)*pulse;g.strokeStyle=i%7===0?'#fff5ef':(i%2?'#ff294b':'#79001d');g.lineWidth=i%5===0?4:1+(i%3);g.beginPath();g.moveTo(0,base);for(let x=0;x<=W;x+=16){const yy=base+Math.sin(x*.022-sec*12+phase)*amp+Math.sin(x*.063+sec*17+phase)*amp*.35;g.lineTo(x,yy)}g.stroke()}
-  g.globalAlpha=.8;g.fillStyle='rgba(255,0,42,.72)';g.fillRect(0,y-31,W,62);g.fillStyle='rgba(8,0,10,.92)';g.fillRect(0,y-13,W,26);g.fillStyle='rgba(255,30,59,'+flicker+')';g.fillRect(0,y-7,W,14);g.fillStyle='rgba(255,252,245,'+pulse+')';g.fillRect(0,y-2,W,4);g.fillStyle='#050005';g.fillRect(0,y-1,W,2);
+  g.globalAlpha=.8;g.fillStyle='rgba(255,0,42,.72)';g.fillRect(0,y-37,W,74);g.fillStyle='rgba(8,0,10,.92)';g.fillRect(0,y-16,W,31);g.fillStyle='rgba(255,30,59,'+flicker+')';g.fillRect(0,y-8,W,17);g.fillStyle='rgba(255,252,245,'+pulse+')';g.fillRect(0,y-2,W,4);g.fillStyle='#050005';g.fillRect(0,y-1,W,2);
   // Irregular black cuts tear through the red field, outlined with white-hot edges.
   for(let i=0;i<18;i++){const x=((i*157+q*(190+(i%4)*47))%(W+100))-40,yy=top+24+((i*61+q*(56+(i%5)*18))%(height-48)),lean=Math.sin(sec*11+i)*24;g.globalAlpha=.28+.4*Math.abs(Math.sin(sec*8+i));g.strokeStyle=i%3===0?'#fff':'#050007';g.lineWidth=i%3===0?3:6;g.beginPath();g.moveTo(x-25,yy-32);g.lineTo(x+lean,yy-8);g.lineTo(x-lean*.45,yy+5);g.lineTo(x+38,yy+34);g.stroke()}
   // Shard fragments shoot along the beam; all are decorative, hitboxes remain the center band.
   for(let i=0;i<170;i++){const x=((i*113+q*(210+(i%7)*62))%(W+34))-17,yy=top+((i*43+q*(70+(i%5)*47))%height),sz=2+i%5;g.globalAlpha=.25+.55*Math.abs(Math.sin(sec*12+i));g.fillStyle=i%8===0?'#fff':(i%3?'#ffb0bd':'#ff173e');g.fillRect(x+shake,yy,sz,sz*(1+i%3))}
   for(const edgeY of [top,bottom]){g.globalAlpha=.95;g.strokeStyle='#fff1ee';g.lineWidth=2;g.beginPath();g.moveTo(0,edgeY);for(let x=0;x<=W;x+=18)g.lineTo(x,edgeY+Math.sin(x*.065-sec*20)*4);g.stroke();g.strokeStyle='#ff153b';g.lineWidth=7;g.beginPath();g.moveTo(0,edgeY+5);g.lineTo(W,edgeY+5);g.stroke()}
   // Emitter lens and white-red flare.
-  const flare=g.createRadialGradient(cx,y,1,cx,y,190);flare.addColorStop(0,'#fff');flare.addColorStop(.07,'rgba(255,244,242,.95)');flare.addColorStop(.15,'rgba(255,14,51,.95)');flare.addColorStop(1,'rgba(255,0,25,0)');g.fillStyle=flare;g.fillRect(-150,y-200,310,400);
+  const flare=g.createRadialGradient(cx,y,1,cx,y,240);flare.addColorStop(0,'#fff');flare.addColorStop(.07,'rgba(255,244,242,.95)');flare.addColorStop(.15,'rgba(255,14,51,.95)');flare.addColorStop(1,'rgba(255,0,25,0)');g.fillStyle=flare;g.fillRect(-170,y-240,390,480);
   g.globalCompositeOperation='source-over';g.globalAlpha=1;
   g.fillStyle='rgba(0,0,0,.86)';g.fillRect(18,95,176,27);g.fillRect(18,H-126,176,27);g.strokeStyle='#aaffc5';g.lineWidth=2;g.strokeRect(18,95,176,27);g.strokeRect(18,H-126,176,27);g.fillStyle='#dcffe6';g.font='bold 11px monospace';g.textAlign='left';g.fillText('SAFE: ABOVE',27,111);g.fillText('SAFE: BELOW',27,H-110);
-  const rem=Math.max(0,16-q),vol=ultimateMusicVolume(q);g.fillStyle='rgba(0,0,0,.88)';g.fillRect(16,68,248,20);g.fillStyle='#ff2947';g.fillRect(18,70,244*(rem/16),7);g.fillStyle='#fff';g.font='bold 11px monospace';g.fillText('NANDE // '+rem.toFixed(1)+'s',18,84);g.textAlign='right';g.fillStyle=vol>0?'#ffd9de':'#baffcf';g.fillText(vol>0?'AUDIO FADING':'AUDIO SILENT',W-18,84);
+  const rem=Math.max(0,17-q),vol=ultimateMusicVolume(q);g.fillStyle='rgba(0,0,0,.88)';g.fillRect(16,68,248,20);g.fillStyle='#ff2947';g.fillRect(18,70,244*(rem/17),7);g.fillStyle='#fff';g.font='bold 11px monospace';g.fillText('NANDE // '+rem.toFixed(1)+'s',18,84);g.textAlign='right';g.fillStyle=vol>0?'#ffd9de':'#baffcf';g.fillText(vol>0?'AUDIO FADING':'AUDIO SILENT',W-18,84);
   if(Math.floor(q*18)!==Math.floor((q-.016)*18)){SH=Math.max(SH,3+R()*5);if(R()<.38){FL=Math.max(FL,4);FLc=R()<.5?'#fff4e8':'#ff1738'}}g.globalAlpha=1;
  }
  g.restore();
@@ -421,14 +423,36 @@ function drawBlackFlashCutscene(c,now){
  // Title lands after the impact frame, with a second Japanese stamp beneath it.
  const titleA=cl((t-.4)/.1,0,1)*(1-cl((t-2.28)/.28,0,1));g.globalAlpha=titleA;g.textAlign='center';g.font='900 58px Impact, monospace';g.lineWidth=12;g.strokeStyle='#000';g.strokeText('BLACK FLASH',W/2+Math.sin(sec*40)*2,H/2+22);g.fillStyle=beat%2?'#fff':'#ff1c43';g.fillText('BLACK FLASH',W/2,H/2+22);g.font='bold 24px monospace';g.fillStyle='#ff2947';g.fillText('黒 閃',W/2,H/2+55);g.font='bold 11px monospace';g.fillStyle='#fff';g.fillText('ONE DISTORTED INSTANT // 44 DAMAGE',W/2,H/2+76);g.globalAlpha=1;
  // If the strike is lethal, the second beat becomes an execution-style final cut with its own timing.
- if(fin&&t>2.4){const ft=t-2.4,fa=cl(ft/.16,0,1)*(1-cl((ft-1.98)/.25,0,1));g.globalCompositeOperation='source-over';g.fillStyle='rgba(0,0,0,'+(.84*fa)+')';g.fillRect(0,0,W,H);g.globalAlpha=fa;
-  g.fillStyle='#790018';g.beginPath();g.moveTo(0,84);g.lineTo(W,60+Math.sin(sec*36)*9);g.lineTo(W,H-78);g.lineTo(0,H-46);g.closePath();g.fill();
-  for(let i=0;i<18;i++){const yy=80+i*24+Math.sin(sec*17+i)*5;g.fillStyle=i%4===0?'rgba(255,255,255,.45)':'rgba(0,0,0,.65)';g.fillRect(0,yy,W,2+i%3)}
-  if(attacker&&attacker.complete&&attacker.naturalWidth){g.globalAlpha=fa*.9;g.drawImage(attacker,W/2-100,H/2-130,200,260)}
-  g.globalAlpha=fa;g.textAlign='center';g.font='900 62px Impact, monospace';g.lineWidth=12;g.strokeStyle='#000';g.strokeText('FINAL CUT',W/2+Math.sin(sec*58)*4,H/2-12);g.fillStyle=beat%2?'#fff':'#ff173b';g.fillText('FINAL CUT',W/2,H/2-12);g.font='bold 17px monospace';g.fillStyle='#ffe7ec';g.fillText(c.targetCh==='zach'?'"THE ORIGINAL WINS."':'"NEXT CHALLENGER."',W/2,H/2+28);g.font='bold 12px monospace';g.fillStyle='#fff';g.fillText('TARGET: '+(c.targetName||'CHALLENGER').toUpperCase()+' // FINISH CONFIRMED',W/2,H/2+55);g.globalAlpha=1;
-  if(ft<.22){g.fillStyle='rgba(255,255,255,'+(.92*(1-ft/.22))+')';g.fillRect(0,0,W,H)}
+ if(fin&&t>2.4){const ft=t-2.4,fa=cl(ft/.14,0,1),out=cl((ft-2.0)/.25,0,1),ease=1-Math.pow(1-cl((ft-.3)/.42,0,1),3),shk=Math.sin(sec*44)*(1-out)*7;
+  // Finisher v16: the arena dims to near-black, a crimson cut widens across the screen, the attacker strikes in from the right, then the screen cuts to black.
+  g.globalCompositeOperation='source-over';g.fillStyle='rgba(4,0,6,'+(.92*fa*(1-out))+')';g.fillRect(0,0,W,H);
+  const sp=cl(ft/.36,0,1),len=2*W*Math.min(1,sp*1.1);g.save();g.translate(W/2+shk,H/2);g.rotate(-.5);g.globalAlpha=fa*(1-out);
+  g.fillStyle='#ff1738';g.fillRect(-W,-20*sp-2,len,40*sp+4);g.fillStyle='#050007';g.fillRect(-W,-7*sp,len,14*sp);g.fillStyle='#fff';g.fillRect(-W,-1,len,2);g.restore();
+  if(attacker&&attacker.complete&&attacker.naturalWidth){const ax=(W+220)+(W*.76-(W+220))*ease;g.save();g.globalAlpha=fa*(1-out)*.95;g.drawImage(attacker,ax-110,H/2-150,220,300);g.restore()}
+  g.globalAlpha=cl((ft-.55)/.14,0,1)*(1-out);g.textAlign='center';g.font='900 66px Impact, monospace';g.lineWidth=12;g.strokeStyle='#000';g.strokeText('FINAL CUT',W*.4+shk,H/2-12);g.fillStyle=beat%2?'#fff':'#ff173b';g.fillText('FINAL CUT',W*.4+shk,H/2-12);
+  g.font='bold 17px monospace';g.fillStyle='#ffe7ec';g.fillText(c.targetCh==='zach'?'"THE ORIGINAL WINS."':'"NEXT CHALLENGER."',W*.4,H/2+30);g.font='bold 12px monospace';g.fillStyle='#fff';g.fillText('TARGET: '+(c.targetName||'CHALLENGER').toUpperCase()+' // CLEAN CUT CONFIRMED',W*.4,H/2+58);g.globalAlpha=1;
+  if(out>0){g.fillStyle='rgba(0,0,0,'+out+')';g.fillRect(0,0,W,H)}
  }
  if(t<.2){g.fillStyle='rgba(255,255,255,'+(.9*(1-t/.2))+')';g.fillRect(0,0,W,H)}else if(t>.3&&t<.43){g.fillStyle='rgba(0,0,0,'+(.42*(1-(t-.3)/.13))+')';g.fillRect(0,0,W,H)}
+ g.restore();
+}
+function drawBlackFlashAfter(a,now){
+ if(!a)return;const u=cl((a.t||0)/(a.dur||1.3),0,1),k=1-u,sec=now/1000,x=a.x||W/2,y=a.y||H/2,fin=!!a.fin;
+ g.save();
+ // Dark letterbox bands sit over the arena, then slowly retract.
+ g.fillStyle='rgba(0,0,0,'+(.55*k*k)+')';g.fillRect(0,72,W,H-144);
+ // The first beat flickers between black and red.
+ if(a.t<.14){g.fillStyle=Math.floor(sec*40)%2?'rgba(255,23,56,'+(.42*k)+')':'rgba(3,2,8,'+(.6*k)+')';g.fillRect(0,72,W,H-144)}
+ // The cut stays on the arena as a black slash with a thin red afterglow.
+ g.save();g.translate(x,y);g.rotate(-.31);const L=Math.max(W,H)*(.35+.65*Math.min(1,u*2.2));
+ g.globalAlpha=k*.95;g.strokeStyle='#020105';g.lineWidth=10*k+2;g.beginPath();g.moveTo(-L,0);g.lineTo(L,0);g.stroke();
+ g.globalAlpha=k*.85;g.strokeStyle='#ff1738';g.lineWidth=3;g.beginPath();g.moveTo(-L,-2);g.lineTo(L,-2);g.stroke();
+ g.restore();
+ // Pixel shards blow outward from the contact point and keep drifting.
+ for(let i=0;i<26;i++){const an=i*PI*2/26+i*.37,dd=(40+(i*53)%170)*(.25+.75*u),sz=3+(i%4)*2;g.globalAlpha=k*(i%3?.9:.6);g.fillStyle=i%3===0?'#fff':(i%2?'#ff1738':'#050207');g.fillRect(x+Math.cos(an)*dd,y+Math.sin(an)*dd*.7,sz,sz)}
+ // A thin white shock ring widens and fades.
+ g.globalAlpha=k;g.strokeStyle='#fff';g.lineWidth=2;g.beginPath();g.ellipse(x,y,20+u*240,14+u*160,0,0,PI*2);g.stroke();
+ if(u<.7){g.globalAlpha=k*.9;g.textAlign='center';g.font='bold 13px monospace';g.fillStyle='#ffd0d8';g.fillText(fin?'FINISHER AFTERSHOCK':'BLACK FLASH AFTERSHOCK',W/2,H-96)}
  g.restore();
 }
 function resolveVote(){const c=[0,0,0];Object.values(S.votes).forEach(v=>c[v]++);const mxv=Math.max(...c),cand=c.map((v,i)=>v===mxv?i:-1).filter(i=>i>=0);S.ups.push(S.opts[cand[Math.floor(R()*cand.length)]]);
@@ -443,7 +467,7 @@ function hitB(p,base,x,y,kind,target='main'){const d=pd(p,base);dmgB(d.v,x,y,d.c
 function hitP(p,dmg,exact=false){if(p.dead||p.inv>0)return;if(p.sh){p.sh=0;p.inv=.8;X('shield');fx(['r',p.x,p.y,50,'#6cf']);return}dmg=exact?Math.round(dmg):Math.round(dmg*.88*[.75,1,1.4][S.set.diff]*(1+.15*lp()));p.hp-=dmg;p.tk+=dmg;X('hurt');p.inv=.7;p.rage=p.m.rush?5:0;fx(['d',p.x,p.y-30,'-'+dmg,'#ff5050',0]);fx(['p',p.x,p.y,10,'#f55',200,.5,4]);fx(['s',6]);
  if(p.hp<=0){if(p.m.revive&&!p.revived){p.revived=1;p.hp=p.max*.5;p.inv=2;X('revive');fx(['r',p.x,p.y,90,'#ff0'])}else{p.dead=1;p.hp=0;fx(['p',p.x,p.y,24,'#fff',300,.8,5]);X('die');if(!alive().length){S.st='over';X('lose')}}}}
 function boom(x,y,r,dmg,own,col){X('boom');fx(['r',x,y,r,col||'#fff']);fx(['p',x,y,16,col||'#fff',260,.5,5]);fx(['s',own==='b'?5:3]);
- if(own==='b')alive().forEach(p=>{if(dist(x,y,p.x,p.y)<r+PLAYER_HIT_R)hitP(p,dmg)});else{const target=bossTargetAt(x,y,r);if(target)dmgB(dmg,x,y,col||'#ffa',0,null,target.id)}}
+ if(own==='b')alive().forEach(p=>{if(dist(x,y,p.x,p.y)<r*ATK_HIT+PLAYER_HIT_R)hitP(p,dmg)});else{const target=bossTargetAt(x,y,r);if(target)dmgB(dmg,x,y,col||'#ffa',0,null,target.id)}}
 function proj(o){S.pr.push(Object.assign({id:S.id++,rot:0,spin:0,life:3,own:'b',pierce:0,hit:[],r:10,sz:30,dmg:10,img:'dump'},o))}
 const bp=(x,y,a,sp,o)=>{if(!(o&&o.own==='p'))sp*=.92;return proj(Object.assign({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,rot:a},o))};
 const warn=o=>S.wr.push(Object.assign({t:0,dur:1,k:'c',r:50,a:0},o,{dur:(o&&o.dur!=null?o.dur:1)*1.1}));
@@ -463,7 +487,7 @@ function attack(p){const m=p.m,rate=(p.buf>0?2:1)*m.rate;
   else{X('whoosh');const col=stage===0?'#ffd04a':'#ff914d',edge=stage===0?'#fff3a8':'#fff0dd';fx(['p',p.x+Math.cos(angle)*65,p.y+Math.sin(angle)*65,11,col,260,.34,5,'shard']);fx(['p',p.x+Math.cos(angle)*72,p.y+Math.sin(angle)*72,7,edge,190,.23,3,'spark'])}
  }
 }
-function sectorContains(h,x,y,r=0){const d=dist(h.x,h.y,x,y);if(d>h.r*.96+r)return false;const pad=Math.asin(cl(r/Math.max(1,d),0,.95));return ang2(Math.atan2(y-h.y,x-h.x),h.a)<=h.half+pad}
+function sectorContains(h,x,y,r=0){const d=dist(h.x,h.y,x,y);if(d>h.r*.96*ATK_HIT+r)return false;const pad=Math.asin(cl(r/Math.max(1,d),0,.95));return ang2(Math.atan2(y-h.y,x-h.x),h.a)<=h.half+pad}
 function stepM1Hit(p,dt){const h=p.m1Hit;if(!h)return;h.t-=dt;if(h.t<=0){p.m1Hit=null;return}
  const m=p.m||{dmg:1,multi:0};bossTargets().forEach(q=>{if(h.hit.includes(q.id)||!sectorContains(h,q.x,q.y,q.r))return;h.hit.push(q.id);const base=h.kind==='stab'?30:h.kind==='reverse'?23:21;hitB(p,base*(1+.6*m.multi),q.x,q.y,'k',q.id);fx(['p',q.x,q.y,h.kind==='stab'?12:8,h.kind==='stab'?'#fff1a0':'#ffe07a',h.kind==='stab'?250:220,h.kind==='stab'?.34:.3,h.kind==='stab'?5:4,h.kind==='stab'?'pixel':'shard'])});
  S.pr.forEach(q=>{if(q.own==='b'&&q.life>0&&sectorContains(h,q.x,q.y,q.r||10)){q.life=0;X('parry');fx(['p',q.x,q.y,6,h.kind==='stab'?'#fff8d8':'#ffc84b',190,.28,4,'spark'])}})
@@ -619,26 +643,26 @@ const M={
  spiral(b,dt){b.tt-=dt;b.mt-=dt;if(b.mt<=0){b.mt=.07;b.sa+=.5;for(let k=0;k<2;k++)bp(b.x,b.y,b.sa+k*PI,230,{img:'dump',sz:52,r:15,dmg:12,life:5})}if(b.tt<=0){b.mode=null;b.cd=1.8}},
  pistol(b,dt,t){b.a=Math.atan2(t.y-b.y,t.x-b.x);b.mt-=dt;if(b.mt<=0){if(b.k<3){X('eshoot');bp(b.x+Math.cos(b.a)*70,b.y+Math.sin(b.a)*70,b.a,470,{img:'ebul',sz:44,r:15,dmg:14});b.k++;b.mt=.12}else{b.k=0;b.n--;b.mt=.55;if(b.n<=0){b.mode=null;b.gun=0;b.cd=1.8}}}},
  pipe(b,dt){const prey=nearest(b.x,b.y);if(prey){const dx=prey.x-b.x,dy=prey.y-b.y,d=Math.max(1,Math.hypot(dx,dy));b.x+=dx/d*(b.tt>0?125:185)*dt;b.y+=dy/d*(b.tt>0?125:185)*dt;b.x=cl(b.x,55,W-55);b.y=cl(b.y,115,H-78)}if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.pipeOn=1;X('swing');b.sw=1.7-b.ph*.2}return}b.pa+=dt*2*PI/b.sw;b.sw-=0;b.te=(b.te||0)+dt;if(b.te>1.7-b.ph*.2){b.te=0;b.pipeOn=0;b.mode=null;b.cd=1.8;return}
-  for(const s of [60,100,140,185])alive().forEach(p=>{if(dist(b.x+Math.cos(b.pa)*s,b.y+Math.sin(b.pa)*s,p.x,p.y)<30+PLAYER_HIT_R)hitP(p,28)})},
- charge(b,dt){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.cdash=.7;X('charge')}return}if(b.cdash>0){b.cdash-=dt;b.x+=Math.cos(b.ca)*900*dt;b.y+=Math.sin(b.ca)*900*dt;fx(['p',b.x,b.y,1,'#f55',40,.4,8]);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<65+PLAYER_HIT_R)hitP(p,30)});
+  for(const s of [60,100,140,185])alive().forEach(p=>{if(dist(b.x+Math.cos(b.pa)*s,b.y+Math.sin(b.pa)*s,p.x,p.y)<30*ATK_HIT+PLAYER_HIT_R)hitP(p,28)})},
+ charge(b,dt){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.cdash=.7;X('charge')}return}if(b.cdash>0){b.cdash-=dt;b.x+=Math.cos(b.ca)*900*dt;b.y+=Math.sin(b.ca)*900*dt;fx(['p',b.x,b.y,1,'#f55',40,.4,8]);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<65*ATK_HIT+PLAYER_HIT_R)hitP(p,30)});
   if(b.cdash<=0||b.x<30||b.x>W-30||b.y<110||b.y>H-60){b.x=cl(b.x,30,W-30);b.y=cl(b.y,110,H-60);b.cdash=0;const n=8+b.ph*2;for(let k=0;k<n;k++)bp(b.x,b.y,k*2*PI/n,260,{img:'ebul',sz:44,r:15,dmg:14});fx(['r',b.x,b.y,90,'#f55']);fx(['s',8]);b.mode=null;b.cd=1.8}}},
  roll(b,dt,t){if(b.tt>0){b.tt-=dt;if(b.tt<=0){const a=Math.atan2(t.y-b.y,t.x-b.x);b.rvx=Math.cos(a)*560;b.rvy=Math.sin(a)*560;b.rolling=1;b.rd=3+b.ph*.6;b.dt2=0}return}
   b.rd-=dt;b.x+=b.rvx*dt;b.y+=b.rvy*dt;if(b.x<70||b.x>W-70){b.rvx*=-1;b.x=cl(b.x,70,W-70);fx(['s',5])}if(b.y<130||b.y>H-90){b.rvy*=-1;b.y=cl(b.y,130,H-90);fx(['s',5])}
   b.dt2-=dt;if(b.dt2<=0){b.dt2=.3;bp(b.x,b.y,rnd(0,PI*2),90,{img:'dump',sz:54,r:16,dmg:12,life:4})}
-  alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<75+PLAYER_HIT_R)hitP(p,24)});fx(['p',b.x,b.y,1,'#ffe08a',40,.4,10]);if(b.rd<=0){b.rolling=0;b.nd=0;b.mode=null;b.cd=2}},
+  alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<75*ATK_HIT+PLAYER_HIT_R)hitP(p,24)});fx(['p',b.x,b.y,1,'#ffe08a',40,.4,10]);if(b.rd<=0){b.rolling=0;b.nd=0;b.mode=null;b.cd=2}},
  laser(b,dt){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.dir=R()<.5?1:-1;b.beam=b.a0;b.be=1.5;fx(['s',6])}return}
   b.beam+=b.dir*(1.1+b.ph*.15)*dt;b.be-=dt;fx(['p',b.x+Math.cos(b.beam)*rnd(80,700),b.y+Math.sin(b.beam)*rnd(80,700),1,'#f66',60,.3,6]);
-  alive().forEach(p=>{const dx=p.x-b.x,dy=p.y-b.y,c=Math.cos(b.beam),sn=Math.sin(b.beam);if(dx*c+dy*sn>0&&Math.abs(-dx*sn+dy*c)<30+PLAYER_HIT_R)hitP(p,32)});
+  alive().forEach(p=>{const dx=p.x-b.x,dy=p.y-b.y,c=Math.cos(b.beam),sn=Math.sin(b.beam);if(dx*c+dy*sn>0&&Math.abs(-dx*sn+dy*c)<30*ATK_HIT+PLAYER_HIT_R)hitP(p,32)});
   if(b.be<=0){b.beam=null;b.nd=0;b.mode=null;b.cd=2}},
  slam(b,dt,t){b.tt-=dt;if(b.st===0){b.air=Math.min(1,b.air+dt*2);if(b.tt<=0){b.st=1;b.tx=t.x;b.ty=t.y;b.tt=.9;warn({x:b.tx,y:b.ty,r:130,dur:.9})}}
   else{b.x+=(b.tx-b.x)*dt*5;if(b.tt<=0){b.x=b.tx;b.y=b.ty;b.air=0;boom(b.tx,b.ty,130,35,'b','#f55');X('slam');for(let k=0;k<12;k++)bp(b.x,b.y,k*PI/6,250,{img:'ebul',sz:44,r:15,dmg:14});b.nd=0;b.mode=null;b.cd=2}}},
  hell(b,dt){b.tt-=dt;b.mt-=dt;b.a+=dt*2.2;if(b.mt<=0){b.mt=.09;for(let k=0;k<4;k++)bp(b.x,b.y,b.a+k*PI/2,270,{img:'ebul',sz:40,r:14,dmg:12,life:5})}if(b.tt<=0){b.mode=null;b.gun=0;b.cd=1.8}},
- knifeLunge(b,dt,t){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.launched=1;b.ca=Math.atan2(t.y-b.y,t.x-b.x);b.cdash=.32;X('charge')}return}if(b.cdash>0){b.cdash-=dt;b.x+=Math.cos(b.ca)*820*dt;b.y+=Math.sin(b.ca)*820*dt;fx(['p',b.x,b.y,1,'#f9e84c',45,.35,6]);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<55+PLAYER_HIT_R)hitP(p,23)});if(b.cdash<=0||b.x<50||b.x>W-50||b.y<110||b.y>H-70){b.x=cl(b.x,50,W-50);b.y=cl(b.y,110,H-70);for(let k=0;k<9;k++)bp(b.x,b.y,k*2*PI/9,255,{img:'eknife',sz:62,r:16,dmg:15,life:4,rot:k*2*PI/9+PI/2});b.mode=null;b.nd=0;b.cd=2}}},
+ knifeLunge(b,dt,t){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.launched=1;b.ca=Math.atan2(t.y-b.y,t.x-b.x);b.cdash=.32;X('charge')}return}if(b.cdash>0){b.cdash-=dt;b.x+=Math.cos(b.ca)*820*dt;b.y+=Math.sin(b.ca)*820*dt;fx(['p',b.x,b.y,1,'#f9e84c',45,.35,6]);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<55*ATK_HIT+PLAYER_HIT_R)hitP(p,23)});if(b.cdash<=0||b.x<50||b.x>W-50||b.y<110||b.y>H-70){b.x=cl(b.x,50,W-50);b.y=cl(b.y,110,H-70);for(let k=0;k<9;k++)bp(b.x,b.y,k*2*PI/9,255,{img:'eknife',sz:62,r:16,dmg:15,life:4,rot:k*2*PI/9+PI/2});b.mode=null;b.nd=0;b.cd=2}}},
  pipeOrbit(b,dt){b.tt-=dt;b.mt-=dt;b.orbA+=dt*3.8;if(b.mt<=0){b.mt=.17;for(let k=0;k<8;k++){const a=b.orbA+k*PI/4;bp(b.x+Math.cos(a)*80,b.y+Math.sin(a)*55,a,220,{img:'pipe',sz:64,r:18,dmg:13,life:2.8,spin:5})}X('swing')}if(b.tt<=0){b.mode=null;b.nd=0;b.cd=2.2}},
  bubbleLoom(b,dt,t){b.tt-=dt;b.mt-=dt;b.sa+=dt*2.8;if(b.mt<=0){b.mt=.14;const a=b.sa;for(let k=0;k<3;k++){const ang=a+k*2*PI/3;bp(b.x+Math.cos(ang)*32,b.y+Math.sin(ang)*32,ang+PI/2,170,{img:'bubble3',sz:52,r:17,dmg:12,life:4,bounce:1,spin:2})}fx(['p',b.x,b.y,2,'#69f3ff',100,.25,4])}if(b.tt<=0){b.mode=null;b.nd=0;b.cd=2.1}},
  bubbleTornado(b,dt,t){b.tt-=dt;b.mt-=dt;b.sa+=dt*3.3;if(b.mt<=0){b.mt=.12;const ring=Math.floor((3.6-b.tt)*2)%3;for(let k=0;k<3;k++){const a=b.sa+k*2*PI/3+ring*.22;bp(b.x+Math.cos(a)*65,b.y+Math.sin(a)*45,a,205,{img:'bubble3',sz:56,r:18,dmg:13,life:4,bounce:1,spin:3})}fx(['p',b.x+rnd(-50,50),b.y+rnd(-40,40),3,'#8defff',120,.3,5])}if(b.tt<=0){for(let k=0;k<16;k++)bp(b.x,b.y,k*2*PI/16,240,{img:'bubble3',sz:46,r:14,dmg:12,life:4});fx(['r',b.x,b.y,160,'#a36bff']);b.mode=null;b.nd=0;b.cd=2.8}},
- mirrorDash(b,dt,t){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.cdash=.24;X('charge')}return}if(b.cdash>0){b.cdash-=dt;b.x+=Math.cos(b.ca)*960*dt;b.y+=Math.sin(b.ca)*960*dt;fx(['p',b.x,b.y,2,'#b46bff',180,.3,6]);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<48+PLAYER_HIT_R)hitP(p,25)});if(b.cdash<=0||b.x<50||b.x>W-50||b.y<110||b.y>H-75){b.x=cl(b.x,50,W-50);b.y=cl(b.y,110,H-75);for(let k=-2;k<=2;k++)bp(b.x,b.y,b.ca+PI/2+k*.22,390,{img:'eknife',sz:55,r:14,dmg:13,life:3.4,rot:b.ca+PI/2+k*.22});b.mode=null;b.nd=0;b.cd=2.4}}}};
-M.linkBeam=function(b,dt){const q=S.bs2;if(!q||q.hp<=0){b.mode=null;b.cd=1.5;return}b.tt-=dt;const x1=b.x,y1=b.y,x2=q.x,y2=q.y,L=dist(x1,y1,x2,y2),live=b.tt<2.3;for(let i=0;i<(live?6:2);i++){const f=R();fx(['p',x1+(x2-x1)*f,y1+(y2-y1)*f,1,live?'#ffd34a':'#ffffff',live?130:50,.3,live?6:3])}if(live){b.lt-=dt;if(b.lt<=0){b.lt=.25;alive().forEach(p=>{const dx=x2-x1,dy=y2-y1,u=cl(((p.x-x1)*dx+(p.y-y1)*dy)/(L*L||1),0,1);if(dist(p.x,p.y,x1+dx*u,y1+dy*u)<26+PLAYER_HIT_R)hitP(p,22)})}}if(b.tt<=0){b.mode=null;b.cd=2.2;fx(['r',(x1+x2)/2,(y1+y2)/2,120,'#ffd34a'])}};
+ mirrorDash(b,dt,t){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.cdash=.24;X('charge')}return}if(b.cdash>0){b.cdash-=dt;b.x+=Math.cos(b.ca)*960*dt;b.y+=Math.sin(b.ca)*960*dt;fx(['p',b.x,b.y,2,'#b46bff',180,.3,6]);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<48*ATK_HIT+PLAYER_HIT_R)hitP(p,25)});if(b.cdash<=0||b.x<50||b.x>W-50||b.y<110||b.y>H-75){b.x=cl(b.x,50,W-50);b.y=cl(b.y,110,H-75);for(let k=-2;k<=2;k++)bp(b.x,b.y,b.ca+PI/2+k*.22,390,{img:'eknife',sz:55,r:14,dmg:13,life:3.4,rot:b.ca+PI/2+k*.22});b.mode=null;b.nd=0;b.cd=2.4}}}};
+M.linkBeam=function(b,dt){const q=S.bs2;if(!q||q.hp<=0){b.mode=null;b.cd=1.5;return}b.tt-=dt;const x1=b.x,y1=b.y,x2=q.x,y2=q.y,L=dist(x1,y1,x2,y2),live=b.tt<2.3;for(let i=0;i<(live?6:2);i++){const f=R();fx(['p',x1+(x2-x1)*f,y1+(y2-y1)*f,1,live?'#ffd34a':'#ffffff',live?130:50,.3,live?6:3])}if(live){b.lt-=dt;if(b.lt<=0){b.lt=.25;alive().forEach(p=>{const dx=x2-x1,dy=y2-y1,u=cl(((p.x-x1)*dx+(p.y-y1)*dy)/(L*L||1),0,1);if(dist(p.x,p.y,x1+dx*u,y1+dy*u)<26*ATK_HIT+PLAYER_HIT_R)hitP(p,22)})}}if(b.tt<=0){b.mode=null;b.cd=2.2;fx(['r',(x1+x2)/2,(y1+y2)/2,120,'#ffd34a'])}};
 // ===== BOSS 5 REMAKE: EVIL ZACH, THE BOOTLEG =====
 // He still dodges player fire, but now he fights with stolen Zach moves: the slash / reverse slash / stab combo
 // (with a visible telegraph), the knife whirl, a trail of old footsteps, thrown burgers, clones and a final cut.
@@ -672,7 +696,7 @@ M.blackFlash=function(b,dt,t){
   if(Math.floor(q.t*32)!==Math.floor((q.t-dt)*32)){fx(['r',b.x,b.y,rnd(18,38),R()<.45?'#fff':'#ff1738']);if(R()<.7)X('bfCrack')}
   const vx=b.x-oldX,vy=b.y-oldY,l2=vx*vx+vy*vy;
   const segDist=(px,py)=>{if(l2<1)return dist(px,py,b.x,b.y);const f=cl(((px-oldX)*vx+(py-oldY)*vy)/l2,0,1);return dist(px,py,oldX+f*vx,oldY+f*vy)};
-  for(const p of alive())if(!q.hit&&p.inv<=0&&segDist(p.x,p.y)<30+PLAYER_HIT_R){
+  for(const p of alive())if(!q.hit&&p.inv<=0&&segDist(p.x,p.y)<30*ATK_HIT+PLAYER_HIT_R){
    q.hit=1;const before=p.hp;hitP(p,44,true);const lethal=!!p.dead;const cutDur=lethal?4.65:3.25;
    p.inv=Math.max(p.inv,.9);S.bfCut={t:0,dur:cutDur,x:p.x,y:p.y,bx:b.x,by:b.y,who:p.id,a:q.a,finisher:lethal?1:0,targetName:p.name||'CHALLENGER',targetCh:p.ch||'cg',damage:44,beats:0};
    S.st='bfcut';S.pr=[];S.wr=[];S.zn=[];b.mode=null;b.bf=null;b.nd=0;b.cd=2.35;
@@ -692,46 +716,53 @@ M.combo=function(b,dt,t){const c=b.cmb;if(!c){b.mode=null;b.nd=0;return}const st
   if(c.t>=.26){c.k++;if(c.k>=3){b.cmb=null;b.mode=null;b.nd=0;b.cd=.95}else{c.s='tele';c.t=0;c.tl=CMB[c.k].tl}}}};
 M.bWhirl=function(b,dt,t){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.sw=1.5;b.rolling=1;X('whirl')}return}
  b.sw-=dt;b.wt-=dt;const a=Math.atan2(t.y-b.y,t.x-b.x);if(dist(b.x,b.y,t.x,t.y)>90){b.x=cl(b.x+Math.cos(a)*130*dt,55,W-55);b.y=cl(b.y+Math.sin(a)*130*dt,115,H-78)}
- if(b.wt<=0){b.wt=.2;fx(['r',b.x,b.y,130,'#f9e84c']);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<130+PLAYER_HIT_R)hitP(p,14)});const sa=b.t*9;for(let k=0;k<3;k++)bp(b.x,b.y,sa+k*2*PI/3,250,{img:'eknife',sz:56,r:14,dmg:11,life:3,rot:sa+k*2*PI/3+PI/2})}
+ if(b.wt<=0){b.wt=.2;fx(['r',b.x,b.y,130,'#f9e84c']);alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<130*ATK_HIT+PLAYER_HIT_R)hitP(p,14)});const sa=b.t*9;for(let k=0;k<3;k++)bp(b.x,b.y,sa+k*2*PI/3,250,{img:'eknife',sz:56,r:14,dmg:11,life:3,rot:sa+k*2*PI/3+PI/2})}
  if(b.sw<=0){b.rolling=0;b.mode=null;b.nd=0;b.cd=2.2}};
 ATK[4]=[['comboStrike','knifeFan','copycatTrail','burgerToss','knifeJuggle','knifeLunge','blackFlash'],
  ['comboStrike','knifeFan','copycatTrail','burgerToss','knifeJuggle','knifeLunge','cloneCircle','knifeWhirl','backstab','knifeRicochet','knifeFlurry','blackFlash'],
  ['comboStrike','copycatTrail','burgerToss','knifeJuggle','cloneCircle','knifeWhirl','backstab','mirrorDash','knifeFlurry','finalCut','counterfeitRush','fakeout','blackFlash']];
-// ===== BOSS 6: FELLA, THE KETCHUP CLEANUP =====
+// ===== BOSS 6: FELLA, THE WALK-OFF MENACE (v16 remake) =====
+// Three phases. Warm-Up: bat sweeps, bouncing sauce bunts, sticky slides.
+// Bullpen: pitch lanes, a minion relay, and sauce rain. Walk-Off: shockwave slams and lob homers.
 ATK[5]=[
- ['fellaBatCombo','ketchupPitch','curveballStorm','fellaRush','minionRush'],
- ['fellaBatCombo','ketchupPitch','ketchupVolley','curveballStorm','fellaRush','minionRush','grandSlam','sauceCurtain','dugoutAmbush'],
- ['fellaBatCombo','fellaRush','curveballStorm','grandSlam','sauceCurtain','homeRun','fellaSlam','dugoutAmbush','walkOff']
+ ['batSweep','sauceBunt','slideRush','bullpenPitch'],
+ ['batSweep','sauceBunt','slideRush','bullpenPitch','minionRelay','sauceRain'],
+ ['batSweep','bullpenPitch','minionRelay','sauceRain','walkOffSlam','lobHomer','slideRush','sauceBunt']
 ];
 Object.assign(A,{
- fellaBatCombo(b,t){b.mode='fellaBatCombo';b.nd=1;b.fc={i:0,t:0,hit:0,a:Math.atan2(t.y-b.y,t.x-b.x)};X('warn');X('swing');warn({x:b.x,y:b.y,r:105,dur:.42,img:'bat',fn:()=>{}})},
- fellaRush(b,t){const a=Math.atan2(t.y-b.y,t.x-b.x);b.mode='fellaRush';b.nd=1;b.fr={phase:'windup',t:0,a,hit:0,ox:b.x,oy:b.y};X('charge');warn({x:t.x,y:t.y,r:52,dur:.55,img:'sauce',fn:()=>{}});fx(['r',b.x,b.y,68,'#ff2844'])},
- ketchupVolley(b,t){X('warn');const cx=cl(t.x,100,860),cy=cl(t.y,155,455),pts=[[cx,cy],[cx-95,cy-56],[cx+95,cy-56],[cx-115,cy+57],[cx+115,cy+57]];pts.forEach(([x,y],i)=>{x=cl(x,65,895);y=cl(y,125,490);warn({x,y,r:i?44:52,dur:.62+i*.075,img:'sauce',fn:()=>{S.zn.push({x,y,r:i?48:58,life:4.8,max:4.8,col:'#ff2845',dmg:0,slowField:1});fx(['r',x,y,i?54:66,'#ff2845']);for(let k=0;k<9;k++)fx(['p',x+rnd(-22,22),y+rnd(-18,18),3,k%3?'#ff4455':'#ffadad',rnd(60,190),.38,5,'pixel'])}})});b.cd=2.75},
- ketchupPitch(b,t){const a=Math.atan2(t.y-b.y,t.x-b.x);X('warn');X('fellaPitch');b.a=a;fx(['r',b.x,b.y,66,'#ff2845']);for(let k=-1;k<=1;k++){const an=a+k*.19;warn({x:b.x+Math.cos(an)*42,y:b.y+Math.sin(an)*34,r:22,dur:.34+Math.abs(k)*.08,img:'sauce',fn:()=>{bp(b.x+Math.cos(an)*42,b.y+Math.sin(an)*34,an,420,{img:'sauce',sz:43,r:12,dmg:12,slow:.65,life:3.2,spin:k*4});fx(['p',b.x+Math.cos(an)*48,b.y+Math.sin(an)*38,7,'#ff4158',180,.25,5,'pixel'])}})}b.cd=2.35},
- curveballStorm(b,t){const tx=t.x,ty=t.y;X('warn');X('fellaPitch');fx(['r',b.x,b.y,84,'#ff2845']);warn({x:tx,y:ty,r:34,dur:.46,img:'sauce',fn:()=>{const a=Math.atan2(ty-b.y,tx-b.x);for(let k=-2;k<=2;k++){const an=a+k*.16,q=bp(b.x+Math.cos(an)*38,b.y+Math.sin(an)*31,an,355,{img:'sauce',sz:46,r:12,dmg:11,slow:.6,life:3.1,spin:k*2});q.curve=(k===0?0:(k<0?-1:1)*(.44+Math.abs(k)*.09));q.curveLife=1.15+Math.abs(k)*.12}X('whoosh');for(let j=0;j<16;j++){const an=a+rnd(-.45,.45);fx(['p',b.x+Math.cos(an)*rnd(20,55),b.y+Math.sin(an)*rnd(16,42),3,j%3?'#ff3148':'#fff0de',rnd(100,260),.32,5,'pixel'])}}});b.cd=2.65},
- dugoutAmbush(b,t){X('charge');const gap=Math.floor(rnd(0,5));for(let i=0;i<5;i++){if(i===gap)continue;const y=132+i*70;warn({x:W/2,y,r:W,dur:.72+(i%2)*.08,k:'l',a:0,img:'minion',fn:()=>{for(const side of [-1,1]){const q=bp(side<0?-30:W+30,y+(side<0?-8:8),side<0?0:PI,345,{img:'minion',sz:43,r:11,dmg:12,slow:.45,life:3.8,spin:side*2});q.curve=side*.12}for(let k=0;k<10;k++)fx(['p',sideOfLane(i),y+rnd(-10,10),2,k%2?'#ff3047':'#ffd9d9',rnd(100,240),.35,5,'pixel'])}})}b.cd=3.45;X('warn')},
- walkOff(b,t){X('fellaHomeRun');X('charge');const cx=cl(t.x,115,845),cy=cl(t.y,155,445),pts=[[-132,-58],[0,-92],[132,-48],[-82,65],[88,72]];pts.forEach(([dx,dy],i)=>{const x=cl(cx+dx,60,900),y=cl(cy+dy,122,485);warn({x,y,r:42,dur:.48+i*.13,img:'sauce',fn:()=>{boom(x,y,40,13,'b','#ff2645');S.zn.push({x,y,r:45,life:3.3,max:3.3,col:'#ff2845',dmg:0,slowField:1});for(let k=0;k<8;k++){const a=k*PI/4+(i%2)*.18,q=bp(x,y,a,220,{img:'sauce',sz:38,r:10,dmg:9,slow:.45,life:2.6,spin:k%2?2:-2});q.curve=(k%2?1:-1)*.22}for(let k=0;k<14;k++){const a=rnd(0,PI*2);fx(['p',x+Math.cos(a)*rnd(14,48),y+Math.sin(a)*rnd(10,36),3,k%4?'#ff3047':'#fff0df',rnd(130,330),.4,5,'pixel'])}X('slam');fx(['r',x,y,78,'#ff2845'])}})});b.cd=4.6;fx(['r',b.x,b.y,145,'#ff3048'])},
- grandSlam(b,t){b.mode='grandSlam';b.nd=1;b.gs={phase:'windup',t:0,targetY:cl(t.y,145,440),safeLane:Math.floor(rnd(0,3)),hit:0};X('fellaGrandSlam');X('charge');fx(['r',b.x,b.y,110,'#ff314b']);for(let lane=0;lane<3;lane++){if(lane===b.gs.safeLane)continue;const y=150+lane*118;warn({x:0,y,r:W,dur:1.05,k:'l',a:0,fn:()=>{}})}b.cd=3.7},
- homeRun(b,t){b.mode='homeRun';b.nd=1;b.hr={phase:'windup',t:0,x:cl(t.x,70,890),y:cl(t.y,140,455),hit:0};X('fellaHomeRun');X('charge');warn({x:cl(t.x,70,890),y:cl(t.y,140,455),r:105,dur:.9,img:'bat',fn:()=>{}});fx(['r',b.x,b.y,125,'#ff304a']);b.cd=4.25},
- minionRush(b,t){X('whoosh');const a=Math.atan2(t.y-b.y,t.x-b.x),n=5+b.ph*2;for(let k=0;k<n;k++){const ang=a+(k-(n-1)/2)*.16;bp(b.x+Math.cos(ang)*38,b.y+Math.sin(ang)*35,ang,320+(k%3)*34,{img:'minion',sz:48+(k%2)*8,r:15,dmg:13,life:4.2,spin:(k%2?1:-1)*2})}for(let i=0;i<8;i++)fx(['p',b.x+rnd(-28,28),b.y+rnd(-22,22),3,'#ff3149',160,.32,5,'pixel']);b.cd=2.5},
- sauceCurtain(b,t){X('warn');const y=cl(t.y,160,470),gap=Math.floor(rnd(1,7));for(let i=0;i<8;i++){if(i===gap||i===gap+1)continue;const x=65+i*118;warn({x,y,r:41,dur:.78+(i%3)*.08,img:'sauce',fn:()=>{S.zn.push({x,y,r:44,life:4.2,max:4.2,col:'#f7193b',dmg:0,slowField:1});fx(['r',x,y,54,'#ff2844']);for(let k=0;k<7;k++)fx(['p',x+rnd(-18,18),y+rnd(-12,12),3,'#ff7a87',170,.45,5,'pixel'])}})}b.cd=3.15},
- fellaSlam(b,t){b.mode='fellaSlam';b.nd=1;b.fs={t:0,phase:'windup',x:cl(t.x,90,870),y:cl(t.y,145,475)};X('warn');warn({x:b.fs.x,y:b.fs.y,r:132,dur:.84,img:'bat',fn:()=>{}});X('slam')}
+ batSweep(b,t){b.mode='batSweep';b.nd=1;b.fc={i:0,t:0,hit:0,dir:R()<.5?-1:1,a:Math.atan2(t.y-b.y,t.x-b.x)};X('warn');fx(['r',b.x,b.y,84,'#ff2844'])},
+ sauceBunt(b,t){const a=Math.atan2(t.y-b.y,t.x-b.x);X('warn');X('fellaPitch');fx(['r',b.x,b.y,58,'#ff2845']);
+  for(let k=-2;k<=2;k++){const an=a+k*.2,sx=b.x+Math.cos(an)*44,sy=b.y+Math.sin(an)*36;warn({x:sx,y:sy,r:18,dur:.36+Math.abs(k)*.05,img:'sauce',fn:()=>{bp(sx,sy,an,300+(2-Math.abs(k))*34,{img:'sauce',sz:40,r:11,dmg:11,slow:.5,life:3.8,bounce:2,spin:k*3})}})}
+  b.cd=2.4},
+ slideRush(b,t){const a=Math.atan2(t.y-b.y,t.x-b.x);b.mode='slideRush';b.nd=1;b.fr={phase:'windup',t:0,a,hit:0,ox:b.x,oy:b.y,trailT:0};X('charge');fx(['r',b.x,b.y,70,'#ff2844']);warn({x:t.x,y:t.y,r:36,dur:.5,img:'sauce',fn:()=>{}})},
+ bullpenPitch(b,t){X('warn');const ph=b.ph||0,ys=ph>=1?[-72,0,72]:[-54,54];ys.forEach((dy,i)=>{const y=cl(t.y+dy,118,440);warn({x:0,y,r:W,k:'l',a:0,dur:.78+i*.14,img:'minion',fn:()=>{X('whoosh');for(let k=0;k<2;k++){bp(W+24+k*46,y+(k?-6:6),PI,470+ph*40+k*60,{img:'minion',sz:44,r:12,dmg:14,life:3.4,spin:(k?1:-1)*3})}for(let j=0;j<8;j++)fx(['p',rnd(40,W-40),y+rnd(-8,8),3,j%2?'#fff0d4':'#ff3048',rnd(120,260),.3,5,'pixel'])}})});b.cd=2.9},
+ minionRelay(b,t){X('whoosh');const a=Math.atan2(t.y-b.y,t.x-b.x),n=4+(b.ph||0)*2;for(let k=0;k<n;k++){const off=(k%2?1:-1)*(Math.floor(k/2)*.16+.1);warn({x:b.x,y:b.y,r:2,dur:k*.11,fn:()=>{const an=a+off;bp(b.x+Math.cos(an)*38,b.y+Math.sin(an)*34,an,330+(k%3)*30,{img:'minion',sz:50,r:14,dmg:13,life:4.2,spin:(k%2?1:-1)*2})}})}b.cd=2.6},
+ sauceRain(b,t){X('warn');for(let i=0;i<6;i++){const x=92+i*(W-184)/5,y=cl(rnd(160,440),160,440);warn({x,y,r:44,dur:.42+i*.2,img:'sauce',fn:()=>{S.zn.push({x,y,r:46,life:4.2,max:4.2,col:'#ff2845',dmg:0,slowField:1});X('slam');fx(['r',x,y,60,'#ff2845']);alive().forEach(p=>{if(p.inv<=0&&dist(x,y,p.x,p.y)<46*ATK_HIT+PLAYER_HIT_R)hitP(p,14)});for(let k=0;k<8;k++)fx(['p',x+rnd(-22,22),y+rnd(-16,16),3,k%3?'#ff4455':'#ffadad',rnd(60,180),.38,5,'pixel'])}})}b.cd=3.1},
+ walkOffSlam(b,t){b.mode='walkOffSlam';b.nd=1;b.fs={t:0,phase:'windup',x:cl(t.x,90,870),y:cl(t.y,145,475)};X('warn');warn({x:b.fs.x,y:b.fs.y,r:96,dur:.9,k:'c',fn:()=>{}});X('slam')},
+ lobHomer(b,t){const lx=cl(t.x,80,880),ly=cl(t.y,130,460);b.mode='lobHomer';b.nd=1;b.hr={t:0,x:lx,y:ly};X('fellaHomeRun');X('charge');fx(['r',b.x,b.y,96,'#ff304a']);warn({x:lx,y:ly,r:64,dur:1.3,k:'c',fn:()=>{X('boom');boom(lx,ly,64,20,'b','#ff2645');S.zn.push({x:lx,y:ly,r:52,life:3.6,max:3.6,col:'#ff2845',dmg:0,slowField:1});for(let k=0;k<6;k++){const an=k*PI/3+.3;bp(lx,ly,an,260,{img:'sauce',sz:36,r:10,dmg:10,slow:.5,life:2.4,bounce:1,spin:k%2?3:-3})}}})}
 });
 Object.assign(M,{
- fellaBatCombo(b,dt,t){const q=b.fc;if(!q){b.mode=null;b.nd=0;b.cd=1.7;return}q.t+=dt;const d=dist(b.x,b.y,t.x,t.y);if(q.t<.2)q.a=Math.atan2(t.y-b.y,t.x-b.x);if(d>125&&q.t<.22){b.x=cl(b.x+Math.cos(q.a)*110*dt,50,W-50);b.y=cl(b.y+Math.sin(q.a)*110*dt,108,H-66)}
-  if(!q.hit&&q.t>=.25){q.hit=1;const h={x:b.x,y:b.y,a:q.a,r:108,half:.69};let n=0;alive().forEach(p=>{if(p.inv<=0&&sectorContains(h,p.x,p.y,PLAYER_HIT_R)){hitP(p,24+(b.ph||0)*3);p.sauceSlow=Math.max(p.sauceSlow||0,.55);n++;}});fx(['r',b.x+Math.cos(q.a)*74,b.y+Math.sin(q.a)*74,78,'#ff364d']);for(let k=0;k<18;k++){const a=q.a+rnd(-.8,.8);fx(['p',b.x+Math.cos(a)*rnd(32,98),b.y+Math.sin(a)*rnd(32,98),3,k%3?'#ff3048':'#ffb6b6',rnd(120,320),.4,5,'pixel'])}if(n)X('hit');else X('whoosh')}
-  if(q.t>=.48){q.i++;if(q.i>=3){b.fc=null;b.mode=null;b.nd=0;b.cd=1.45}else{q.t=0;q.hit=0;q.a=Math.atan2(t.y-b.y,t.x-b.x);if(q.i===2)X('charge')}}},
- grandSlam(b,dt,t){const q=b.gs;if(!q){b.mode=null;b.nd=0;b.cd=2;return}q.t+=dt;
-  if(q.phase==='windup'){b.x+=(480-b.x)*dt*.65;b.y+=(235-b.y)*dt*.65;if(Math.floor(q.t*16)!==Math.floor((q.t-dt)*16)){fx(['p',b.x+rnd(-44,44),b.y+rnd(-28,28),4,R()<.5?'#ff2645':'#fff',170,.25,5,'pixel'])}if(q.t>=1.05){q.phase='impact';q.t=0;X('slam');X('boom');fx(['f','#fff']);fx(['s',18]);fx(['r',b.x,b.y,168,'#ff2545']);for(let lane=0;lane<3;lane++){if(lane===q.safeLane)continue;const y=150+lane*118,dir=lane%2?1:-1;for(let j=0;j<8;j++){const xx=dir>0?-35+j*145:W+35-j*145;bp(xx,y,dir>0?0:PI,440,{img:'bat',sz:62,r:18,dmg:22,life:3.4,rot:dir>0?0:PI,spin:dir*3})}S.zn.push({x:W/2,y,r:28,life:1.2,max:1.2,col:'#ff3348',dmg:0,slowField:1})}for(let i=0;i<35;i++){const a=rnd(0,PI*2);fx(['p',b.x+Math.cos(a)*rnd(10,125),b.y+Math.sin(a)*rnd(10,78),3,i%4?'#ff2845':'#fff',rnd(170,390),.48,6,'pixel'])}}return}
-  if(q.phase==='impact'&&q.t>.62){b.gs=null;b.mode=null;b.nd=0;b.cd=b.ph>=2?1.75:2.45}},
- homeRun(b,dt,t){const q=b.hr;if(!q){b.mode=null;b.nd=0;b.cd=2;return}q.t+=dt;
-  if(q.phase==='windup'){b.a=Math.atan2(q.y-b.y,q.x-b.x);if(q.t>=.9){q.phase='swing';q.t=0;const a=Math.atan2(q.y-b.y,q.x-b.x);b.a=a;X('swing');X('fellaHomeRun');fx(['f','#fff']);fx(['s',16]);fx(['r',b.x+Math.cos(a)*76,b.y+Math.sin(a)*58,108,'#ff2745']);const h={x:b.x,y:b.y,a,r:132,half:.62};let caught=0;alive().forEach(p=>{if(p.inv<=0&&sectorContains(h,p.x,p.y,PLAYER_HIT_R)){hitP(p,32);p.sauceSlow=Math.max(p.sauceSlow||0,.95);caught++;for(let k=0;k<18;k++){const an=rnd(0,PI*2);fx(['p',p.x+Math.cos(an)*rnd(10,52),p.y+Math.sin(an)*rnd(8,42),3,k%3?'#ff2845':'#fff',rnd(140,340),.42,6,'pixel'])}}});if(!caught){for(let k=-2;k<=2;k++)bp(b.x+Math.cos(a)*50,b.y+Math.sin(a)*40,a+k*.16,520,{img:'minion',sz:56,r:16,dmg:15,slow:.5,life:3.1,spin:k*3})}S.zn.push({x:q.x,y:q.y,r:58,life:3.8,max:3.8,col:'#ff2845',dmg:0,slowField:1});for(let j=0;j<22;j++)fx(['p',b.x+Math.cos(a)*rnd(32,120),b.y+Math.sin(a)*rnd(24,100),3,j%3?'#ff2845':'#ffb7be',rnd(120,300),.38,5,'pixel'])}return}
-  if(q.phase==='swing'&&q.t>.42){b.hr=null;b.mode=null;b.nd=0;b.cd=2.2}},
- fellaRush(b,dt,t){const q=b.fr;if(!q){b.mode=null;b.nd=0;b.cd=1.6;return}q.t+=dt;if(q.phase==='windup'){if(q.t<.38){q.a=Math.atan2(t.y-b.y,t.x-b.x)}if(q.t>=.56){q.phase='dash';q.t=0;q.ox=b.x;q.oy=b.y;X('whoosh');fx(['f','#ff6174']);fx(['s',10])}return}
-  const ox=b.x,oy=b.y;b.x=cl(b.x+Math.cos(q.a)*1150*dt,34,W-34);b.y=cl(b.y+Math.sin(q.a)*1150*dt,101,H-58);fx(['p',b.x-Math.cos(q.a)*18,b.y-Math.sin(q.a)*18,4,'#ff3048',210,.24,6,'pixel']);fx(['p',b.x+rnd(-12,12),b.y+rnd(-12,12),2,'#050307',170,.2,5,'pixel']);
-  const vx=b.x-ox,vy=b.y-oy,l2=vx*vx+vy*vy;for(const p of alive()){const f=l2>1?cl(((p.x-ox)*vx+(p.y-oy)*vy)/l2,0,1):0;if(!q.hit&&p.inv<=0&&dist(p.x,p.y,ox+f*vx,oy+f*vy)<35+PLAYER_HIT_R){q.hit=1;hitP(p,27);p.sauceSlow=Math.max(p.sauceSlow||0,1.25);S.zn.push({x:p.x,y:p.y,r:50,life:3.8,max:3.8,col:'#ff2845',dmg:0,slowField:1});fx(['f','#fff']);fx(['r',p.x,p.y,100,'#ff2845']);for(let k=0;k<30;k++){const a=rnd(0,PI*2);fx(['p',p.x+Math.cos(a)*rnd(8,52),p.y+Math.sin(a)*rnd(8,52),2,k%3?'#ff2845':'#050307',rnd(140,420),.35,6,'pixel'])}break}}
-  if(q.t>=.38||b.x<=35||b.x>=W-35||b.y<=102||b.y>=H-59){const x=b.x,y=b.y;if(!q.hit){S.zn.push({x,y,r:43,life:2.8,max:2.8,col:'#ff2845',dmg:0,slowField:1})}fx(['r',x,y,72,'#ff2845']);b.fr=null;b.mode=null;b.nd=0;b.cd=q.hit?1.75:1.35}},
- fellaSlam(b,dt,t){const q=b.fs;if(!q){b.mode=null;b.nd=0;b.cd=1.6;return}q.t+=dt;if(q.phase==='windup'){b.air=Math.min(1,b.air+dt*1.7);b.x+=(q.x-b.x)*dt*.85;if(q.t>=.84){q.phase='impact';q.t=0;b.x=q.x;b.y=q.y;b.air=0;boom(q.x,q.y,116,31,'b','#ff2946');S.zn.push({x:q.x,y:q.y,r:80,life:4.2,max:4.2,col:'#ff2845',dmg:0,slowField:1});for(let k=0;k<26;k++){const a=k*PI*2/26;fx(['p',q.x+Math.cos(a)*rnd(30,115),q.y+Math.sin(a)*rnd(30,90),3,k%3?'#ff3048':'#ffe5e8',rnd(130,360),.45,6,'pixel'])}fx(['f','#fff']);fx(['s',16])}return}if(q.t>.35){b.fs=null;b.mode=null;b.nd=0;b.cd=1.5}},
+ batSweep(b,dt,t){const q=b.fc;if(!q){b.mode=null;b.nd=0;b.cd=1.6;return}q.t+=dt;
+  if(q.t<.34)q.a=Math.atan2(t.y-b.y,t.x-b.x);
+  if(!q.hit&&q.t>=.34){q.hit=1;const h={x:b.x,y:b.y,a:q.a,r:112,half:.78};let n=0;alive().forEach(p=>{if(p.inv<=0&&sectorContains(h,p.x,p.y,PLAYER_HIT_R)){hitP(p,22+(b.ph||0)*3);p.sauceSlow=Math.max(p.sauceSlow||0,.55);n++}});
+   fx(['r',b.x+Math.cos(q.a)*78,b.y+Math.sin(q.a)*78,76,'#ff364d']);for(let k=0;k<16;k++){const a=q.a+rnd(-.8,.8);fx(['p',b.x+Math.cos(a)*rnd(32,104),b.y+Math.sin(a)*rnd(32,104),3,k%3?'#ff3048':'#ffb6b6',rnd(120,320),.4,5,'pixel'])}
+   if(q.i===1)S.zn.push({x:b.x+Math.cos(q.a)*96,y:b.y+Math.sin(q.a)*96,r:38,life:3.2,max:3.2,col:'#ff2845',dmg:0,slowField:1});
+   X(n?'hit':'whoosh')}
+  if(q.t>=.56){q.i++;if(q.i>=2){b.fc=null;b.mode=null;b.nd=0;b.cd=1.45;return}q.t=0;q.hit=0;q.dir*=-1;q.a=Math.atan2(t.y-b.y,t.x-b.x);X('whoosh')}},
+ slideRush(b,dt,t){const q=b.fr;if(!q){b.mode=null;b.nd=0;b.cd=1.6;return}q.t+=dt;
+  if(q.phase==='windup'){if(q.t<.42)q.a=Math.atan2(t.y-b.y,t.x-b.x);if(q.t>=.5){q.phase='slide';q.t=0;q.ox=b.x;q.oy=b.y;X('whoosh');fx(['f','#ff6174']);fx(['s',8])}return}
+  const ox=b.x,oy=b.y;b.x=cl(b.x+Math.cos(q.a)*980*dt,34,W-34);b.y=cl(b.y+Math.sin(q.a)*980*dt,101,H-58);
+  q.trailT-=dt;if(q.trailT<=0){q.trailT=.11;S.zn.push({x:b.x,y:b.y,r:34,life:2.2,max:2.2,col:'#ff2845',dmg:0,slowField:1})}
+  fx(['p',b.x-Math.cos(q.a)*16+rnd(-6,6),b.y-Math.sin(q.a)*16+rnd(-6,6),4,'#ff3048',210,.24,6,'pixel']);
+  const vx=b.x-ox,vy=b.y-oy,l2=vx*vx+vy*vy;
+  for(const p of alive()){const f=l2>1?cl(((p.x-ox)*vx+(p.y-oy)*vy)/l2,0,1):0;if(!q.hit&&p.inv<=0&&dist(p.x,p.y,ox+f*vx,oy+f*vy)<36*ATK_HIT+PLAYER_HIT_R){q.hit=1;hitP(p,26);p.sauceSlow=Math.max(p.sauceSlow||0,1.25);fx(['f','#fff']);fx(['r',p.x,p.y,90,'#ff2845']);break}}
+  if(q.hit||q.t>=.5||b.x<=36||b.x>=W-36||b.y<=102||b.y>=H-60){fx(['r',b.x,b.y,70,'#ff2845']);b.fr=null;b.mode=null;b.nd=0;b.cd=q.hit?1.7:1.2}},
+ walkOffSlam(b,dt,t){const q=b.fs;if(!q){b.mode=null;b.nd=0;b.cd=1.6;return}q.t+=dt;
+  if(q.phase==='windup'){b.air=Math.min(1,(b.air||0)+dt*1.7);b.x+=(q.x-b.x)*dt*.85;if(q.t>=.9){q.phase='impact';q.t=0;b.x=q.x;b.y=q.y;b.air=0;X('boom');fx(['f','#fff']);fx(['s',20]);S.zn.push({x:q.x,y:q.y,r:96,life:4.2,max:4.2,col:'#ff2845',dmg:0,slowField:1});for(let k=0;k<30;k++){const a=k*PI*2/30;fx(['p',q.x+Math.cos(a)*rnd(30,115),q.y+Math.sin(a)*rnd(30,90),3,k%3?'#ff3048':'#ffe5e8',rnd(130,360),.45,6,'pixel'])}}return}
+  // Three shockwave rings ripple out from the landing point. Each ring hits anyone inside its band, once per ring.
+  [[0,0,96,30],[.42,140,180,20],[.84,226,268,14]].forEach(([tt,inner,outer,dmg],i)=>{if(!q['rg'+i]&&q.t>=tt){q['rg'+i]=1;X(i?'slam':'boom');fx(['r',q.x,q.y,outer,i===1?'#fff':'#ff2845']);alive().forEach(p=>{const d=dist(q.x,q.y,p.x,p.y);if(p.inv<=0&&d>inner-PLAYER_HIT_R&&d<outer*ATK_HIT+PLAYER_HIT_R)hitP(p,dmg)})}});
+  if(q.t>=1.25){b.fs=null;b.mode=null;b.nd=0;b.cd=1.6}},
+ lobHomer(b,dt,t){const q=b.hr;if(!q){b.mode=null;b.nd=0;b.cd=1.8;return}q.t+=dt;b.a=Math.atan2(q.y-b.y,q.x-b.x);if(q.t>=1.4){b.hr=null;b.mode=null;b.nd=0;b.cd=1.9}}
 });
 // ===== END BOSS 6 =====
 function stepBoss(b,dt,attackSource){if(b.idx===3||b.isAllianceAlly){const o=b.isAllianceAlly?S.bs:S.bs2;if(o&&o.hp<=0)dt*=1.35}b.fl=Math.max(0,(b.fl||0)-dt);b.t=(b.t||0)+dt;if(b.inv||b.hp<=0)return;const t=nearest(b.x,b.y);if(!t)return;
@@ -745,8 +776,12 @@ function stepBoss(b,dt,attackSource){if(b.idx===3||b.isAllianceAlly){const o=b.i
   if(b.dodgeT>0){b.x+=b.dvx*590*dt;b.y+=b.dvy*590*dt}else{const dx=b.x-t.x,dy=b.y-t.y,d=Math.max(1,Math.hypot(dx,dy)),nx=dx/d,ny=dy/d,side=Math.sin(b.t*1.5)>0?1:-1;const radial=d<125?.42:(d>220?-1.18:(d<175?.12:-.25)),vx=nx*radial*205+(-ny)*side*150,vy=ny*radial*205+nx*side*150;b.x+=vx*dt;b.y+=vy*dt}
   b.x=cl(b.x,55,W-55);b.y=cl(b.y,115,H-78);b.cd-=dt;
  }else if(b.idx===5){
-  // Fella pressures close range and circles quickly between swings.
-  b.a=Math.atan2(t.y-b.y,t.x-b.x);const dx=t.x-b.x,dy=t.y-b.y,d=Math.max(1,Math.hypot(dx,dy)),nx=dx/d,ny=dy/d,side=Math.sin(b.t*2.1)>0?1:-1;const radial=d>190?1.08:d<108?-.68:.15,speed=230+(b.ph||0)*34;const finalSpeed=(b.ph||0)>=2?1.22:1;b.x+=(nx*radial*speed*finalSpeed+(-ny)*side*(92+(b.ph||0)*34))*dt;b.y+=(ny*radial*speed*finalSpeed+nx*side*(92+(b.ph||0)*34))*dt;if((b.ph||0)>=2){b.trailCd=(b.trailCd||0)-dt;if(b.trailCd<=0){b.trailCd=.075;fx(['p',b.x+rnd(-18,18),b.y+rnd(-16,16),3,R()<.5?'#ff2845':'#fff0d4',rnd(110,250),.22,5,'pixel'])}}b.x=cl(b.x,55,W-55);b.y=cl(b.y,112,H-72);b.cd-=dt;
+  // Fella works the infield: keeps a batter's distance, circles the player, and sprints harder in later phases.
+  b.a=Math.atan2(t.y-b.y,t.x-b.x);const dx=t.x-b.x,dy=t.y-b.y,d=Math.max(1,Math.hypot(dx,dy)),nx=dx/d,ny=dy/d,ph=b.ph||0,side=Math.sin(b.t*1.7+ph)>0?1:-1;
+  const radial=d>240?1:(d<150?-.9:.2),speed=190+ph*36,orbit=110+ph*30;
+  b.x+=(nx*radial*speed+(-ny)*side*orbit)*dt;b.y+=(ny*radial*speed+nx*side*orbit)*dt;
+  if(ph>=2){b.trailCd=(b.trailCd||0)-dt;if(b.trailCd<=0){b.trailCd=.09;fx(['p',b.x+rnd(-18,18),b.y+rnd(-16,16),3,R()<.5?'#ff2845':'#fff0d4',rnd(110,250),.22,5,'pixel'])}}
+  b.x=cl(b.x,55,W-55);b.y=cl(b.y,112,H-72);b.cd-=dt;
  }else if(b.idx===3||b.isAllianceAlly){
   // Alliance choreography: mirrored sway -> crossing weave -> counter-rotating orbit.
   const side=b.isAllianceAlly?1:-1,ph=b.ph||0;let tx,ty;b.a=Math.atan2(t.y-b.y,t.x-b.x);
@@ -789,10 +824,10 @@ function launchSurvivalWave(){const players=alive();if(!players.length)return;co
 function stepSurvivalWorld(dt){
  // Release telegraphed arena attacks when their warning timers expire.
  for(const w of S.wr){w.t+=dt;if(w.t>=w.dur){w.done=1;if(w.fn)w.fn()}}S.wr=S.wr.filter(w=>!w.done);
- for(const z of S.zn){z.life-=dt;if(z.slowField){alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r+PLAYER_HIT_R)p.sauceSlow=Math.max(p.sauceSlow||0,.28)})}else{z.tick=(z.tick||0)-dt;if(z.tick<=0){z.tick=.48;alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r+PLAYER_HIT_R)hitP(p,z.dmg||10)})}}}S.zn=S.zn.filter(z=>z.life>0);
- for(const q of S.pr){q.life-=dt;if(q.life<=0&&q.pop&&q.own==='b'&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}const sl=q.own==='b'?S.slowm||1:1;if(q.curve){const aa=q.curve*dt,cs=Math.cos(aa),sn=Math.sin(aa),vx=q.vx;q.vx=vx*cs-q.vy*sn;q.vy=vx*sn+q.vy*cs;if(q.curveLife!=null){q.curveLife-=dt;if(q.curveLife<=0)q.curve=0}}q.x+=q.vx*dt*sl;q.y+=q.vy*dt*sl;q.rot+=q.spin*dt;if(q.bounce>0){if(q.x<12||q.x>W-12){q.vx*=-1;q.x=cl(q.x,12,W-12);q.bounce--}if(q.y<100||q.y>H-12){q.vy*=-1;q.y=cl(q.y,100,H-12);q.bounce--}}if(q.own==='b'){for(const p of alive())if(dist(q.x,q.y,p.x,p.y)<q.r+PLAYER_HIT_R){hitP(p,q.dmg);if(q.slow)p.sauceSlow=Math.max(p.sauceSlow||0,q.slow);if(!q.pierce){q.life=0;if(q.pop&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}}}}if(q.x<-80||q.x>W+80||q.y<-80||q.y>H+80)q.life=0}S.pr=S.pr.filter(q=>q.life>0);
+ for(const z of S.zn){z.life-=dt;if(z.slowField){alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)p.sauceSlow=Math.max(p.sauceSlow||0,.28)})}else{z.tick=(z.tick||0)-dt;if(z.tick<=0){z.tick=.48;alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)hitP(p,z.dmg||10)})}}}S.zn=S.zn.filter(z=>z.life>0);
+ for(const q of S.pr){q.life-=dt;if(q.life<=0&&q.pop&&q.own==='b'&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}const sl=q.own==='b'?S.slowm||1:1;if(q.curve){const aa=q.curve*dt,cs=Math.cos(aa),sn=Math.sin(aa),vx=q.vx;q.vx=vx*cs-q.vy*sn;q.vy=vx*sn+q.vy*cs;if(q.curveLife!=null){q.curveLife-=dt;if(q.curveLife<=0)q.curve=0}}q.x+=q.vx*dt*sl;q.y+=q.vy*dt*sl;q.rot+=q.spin*dt;if(q.bounce>0){if(q.x<12||q.x>W-12){q.vx*=-1;q.x=cl(q.x,12,W-12);q.bounce--}if(q.y<100||q.y>H-12){q.vy*=-1;q.y=cl(q.y,100,H-12);q.bounce--}}if(q.own==='b'){for(const p of alive())if(dist(q.x,q.y,p.x,p.y)<q.r*ATK_HIT+PLAYER_HIT_R){hitP(p,q.dmg);if(q.slow)p.sauceSlow=Math.max(p.sauceSlow||0,q.slow);if(!q.pierce){q.life=0;if(q.pop&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}}}}if(q.x<-80||q.x>W+80||q.y<-80||q.y>H+80)q.life=0}S.pr=S.pr.filter(q=>q.life>0);
 }
-function step(dt){if(S.paused)return;S.t+=dt;if(S.ezUlt&&S.ezUlt.stage!=='end'&&S.st!=='dlg'){stepEvilZachUltimate(dt);return;}if(S.st==='bfcut'){if(S.bfCut){const c=S.bfCut,oldT=c.t;c.t+=dt;const cues=c.finisher?[.12,.38,.86,1.32,1.92,2.55,2.84,3.25,3.85,4.23]:[.12,.38,.86,1.32,1.92,2.55];const sounds=['bfCrack','bfBoom','whoosh','bfImpact','bfFinisher','bfFinal','bfBoom','bfCrack','bfTail','bfFinal'];while((c.beats||0)<cues.length&&oldT<cues[c.beats||0]&&c.t>=cues[c.beats||0]){const ix=c.beats||0;X(sounds[ix]);if(ix===0||ix===3||ix===5||ix===7){fx(['f',ix===0?'#fff':'#ff1738']);SH=Math.max(SH,ix===0?16:(ix===5?18:22))}if(ix===1||ix===4||ix===6){fx(['r',c.x,c.y,ix===6?210:150,'#ff1738']);fx(['s',ix===6?22:18]);for(let j=0;j<30;j++){const a=rnd(0,PI*2);fx(['p',c.x+Math.cos(a)*rnd(20,120),c.y+Math.sin(a)*rnd(12,80),3,j%2?'#050207':'#fff',rnd(180,440),.35,6,'pixel'])}}c.beats=(c.beats||0)+1}if(c.t>=c.dur){X(c.finisher?'bfTail':'bfEcho');S.bfCut=null;if(alive().length){S.st='fight';if(S.bs){S.bs.inv=0;S.bs.cd=1.15}}else S.st='over'}}return;}
+function step(dt){if(S.paused)return;S.t+=dt;if(S.bfAfter){S.bfAfter.t+=dt;if(S.bfAfter.t>=S.bfAfter.dur)S.bfAfter=null}if(S.ezUlt&&S.ezUlt.stage!=='end'&&S.st!=='dlg'){stepEvilZachUltimate(dt);return;}if(S.st==='bfcut'){if(S.bfCut){const c=S.bfCut,oldT=c.t;c.t+=dt;const cues=c.finisher?[.12,.38,.86,1.32,1.92,2.55,2.84,3.25,3.85,4.23]:[.12,.38,.86,1.32,1.92,2.55];const sounds=['bfCrack','bfBoom','whoosh','bfImpact','bfFinisher','bfFinal','bfBoom','bfCrack','bfTail','bfFinal'];while((c.beats||0)<cues.length&&oldT<cues[c.beats||0]&&c.t>=cues[c.beats||0]){const ix=c.beats||0;X(sounds[ix]);if(ix===0||ix===3||ix===5||ix===7){fx(['f',ix===0?'#fff':'#ff1738']);SH=Math.max(SH,ix===0?16:(ix===5?18:22))}if(ix===1||ix===4||ix===6){fx(['r',c.x,c.y,ix===6?210:150,'#ff1738']);fx(['s',ix===6?22:18]);for(let j=0;j<30;j++){const a=rnd(0,PI*2);fx(['p',c.x+Math.cos(a)*rnd(20,120),c.y+Math.sin(a)*rnd(12,80),3,j%2?'#050207':'#fff',rnd(180,440),.35,6,'pixel'])}}c.beats=(c.beats||0)+1}if(c.t>=c.dur){X(c.finisher?'bfTail':'bfEcho');S.bfCut=null;S.bfAfter={t:0,dur:c.finisher?1.7:1.3,x:c.x,y:c.y,a:c.a,fin:c.finisher?1:0};SH=Math.max(SH,10);if(alive().length){S.st='fight';if(S.bs){S.bs.inv=0;S.bs.cd=1.15}}else S.st='over'}}return;}
  if(S.st==='dlg'||S.st==='cut'){const D=S.dlg;if(!D)return;if(S.bdT>0&&S.bs){S.bdT-=dt;if(R()<.4){const b=S.bs,x=b.x+rnd(-70,70),y=b.y+rnd(-70,70);fx(['r',x,y,rnd(40,90),b.d.col[0]]);fx(['p',x,y,10,b.d.col[1],300,.6,5]);fx(['s',7]);X('boom')}}D.t+=dt;if(D.t>=D.dur){D.i++;D.t=0;if(D.i>=D.L.length)return endDlg();D.dur=dur(D.L[D.i])}return}
  if(S.st==='up'){S.vt-=dt;if(S.vt<=0||Object.keys(S.pl).every(id=>S.votes[id]!==undefined))resolveVote();return}
  if(S.st==='survival'){Object.values(S.pl).forEach(p=>stepPl(p,dt));S.slowm=Math.min(1,...alive().map(p=>p.m.slow));S.survElapsed=(S.survElapsed||0)+dt;S.survT=Math.max(0,(S.survMax||93.179)-S.survElapsed);S.survAttackCd=(S.survAttackCd||0)-dt;if(S.survAttackCd<=0)launchSurvivalWave();stepSurvivalWorld(dt);S.survPickupCd=(S.survPickupCd===undefined?5.5:S.survPickupCd)-dt;if(S.survPickupCd<=0){if(S.pk.length<2){const k={x:rnd(65,895),y:rnd(155,465)};S.pk.push(k);fx(['r',k.x,k.y,42,'#77ffab']);fx(['p',k.x,k.y,12,'#b8ffcf',180,.5,5])}S.survPickupCd=10.5}S.pk=S.pk.filter(k=>{for(const p of alive())if(dist(k.x,k.y,p.x,p.y)<PICKUP_HIT_R+PLAYER_HIT_R){const h=Math.round(p.max*.2);p.hp=Math.min(p.max,p.hp+h);fx(['d',p.x,p.y-34,'+'+h,'#75ffb5',0]);fx(['p',k.x,k.y,16,'#b8ffcf',220,.55,5]);X('heal');return false}return true});S.survFx=(S.survFx||0)+dt;if(S.survFx>.055){S.survFx=0;for(let i=0;i<3;i++){const x=rnd(20,W-20),y=rnd(70,H-35);fx(['p',x,y,rnd(2,5),R()<.5?'#ffd34a':'#ff5a5a',rnd(120,280),.65,5])}if(R()<.3)fx(['s',2]);if(R()<.06)fx(['f',R()<.5?'#ffb347':'#ff4a5e'])}if(S.survT<=0){ach('purge');S.st='up';S.opts=pick3();S.votes={};S.vt=20;S.wr=[];S.pr=[];S.zn=[];X('upgrade')}return}
@@ -801,19 +836,19 @@ function step(dt){if(S.paused)return;S.t+=dt;if(S.ezUlt&&S.ezUlt.stage!=='end'&&
  Object.values(S.pl).forEach(p=>stepPl(p,dt));if(S.st!=='fight')return;
  stepBoss(b,dt);
  if(b.idx===3&&S.bs2&&S.bs2.hp>0){stepBoss(S.bs2,dt,1)} 
- for(const z of S.zn){z.life-=dt;if(z.slowField){alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r+PLAYER_HIT_R)p.sauceSlow=Math.max(p.sauceSlow||0,.28)})}else{z.tick=(z.tick||0)-dt;if(z.tick<=0){z.tick=.48;alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r+PLAYER_HIT_R)hitP(p,z.dmg||10)})}}}S.zn=S.zn.filter(z=>z.life>0);
+ for(const z of S.zn){z.life-=dt;if(z.slowField){alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)p.sauceSlow=Math.max(p.sauceSlow||0,.28)})}else{z.tick=(z.tick||0)-dt;if(z.tick<=0){z.tick=.48;alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)hitP(p,z.dmg||10)})}}}S.zn=S.zn.filter(z=>z.life>0);
  S.pkT-=dt;if(S.pkT<=0&&S.pk.length<2){S.pkT=18;S.pk.push({x:rnd(80,880),y:rnd(150,450)})}
  S.pk=S.pk.filter(k=>{for(const p of alive())if(dist(k.x,k.y,p.x,p.y)<PICKUP_HIT_R+PLAYER_HIT_R){const h=Math.round(p.max*.15);p.hp=Math.min(p.max,p.hp+h);fx(['d',p.x,p.y-34,'+'+h,'#6f6',0]);fx(['p',k.x,k.y,14,'#ffd34a',200,.5,4]);X('heal');return false}return true});
  for(const q of S.pr){q.life-=dt;if(q.life<=0&&q.pop&&q.own==='b'&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}const sl=q.own==='b'?S.slowm:1;if(q.curve){const aa=q.curve*dt,cs=Math.cos(aa),sn=Math.sin(aa),vx=q.vx;q.vx=vx*cs-q.vy*sn;q.vy=vx*sn+q.vy*cs;if(q.curveLife!=null){q.curveLife-=dt;if(q.curveLife<=0)q.curve=0}}q.x+=q.vx*dt*sl;q.y+=q.vy*dt*sl;q.rot+=q.spin*dt;
   if(q.bounce>0){let bn=0;if(q.x<12||q.x>W-12){q.vx*=-1;q.x=cl(q.x,12,W-12);bn=1}if(q.y<100||q.y>H-12){q.vy*=-1;q.y=cl(q.y,100,H-12);bn=1}if(bn){q.bounce--;fx(['p',q.x,q.y,4,'#f66',120,.3,4])}}
   if(q.own==='p'){const target=bossTargetAt(q.x,q.y,q.r);if(target&&!q.hit.includes(target.id)){q.hit.push(target.id);const p=S.pl[q.pid];if(p)hitB(p,q.dmg*(q.kind==='b'?1+.25*q.pierce:1),q.x,q.y,q.kind,target.id);if((q.kind==='b'&&!q.pierce)||q.img==='burger')q.life=0}
    if(q.pierce>0)S.pr.forEach(e=>{if(e.own==='b'&&dist(q.x,q.y,e.x,e.y)<q.r+e.r)e.life=0})}
-  if(q.own==='b'){for(const p of alive())if(dist(q.x,q.y,p.x,p.y)<q.r+PLAYER_HIT_R){hitP(p,q.dmg);if(q.slow)p.sauceSlow=Math.max(p.sauceSlow||0,q.slow);if(!q.pierce){q.life=0;if(q.pop&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}}}}
+  if(q.own==='b'){for(const p of alive())if(dist(q.x,q.y,p.x,p.y)<q.r*ATK_HIT+PLAYER_HIT_R){hitP(p,q.dmg);if(q.slow)p.sauceSlow=Math.max(p.sauceSlow||0,q.slow);if(!q.pierce){q.life=0;if(q.pop&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}}}}
   if(q.x<-80||q.x>W+80||q.y<-80||q.y>H+80)q.life=0}
  S.pr=S.pr.filter(q=>q.life>0);
  for(const w of S.wr){w.t+=dt;if(w.t>=w.dur){w.done=1;if(w.fn)w.fn()}}S.wr=S.wr.filter(w=>!w.done)}
 /* ---------- SNAPSHOT / NET ---------- */
-function snap(){const b=S.bs,D=S.dlg;return{st:S.st,bi:bidx(),loop:lp(),paused:S.paused,ezUlt:S.ezUlt?{stage:S.ezUlt.stage,t:S.ezUlt.t,beamT:S.ezUlt.beamT,flashT:S.ezUlt.flashT}:null,bfCut:S.bfCut?{t:S.bfCut.t,dur:S.bfCut.dur,x:S.bfCut.x,y:S.bfCut.y,bx:S.bfCut.bx,by:S.bfCut.by,a:S.bfCut.a,finisher:S.bfCut.finisher||0,targetName:S.bfCut.targetName||'CHALLENGER',targetCh:S.bfCut.targetCh||'cg',damage:S.bfCut.damage||44}:null,runT:S.t,survT:S.survT,survMax:S.survMax,survName:S.survName,survWave:S.survWave,bs2:S.bs2&&{img:S.bs2.img,x:S.bs2.x,y:S.bs2.y,hp:S.bs2.hp,max:S.bs2.max,idx:1,sz:S.bs2.sz||150,fl:S.bs2.fl>0?1:0,a:S.bs2.a||0,gun:S.bs2.gun?1:0,pipe:S.bs2.pipeOn?S.bs2.pa:null,beam:S.bs2.beam==null?null:S.bs2.beam,mode:S.bs2.mode||'',sp:S.bs2.rolling?S.bs2.t*14:0},zn:S.zn.map(z=>[z.x|0,z.y|0,z.r,+(z.life/z.max).toFixed(2),z.col||'',z.dmg||10,z.slowField?1:0]),pk:S.pk.map(k=>[k.x|0,k.y|0]),set:S.set,vt:S.vt,ups:S.ups,opts:S.opts,votes:S.votes,room,n:nPl(),
+function snap(){const b=S.bs,D=S.dlg;return{st:S.st,bi:bidx(),loop:lp(),paused:S.paused,ezUlt:S.ezUlt?{stage:S.ezUlt.stage,t:S.ezUlt.t,beamT:S.ezUlt.beamT,flashT:S.ezUlt.flashT}:null,bfAfter:S.bfAfter?{t:S.bfAfter.t,dur:S.bfAfter.dur,x:S.bfAfter.x,y:S.bfAfter.y,a:S.bfAfter.a,fin:S.bfAfter.fin}:null,bfCut:S.bfCut?{t:S.bfCut.t,dur:S.bfCut.dur,x:S.bfCut.x,y:S.bfCut.y,bx:S.bfCut.bx,by:S.bfCut.by,a:S.bfCut.a,finisher:S.bfCut.finisher||0,targetName:S.bfCut.targetName||'CHALLENGER',targetCh:S.bfCut.targetCh||'cg',damage:S.bfCut.damage||44}:null,runT:S.t,survT:S.survT,survMax:S.survMax,survName:S.survName,survWave:S.survWave,bs2:S.bs2&&{img:S.bs2.img,x:S.bs2.x,y:S.bs2.y,hp:S.bs2.hp,max:S.bs2.max,idx:1,sz:S.bs2.sz||150,fl:S.bs2.fl>0?1:0,a:S.bs2.a||0,gun:S.bs2.gun?1:0,pipe:S.bs2.pipeOn?S.bs2.pa:null,beam:S.bs2.beam==null?null:S.bs2.beam,mode:S.bs2.mode||'',sp:S.bs2.rolling?S.bs2.t*14:0},zn:S.zn.map(z=>[z.x|0,z.y|0,z.r,+(z.life/z.max).toFixed(2),z.col||'',z.dmg||10,z.slowField?1:0]),pk:S.pk.map(k=>[k.x|0,k.y|0]),set:S.set,vt:S.vt,ups:S.ups,opts:S.opts,votes:S.votes,room,n:nPl(),
  pl:Object.values(S.pl).map(p=>({id:p.id,ch:p.ch,x:p.x|0,y:p.y|0,hp:Math.ceil(p.hp),max:p.max,ang:+p.ang.toFixed(2),walk:p.walk,stab:p.stab,sd:p.sd,dead:p.dead,sh:p.sh,name:p.name,cd:p.cd,cdm:p.cdm,wh:p.whirl>0?1:0,kick:p.kick,dash:p.dash||0,inv:p.inv>0?1:0,buf:p.buf>0?1:0,sauce:p.sauceSlow>0?1:0,orb:p.m?p.m.orbit:0,oa:p.oa||0,dd:p.dd,tk:p.tk,m1Anim:p.m1Anim||0,m1T:p.m1T||0,m1Dur:p.m1Dur||.3,m1Angle:p.m1Angle==null?p.ang:p.m1Angle,m1Hit:p.m1Hit&&p.m1Hit.t>0?{x:p.m1Hit.x,y:p.m1Hit.y,a:p.m1Hit.a,r:p.m1Hit.r,half:p.m1Hit.half,kind:p.m1Hit.kind,t:p.m1Hit.t}:null})),
  b:b&&{img:b.img,name:b.d.n,x:b.x|0,y:b.y|0,hp:b.hp,max:b.max,ph:b.ph,fl:b.fl>0?1:0,inv:b.inv,sz:b.sz,a:b.a||0,gun:b.gun?1:0,pipe:b.pipeOn?b.pa:null,beam:b.beam==null?null:b.beam,air:b.air||0,sp:b.rolling?b.t*14:0,mode:b.mode||'',cdash:b.cdash||0,idx:bidx(),hp2:b.hp2||0,max2:b.max2||0,fc:b.fc?{i:b.fc.i,t:b.fc.t,a:b.fc.a}:null,fr:b.fr?{phase:b.fr.phase,t:b.fr.t,a:b.fr.a,dx:b.fr.dx,dy:b.fr.dy}:null,fs:b.fs?{phase:b.fs.phase,t:b.fs.t,x:b.fs.x,y:b.fs.y}:null,gs:b.gs?{phase:b.gs.phase,t:b.gs.t,safeLane:b.gs.safeLane}:null,hr:b.hr?{phase:b.hr.phase,t:b.hr.t,x:b.hr.x,y:b.hr.y}:null,cmb:b.cmb?[b.cmb.k,+b.cmb.a.toFixed(2),+b.cmb.p.toFixed(2),b.cmb.s==='swing'?1:0,b.cmb.r,b.cmb.h]:null},
  pr:S.pr.map(q=>[q.id,q.img,q.x|0,q.y|0,+q.rot.toFixed(2),q.sz,q.own,q.r]),
@@ -1064,14 +1099,7 @@ function drawBoss(b,t,id){const o=sm('boss',b.x,b.y),bob=Math.sin(t*2.5)*6,sq=Ma
  if(b.fl){g.globalCompositeOperation='lighter';spr(b.img,o.x,oy,b.sz,0,1,1,.7);g.globalCompositeOperation='source-over'}
  if(b.idx===4&&b.cmb){const [ck,ca,cp,csw,cr,ch]=b.cmb;g.save();g.translate(o.x,o.y);if(!csw){g.fillStyle='rgba(255,50,70,'+(.1+.3*cp)+')';g.strokeStyle='rgba(255,90,90,.85)';g.lineWidth=2;g.beginPath();g.moveTo(0,0);g.arc(0,0,cr*(.55+.45*cp),ca-ch,ca+ch);g.closePath();g.fill();g.stroke();g.strokeStyle='rgba(255,240,150,'+(.3+.5*cp)+')';g.beginPath();g.arc(0,0,cr,ca-ch,ca+ch);g.stroke();g.restore()}else{g.restore();if(ck===2)drawZachStab(o.x,o.y,ca,cp);else drawZachSlash(o.x,o.y,ca,cp,ck===1,t)}}
  if(b.idx===4){spr('eknife',o.x+Math.cos(b.a||0)*70,o.y+Math.sin(b.a||0)*70+5,76,(b.a||0)+PI/2,1,1,.95);if(b.dodgeT>0){g.strokeStyle='rgba(249,232,76,.9)';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,b.sz*.62,0,PI*2);g.stroke()}}
- if(b.idx===5){const aa=b.fc&&b.fc.t>.18?b.fc.a:(b.fr&&b.fr.phase==='dash'?Math.atan2(b.fr.dy||Math.sin(b.fr.a),b.fr.dx||Math.cos(b.fr.a)):(b.a||0));const swing=b.fc?Math.sin(Math.min(1,b.fc.t/.48)*PI)*.68:(b.hr&&b.hr.phase==='swing'?Math.sin(Math.min(1,b.hr.t/.42)*PI)*.95:0);
-  if((b.ph||0)>=1){g.save();g.globalCompositeOperation='lighter';for(let j=0;j<4;j++){const a=t*(1.5+j*.25)+j*2.094;g.strokeStyle=j%2?'rgba(255,42,65,.5)':'rgba(255,230,180,.62)';g.lineWidth=2+j;g.beginPath();g.arc(o.x,o.y,72+j*15+Math.sin(t*5+j)*5,a,a+1.45);g.stroke()}g.restore()}
-  if(b.fc&&b.fc.t<.25){g.save();g.globalAlpha=.18+.3*Math.sin(t*30);g.fillStyle='#ff233f';g.beginPath();g.moveTo(o.x,o.y);g.arc(o.x,o.y,108,b.fc.a-.69,b.fc.a+.69);g.closePath();g.fill();g.strokeStyle='#ffe6e8';g.lineWidth=2;g.stroke();g.restore()}
-  spr('bat',o.x+Math.cos(aa+.45+swing)*53,o.y+Math.sin(aa+.45+swing)*49+6,88,aa+PI/2+swing,1,Math.cos(aa)<0?-1:1,.98);
-  if(b.gs&&b.gs.phase==='windup'){g.save();g.globalAlpha=.7+.25*Math.sin(t*25);g.strokeStyle='#fff';g.lineWidth=3;for(let lane=0;lane<3;lane++){if(lane===b.gs.safeLane)continue;const yy=150+lane*118;g.setLineDash([10,8]);g.beginPath();g.moveTo(0,yy);g.lineTo(W,yy);g.stroke()}g.setLineDash([]);g.restore();TS('GRAND SLAM!',W/2,148,19,'#fff')}
-  if(b.hr&&b.hr.phase==='windup'){g.save();g.strokeStyle='rgba(255,40,65,.9)';g.lineWidth=3;g.setLineDash([8,6]);g.beginPath();g.moveTo(o.x,o.y);g.lineTo(b.hr.x,b.hr.y);g.stroke();g.setLineDash([]);g.beginPath();g.arc(b.hr.x,b.hr.y,48+Math.sin(t*24)*8,0,PI*2);g.stroke();g.restore();TS('HOME RUN!',b.hr.x,b.hr.y-52,15,'#ffebef')}
-  if(b.mode==='fellaSlam'){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,40,65,.75)';g.lineWidth=4;g.beginPath();g.ellipse(o.x,o.y+28,70+(b.fs?.t||0)*48,20+(b.fs?.t||0)*12,0,0,PI*2);g.stroke();g.restore()}
- }
+ if(b.idx===5)drawFellaBoss(b,o,t);
  if(b.gun){spr('egun',o.x+Math.cos(b.a)*70,o.y+Math.sin(b.a)*70,70,b.a,1,Math.cos(b.a)<0?-1:1)}
  if(b.pipe!=null){g.strokeStyle='rgba(255,60,60,.25)';g.lineWidth=40;g.beginPath();g.arc(o.x,o.y,125,b.pipe-.5,b.pipe);g.stroke();spr('pipe',o.x+Math.cos(b.pipe)*115,o.y+Math.sin(b.pipe)*115,190,b.pipe+PI/2)}}
 function drawBossBar(b,dt){const d=BD[b.idx],x=140,y=36,w=680,h=26,r=b.hp/b.max;trail=r<trail?Math.max(r,trail-.25*dt):r;
@@ -1114,8 +1142,8 @@ function sfx(n){if(!AC||mute||(ST.bgMute&&!winFocus)||!SFX[n])return;const t=per
 const MA={};
 function ultimateMusicVolume(beamT){
  const base=cl((ST.master||0)/100*(ST.music||0)/100,0,1);
- // Fade from 7 to 10 seconds, then remain silent for the final six seconds of the laser.
- const fade=beamT<=7?1:cl((10-beamT)/3,0,1);
+ // Full volume for the first 14 seconds, then a 3-second fade so the track is silent at 17 seconds.
+ const fade=beamT<=14?1:cl((17-beamT)/3,0,1);
  return base*fade;
 }
 function ensureEvilZachAudio(){
@@ -1151,12 +1179,31 @@ const MC=[['Monk Cartman Throat Singing (Extended Version)','Title screen'],['Ch
 let VG=null;
 function drawVignette(st){if(st!=='fight'&&st!=='survival')return;if(!VG){VG=document.createElement('canvas');VG.width=W;VG.height=H;const q=VG.getContext('2d'),r=q.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,H*.9);r.addColorStop(0,'rgba(0,0,0,0)');r.addColorStop(1,'rgba(0,0,0,.55)');q.fillStyle=r;q.fillRect(0,0,W,H)}g.drawImage(VG,0,0)}
 function drawAura(c,t,x,y,sz){g.save();g.globalCompositeOperation='lighter';const gr=g.createRadialGradient(x,y,sz*.2,x,y,sz*.9);gr.addColorStop(0,c[0]+'44');gr.addColorStop(1,c[1]+'00');g.fillStyle=gr;g.beginPath();g.arc(x,y,sz*.9,0,PI*2);g.fill();for(let i=0;i<14;i++){const a=t*(.6+i%3*.2)+i*PI/7,r=sz*.55+Math.sin(t*2+i)*14;g.globalAlpha=.55;g.fillStyle=c[i%2];g.beginPath();g.arc(x+Math.cos(a)*r,y+Math.sin(a)*r*.7,2+i%3,0,PI*2);g.fill()}g.restore()}
+function drawFellaBoss(b,o,t){
+ const ph=b.ph||0;
+ if(ph>=1){g.save();g.globalCompositeOperation='lighter';for(let j=0;j<4;j++){const a=t*(1.5+j*.25)+j*2.094;g.strokeStyle=j%2?'rgba(255,42,65,.5)':'rgba(255,230,180,.62)';g.lineWidth=2+j;g.beginPath();g.arc(o.x,o.y,72+j*15+Math.sin(t*5+j)*5,a,a+1.45);g.stroke()}g.restore()}
+ // Batting telegraph: the red arc shows exactly where the next sweep lands.
+ if(b.fc&&b.fc.t<.34){g.save();g.globalAlpha=.18+.3*Math.sin(t*30);g.fillStyle='#ff233f';g.beginPath();g.moveTo(o.x,o.y);g.arc(o.x,o.y,112,b.fc.a-.78,b.fc.a+.78);g.closePath();g.fill();g.strokeStyle='#ffe6e8';g.lineWidth=2;g.stroke();g.restore()}
+ // The bat is cocked during windup and whips through the arc on contact.
+ let aa=b.a||0,swing=0;
+ if(b.fc){aa=b.fc.a;swing=b.fc.t<.34?-.5*(b.fc.t/.34):.85*Math.min(1,(b.fc.t-.34)/.18)}
+ else if(b.fr&&b.fr.phase==='slide'){aa=b.fr.a}
+ else if(b.hr){aa=Math.atan2(b.hr.y-o.y,b.hr.x-o.x);swing=b.hr.t<1.1?-.4:.9}
+ spr('bat',o.x+Math.cos(aa+.45+swing)*53,o.y+Math.sin(aa+.45+swing)*49+6,88,aa+PI/2+swing,1,Math.cos(aa)<0?-1:1,.98);
+ // Slide: three dust streaks trail behind Fella.
+ if(b.fr&&b.fr.phase==='slide'){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,40,65,.7)';g.lineWidth=3;const bx=-Math.cos(b.fr.a),by=-Math.sin(b.fr.a);for(let j=0;j<3;j++){g.beginPath();g.moveTo(o.x+bx*(20+j*9),o.y+by*(20+j*9)+(j-1)*8);g.lineTo(o.x+bx*(70+j*12),o.y+by*(70+j*12)+(j-1)*8);g.stroke()}g.restore()}
+ // Walk-off slam: a shadow grows under Fella while he hangs in the air, then three rings ripple out.
+ if(b.fs&&b.fs.phase==='windup'){g.save();g.globalAlpha=.4;g.fillStyle='#000';g.beginPath();g.ellipse(b.fs.x,b.fs.y+28,50,18,0,0,PI*2);g.fill();g.restore()}
+ if(b.fs&&b.fs.phase==='impact'){g.save();g.globalCompositeOperation='lighter';[[0,96],[.42,180],[.84,268]].forEach(([tt,rr])=>{const k=cl((b.fs.t-tt)/.35,0,1);if(k>0&&k<1){g.globalAlpha=1-k;g.strokeStyle='#ff2845';g.lineWidth=6*(1-k)+1;g.beginPath();g.ellipse(b.fs.x,b.fs.y,rr*k+10,(rr*k+10)*.62,0,0,PI*2);g.stroke()}});g.restore()}
+ // Lob homer: the dashed arc and landing circle show where the ball will drop.
+ if(b.hr&&b.hr.t<1.3){g.save();g.strokeStyle='rgba(255,40,65,.9)';g.lineWidth=3;g.setLineDash([8,6]);g.beginPath();g.moveTo(o.x,o.y);g.lineTo(b.hr.x,b.hr.y);g.stroke();g.setLineDash([]);g.beginPath();g.arc(b.hr.x,b.hr.y,64+Math.sin(t*24)*6,0,PI*2);g.stroke();g.restore();TS('WALK-OFF HOMER!',b.hr.x,b.hr.y-56,15,'#ffebef')}
+}
 function drawFellaArena(t,v){
  // Night-game ballpark: crowd stands, fence, chalk diamond, warning track, and moving stadium lights.
  const turf=g.createLinearGradient(0,90,0,H);turf.addColorStop(0,'#174b35');turf.addColorStop(.48,'#14613b');turf.addColorStop(1,'#082d25');g.fillStyle=turf;g.fillRect(0,72,W,H-72);
  for(let i=0;i<12;i++){g.fillStyle=i%2?'rgba(125,255,160,.045)':'rgba(0,0,0,.06)';g.fillRect(i*82,155,42,H-155)}
  g.fillStyle='#20263a';g.fillRect(0,72,W,66);for(let i=0;i<42;i++){const x=i*24,y=83+(i%3)*12;g.fillStyle=['#ff7e87','#ffcc6c','#92d9ff','#eee8ff'][i%4];g.fillRect(x,y,8,8);g.fillRect(x+9,y+3,5,5)}
- g.fillStyle='#351e2a';g.fillRect(0,130,W,17);g.fillStyle='#ddcaa1';g.fillRect(0,147,W,4);g.fillStyle='#b8d3c7';g.font='bold 13px monospace';g.textAlign='center';g.fillText('FELLA FIELD  •  BOTTOM OF THE NINTH',W/2,95);
+ g.fillStyle='#351e2a';g.fillRect(0,130,W,17);g.fillStyle='#ddcaa1';g.fillRect(0,147,W,4);g.fillStyle='#b8d3c7';g.font='bold 13px monospace';g.textAlign='center';g.fillText('FELLA FIELD  •  WALK-OFF ZONE',W/2,95);
  // Outfield wall and chalk field.
  g.fillStyle='#15302a';g.fillRect(0,148,W,18);g.strokeStyle='#e8e8c9';g.lineWidth=3;g.beginPath();g.moveTo(W/2,282);g.lineTo(115,470);g.lineTo(480,515);g.lineTo(845,470);g.closePath();g.stroke();
  g.fillStyle='rgba(206,155,112,.16)';g.beginPath();g.moveTo(W/2,282);g.lineTo(115,470);g.lineTo(480,515);g.lineTo(845,470);g.closePath();g.fill();
@@ -1167,7 +1214,7 @@ function drawFellaArena(t,v){
  g.strokeStyle='rgba(255,255,230,.24)';g.lineWidth=1;for(let i=0;i<5;i++){const r=90+i*47;g.beginPath();g.arc(480,370,r,Math.PI*1.1,Math.PI*1.9);g.stroke()}
  // Stadium lamps and scoreboard.
  for(const side of [0,1]){const x=side?W-24:24;g.fillStyle='#202533';g.fillRect(x-4,74,8,80);g.globalCompositeOperation='lighter';const rg=g.createRadialGradient(x,95,1,x,95,125);rg.addColorStop(0,'rgba(255,250,220,.2)');rg.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=rg;g.fillRect(x-125,0,250,220);g.globalCompositeOperation='source-over';g.fillStyle='#fff3be';for(let j=0;j<8;j++)g.fillRect(x-13+(j%4)*7,77+Math.floor(j/4)*7,4,4)}
- g.fillStyle='#08131a';g.fillRect(366,108,228,32);g.strokeStyle='#f25b6c';g.lineWidth=2;g.strokeRect(366,108,228,32);T('INNING '+((v&&v.b&&v.b.ph||0)+1)+'  •  KETCHUP 0',480,124,12,'#ffadb6','center');
+ const fLab=['WARM-UP','BULLPEN','WALK-OFF'][Math.min(2,(v&&v.b&&v.b.ph)||0)],fPct=v&&v.b&&v.b.max?Math.max(0,Math.ceil(100*v.b.hp/v.b.max)):100;g.fillStyle='#08131a';g.fillRect(366,108,228,32);g.strokeStyle='#f25b6c';g.lineWidth=2;g.strokeRect(366,108,228,32);T(fLab+'  •  HP '+fPct+'%',480,124,12,'#ffadb6','center');
 }
 function drawAmbient(t,c){g.save();g.globalCompositeOperation='lighter';for(let i=0;i<46;i++){const x=(i*137+t*(8+i%4*5))%W,y=H-((i*71+t*(14+i%5*6))%(H-90));g.globalAlpha=.12+.1*Math.sin(t*2+i);g.fillStyle=c[i%2];g.fillRect(x,y,2+i%3,2+i%3)}g.restore()}
 // ===== END AMBIENT FX =====
@@ -1269,7 +1316,7 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];
  if(v.dlg&&v.dlg.intro&&v.dlg.i===0&&v.dlg.t<2.4&&v.b){const a=Math.min(1,(2.4-v.dlg.t)*2,v.dlg.t*3);g.globalAlpha=a;TS('BOSS '+(v.bi+1)+(v.loop?'  -  LOOP '+(v.loop+1):''),W/2,H/2-100,26,'#fff');TS(v.b.name.toUpperCase(),W/2,H/2-45,58,BD[v.bi].col[0]);TS(BD[v.bi].title,W/2,H/2+5,24,'#ddd');g.globalAlpha=1}
  if(st==='up')drawUp(v,now);
  if(st==='win')drawEnd(v,1);if(st==='over')drawEnd(v,0);if(v.paused)TS('PAUSED  (press '+kn('pause')+')',W/2,H/2,48,'#fff');
- if(st==='fight'&&!setOpen)drawCrosshair(t);if(v.ezUlt)drawEvilZachUltimate(now,v.ezUlt);if(v.bfCut)drawBlackFlashCutscene(v.bfCut,now)}
+ if(st==='fight'&&!setOpen)drawCrosshair(t);if(v.ezUlt)drawEvilZachUltimate(now,v.ezUlt);if(v.bfCut)drawBlackFlashCutscene(v.bfCut,now);if(v.bfAfter)drawBlackFlashAfter(v.bfAfter,now)}
 // ===== SETTINGS MENU =====
 const SKEY='zub_settings_v1';
 const ACTS=[

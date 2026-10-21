@@ -1,7 +1,19 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v14)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v16)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 16 — hitboxes, Evil Zach ultimate, Black Flash aftershock, and a new Fella
+
+- **Boss attack hitboxes** are about 12% smaller than the shapes drawn for them: projectiles, melee sectors, area hazards, and the Black Flash and charge bodies. Boss and player bodies are unchanged. Press **H** to compare the new shapes.
+- **Evil Zach ultimate:** the laser rift is about 20% taller (it now spans y 140–400) and its danger band follows the visible rift. The *Nande* track plays for **17 seconds**: full volume until 14 s, a 3-second fade, silent at 17 s. The laser now lasts the same 17 seconds, so the music and the beam end together.
+- **Black Flash aftershock:** after the cutscene, a black cut stays across the arena with a thin red afterglow, pixel shards drift out from the contact point, and a white shock ring fades. Multiplayer snapshots carry it.
+- **Finisher (lethal FINAL CUT) reworked:** the arena dims to near-black, a crimson diagonal cut widens across the screen, Evil Zach strikes in from the right, the FINAL CUT title slams in, and the screen cuts to black before the aftershock.
+- **Fella (boss 6) remade** with a new attack set and three phases:
+  - *Warm-Up:* Bat Sweep (two-hit arc, the second sweep leaves a sticky sauce puddle), Sauce Bunt (three bottles that bounce off the walls twice), Slide Rush (slides across the field, leaving a slow trail), Bullpen Pitch (telegraphed pitch lanes).
+  - *Bullpen:* adds Minion Relay (staggered minion sprint) and Sauce Rain (six puddles land left to right, each with a splash).
+  - *Walk-Off:* adds Walk-Off Slam (landing with three shockwave rings) and Lob Homer (telegraphed landing circle, then a sauce burst). Final phase moves faster.
+  - The HUD shows the phase and Fella's HP. Fella's dialogue was rewritten for the new attacks.
 
 ## Version 13 — Black Flash, laser, and Boss 6
 
