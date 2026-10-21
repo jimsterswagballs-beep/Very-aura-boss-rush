@@ -1,7 +1,19 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v17)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella & Jay (v18)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 18 — Jay, the support cook
+
+- **Jay** is a new playable character (support): **90 HP**, speed 245. Pick him in the lobby card row (three cards now: Coolguy15, Zach, Jay).
+- **Pan attack (left click):** up close, Jay swings his frying pan in a wide arc (10–20 damage per hit, with a swing trail and impact sparks). Further away, he flicks a random snack out of the pan at your aim (10–20 damage). **0.25 s** between attacks. In multiplayer, a snack that hits a teammate heals them for **2–4%** of their max HP.
+- **Q — Food Barrage (20 s cooldown):** Jay winds up for **0.75 s** (moving at reduced speed), then flings **11 snacks** (orange, sausage, pizza, egg) that arc onto random spots on the map. A snack that hits the boss deals **10–20** damage. A snack lying on the ground heals any player who touches it for **3–5%** of their max HP, and it fades after 12 s.
+- **E — Pan Boomerang (10 s cooldown):** the pan flies out at the boss and loops, hitting it **4 times over 1.5 s** for **20** damage each, then glides back to Jay. Jay can't attack while the pan is out. The pan also knocks away boss projectiles it passes through.
+- **R — Box Hide (7 s cooldown):** Jay climbs into a cardboard box for **3 s**. He turns semi-transparent, and boss attacks (projectiles, sweeps, lasers, Black Flash, sauce puddles) pass straight through him. He can still move and attack while hidden.
+- Only three Jay frames (idle 1, idle 2, walk) were supplied, so the walk cycle alternates between them with the usual bob and squash. Five snack sprites are used for the food pieces.
+- New sound cues for the swing, pan hits, the snack toss and landing, the boomerang, the box, and the heal.
+- Jay has his own lines in the intro, phase, outro and victory dialogue (solo, mixed with the other characters, and in parties).
+- The lobby's character cards and player panel were resized to fit three characters.
 
 ## Version 17 — bigger bat, sauce puddles, more attacks
 
