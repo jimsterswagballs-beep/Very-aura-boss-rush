@@ -3,6 +3,13 @@
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
 
+## Version 24 — Terry tweak, achievements rebuilt
+
+- **Terry:** the money gun now deals 2 damage per shot (was 3).
+- **Achievements:** the screen is a scrollable list with a progress bar and scrollbar. Scroll with the mouse wheel or drag the list.
+- **New achievements (9):** Burger Break (pick up a burger), Power Up (choose an upgrade), Second Wind (get revived), Ouch (a player goes down), Close Call (survive a hit under 10% health), Solo Act (defeat a boss alone), Punching Bag (take 150 damage in one run), Heavy Hitter (deal 3000 damage in one run), Loop Champion (defeat a boss on a second loop).
+
+
 ## Version 23 — Secret boss 8: Hateful Doom
 
 - **How to unlock:** leave Mason for last. When the second of Will and Jackson falls while Mason is still alive, the secret cutscene plays: Mason finishes them off, Will says "your not mason", and Mason transforms.
