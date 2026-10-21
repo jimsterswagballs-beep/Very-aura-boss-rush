@@ -146,3 +146,10 @@ The game remains a flat-file project: keep `index.html`, every image, every soun
 - Evil Zach Black Flash now deals a flat 44 damage, has a distinct lethal FINISHER cutscene, and includes new impact, crack, boom, and finisher sound cues.
 - Evil Zach's ultimate now fills the central band of the arena, leaving upper and lower escape corridors; the center-right safe pocket has been removed.
 - Reworked Fella into The Grand Slam Menace with a stadium arena, ketchup-pitch slow shots, Grand Slam multi-lane bat projectiles, and a Home Run finisher-style swing, with phase-specific visuals and higher health.
+
+
+## v15 update
+- Tightened shared player and attack collision envelopes slightly, including the Black Flash dash and Fella's bat attacks.
+- Rebuilt Evil Zach's ultimate visuals around a broad, telegraphed central rift with top/bottom escape lanes; the collision field follows the visible danger band.
+- Rebuilt Black Flash's cutscene into a manga-panel impact sequence, added more timed impact sounds/effects, and kept the lethal FINAL CUT finisher.
+- Reworked Fella into a three-inning boss with curving ketchup curveballs, Dugout Ambush lane volleys, a Walk-Off attack, faster final-phase movement, and new inning dialogue.
