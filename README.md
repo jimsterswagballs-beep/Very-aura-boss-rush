@@ -11,6 +11,8 @@ This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all 
 - **Pause menu (Esc):** opens Resume, Settings, Restart Run, Back to Lobby (in multiplayer, host only, shown in a run), and Title Screen. Esc or Resume closes it. Solo fights pause; multiplayer fights are only overlaid. Settings returns you to the pause menu.
 - **Admin panel:** type `coolguy186` on any screen to open it. Options: God mode, infinite abilities, full heal, clear upgrades, give any upgrade to every player, kill the current boss, and start any boss. Esc closes it.
 - **Hateful Doom timer:** a large red clock. Under 60 s it pulses faster, under 20 s it glitches and shakes, and it plays a warning tick each second under 30 s.
+- **Hateful Doom attacks:** three new attacks: Hunter Chain (six aimed black shots), Night Nova (a dense black burst), and Shadow Orbs (black orbs that circle him, then fly at the players). The Void Pulse is nerfed: slower, smaller, 8 damage, and the second ring only appears in phase II.
+- **Timer runs out:** the screen slowly pixelates over 4.5 seconds, then you are sent back to the lobby.
 - **Harder Hateful Doom:** faster enrage (1.35x), more and faster projectile volleys, shorter telegraphs, wider sweeps, bigger sweep damage (24), and 30% more damage taken from all sources.
 
 ## Version 24 — Terry tweak, achievements rebuilt
