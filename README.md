@@ -1,7 +1,30 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella & Jay (v18)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay & Terry (v19)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 19 — Terry the Hustler, Jay tuning, upgrade balance
+
+- **Iron Will** is now +20 max HP and -15% speed (was +60 HP, -10% speed).
+- **Second Chance** revives at 25% HP with 1 s of invulnerability (was 50% HP, 2 s).
+
+- **Upgrades for Terry:** Double Tap, Piercing Rounds and Explosive Rounds all work on his money gun and coins. Cooldown Crunch and Snack Time apply to all his abilities.
+- **Terry** is a new playable character (support-damage hybrid, class **Hustler**): **110 HP**, speed 240. Pick him in the lobby (four cards now: Coolguy15, Zach, Jay, Terry).
+- **Money gun (left click):** rapid-fire cash. A bill fires every **0.07 s** for **3** damage each. Upgrades that add multishot fan the bills out.
+- **Q — Lucky Coin (9 s cooldown):** flips a fan of **five** spinning coins. Each coin deals **9** damage and bounces off the walls twice.
+- **E — Briefcase Bomb (12 s cooldown):** throws a briefcase that flies for **4 s**. It deals **20** damage each time it hits the boss (the boss can be hit again every 0.45 s while the case is over it). Every time it bounces off an edge it sprays money in all directions. At 4 s it explodes into a ring of cash for **12** damage per bill. The case glows green in its last second.
+- **R — Cash Shield (10 s cooldown):** a 3 s green shield. Boss projectiles that touch Terry are blocked and fired back at the boss as cash bills. Shield blocks projectiles only, not lasers, sweeps or Black Flash.
+- Terry's sprites (idle 1/2, walk 1/2, money gun, money bill, coin, briefcase) are used as supplied. Terry has his own lines in the intro, phase, outro and victory dialogue.
+
+### Jay changes
+
+- **Food damage** is now **6–9** for every snack projectile: flicked snacks, Food Barrage snacks that hit the boss.
+- **Pan melee** (close-range swing) now does **13** damage per hit. The Pan Boomerang still does 20 per hit.
+- **80 HP** (was 90).
+- **Upgrades:** Double Tap throws an extra snack per flick, and Piercing Rounds adds 25% snack damage per stack.
+- **Basic attack is slightly slower:** 0.32 s between attacks (was 0.25 s).
+- **Watermelon snack:** each snack thrown (flick or barrage) has a **0.5%** chance to be the watermelon, drawn bigger. Set `MELON_CHANCE` in the script to change this.
+- **Walk and idle animations fixed.** The walk used to alternate between the walk sprite and an idle frame, so it barely moved. There are now two walk frames with stepping legs, and the idle alternates between two frames with a breathing stretch.
 
 ## Version 18 — Jay, the support cook
 
