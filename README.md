@@ -1,7 +1,28 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio (v20)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v23)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 23 — Secret boss 8: Hateful Doom
+
+- **How to unlock:** leave Mason for last. When the second of Will and Jackson falls while Mason is still alive, the secret cutscene plays: Mason finishes them off, Will says "your not mason", and Mason transforms.
+- **Hateful Doom** has 9999 HP. The fight lasts exactly as long as `Hateful_Doom_secret_boss_8.mp3` (157 s). If the song ends first, you lose instantly, with a short cutscene.
+- His sprite alternates between `Mason Dark 1 (secret boss 8).png` and `Mason Dark 2 (secret boss 8).png` every 0.22 s.
+- **Pitch-black attacks:** Black Fire Rain (marked spots burst into rings of black flame), Spear Volley (black spears fall through telegraphed lanes), Eclipse Spiral, Void Pulse (rings of darkness), Shadow Dash (he vanishes, reappears beside you and slashes), Umbral Sweep (a black beam), and **Copy**, which fires a random attack from another boss rebuilt in black, with a banner naming the source.
+- **Stage:** a darker, greyer alley with red and blue accents. The gradient, bars and ribbon react to the music's spectrum.
+- **Phases:** at 66% and 33% health he attacks faster, fires bigger volleys and wider sweeps, and a banner announces each phase.
+- **Achievement:** Hateful Doom (defeat him before the song ends). Added a credit line for the track.
+- **Balance note:** 9999 HP in 157 s needs about 64 effective damage per second. Tune this in `SEC_TIME` and the HP in `secTransform` if it is too hard.
+- **Not yet tested:** multiplayer with a second client, and the cutscene visuals (checked through the state machine and the fight screenshots, not by watching the cutscene frames).
+
+
+## Version 22 — Boss 7 remake: new stage, all-new attacks
+
+- **New stage** for boss 7: a midnight food alley with a checker floor, neon frames, spotlights and rising steam.
+- **Will** (aura): **Spirit Chase** (ghosts that home in on you), **Aura Orbit** (orbs circle him, then fire at you), **Zig-Zag Bugs** (bugs that wiggle as they fly), **Chakra Pulse** (rings expand out, so stay between them).
+- **Jackson** (gunner): **Reload Barrage** (six shots, then he reloads for 1.6 s and takes 50% more damage, shown as RELOADING), **Twig Sweep** (a telegraphed beam that swings across the arena), **Pinball Rounds** (bullets that bounce four times), **Ruler Grid** (telegraphed lanes with one safe lane).
+- **Mason** (food): **Pizza Boomerang** (slices fly out and swing back to him), **Burger Drop** (burgers land and leave slowing sauce), **Sausage Roll** (he rolls at you and leaves a greasy trail, and can't act while rolling), **Hot Dog Split** (hot dogs burst into pieces when they run out of range).
+- The four map attacks from v21 are unchanged.
 
 ## Version 21 — More Boss 7 attacks and map hazards
 
