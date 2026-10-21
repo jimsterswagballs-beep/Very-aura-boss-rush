@@ -1,13 +1,28 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay & Terry (v19)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio (v20)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 20 — Boss 7: The Hover Trio
+
+- **Boss 7 is three bosses fighting at once:** Will (3,800 HP), Jackson (4,400 HP) and Mason (5,000 HP). Each has its own health bar, and the fight ends when all three are down. HP scales with difficulty and party size like the other bosses.
+- **Intro cutscene** (plays with the *Suffocate In Dust II* track, which replaces the normal boss intro):
+  - 0–16 s: a black screen with a clock in the middle that ticks once a second.
+  - 16 s: Will walks in and hovers, giving off aura sparks, for 9 s.
+  - After that, Jackson walks in from the left and Mason from the right.
+  - Will: "we found them boys". Jackson: "damn son". These lines cannot be skipped, not even with the skip setting.
+  - The screen flashes and the fight starts.
+- **Attacks** (boss 7 has 13 in total, four more than before). Will: aura rings, aimed sparks and slams. Jackson: gunfire, ricochet shots and pinpoint blasts. Mason: an all-food set (flying snacks, a dumpling ring, a chopstick line, sauce splats, bouncing burgers, falling eggs and spinning pizzas). Phases follow the combined HP of the three.
+- Timings are in the `T7` constant in the script (`clock`, `walk`, `hover`, `pair`), and attacks are in `TRI_FIRE`.
+- New files that must sit in the root with `index.html`: `Will (boss 7).png`, `Jackson (boss 7).png`, `Mason (boss 7).png`, `Suffocate_In_Dust_II_boss_7.mp3`.
+- Beating boss 7 unlocks the **Triple Threat** achievement. Its victory dialogue and music credit were added too.
 
 ## Version 19 — Terry the Hustler, Jay tuning, upgrade balance
 
 - **Iron Will** is now +20 max HP and -15% speed (was +60 HP, -10% speed).
 - **Second Chance** revives at 25% HP with 1 s of invulnerability (was 50% HP, 2 s).
 
+- **Character select** is now a two-column grid that grows with the roster. Cards shrink to a compact layout once there are more than four characters, and the player list no longer overlaps the cards.
 - **Upgrades for Terry:** Double Tap, Piercing Rounds and Explosive Rounds all work on his money gun and coins. Cooldown Crunch and Snack Time apply to all his abilities.
 - **Terry** is a new playable character (support-damage hybrid, class **Hustler**): **110 HP**, speed 240. Pick him in the lobby (four cards now: Coolguy15, Zach, Jay, Terry).
 - **Money gun (left click):** rapid-fire cash. A bill fires every **0.07 s** for **3** damage each. Upgrades that add multishot fan the bills out.
