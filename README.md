@@ -1,7 +1,14 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v16)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework & Fella (v17)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 17 — bigger bat, sauce puddles, more attacks
+
+- **Fella's bat** is about 70% bigger. Bat Sweep now lunges Fella toward you through the strike, leaves a crimson crescent that sweeps the arc, shows bat afterimages, and shakes the screen on contact.
+- **Sauce puddles** are 60% larger on screen and in collision. Standing in one deals **1 damage every 0.15 seconds** (it applies to any puddle, whoever made it) and still slows you.
+- **Evil Zach** has three new attacks: **Knife Rain** (knives drop onto telegraphed spots near you), **Knife Spiral** (an expanding spiral of knives), and **Shadow Slash** (blinks beside you and slashes through). Knife Rain appears from phase 1, Knife Spiral from phase 2, and Shadow Slash from phase 3.
+- **Fella** has three new attacks: **Foul Ball** (a ball that ricochets off the walls up to four times), **Sauce Fastball** (a telegraphed line and a fast sauce bullet), and **Vertical Pitch** (two top-down pitch lanes). Foul Ball appears from phase 1, Sauce Fastball from phase 2, and Vertical Pitch from phase 3.
 
 ## Version 16 — hitboxes, Evil Zach ultimate, Black Flash aftershock, and a new Fella
 

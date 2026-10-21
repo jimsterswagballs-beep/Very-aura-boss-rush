@@ -721,6 +721,14 @@ M.bWhirl=function(b,dt,t){if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.sw=1.5;b.rolling=1;X
 ATK[4]=[['comboStrike','knifeFan','copycatTrail','burgerToss','knifeJuggle','knifeLunge','blackFlash'],
  ['comboStrike','knifeFan','copycatTrail','burgerToss','knifeJuggle','knifeLunge','cloneCircle','knifeWhirl','backstab','knifeRicochet','knifeFlurry','blackFlash'],
  ['comboStrike','copycatTrail','burgerToss','knifeJuggle','cloneCircle','knifeWhirl','backstab','mirrorDash','knifeFlurry','finalCut','counterfeitRush','fakeout','blackFlash']];
+// ===== v17: EXTRA EVIL ZACH ATTACKS =====
+Object.assign(A,{
+ knifeRain(b,t){X('warn');const n=6+b.ph*2;for(let k=0;k<n;k++){const x=cl(t.x+rnd(-210,210),60,W-60),y=cl(t.y+rnd(-130,130),130,470);warn({x,y,r:26,dur:.42+k*.12,fn:()=>{X('whoosh');bp(x,y-270,PI/2,520,{img:'eknife',sz:56,r:14,dmg:14,life:2.2,rot:PI/2});fx(['p',x,y,5,'#f9e84c',160,.3,4])}})}b.cd=2.9},
+ knifeSpiral(b,t){X('charge');const n=18+b.ph*4,base=Math.atan2(t.y-b.y,t.x-b.x);fx(['r',b.x,b.y,70,'#f9e84c']);for(let k=0;k<n;k++){const an=base+k*.42;warn({x:b.x,y:b.y,r:2,dur:k*.07,fn:()=>{bp(b.x,b.y,an,340,{img:'eknife',sz:52,r:13,dmg:12,life:3.2,rot:an+PI/2,spin:3})}})}b.cd=3.2},
+ shadowSlash(b,t){const a=Math.atan2(t.y-b.y,t.x-b.x),side=R()<.5?1:-1,nx=cl(t.x+Math.cos(a+PI/2*side)*120,60,W-60),ny=cl(t.y+Math.sin(a+PI/2*side)*120,120,H-70);X('warn');warn({x:nx,y:ny,r:44,dur:.5,img:'ez',fn:()=>{fx(['p',nx,ny,14,'#b36bff',220,.4,5]);b.x=nx;b.y=ny;const aim=Math.atan2(t.y-ny,t.x-nx);b.a=aim;X('stab');const h={x:b.x,y:b.y,a:aim,r:118,half:.9};alive().forEach(p=>{if(p.inv<=0&&sectorContains(h,p.x,p.y,PLAYER_HIT_R))hitP(p,20)});fx(['r',b.x+Math.cos(aim)*80,b.y+Math.sin(aim)*80,70,'#f9e84c']);for(let k=0;k<12;k++)fx(['p',b.x+Math.cos(aim+rnd(-.8,.8))*rnd(40,110),b.y+Math.sin(aim+rnd(-.8,.8))*rnd(40,110),3,'#f9e84c',200,.3,4])}});b.cd=3.3},
+});
+ATK[4][0].push('knifeRain');ATK[4][1].push('knifeRain','knifeSpiral');ATK[4][2].push('knifeRain','knifeSpiral','shadowSlash');
+// ===== END v17 EVIL ZACH =====
 // ===== BOSS 6: FELLA, THE WALK-OFF MENACE (v16 remake) =====
 // Three phases. Warm-Up: bat sweeps, bouncing sauce bunts, sticky slides.
 // Bullpen: pitch lanes, a minion relay, and sauce rain. Walk-Off: shockwave slams and lob homers.
@@ -744,7 +752,9 @@ Object.assign(A,{
 Object.assign(M,{
  batSweep(b,dt,t){const q=b.fc;if(!q){b.mode=null;b.nd=0;b.cd=1.6;return}q.t+=dt;
   if(q.t<.34)q.a=Math.atan2(t.y-b.y,t.x-b.x);
-  if(!q.hit&&q.t>=.34){q.hit=1;const h={x:b.x,y:b.y,a:q.a,r:112,half:.78};let n=0;alive().forEach(p=>{if(p.inv<=0&&sectorContains(h,p.x,p.y,PLAYER_HIT_R)){hitP(p,22+(b.ph||0)*3);p.sauceSlow=Math.max(p.sauceSlow||0,.55);n++}});
+  // The swing carries Fella forward into the strike.
+  if(q.t>=.3&&q.t<.5){b.x=cl(b.x+Math.cos(q.a)*720*dt,55,W-55);b.y=cl(b.y+Math.sin(q.a)*720*dt,112,H-72)}
+  if(!q.hit&&q.t>=.34){q.hit=1;SH=Math.max(SH,9);const h={x:b.x,y:b.y,a:q.a,r:112,half:.78};let n=0;alive().forEach(p=>{if(p.inv<=0&&sectorContains(h,p.x,p.y,PLAYER_HIT_R)){hitP(p,22+(b.ph||0)*3);p.sauceSlow=Math.max(p.sauceSlow||0,.55);n++}});
    fx(['r',b.x+Math.cos(q.a)*78,b.y+Math.sin(q.a)*78,76,'#ff364d']);for(let k=0;k<16;k++){const a=q.a+rnd(-.8,.8);fx(['p',b.x+Math.cos(a)*rnd(32,104),b.y+Math.sin(a)*rnd(32,104),3,k%3?'#ff3048':'#ffb6b6',rnd(120,320),.4,5,'pixel'])}
    if(q.i===1)S.zn.push({x:b.x+Math.cos(q.a)*96,y:b.y+Math.sin(q.a)*96,r:38,life:3.2,max:3.2,col:'#ff2845',dmg:0,slowField:1});
    X(n?'hit':'whoosh')}
@@ -765,6 +775,15 @@ Object.assign(M,{
  lobHomer(b,dt,t){const q=b.hr;if(!q){b.mode=null;b.nd=0;b.cd=1.8;return}q.t+=dt;b.a=Math.atan2(q.y-b.y,q.x-b.x);if(q.t>=1.4){b.hr=null;b.mode=null;b.nd=0;b.cd=1.9}}
 });
 // ===== END BOSS 6 =====
+// ===== v17: EXTRA FELLA ATTACKS =====
+Object.assign(A,{
+ foulBall(b,t){X('swing');const a=Math.atan2(t.y-b.y,t.x-b.x);fx(['r',b.x,b.y,70,'#ff2844']);warn({x:b.x,y:b.y,r:40,dur:.35,fn:()=>{X('hit');for(const d of [-.22,0,.22]){bp(b.x,b.y,a+d,420,{img:'minion',sz:42,r:12,dmg:14,life:4.6,bounce:4,spin:d?d*12:5})}}});b.cd=2.6},
+ sauceFastball(b,t){const a=Math.atan2(t.y-b.y,t.x-b.x);X('warn');X('fellaPitch');warn({x:b.x,y:b.y,r:W,k:'l',a,dur:.5,fn:()=>{X('whoosh');bp(b.x,b.y,a,760,{img:'sauce',sz:38,r:10,dmg:16,slow:.5,life:2.4,spin:4})}});b.cd=2.4},
+ vertPitch(b,t){X('warn');const xs=[cl(t.x-70,60,900),cl(t.x+70,60,900)];xs.forEach((x,i)=>{warn({x,y:0,r:H,k:'l',a:PI/2,dur:.8+i*.2,fn:()=>{X('whoosh');bp(x,-30,PI/2,500,{img:'minion',sz:44,r:12,dmg:14,life:3.4,spin:i?3:-3});bp(x,-90,PI/2,500,{img:'minion',sz:44,r:12,dmg:14,life:3.4,spin:i?-3:3})}})});b.cd=3},
+});
+ATK[5][0].push('foulBall');ATK[5][1].push('foulBall','sauceFastball');ATK[5][2].push('vertPitch','sauceFastball');
+// ===== END v17 FELLA =====
+
 function stepBoss(b,dt,attackSource){if(b.idx===3||b.isAllianceAlly){const o=b.isAllianceAlly?S.bs:S.bs2;if(o&&o.hp<=0)dt*=1.35}b.fl=Math.max(0,(b.fl||0)-dt);b.t=(b.t||0)+dt;if(b.inv||b.hp<=0)return;const t=nearest(b.x,b.y);if(!t)return;
  if(b.idx===4){b.trT=(b.trT||0)-dt;if(b.trT<=0){b.trT=.12;(b.trail=b.trail||[]).push({x:t.x,y:t.y});if(b.trail.length>26)b.trail.shift()}}
  if(b.mode){M[b.mode](b,dt,t);if(b.mode&&!b.nd&&(b.mode!=='charge'||!b.cdash)){const hx=b.isAllianceAlly?730:(b.idx===3?300:480),hy=b.isAllianceAlly?175:150;b.x+=(hx-b.x)*dt*.3;b.y+=(hy-b.y)*dt*.3}return}
@@ -821,10 +840,21 @@ function launchSurvivalWave(){const players=alive();if(!players.length)return;co
  else{S.survName='LADLE & PIPE SMASH';X('warn');for(let i=0;i<5;i++){const x=cl(tx+rnd(-170,170)*(i?1:0),90,870),y=cl(ty+rnd(-90,90)*(i?1:0),140,480),bao=i%2===0;warn({x,y,r:100,dur:.8+i*.45,img:bao?'dump':'pipe',fn:()=>{boom(x,y,92,18,'b',bao?'#ffcf5a':'#ff6060');fx(['s',5]);for(let k=0;k<8;k++)(bao?dump:pipe)(x,y,k*PI/4,190,{sz:bao?50:58,r:bao?15:17,dmg:11,life:3})}})}}
  S.survAttackCd=(wave===4?4.2:(wave===5||wave===10?4.4:(wave===1?3.8:3.1)))*(1.12-.4*(VZ.lvl||0));for(let i=0;i<24;i++)fx(['p',rnd(30,W-30),rnd(80,H-30),rnd(2,5),i%2?'#ffd34a':'#ff5a5a',rnd(100,300),rnd(.3,.8),5])}
 // ===== END PHASE 4.5 WAVES =====
+// v17: shared zone update. Sauce puddles are 1.6x their old radius and deal 1 damage every 0.15 seconds to anyone standing in them.
+const SAUCE_SCALE=1.6;
+function updZones(dt){
+ alive().forEach(p=>p.inSauce=0);
+ for(const z of S.zn){z.life-=dt;
+  if(z.slowField){if(!z.big){z.big=1;z.r*=SAUCE_SCALE}alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R){p.sauceSlow=Math.max(p.sauceSlow||0,.28);p.inSauce=1}})}
+  else{z.tick=(z.tick||0)-dt;if(z.tick<=0){z.tick=.48;alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)hitP(p,z.dmg||10)})}}
+ }
+ alive().forEach(p=>{if(!p.inSauce){p.sauceTk=0;return}p.sauceTk=(p.sauceTk||0)-dt;if(p.sauceTk<=0){p.sauceTk=.15;p.hp=Math.max(0,p.hp-1);p.tk+=1;fx(['d',p.x,p.y-30,'-1','#ff4d5e',0]);if(p.hp<=0){p.hp=0;p.dead=1;X('die')}}});
+ S.zn=S.zn.filter(z=>z.life>0);
+}
 function stepSurvivalWorld(dt){
  // Release telegraphed arena attacks when their warning timers expire.
  for(const w of S.wr){w.t+=dt;if(w.t>=w.dur){w.done=1;if(w.fn)w.fn()}}S.wr=S.wr.filter(w=>!w.done);
- for(const z of S.zn){z.life-=dt;if(z.slowField){alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)p.sauceSlow=Math.max(p.sauceSlow||0,.28)})}else{z.tick=(z.tick||0)-dt;if(z.tick<=0){z.tick=.48;alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)hitP(p,z.dmg||10)})}}}S.zn=S.zn.filter(z=>z.life>0);
+ updZones(dt);
  for(const q of S.pr){q.life-=dt;if(q.life<=0&&q.pop&&q.own==='b'&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}const sl=q.own==='b'?S.slowm||1:1;if(q.curve){const aa=q.curve*dt,cs=Math.cos(aa),sn=Math.sin(aa),vx=q.vx;q.vx=vx*cs-q.vy*sn;q.vy=vx*sn+q.vy*cs;if(q.curveLife!=null){q.curveLife-=dt;if(q.curveLife<=0)q.curve=0}}q.x+=q.vx*dt*sl;q.y+=q.vy*dt*sl;q.rot+=q.spin*dt;if(q.bounce>0){if(q.x<12||q.x>W-12){q.vx*=-1;q.x=cl(q.x,12,W-12);q.bounce--}if(q.y<100||q.y>H-12){q.vy*=-1;q.y=cl(q.y,100,H-12);q.bounce--}}if(q.own==='b'){for(const p of alive())if(dist(q.x,q.y,p.x,p.y)<q.r*ATK_HIT+PLAYER_HIT_R){hitP(p,q.dmg);if(q.slow)p.sauceSlow=Math.max(p.sauceSlow||0,q.slow);if(!q.pierce){q.life=0;if(q.pop&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}}}}if(q.x<-80||q.x>W+80||q.y<-80||q.y>H+80)q.life=0}S.pr=S.pr.filter(q=>q.life>0);
 }
 function step(dt){if(S.paused)return;S.t+=dt;if(S.bfAfter){S.bfAfter.t+=dt;if(S.bfAfter.t>=S.bfAfter.dur)S.bfAfter=null}if(S.ezUlt&&S.ezUlt.stage!=='end'&&S.st!=='dlg'){stepEvilZachUltimate(dt);return;}if(S.st==='bfcut'){if(S.bfCut){const c=S.bfCut,oldT=c.t;c.t+=dt;const cues=c.finisher?[.12,.38,.86,1.32,1.92,2.55,2.84,3.25,3.85,4.23]:[.12,.38,.86,1.32,1.92,2.55];const sounds=['bfCrack','bfBoom','whoosh','bfImpact','bfFinisher','bfFinal','bfBoom','bfCrack','bfTail','bfFinal'];while((c.beats||0)<cues.length&&oldT<cues[c.beats||0]&&c.t>=cues[c.beats||0]){const ix=c.beats||0;X(sounds[ix]);if(ix===0||ix===3||ix===5||ix===7){fx(['f',ix===0?'#fff':'#ff1738']);SH=Math.max(SH,ix===0?16:(ix===5?18:22))}if(ix===1||ix===4||ix===6){fx(['r',c.x,c.y,ix===6?210:150,'#ff1738']);fx(['s',ix===6?22:18]);for(let j=0;j<30;j++){const a=rnd(0,PI*2);fx(['p',c.x+Math.cos(a)*rnd(20,120),c.y+Math.sin(a)*rnd(12,80),3,j%2?'#050207':'#fff',rnd(180,440),.35,6,'pixel'])}}c.beats=(c.beats||0)+1}if(c.t>=c.dur){X(c.finisher?'bfTail':'bfEcho');S.bfCut=null;S.bfAfter={t:0,dur:c.finisher?1.7:1.3,x:c.x,y:c.y,a:c.a,fin:c.finisher?1:0};SH=Math.max(SH,10);if(alive().length){S.st='fight';if(S.bs){S.bs.inv=0;S.bs.cd=1.15}}else S.st='over'}}return;}
@@ -836,7 +866,7 @@ function step(dt){if(S.paused)return;S.t+=dt;if(S.bfAfter){S.bfAfter.t+=dt;if(S.
  Object.values(S.pl).forEach(p=>stepPl(p,dt));if(S.st!=='fight')return;
  stepBoss(b,dt);
  if(b.idx===3&&S.bs2&&S.bs2.hp>0){stepBoss(S.bs2,dt,1)} 
- for(const z of S.zn){z.life-=dt;if(z.slowField){alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)p.sauceSlow=Math.max(p.sauceSlow||0,.28)})}else{z.tick=(z.tick||0)-dt;if(z.tick<=0){z.tick=.48;alive().forEach(p=>{if(dist(z.x,z.y,p.x,p.y)<z.r*ATK_HIT+PLAYER_HIT_R)hitP(p,z.dmg||10)})}}}S.zn=S.zn.filter(z=>z.life>0);
+ updZones(dt);
  S.pkT-=dt;if(S.pkT<=0&&S.pk.length<2){S.pkT=18;S.pk.push({x:rnd(80,880),y:rnd(150,450)})}
  S.pk=S.pk.filter(k=>{for(const p of alive())if(dist(k.x,k.y,p.x,p.y)<PICKUP_HIT_R+PLAYER_HIT_R){const h=Math.round(p.max*.15);p.hp=Math.min(p.max,p.hp+h);fx(['d',p.x,p.y-34,'+'+h,'#6f6',0]);fx(['p',k.x,k.y,14,'#ffd34a',200,.5,4]);X('heal');return false}return true});
  for(const q of S.pr){q.life-=dt;if(q.life<=0&&q.pop&&q.own==='b'&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}const sl=q.own==='b'?S.slowm:1;if(q.curve){const aa=q.curve*dt,cs=Math.cos(aa),sn=Math.sin(aa),vx=q.vx;q.vx=vx*cs-q.vy*sn;q.vy=vx*sn+q.vy*cs;if(q.curveLife!=null){q.curveLife-=dt;if(q.curveLife<=0)q.curve=0}}q.x+=q.vx*dt*sl;q.y+=q.vy*dt*sl;q.rot+=q.spin*dt;
@@ -1183,13 +1213,21 @@ function drawFellaBoss(b,o,t){
  const ph=b.ph||0;
  if(ph>=1){g.save();g.globalCompositeOperation='lighter';for(let j=0;j<4;j++){const a=t*(1.5+j*.25)+j*2.094;g.strokeStyle=j%2?'rgba(255,42,65,.5)':'rgba(255,230,180,.62)';g.lineWidth=2+j;g.beginPath();g.arc(o.x,o.y,72+j*15+Math.sin(t*5+j)*5,a,a+1.45);g.stroke()}g.restore()}
  // Batting telegraph: the red arc shows exactly where the next sweep lands.
- if(b.fc&&b.fc.t<.34){g.save();g.globalAlpha=.18+.3*Math.sin(t*30);g.fillStyle='#ff233f';g.beginPath();g.moveTo(o.x,o.y);g.arc(o.x,o.y,112,b.fc.a-.78,b.fc.a+.78);g.closePath();g.fill();g.strokeStyle='#ffe6e8';g.lineWidth=2;g.stroke();g.restore()}
+ if(b.fc&&b.fc.t<.34){g.save();g.globalAlpha=.18+.3*Math.sin(t*30);g.fillStyle='#ff233f';g.beginPath();g.moveTo(o.x,o.y);g.arc(o.x,o.y,150,b.fc.a-.78,b.fc.a+.78);g.closePath();g.fill();g.strokeStyle='#ffe6e8';g.lineWidth=2;g.stroke();g.restore()}
  // The bat is cocked during windup and whips through the arc on contact.
  let aa=b.a||0,swing=0;
  if(b.fc){aa=b.fc.a;swing=b.fc.t<.34?-.5*(b.fc.t/.34):.85*Math.min(1,(b.fc.t-.34)/.18)}
  else if(b.fr&&b.fr.phase==='slide'){aa=b.fr.a}
  else if(b.hr){aa=Math.atan2(b.hr.y-o.y,b.hr.x-o.x);swing=b.hr.t<1.1?-.4:.9}
- spr('bat',o.x+Math.cos(aa+.45+swing)*53,o.y+Math.sin(aa+.45+swing)*49+6,88,aa+PI/2+swing,1,Math.cos(aa)<0?-1:1,.98);
+ // Swing effects: a crimson crescent sweeps the arc during the strike, with fading bat afterimages behind the bat.
+ if(b.fc&&b.fc.t>=.34){const k=cl((b.fc.t-.34)/.16,0,1),a0=aa-.85,a1=a0+1.7*k;g.save();g.globalCompositeOperation='lighter';
+  const gr=g.createRadialGradient(o.x,o.y,20,o.x,o.y,150);gr.addColorStop(0,'rgba(255,255,255,0)');gr.addColorStop(.7,'rgba(255,40,70,.6)');gr.addColorStop(1,'rgba(255,40,70,0)');g.globalAlpha=.7*(1-k*.4);g.fillStyle=gr;g.beginPath();g.moveTo(o.x,o.y);g.arc(o.x,o.y,150,a0,a1);g.closePath();g.fill();
+  g.strokeStyle='#fff';g.lineWidth=5;g.globalAlpha=.9*(1-k*.5);g.beginPath();g.arc(o.x,o.y,150,Math.max(a0,a1-.3),a1);g.stroke();
+  for(let j=1;j<=3;j++){g.globalAlpha=.3/j;g.strokeStyle='#ff3048';g.lineWidth=3;g.beginPath();g.arc(o.x,o.y,130-j*14,Math.max(a0,a1-.45*j),a1);g.stroke()}
+  g.restore();
+  for(let j=3;j>=1;j--){const sj=swing-j*.2;g.globalAlpha=.22/j;spr('bat',o.x+Math.cos(aa+.45+sj)*72,o.y+Math.sin(aa+.45+sj)*72+6,150,aa+PI/2+sj,1,Math.cos(aa)<0?-1:1,1)}
+  g.globalAlpha=1}
+ spr('bat',o.x+Math.cos(aa+.45+swing)*72,o.y+Math.sin(aa+.45+swing)*72+6,150,aa+PI/2+swing,1,Math.cos(aa)<0?-1:1,.98);
  // Slide: three dust streaks trail behind Fella.
  if(b.fr&&b.fr.phase==='slide'){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,40,65,.7)';g.lineWidth=3;const bx=-Math.cos(b.fr.a),by=-Math.sin(b.fr.a);for(let j=0;j<3;j++){g.beginPath();g.moveTo(o.x+bx*(20+j*9),o.y+by*(20+j*9)+(j-1)*8);g.lineTo(o.x+bx*(70+j*12),o.y+by*(70+j*12)+(j-1)*8);g.stroke()}g.restore()}
  // Walk-off slam: a shadow grows under Fella while he hangs in the air, then three rings ripple out.
