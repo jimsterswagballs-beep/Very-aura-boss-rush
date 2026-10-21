@@ -3,6 +3,14 @@
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
 
+## Version 21 — More Boss 7 attacks and map hazards
+
+- **Will** has two new attacks: **Ghost Wave** (a ring of ghosts that curl away) and **Bug Swarm** (bugs that bounce around the arena).
+- **Jackson** has two new attacks: **Twig Volley** (spinning twigs) and **Ruler Snipe** (a telegraphed line).
+- **Mason's** attacks are all food, as of v20.
+- **Map attacks** happen on their own timer during the boss 7 fight, separate from the bosses: **Food Rain** (falling food with landing marks), **Bug Horde** (bugs sweep across), **Ruler Slam** (a full-width line with a safe gap) and **Sauce Flood** (slowing sauce puddles). They come more often as the bosses lose health.
+- New sprite files in the root: `Ghost (boss 7).png`, `Twig (boss 7).png`, `Bug (boss 7).png`, `Ruler (boss 7).png`.
+
 ## Version 20 — Boss 7: The Hover Trio
 
 - **Boss 7 is three bosses fighting at once:** Will (3,800 HP), Jackson (4,400 HP) and Mason (5,000 HP). Each has its own health bar, and the fight ends when all three are down. HP scales with difficulty and party size like the other bosses.

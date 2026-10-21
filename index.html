@@ -9,7 +9,7 @@
 window.addEventListener('error',e=>{let d=document.getElementById('err');if(!d){d=document.createElement('pre');d.id='err';d.style.cssText='position:fixed;left:0;top:0;right:0;margin:0;padding:8px;background:#600;color:#fff;font:12px monospace;z-index:9;white-space:pre-wrap';document.body.appendChild(d)}d.textContent='Game error: '+e.message+' (line '+e.lineno+')\n'+d.textContent});
 const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=W;cv.height=H;g.imageSmoothingEnabled=false;
 const R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d),sideOfLane=i=>i%2?W-12:12;
-const F={start:'startbutton.png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png'};
+const F={start:'startbutton.png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png'};
 const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp3',m1:'Cheese Crusade V2 (boss 1).mp3',m2:'The guy(Boss 2).mp3',m3:'SpongeSwap - Hell Or High Water_Phase 2 (boss 3).mp3',m4:'Pyrosomni (boss 4).mp3',surv:'Timebomb Madness OST - Overdue - blocco (boss 4.5).mp3',m5:'SpongeBob SquarePants SuperSponge - Vs. Patrick (boss 5).mp3',m6:'Vs. Randy boss 6.mp3',m7:'Suffocate_In_Dust_II_boss_7.mp3'};
 /* ---------- DATA ---------- */
 const CH={cg:{n:'Coolguy15',hp:100,spd:230,i:['cgi1','cgi2'],w:['cgw1','cgw2'],ab:['Brick Toss','Overclock','Roll'],dsc:['Hurl a huge piercing brick','4s of double fire rate','Invulnerable dash'],wp:'Gun: aim with mouse, hold click to shoot'},
@@ -1089,7 +1089,8 @@ function step(dt){if(S.paused)return;S.t+=dt;if(S.st==='intro7'){stepTrioIntro(d
 // Each boss has its own health bar. Player shots reach them through bossTargets(), and damage goes through triDamage().
 const T7={clock:16,walk:1.6,hover:9,pair:2,fade:.8};
 const TRI_HOME=[{x:480,y:200},{x:215,y:330},{x:745,y:330}];
-const TRI_POOL=[['auraRing','auraAim','auraSlam'],['fan','ricochet','pin'],['snackThrow','dumplingRing','chopstickLine','sauceSplat','burgerBounce','eggBarrage','pizzaSpin']];
+const TRI_POOL=[['auraRing','auraAim','auraSlam','ghostWave','bugSwarm'],['fan','ricochet','pin','twigVolley','rulerSnipe'],['snackThrow','dumplingRing','chopstickLine','sauceSplat','burgerBounce','eggBarrage','pizzaSpin']];
+const MAP_POOL=['foodRain','bugHorde','rulerSlam','sauceFlood'];
 const TRIO_OPEN=[["Will","we found them boys"],["Jackson","damn son"]];
 const TRIO_OUTRO=[["Will","Hovering was never the problem. The bats were."],["Mason","Hey, I was a bat, not a wall. Nobody warned me."]];
 const TRIO_WIN=[["Mason","Three down. Put the bat away, Jackson."],["Jackson","Fine. I'm keeping the gun, though."],["Will","Good hovering, everybody."]];
@@ -1124,7 +1125,7 @@ function stepTrioIntro(dt){
  else if(I.said)startTrioFight();
 }
 function startTrioFight(){
- S.in7=null;S.dlg=null;S.st='fight';
+ S.in7=null;S.dlg=null;S.st='fight';S.mapCd=5;S.mapLast='';
  [S.bs,...S.tri].forEach((q,i)=>{q.inv=0;q.cd=1.4+i*.35});
  fx(['f','#fff']);fx(['s',16]);X('phase');fx(['r',S.bs.x,S.bs.y,190,'#9dffb0']);
 }
@@ -1133,6 +1134,7 @@ function stepTrio(dt){
  const hp=all.reduce((s,q)=>s+Math.max(0,q.hp),0),mx=all.reduce((s,q)=>s+q.max,0),f=hp/mx,ph=f>.66?0:f>.33?1:2;
  if(ph>b.ph){all.forEach(q=>{q.ph=ph});X('phase');fx(['f','#9dffb0']);fx(['s',14]);fx(['r',b.x,b.y,230,'#9dffb0']);b.cd=Math.min(b.cd,.7)}
  const down=all.filter(q=>q.hp<=0).length,enrage=down?.8:1;
+ S.mapCd=(S.mapCd??5)-dt;if(S.mapCd<=0){const pool=MAP_POOL.filter(k=>k!==S.mapLast),k=pool[Math.floor(R()*pool.length)];S.mapLast=k;MAP_FIRE[k](ph);S.mapCd=[7.5,6,4.5][ph]*(.85+R()*.3)}
  if(b.hp>0)triBoss(b,dt,ph,enrage,t=>({x:480+Math.sin(t*.6)*210,y:200+Math.sin(t*1.1)*40}),1.3);
  if(J.hp>0)triBoss(J,dt,ph,enrage,t=>({x:215+Math.sin(t*.8)*75,y:330+Math.sin(t*1.5)*36}),1.2+ph*.2);
  if(M.hp>0)triBoss(M,dt,ph,enrage,t=>({x:745+Math.sin(t*.8+1)*75,y:330+Math.sin(t*1.5+2)*36}),1.2+ph*.2);
@@ -1154,6 +1156,12 @@ const TRI_FIRE={
  fan(q,t,ph){const n=ph>=1?7:5;X('eshoot');for(let k=0;k<n;k++)bp(q.x,q.y,q.a+(k-(n-1)/2)*.15,300,{img:'ebul',sz:34,r:12,dmg:12,life:3})},
  ricochet(q,t,ph){X('eshoot');(ph>=1?[-.42,0,.42]:[-.42,.42]).forEach(o=>bp(q.x,q.y,q.a+o,270,{img:'ebul',sz:34,r:12,dmg:12,life:5,bounce:2}))},
  pin(q,t,ph){const x=t.x,y=t.y;warn({x,y,r:44,dur:1.05-ph*.12,img:'ebul',fn:()=>boom(x,y,44,20,'b','#ff9a3c')})},
+ // Will (new): a ring of ghosts that curl away, and a swarm of bugs that bounce around the arena.
+ ghostWave(q,t,ph){const N=ph>=1?12:8,a0=R()*PI*2;X('ring');for(let k=0;k<N;k++){const a=a0+k*2*PI/N;bp(q.x,q.y,a,160,{img:'b7ghost',sz:42,r:14,dmg:11,life:4.5,curve:k%2?.9:-.9,curveLife:1.4})}},
+ bugSwarm(q,t,ph){X('eshoot');const n=ph>=1?6:4;for(let k=0;k<n;k++)bp(q.x,q.y,q.a+(k-(n-1)/2)*.3,270,{img:'b7bug',sz:34,r:12,dmg:11,life:5,bounce:2,spin:6})},
+ // Jackson (new): twig volleys that spin in, and a ruler snipe along a telegraphed line.
+ twigVolley(q,t,ph){X('throw');const n=ph>=1?4:3;for(let k=0;k<n;k++)bp(q.x,q.y,q.a+(k-(n-1)/2)*.22,330,{img:'b7twig',sz:46,r:14,dmg:13,life:3.4,spin:7})},
+ rulerSnipe(q,t,ph){const x=q.x,y=q.y,a=q.a,c=Math.cos(a),s=Math.sin(a),L=1500;X('whoosh');warn({k:'l',x,y,a,r:L,dur:.9-ph*.1,fn:()=>alive().forEach(p=>{const dx=p.x-x,dy=p.y-y,along=dx*c+dy*s,across=-dx*s+dy*c;if(along>0&&along<L&&Math.abs(across)<28+PLAYER_HIT_R)hitP(p,16)})})},
  // Mason: an all-food set. Snacks fly, dumplings ring the arena, chopsticks strike in a line, sauce splats, burgers bounce, eggs drop and pizzas spin.
  snackThrow(q,t,ph){X('throw');const n=ph>=1?3:2,img=R()<.5?'jf2':'jf3';for(let k=0;k<n;k++)bp(q.x,q.y,q.a+(k-(n-1)/2)*.28,250,{img,sz:50,r:15,dmg:14,life:3.4,spin:8})},
  dumplingRing(q,t,ph){const x=q.x,y=q.y,N=ph>=1?12:9,a0=R()*PI*2;warn({x,y,r:90,dur:.7,fn:()=>{X('ring');for(let k=0;k<N;k++)bp(x,y,a0+k*2*PI/N,230,{img:'dump',sz:40,r:14,dmg:13,life:3.6,spin:5})}})},
@@ -1162,6 +1170,13 @@ const TRI_FIRE={
  burgerBounce(q,t,ph){X('throw');(ph>=1?[-.4,0,.4]:[-.4,.4]).forEach(o=>bp(q.x,q.y,q.a+o,260,{img:'burger',sz:44,r:14,dmg:13,life:5,bounce:2,spin:4}))},
  eggBarrage(q,t,ph){for(let k=0;k<(ph>=1?5:4);k++){const x=cl(rnd(80,W-80),60,W-60),y=cl(rnd(130,H-80),110,H-60);warn({x,y,r:52,dur:.9+k*.12,img:'jf4',fn:()=>boom(x,y,52,15,'b','#fff3c4')})}},
  pizzaSpin(q,t,ph){X('throw');[-.3,0,.3].forEach(o=>bp(q.x,q.y,q.a+o,240,{img:'jf3',sz:46,r:14,dmg:12,life:4,spin:10,curve:1.6,curveLife:1.2}))}
+};
+// Map attacks: arena-wide hazards on their own timer while boss 7 fights.
+const MAP_FIRE={
+ foodRain(ph){const n=ph>=1?10:7;for(let k=0;k<n;k++){const x=rnd(70,W-70),y=rnd(130,H-80),img=['burger','xlb','jf1','jf3','jf5','dump'][Math.floor(R()*6)];warn({x,y,r:40,dur:1+k*.12,img,fn:()=>boom(x,y,40,12,'b','#ffd34a')})}},
+ bugHorde(ph){const fromLeft=R()<.5,y=rnd(150,H-90);X('whoosh');for(let k=0;k<(ph>=1?5:4);k++)bp(fromLeft?20:W-20,y+k*16-32,fromLeft?0:PI,260+k*15,{img:'b7bug',sz:34,r:12,dmg:11,life:5,spin:0})},
+ rulerSlam(ph){const y=rnd(170,H-90),gapX=rnd(130,W-130),gap=110;X('whoosh');warn({k:'l',x:0,y,a:0,r:W,dur:1.1-ph*.1,fn:()=>alive().forEach(p=>{if(Math.abs(p.y-y)<30+PLAYER_HIT_R&&Math.abs(p.x-gapX)>gap/2)hitP(p,16)})});warn({x:gapX,y,r:gap/2,dur:1.1-ph*.1,k:'c',fn:()=>{}})},
+ sauceFlood(ph){X('warn');const n=ph>=1?6:4;for(let i=0;i<n;i++){const x=rnd(120,W-120),y=rnd(170,H-100);warn({x,y,r:44,dur:.6+i*.25,img:'sauce',fn:()=>{S.zn.push({x,y,r:46,life:4.2,max:4.2,col:'#ff2845',dmg:0,slowField:1});X('slam');fx(['r',x,y,60,'#ff2845'])}})}}
 };
 // Called from dmgB for boss 7. target 'ally' is Jackson, 'ally2' is Mason, and 'main' is Will.
 function triDamage(v,x,y,col,crit,p,target){
