@@ -481,8 +481,8 @@ function hitP(p,dmg,exact=false){if(p.dead||p.inv>0||p.hide>0||ADMIN.god)return;
 function boom(x,y,r,dmg,own,col){X('boom');fx(['r',x,y,r,col||'#fff']);fx(['p',x,y,16,col||'#fff',260,.5,5]);fx(['s',own==='b'?5:3]);
  if(own==='b')alive().forEach(p=>{if(dist(x,y,p.x,p.y)<r*ATK_HIT+PLAYER_HIT_R)hitP(p,dmg)});else{const target=bossTargetAt(x,y,r);if(target)dmgB(dmg,x,y,col||'#ffa',0,null,target.id)}}
 function proj(o){S.pr.push(Object.assign({id:S.id++,rot:0,spin:0,life:3,own:'b',pierce:0,hit:[],r:10,sz:30,dmg:10,img:'dump'},o))}
-const bp=(x,y,a,sp,o)=>{if(!(o&&o.own==='p'))sp*=.92;return proj(Object.assign({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,rot:a},o))};
-const warn=o=>S.wr.push(Object.assign({t:0,dur:1,k:'c',r:50,a:0},o,{dur:(o&&o.dur!=null?o.dur:1)*1.1}));
+const bp=(x,y,a,sp,o)=>{if(!(o&&o.own==='p'))sp*=.92;if(S.secOn&&o&&o.dark){sp*=SEC_HARD.speed;if(o.r)o.r*=SEC_HARD.hit;if(o.curve===undefined&&!o.shape&&!o.home&&!o.boomer&&!o.split&&!o.wave){o.curve=rnd(-SEC_HARD.curve,SEC_HARD.curve);o.curveLife=1.4}}return proj(Object.assign({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,rot:a},o))};
+const warn=o=>S.wr.push(Object.assign({t:0,dur:1,k:'c',r:50,a:0},o,{dur:(o&&o.dur!=null?o.dur:1)*1.1*(S.secOn?SEC_HARD.warn:1)}));
 function nearest(x,y){let b=null,bd=1e9;alive().forEach(p=>{const d=dist(x,y,p.x,p.y);if(d<bd){bd=d;b=p}});return b}
 function ang2(a,b){const d=Math.abs(a-b)%(2*PI);return d>PI?2*PI-d:d}
 function attack(p){const m=p.m,rate=(p.buf>0?2:1)*m.rate;if(p.ch==='jay'){jayAttack(p,rate);return}if(p.ch==='terry'){terryAttack(p,rate);return}
@@ -1147,7 +1147,7 @@ function triBoss(q,dt,ph,enrage,home,speed){
  const t=nearest(q.x,q.y);if(!t)return;
  q.a=Math.atan2(t.y-q.y,t.x-q.x);
  q.cd-=dt*enrage;
- if(q.cd<=0){if(S.secOn&&(S.s7||[]).length>=9){q.cd=.4;return}const pool=(q.pool||TRI_POOL[q.pi]).filter(k=>k!==q.last),k=pool[Math.floor(R()*pool.length)];q.last=k;TRI_FIRE[k](q,t,ph);q.cd=[2.3,1.75,1.3][ph]*(.8+R()*.4)}
+ if(q.cd<=0){if(S.secOn&&(S.s7||[]).length>=SEC_HARD.cap){q.cd=.4;return}const pool=(q.pool||TRI_POOL[q.pi]).filter(k=>k!==q.last),k=pool[Math.floor(R()*pool.length)];q.last=k;TRI_FIRE[k](q,t,ph);q.cd=[2.3,1.75,1.3][ph]*(.8+R()*.4)*(S.secOn&&R()<SEC_HARD.double?.22:1)}
 }
 // ----- Boss 7 attacks (v22). Every attack has its own gimmick. -----
 // Will (aura): ghosts that home in, orbs that circle and then fire, bugs that zig-zag, and pulses that ripple out.
@@ -1167,7 +1167,7 @@ const TRI_FIRE={
  sausageRoll(q,t,ph){X('whoosh');s7add({k:'roll',boss:q,t:0,dur:.9,x0:q.x,y0:q.y,x1:cl(t.x,70,W-70),y1:cl(t.y,120,H-70)})},
  hotDogSplit(q,t,ph){X('throw');const n=ph>=1?5:4;for(let k=0;k<n;k++)bp(q.x,q.y,q.a+(k-(n-1)/2)*.42,250,{img:'jf2',sz:44,r:14,dmg:12,life:1.1+k*.05,spin:7,split:3})}
 };
-function s7add(o){(S.s7=S.s7||[]).push(o);return o}
+function s7add(o){if(S.secOn&&o.tele!=null)o.tele*=SEC_HARD.tele;(S.s7=S.s7||[]).push(o);return o}
 // Timed boss-7 hazards (orbs, beams, pulses, reloads, rolls). Runs on the host every frame of the fight.
 function stepS7(dt){
  if(!S.s7)return;
@@ -1191,7 +1191,7 @@ function stepS7(dt){
   if(o.k==='launch'){
    let open=0;
    o.list.forEach(it=>{if(it.done)return;if(o.t<it.at){open++;return}it.done=1;const pj=it.pj;
-    if(pj&&pj.life>0){const tg=nearest(pj.x,pj.y),a=tg?Math.atan2(tg.y-pj.y,tg.x-pj.x):0;pj.vx=Math.cos(a)*o.sp;pj.vy=Math.sin(a)*o.sp;pj.rot=a;fx(['r',pj.x,pj.y,26,'#ff1c3a']);fx(['p',pj.x,pj.y,5,'#050207',150,.35,4,'pixel']);X('eshoot')}});
+    if(pj&&pj.life>0){const tg=nearest(pj.x,pj.y),a=tg?Math.atan2(tg.y-pj.y,tg.x-pj.x):0;pj.vx=Math.cos(a)*o.sp*SEC_HARD.speed;pj.vy=Math.sin(a)*o.sp*SEC_HARD.speed;pj.rot=a;fx(['r',pj.x,pj.y,26,'#ff1c3a']);fx(['p',pj.x,pj.y,5,'#050207',150,.35,4,'pixel']);X('eshoot')}});
    return open>0;
   }
   if(o.k==='shuffle'){
@@ -1408,6 +1408,11 @@ const secEase=u=>u*u*(3-2*u);
 const SEC_NAME={blackFireRain:'BLACK FIRE RAIN',spearVolley:'SPEAR VOLLEY',eclipseSpiral:'ECLIPSE SPIRAL',voidPulse:'VOID PULSE',shadowDash:'SHADOW DASH',umbralSweep:'UMBRAL SWEEP',hunterSeq:'HUNTER CHAIN',nightNova:'NIGHT NOVA',orbShield:'SHADOW ORBS',graveSpikes:'GRAVE SPIKES',gravityWell:'GRAVITY WELL',curseSigil:'CURSE SIGIL',phantomDouble:'PHANTOM DOUBLE',reaperCrescent:'REAPER CRESCENT',eclipseGaze:'ECLIPSE GAZE',blackSun:'BLACK SUN',deathMarch:'DEATH MARCH',decoyShuffle:'THREE OF HIM',frozenEchoes:'FROZEN ECHOES',reverseSweep:'REVERSE SWEEP'};
 // Chance that a move's banner names a different move (the fight is meant to be a little misleading).
 const SEC_LIE=.2;
+// Difficulty knobs for Hateful Doom (v28). warn/tele scale telegraph times (lower = less time to dodge),
+// speed and hit scale dark shots, curve sets how hard dark shots bend, enrage speeds up casting,
+// double is the chance a cast is followed almost at once by another, cap is how many hazards may be live,
+// chaosEvery is the average seconds between random edge shots.
+const SEC_HARD={warn:.72,tele:.75,speed:1.25,hit:1.2,curve:.9,enrage:1.7,double:.3,cap:14,chaosEvery:2.2};
 // Which boss each copied move comes from. Its sprite flickers over him as an echo, then the black copy fires.
 const SRC_NAME={xlb:'XIAO LONG BAO',ucg:'UNCOOLGUY16',sp1:'EVIL SPONG',ez:'EVIL ZACH',fella:'FELLA',will:'WILL',jackson:'JACKSON',mason:'MASON'};
 // Copied moves: each one rebuilds a real move from another boss, drawn in black.
@@ -1531,7 +1536,7 @@ function stepSecretCut(dt){
 function secTransform(m){
  S.sc=null;S.secOn=1;S.secT=SEC_TIME;S.st='fight';S.s7=[];S.pr=[];S.wr=[];S.zn=[];
  m.hp=0;m.inv=1;S.bs.inv=0;
- S.sec={x:m.x,y:m.y,hp:9999,max:9999,fl:0,ph:0,t:0,cd:2.2,a:0,last:'',pool:SEC_POOL,inv:0,vanish:0,busy:0,stun:0,r:60};
+ const secHp=Math.round(16666*(1+.5*(nPl()-1)));S.sec={x:m.x,y:m.y,hp:secHp,max:secHp,fl:0,ph:0,t:0,cd:2.2,a:0,last:'',pool:SEC_POOL,inv:0,vanish:0,busy:0,stun:0,r:60};
  S.secBanner={txt:'HATEFUL DOOM',t:3.2};
  fx(['f','#ff1c3a']);fx(['s',22]);X('bossdie');fx(['r',m.x,m.y,260,'#ff1c3a']);fx(['r',m.x,m.y,170,'#2a5bff']);
 }
@@ -1644,16 +1649,28 @@ function stepSecret(dt){
  const f=q.hp/q.max,ph=f>.66?0:f>.33?1:2;
  if(ph>q.ph){q.ph=ph;X('phase');fx(['f','#ff1c3a']);fx(['s',16]);fx(['r',q.x,q.y,260,'#2a5bff']);secBurst(q.x,q.y,'#ff1c3a',60,1.4);S.secBanner={txt:ph===1?'PHASE II: THE BLACK FIRE':'PHASE III: NO MORE SONG',t:2.6}}
  stepS7(dt);
+ if(S.st==='fight')secChaos(dt);
  if(S.st!=='fight')return;
  // Stalking: the further into the fight, the more he leans toward the nearest player.
  const tg=nearest(q.x,q.y),lean=.08+.12*ph,hx=tg?tg.x:480,hy=tg?tg.y:250,lastMove=q.last;
- triBoss(q,dt,ph,1.35,t=>({x:cl(480+Math.sin(t*.5)*250+(hx-480)*lean,90,W-90),y:cl(250+Math.sin(t*.9)*70+(hy-250)*lean,130,H-150)}),1.1+ph*.15);
+ triBoss(q,dt,ph,SEC_HARD.enrage,t=>({x:cl(480+Math.sin(t*.5)*250+(hx-480)*lean,90,W-90),y:cl(250+Math.sin(t*.9)*70+(hy-250)*lean,130,H-150)}),1.1+ph*.15);
  if(q.last!==lastMove&&q.last){
   // A new move just started: flash, shock ring and sparks, then announce it by name.
   fx(['s',7]);fx(['r',q.x,q.y,80,'#ff1c3a']);fx(['r',q.x,q.y,46,'#2a5bff']);fx(['p',q.x,q.y,14,'#ff1c3a',300,.45,5,'pixel']);
   secBurst(q.x,q.y,'#ff1c3a',26,1);secBurst(q.x,q.y,'#2a5bff',12,1);
   if(q.last!=='copyAttack'&&SEC_NAME[q.last]&&(!S.secBanner||S.secBanner.t<.6)){const names=Object.values(SEC_NAME);S.secBanner={txt:R()<SEC_LIE?names[Math.floor(R()*names.length)]:SEC_NAME[q.last],t:1.2}}
  }
+}
+// Chaos: every few seconds a black shot is warned at a random edge, then fires inward at whoever is nearest. Phase III adds a second one.
+function secChaos(dt){
+ S.secChaosT=(S.secChaosT==null?SEC_HARD.chaosEvery:S.secChaosT)-dt;
+ if(S.secChaosT>0)return;
+ S.secChaosT=SEC_HARD.chaosEvery*(.6+R()*.8);
+ if(!alive().length)return;
+ const side=Math.floor(R()*4),ph=S.sec?S.sec.ph:0;
+ const ex=side===0?20:side===1?W-20:rnd(60,W-60),ey=side===2?112:side===3?H-40:rnd(130,H-100);
+ warn({x:ex,y:ey,r:30,dur:.55,fn:()=>{X('eshoot');SH=Math.max(SH,4);
+   for(let k=0;k<(ph>=2?2:1);k++){const tg=nearest(ex,ey);if(!tg)return;const a=Math.atan2(tg.y-ey,tg.x-ex)+(k?rnd(-.35,.35):0);bp(ex,ey,a,280,darkOpt({img:'ebul',sz:36,r:12,dmg:12,life:4}))}}});
 }
 function secDamage(v,x,y,col,crit,p){
  const q=S.sec;if(!q||q.hp<=0||S.st!=='fight')return;

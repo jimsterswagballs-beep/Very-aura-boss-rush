@@ -1,7 +1,23 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v27)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v29)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 29 — Hateful Doom health scales with the party
+
+- **Health:** Hateful Doom starts with 16,666 HP (was 9,999). Each player beyond the first adds 50% more: 2 players = 24,999, 3 players = 33,332, and so on.
+- **Balance note:** the fight still lasts exactly as long as his song (157 s). Solo, that needs about 106 damage per second, so retune `SEC_TIME` or the health multiplier if it is too hard.
+
+## Version 28 — Hateful Doom: harder to dodge, more chaos
+
+- **Shorter warnings:** every warning in the secret fight is 28% shorter (`SEC_HARD.warn`), and so are the sweep, gaze and pulse telegraphs (`SEC_HARD.tele`).
+- **Faster, wider dark shots:** dark bullets fly 25% faster and have a 20% bigger hit radius. Most of them also bend: a random curve that straightens out after about 1.4 s. Spears, homing and boomerang shots stay straight.
+- **Faster casting:** enrage is 1.7 (was 1.35). Each cast has a 30% chance of being followed almost at once by another.
+- **More live hazards:** up to 14 can be on screen at once (was 9).
+- **Chaos shots:** about every 2.2 s (randomly 1.3 to 3.5 s), a black shot is warned at a random screen edge and fires inward at the nearest player. In phase III it fires two.
+- **Frozen Echoes** launches at the same higher speed as the other dark shots.
+- **Tuning:** all of the numbers above are in one `SEC_HARD` block just under `SEC_LIE`. Set `warn` and `tele` to `1` to get back the old telegraph times.
+- **Testing note:** checked headless (every move fired in phase III, a 9-second run of the real loop with chaos shots, no errors). Not played by hand, so the difficulty still needs a real run-through.
 
 ## Version 27 — Hateful Doom: eclipse visualizer, particle storm, stranger moves
 
