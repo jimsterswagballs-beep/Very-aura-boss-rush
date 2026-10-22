@@ -1,7 +1,27 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v34)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v35)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 35 — full dialogue reference applied
+
+- **Replaced:** every boss intro, phase-change, outro and cameo line, the Coolguy15 / Zach / Jay / Terry / Patrick character lines, the Trio opening, outro and win lines, the secret-boss trigger and win lines, the copy banners, the timeout banner, the encore header, hint and footer, and the Fella field label.
+- **Added:** the Boss 4, Boss 5 and Boss 6 extra lines, the Trio crowd line for Fella, the secret-boss trigger ("That's NOT mason…"), the Patrick and Evil Spong scene (plays at the Evil Spong intro when Patrick is in the run), and the Boss 7 final tally.
+- **Removed:** the old INTRO, PH, OUTRO, WIN, PARTY_TAUNTS and PARTY_REPLIES arrays, which the reference listed as unused.
+- **Changed or cut on purpose:**
+  - Slurs and self-harm/insult lines (the "NIG" and "NI-" lines, "tards", "kys").
+  - Racial caricature: the mock-accent spellings (Herro, rittle, rike, rost), the "racial caricature" line, and the Chinese-language "I like men / me too" exchange.
+  - Dog-eating stereotype lines ("I eat puppies", "neighbours pets"). The solo intro now uses a different joke.
+  - Sexual lines ("sucky tongue", "suck balls", "gone gay", "beat me off", "Suck this!").
+  - Genocide references in the Fella squad intro.
+  - Boss 4's "virgin boy eggs" line (replaced with "soup eggs").
+  - Boss 6's "several abuse charges" (now "several charges").
+  - "CHINESE STEROID TECHNOLOGY" is now "STEROID TECHNOLOGY".
+  - Mother-insult lines are reworded to keep the same joke.
+- **Open decisions:**
+  - Copy banners: the reference lists six copy attacks. The game also copies four others (SNIPER LINE, SPIRIT CHASE, PINBALL RICOCHET, PIZZA BOOMERANG) that are not in the reference. They are kept.
+  - Timeout: the reference says the banner is "It's over." and also that "Time ran out…" is shown instead. The banner now reads "It's over."
+- **Testing note:** checked headless: compose() across all 7 bosses, every party size, and every character combination (196 cases) with no errors; the intro and the secret-boss trigger both play and return to the fight; the earlier fight tests still pass.
 
 ## Version 34 — bug fix
 

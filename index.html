@@ -30,105 +30,6 @@ const PORT={'Will':'will','Jackson':'jackson','Mason':'mason','Xiao Long Bao':'x
 // ===== STORY: THE GRAND STEAMER (light-hearted) =====
 // Everyone here wants you gone, but mostly they just want to bicker with each other.
 // BAO: theatrical, vain chef. UNCOOL: deadpan, jealous of "cool". SPONG: dramatic bubble-obsessed. EVIL ZACH: smug bootleg Zach.
-const INTRO=[
-{open:[["Xiao Long Bao","Welcome to the Grand Steamer! Today's special is... you!"],["Xiao Long Bao","Please keep your arms and legs inside the steamer basket at all times."],["Xiao Long Bao","Five stars on every review. The reviews are written by me."]],
- cg:[["Coolguy15","Uh, we just came for the tournament."],["Xiao Long Bao","The tournament is a buffet, and you're the appetizers!"]],
- zach:[["Zach","I brought a knife and a burger. Dumpling, you're on the menu."],["Xiao Long Bao","SOUP dumpling! Say it right before I boil you!"]],
- duo:[["Coolguy15","Zach, you stab. I'll shoot."],["Zach","Deal. Don't shoot my burger."]]},
-{open:[["UnCoolguy16","Oh good, Bao lost. Finally somebody did my job."],["UnCoolguy16","I'm UnCoolguy16. Yes, there was a 15. No, we don't talk about it."],["UnCoolguy16","You look way too cool. I'm going to fix that."]],
- cg:[["Coolguy15","Dude, you look like me. Just... sadder."],["UnCoolguy16","You say that like it's an insult. It's the whole problem."]],
- zach:[["Zach","Who even are you?"],["UnCoolguy16","Exactly. Nobody ever asks."]],
- duo:[["Zach","He's mad at everyone."],["Coolguy15","Good. Then he's predictable."]]},
-{open:[["Evil Spong","Whoa, whoa, whoa. Nobody told me there'd be guests."],["Evil Spong","This is my bubble. I paid for it. Please wipe your feet."],["Evil Spong","Fine, you wanna scrap? I'll pop you into next week. Bubble style!"]],
- cg:[["Coolguy15","Can't we just talk this out?"],["Evil Spong","Sure! Right after I bubble you."]],
- zach:[["Zach","Is that sponge wearing pants?"],["Evil Spong","Square ones. Mind your own business."]],
- duo:[["Coolguy15","Pop the wobbly bubbles, dodge the big ones."],["Zach","Bubble pop. Got it. Easy."]]},
-{open:[["Xiao Long Bao","REMATCH! And this time I brought a friend!"],["UnCoolguy16","I'm not his friend. I was dragged here."],["Xiao Long Bao","He's my business partner! My dishwasher!"],["UnCoolguy16","Intern. Unpaid. Still here."]],
- cg:[["Coolguy15","Two health bars, linked. Lose one and the other gets mad."]],
- zach:[["Zach","They hate each other more than they hate us."],["Xiao Long Bao","We hate you at the SAME time! It's efficient!"]],
- duo:[["UnCoolguy16","I'll take the left. Try not to hog the spotlight."],["Xiao Long Bao","The spotlight was MINE first!"]]},
-{open:[["Evil Zach","Hi. I'm Zach, but evil. Same face, better hair, worse attitude."],["Evil Zach","Everybody else was the opening act. I'm the headliner."],["Evil Zach","Fair warning: I do the combo AND the burger. Both."]],
- cg:[["Coolguy15","So... a Zach cosplayer with an attitude."],["Evil Zach","Cosplay? I'm a PREMIUM knockoff."]],
- zach:[["Zach","That's my face, my footwork, and a very rude knife."],["Evil Zach","I kept the good parts. You weren't using them anyway."]],
- duo:[["Evil Zach","More challengers? Great, I brought enough knives for everybody."]]},
-{open:[["Fella","Welcome to the Walk-Off Ballpark. Ground rules: I swing, I bunt, I slide, and you get sticky."],["Fella","Sauce bunts bounce off the walls twice, and slide trails stay sticky. Watch the ground, not just me."]],cg:[["Coolguy15","Is that ketchup?"],["Fella","It's a slow-cooked secret recipe. Mostly because it slows YOU down."]],zach:[["Zach","You brought a baseball bat to a boss rush?"],["Fella","And a pitching machine. Never underestimate either."]],duo:[["Fella","Two players? Great. One can run the bases while the other gets turned into a hot dog."]]}];
-const PH=[
-[null,{b:[["Xiao Long Bao","You cracked my wrapper! Now you'll feel the STEAM!"]],cg:[["Coolguy15","Is he... hotter now?"]],zach:[["Zach","Honestly? Smells good."]]},
- {b:[["Xiao Long Bao","ENOUGH! Dishwasher! I know you're lurking! Come help me!"],["UnCoolguy16","You're doing great, Steamy. Keep going."]],cg:[["Coolguy15","Someone else is in here..."]],zach:[["Zach","Boss two is watching. Great."]]}],
-[null,{b:[["UnCoolguy16","Ow. Okay, you hit like you mean it. I mean it too."]],cg:[["Coolguy15","I don't want to fight you!"],["UnCoolguy16","Nobody asked what you wanted."]],zach:[["Zach","He talks a lot for a guy with one bullet sprite."]]},
- {b:[["UnCoolguy16","Fine. NO MORE MR. NICE UNCOOL. PIPE. GUN. EVERYTHING."],["Xiao Long Bao","(from the sidelines) Take notes, dishwasher! That's how you do a dramatic phase change!"]],cg:[["Coolguy15","He's getting desperate!"]],zach:[["Zach","Last phase. Burgers ready."]]}],
-[null,{b:[["Evil Spong","Okay, the small bubbles were just a warm-up. Enjoy the premium bubbles."]],cg:[["Coolguy15","He's weaving bubbles on purpose. Look for the gaps."]],zach:[["Zach","The big ones are mines, right? Please say yes."]]},
- {b:[["Evil Spong","You popped my bubbles! Those were limited edition!"],["Evil Spong","Now I'm bubbling at full power. Say bye-bye to your hit points."]],cg:[["Coolguy15","He's way too dramatic."]],zach:[["Zach","Great. We made the sponge mad."]]}],
-[null,{b:[["Xiao Long Bao","Stop stealing my attacks, dishwasher!"],["UnCoolguy16","Stop being predictable, Steamy."]],cg:[["Coolguy15","Their crossfire is lining up. Move before it syncs."]],zach:[["Zach","They're arguing with each other. Good for us."]]},
- {b:[["UnCoolguy16","The beam between us is getting dangerous. Bao, this is YOUR fault."],["Xiao Long Bao","Everything is your fault! Just hit them!"]],cg:[["Coolguy15","Their duo attacks are synced up. Break the rhythm."]],zach:[["Zach","Almost there. Keep dodging."]]}],
-[null,{b:[["Evil Zach","Too slow! You almost had me."],["Evil Zach","I learned that from you, by the way. Thanks!"]],cg:[["Coolguy15","He's dodging the same way every time!"]],zach:[["Zach","Stop stealing my moves!"]]},
- {b:[["Evil Zach","Okay, I'm done messing around. Time for the FULL combo."],["Evil Zach","Slash, reverse slash, stab. Look familiar?"]],cg:[["Coolguy15","He's doing YOUR combo, Zach!"]],zach:[["Zach","Hey! That's my combo! Somebody call a lawyer!"]]}],
-[null,{b:[["Fella","Warm-up's over! I was reading your footwork. The BULLPEN is open!"]],cg:[["Coolguy15","The sauce is curving in mid-air. Watch its trail, not just its aim."]],zach:[["Zach","Ketchup should not be able to bend around corners. That feels illegal."]]}, {b:[["Fella","WALK-OFF TIME! Bases loaded, the crowd is on its feet, and I'm swinging for the fences!"]],cg:[["Coolguy15","The whole diamond is active now. Find the clean lane before the warnings finish."]],zach:[["Zach","He's treating the entire arena like home plate. We need to move before he swings."]]}]];
-const OUTRO=[
-[["Xiao Long Bao","I'm... steamed out. Tell my dumplings... I loved them."],["UnCoolguy16","Rest, Steamy. You were the warm-up."]],
-[["UnCoolguy16","Okay, okay, you win. I'm not even mad. (I'm a little mad.)"],["UnCoolguy16","Go bother the sponge. He has bubbles and a bad attitude."]],
-[["Evil Spong","My bubbles... all popped... and I just waxed them."],["Xiao Long Bao","Hold on, we're not done! Dishwasher, assemble!"],["UnCoolguy16","Ugh. Fine. For the record, this is a bad idea."]],
-[["Xiao Long Bao","No... no, this can’t be it. We have one chance left, and I refuse to let it end here!"],["UnCoolguy16","Save the speech. We’re battered, we’re out of tricks, and that thing is still standing."],["Xiao Long Bao","Then we stand too. One last round. No retreat, no more jokes—if we fall, we fall fighting!"],["UnCoolguy16","...For once, I agree. Everyone, give it everything. This is our last stand."]],
-[["Evil Zach","No way. I read every move... except the ones you just made up."],["Evil Zach","Okay, okay. You win. Tell nobody I lost to my own face."]],
-[["Fella","The bat's retired. The sauce is... mostly cleaned up."],["Fella","I'm calling this a walk-off. For YOU. My shoes are still sticky, though."]]];
-// ===== END STORY =====
-const WIN={cg:[["Coolguy15","...Did we just win?"]],zach:[["Zach","Boss rush cleared. Burgers are on me."]]};
-// Party-aware story barks. The script adapts to solo, duo, or squad runs.
-// Class responses are added only for characters actually selected in the lobby.
-const PARTY_TAUNTS={
- intro:[
-  {solo:["Xiao Long Bao","Just one challenger? Fine. One serving, extra steam."],duo:["Xiao Long Bao","Two challengers? That's a combo meal!"],squad:["Xiao Long Bao","A full table? I'll need a bigger steamer!"]},
-  {solo:["UnCoolguy16","Solo? Bold. Reckless, but bold."],duo:["UnCoolguy16","Two challengers. Great, double the disappointment."],squad:["UnCoolguy16","A whole squad? No wonder nobody invites me anywhere."]},
-  {solo:["Evil Spong","One guest? That's still a crowd in my bubble."],duo:["Evil Spong","Two guests? My personal space is under attack!"],squad:["Evil Spong","A whole party? This bubble has an occupancy limit!"]},
-  {solo:["Xiao Long Bao","One challenger against both of us. ...That's actually pretty unfair."],duo:["UnCoolguy16","Two of you, two of us. Finally, a balanced argument."],squad:["Xiao Long Bao","A full squad? Great. We were running out of people to blame."]},
-  {solo:["Evil Zach","Going solo? I respect the confidence. I don't respect your survival odds."],duo:["Evil Zach","Two challengers? I only rehearsed this against one."],squad:["Evil Zach","A whole crowd? Good, my victory speech needs an audience."]},
-  {solo:["Fella","One player? A clean 1-on-1 at the plate. My favorite kind of game."],duo:["Fella","Two opponents? I'll slide into one and swing at the other."],squad:["Fella","More players means more targets. I brought a bigger pitching machine."]}
- ],
- phase:[
-  [
-   {solo:["Xiao Long Bao","You cracked my wrapper alone? Then I'll turn up the heat!"],duo:["Xiao Long Bao","Coordinating, are we? I'll steam both sides of the arena!"],squad:["Xiao Long Bao","Everyone attacking at once? Then everyone gets extra steam!"]},
-   {solo:["Xiao Long Bao","No backup, no mercy. This steamer is going to boil over!"],duo:["Xiao Long Bao","Two challengers still standing? Double serving coming up!"],squad:["Xiao Long Bao","A whole squad and you're still in my kitchen? OUT!"]}
-  ],
-  [
-   {solo:["UnCoolguy16","You landed a hit all by yourself? Annoying. Seriously annoying."],duo:["UnCoolguy16","Two of you? Great, double the target practice."],squad:["UnCoolguy16","Group project? I hate group projects. PIPE!"]},
-   {solo:["UnCoolguy16","No one's coming to bail you out. Just you and the pipe."],duo:["UnCoolguy16","Stop covering for each other! Fight me properly!"],squad:["UnCoolguy16","You can't all dodge forever! ...Can you?"]}
-  ],
-  [
-   {solo:["Evil Spong","You're popping bubbles alone? That's dedication. Irritating dedication."],duo:["Evil Spong","Two bubble-poppers? That's twice the disrespect!"],squad:["Evil Spong","A whole squad against my bubbles? This is targeted harassment!"]},
-   {solo:["Evil Spong","No teammates to hide behind. Let's see if you can keep up."],duo:["Evil Spong","Stay together if you want—I'll bubble both of you!"],squad:["Evil Spong","More players, more targets. My bubble budget is unlimited!"]}
-  ],
-  [
-   {solo:["Xiao Long Bao","One challenger against our teamwork! ...Uncool, are we actually doing teamwork?"],duo:["UnCoolguy16","Two of you against two of us. Finally, this is almost fair."],squad:["UnCoolguy16","They're spreading out. Bao, stop arguing and cover the other side!"]},
-   {solo:["UnCoolguy16","Still standing alone? I almost respect that. Almost."],duo:["Xiao Long Bao","Two of you and you still won't stay in one place!"],squad:["UnCoolguy16","A full team and we're still losing the argument. Focus up!"]}
-  ],
-  [
-   {solo:["Evil Zach","Still here by yourself? I'll have to stop holding back."],duo:["Evil Zach","Two of you? Fine. I'll steal both your moves."],squad:["Evil Zach","A squad? Cute. I'll defeat you in alphabetical order."]},
-   {solo:["Evil Zach","No backup, no excuses. Here's the real combo."],duo:["Evil Zach","You keep helping each other. It's honestly ruining my show."],squad:["Evil Zach","Everyone gets the premium combo! Wait, I only have two arms!"]}
-  ],
-  [
-   {solo:["Fella","No backup? Then the sauce bunts have nowhere to bounce but you."],duo:["Fella","You're covering each other? Fine. I'll paint the floor red."],squad:["Fella","The whole crew is still standing? Then the pitching machine goes full speed!"]},
-   {solo:["Fella","Final inning. The bat's going full speed now!"],duo:["Fella","Stay together all you want. The sauce rain covers everybody."],squad:["Fella","EVERYBODY GETS A WALK-OFF! This is a very messy team sport."]}
-  ]
- ]
-};
-const PARTY_REPLIES={
- intro:{
-  cg:{solo:["Coolguy15","Okay, just me. One weird boss at a time."],duo:["Coolguy15","You cover one side; I'll keep the pressure on."],squad:["Coolguy15","Everybody spread out and watch each other's backs."]},
-  zach:{solo:["Zach","One knife, one burger, absolutely no plan."],duo:["Zach","I'll keep them busy. You make the openings."],squad:["Zach","Everybody pick a target. Try not to stand where I swing."]}
- },
- phase:{
-  cg:{solo:["Coolguy15","No backup? Then I can't afford a mistake."],duo:["Coolguy15","Keep moving. Don't let them corner us together."],squad:["Coolguy15","Call out the attack warnings. No one gets left behind."]},
-  zach:{solo:["Zach","Ow. That's the part where a plan would've helped."],duo:["Zach","One of us draws them out; the other hits hard."],squad:["Zach","Keep them busy. I'll take any opening you make."]}
- },
- outro:{
-  cg:{solo:["Coolguy15","That was way too close. Still standing, though."],duo:["Coolguy15","Nice work. We covered each other's blind spots."],squad:["Coolguy15","Count off. If everyone's still here, we move together."]},
-  zach:{solo:["Zach","I won that entirely on purpose. Mostly."],duo:["Zach","Not bad. Don't expect me to admit that again."],squad:["Zach","Same team next time? ...Don't make it weird."]}
- },
- win:{
-  cg:{solo:["Coolguy15","Solo clear. I'm never doing that without a snack again."],duo:["Coolguy15","We actually pulled that off. Nice teamwork."],squad:["Coolguy15","Everybody made it. That's a win worth celebrating."]},
-  zach:{solo:["Zach","Boss rush cleared. Burgers are on... me, apparently."],duo:["Zach","Boss rush cleared. I'll admit, that was decent teamwork."],squad:["Zach","Boss rush cleared. I expect a group discount on burgers."]}
- }
-};
 const UP=[
  {n:'Sharp Edge',d:'+20% damage',f:m=>m.dmg*=1.2},{n:'Quick Hands',d:'+20% attack speed',f:m=>m.rate*=1.2},
  {n:'Light Feet',d:'+15% move speed',f:m=>m.spd*=1.15},{n:'Thick Skin',d:'+30 max HP',f:m=>m.hp+=30},
@@ -186,131 +87,165 @@ function resetPl(p,i){p.boom=null;p.hide=0;p.windup=0;p.sauceSlow=0;p.dd=0;p.tk=
 function startRun(){S.ups=[];S.bi=cl(S.set.start,0,BD.length-1);S.t=0;S.paused=0;S.ezUlt=null;if(MA[curMus])MA[curMus].pause();if(MA.ezUlt)MA.ezUlt.pause();curMus=null;musTry=0;Object.values(S.pl).forEach((p,i)=>resetPl(p,i));spawnBoss()}
 function spawnBoss(){S.ezUlt=null;S.tri=null;S.in7=null;const d=BD[bidx()],n=nPl(),mult=[.75,1,1.5][S.set.diff]*(1+.8*(n-1))*(1+.6*lp()),hp=d.hp*mult,hp2=(d.hp2||0)*mult;
  S.bs={idx:bidx(),d,img:d.img,x:(bidx()===3?300:480),y:140,hp,max:hp,ph:0,hp2,max2:hp2,cd:2.5,mode:null,fl:0,inv:1,sz:d.sz,a:0,t:0,last:'',air:0,nd:0};S.bs2=bidx()===3?{idx:1,d:BD[1],img:'ucg',x:700,y:180,hp:hp2,max:hp2,t:0,cd:1.8,ph:0,sz:150,mode:null,nd:0,isAllianceAlly:1,last:'',a:0,fl:0}:null;S.survT=0;S.survElapsed=0;S.survAttackCd=2;S.survWave=0;S.survName='';S.pr=[];S.wr=[];S.slowm=1;S.zn=[];S.pk=[];S.pkT=12;S.bdT=0;S.jf=[];S.tc=[];
- Object.values(S.pl).forEach((p,i)=>{p.x=300+i*120;p.y=430;p.revived=0});if(bidx()===6)startTrio(mult);else say(compose(INTRO[bidx()],'intro'),'fight')}
-// ===== REWRITTEN STORY SYSTEM =====
-// Dialogue is assembled for the exact party size (1-4) and selected character roster.
-// Bosses can talk to each other as well as react to the actual challengers in front of them.
+ Object.values(S.pl).forEach((p,i)=>{p.x=300+i*120;p.y=430;p.revived=0});if(bidx()===6)startTrio(mult);else say(compose(null,'intro'),'fight')}
+// ===== STORY (v35: full dialogue reference applied) =====
+// Always-plays lines, then per-party lines, then character lines. Racial, sexual, slur and self-harm lines from the reference were rewritten or removed.
 const partyBucket=n=>n===1?'solo':n===2?'duo':n===3?'trio':'squad';
 const STORY_OPEN=[
- [["Xiao Long Bao","The Grand Steamer is closed to the public. Fortunately, you look like a private tasting."],["Xiao Long Bao","I have prepared a seven-course menu. You are course one, two, and the plate." ]],
- [["UnCoolguy16","Bao lost? Knew it. He spends more time garnishing than fighting."],["UnCoolguy16","I'm not the backup. I'm the person they call when the backup fails." ]],
- [["Evil Spong","Welcome to my pressure chamber. The bubbles are soundproof, so nobody can hear you complain."],["Evil Spong","I was promised a quiet boss rush. Then you showed up." ]],
- [["Xiao Long Bao","You made it to the rematch! Dishwasher, cue the dramatic entrance!"],["UnCoolguy16","I told you I wasn't your dishwasher."],["Xiao Long Bao","You're wearing the apron."],["UnCoolguy16","It's a warning label." ]],
- [["Evil Zach","Finally. The real main event. I even practiced your confused face."],["Evil Zach","Don't worry; I'll make this look like an accident. A very stylish accident." ]],
- [["Fella","Welcome to the Walk-Off Ballpark. I brought a bat, a pitching machine, and an unreasonable amount of ketchup."],["Fella","Three strikes and you're out. Get sauced once and you'll be moving like a shopping cart with one bad wheel." ]]
+ [["Xiao Long Bao","Hello, welcome to Chitty Dumplings!"],["Xiao Long Bao","Hold on, I brackristed your parents' mum's cousin's dog thirty years ago! Get out! OUTTT!"]],
+ [["UnCoolguy16","Yo yo ay ay"],["UnCoolguy16","I'm UnCoolguy16, I am tuffer than CoolGuy15"]],
+ [["Evil Spong","I have embraced the fungus. Welcome to my goon cave. My bubble zone, my casa."],["Evil Spong","I was chillin until you guys started killing food items."]],
+ [["Xiao Long Bao","This time I will feed you to the customers!!"],["UnCoolguy16","Yeah what he said"],["Xiao Long Bao","For my father!"],["UnCoolguy16","PISS"]],
+ [["Evil Zach","I'm Zach, but evil."],["Evil Zach","Now… let's larp, just this once"]],
+ [["Fella","Yo guys its me fella."],["Fella","I'm a fella."]]
 ];
+const STEAM_EXT=[["Xiao Long Bao","STEROID TECHNOLOGY"],["UnCoolguy16","FUSE GOOCH POWER"]];
+const BOSS4_P3_EXT=[["UnCoolguy16","Mr Bao? I don't feel so good…"],["Xiao Long Bao","ILL SPREAD YOUR INTESTINES LIKE NOODLES"],["UnCoolguy16","jesus, dude"]];
+const WALK_EXT=[["Fella","Go to https://spongesquarebobpants.neocities.org"]];
+const CROWD=[["Fella","You hear that? Thats the crowd cheering for ME, MEEEE"]];
 const STORY_PARTY={
  intro:[
-  {solo:[["Xiao Long Bao","One challenger. I'll plate this as a tasting menu."],["UnCoolguy16","Don't burn the kitchen down, Bao. I don't want to clean up after you."]],duo:[["Xiao Long Bao","Two challengers! A combo meal. The second serving is also me."],["UnCoolguy16","I'll take the one who looks organized. So... neither of you, probably."]],trio:[["Xiao Long Bao","Three challengers at my table? Everyone gets a personal serving of steam!"],["UnCoolguy16","Three targets. Finally, a group project where I can blame everyone else."]],squad:[["Xiao Long Bao","Four challengers! This is no longer dinner—it's a catering emergency."],["UnCoolguy16","I'll cover the exits. Bao, try not to season the floor with yourself."]] },
-  {solo:[["UnCoolguy16","Solo? That means nobody can tell you your plan is bad. Convenient."],["Evil Spong","I can hear you from my bubble. It is bad."]],duo:[["UnCoolguy16","Two of you. Great, one can watch while the other makes a mistake."],["Xiao Long Bao","Don't worry, I make enough mistakes for everybody!"]],trio:[["UnCoolguy16","Three challengers? I'll need three new excuses when I lose."],["Evil Spong","You are already preparing to lose? Respectfully, same."]],squad:[["UnCoolguy16","Four players. That's a team, not a strategy."],["Xiao Long Bao","A team is just four people I can blame at once!"]] },
-  {solo:[["Evil Spong","One person inside my bubble? I can still call that an audience."],["UnCoolguy16","Don't pop the walls. I'm using that bubble to watch from a safe distance."]],duo:[["Evil Spong","Two challengers. Bubble etiquette says one person at a time!"],["Xiao Long Bao","Ignore the sign. It was written in soap."]],trio:[["Evil Spong","Three opponents? My bubble has a strict capacity of two and a half."],["UnCoolguy16","That's not how bubbles work. Or numbers."]],squad:[["Evil Spong","Four of you? I'm filing a noise complaint with the laws of physics."],["Xiao Long Bao","Make it a group complaint! We love group activities."]] },
-  {solo:[["Xiao Long Bao","One fighter against both of us. That's unfair."],["UnCoolguy16","You noticed that after I signed the contract?"],["Xiao Long Bao","I thought the contract was a menu!"]],duo:[["UnCoolguy16","Two on two. No cheap tricks, Bao."],["Xiao Long Bao","Agreed. My expensive tricks cost extra." ]],trio:[["Xiao Long Bao","Three challengers. We need teamwork."],["UnCoolguy16","You call yelling my name from across the arena teamwork?"],["Xiao Long Bao","It's my leadership style!"]],squad:[["UnCoolguy16","Four opponents means we can't cover every angle."],["Xiao Long Bao","Then cover two angles each!"],["UnCoolguy16","That's... disturbingly sensible."]] },
-  {solo:[["Evil Zach","One challenger? I can focus on ruining one life at a time."],["Evil Zach","Hey, original Zach. Watch closely. This is your face with better timing."]],duo:[["Evil Zach","Two players. I'll make you argue about who got hit first."],["Evil Zach","Teamwork is adorable. I'll cut right through it."]],trio:[["Evil Zach","Three challengers? I can steal a move from each of you."],["Evil Zach","Don't worry, I won't credit you in the victory speech."]],squad:[["Evil Zach","Four challengers. Perfect. A live audience for my greatest hits."],["Evil Zach","Try to survive long enough to applaud."]] },
-  {solo:[["Fella","One batter steps up. I like a clean matchup."],["Fella","The ketchup is still absolutely part of the rules. I wrote the rules."]],duo:[["Fella","Two challengers? One draws the pitch, one gets the bat. Let's see who panics first."],["Fella","You may discuss strategy during the brief interval between sauce splats."]],trio:[["Fella","Three on the field! I'll put the sauce where your backup plans are."],["Fella","The bases are loaded and the pitching machine is warm. This is getting interesting."]],squad:[["Fella","Four opponents. Bases loaded, crowd roaring, ketchup bottle uncapped."],["Fella","Let's see if teamwork survives a very sticky infield."]] }
+  {solo:[["Xiao Long Bao","I'm going to put your you in a dumpling and feed you to the homeless! I'm mean, but I'm not a monster."]],
+   duo:[["Xiao Long Bao","Aww, the lovely couple trying to get some of my dumplings?! Not on my watch!"]],
+   trio:[["Xiao Long Bao","I will make a three course dumpling meal of your bodies! Enough for the whole family!"]],
+   squad:[["Xiao Long Bao","You're praying in a squad? You think this is Fortnite?! I'm going to crank 90s until you cry. Respectfully."],["UnCoolguy16","Oh yeah, I'll crank them too!"],["Xiao Long Bao","What the fuck??"]]},
+  {solo:[["UnCoolguy16","You're absolutely cooked vro, time to die little one"]],
+   duo:[["UnCoolguy16","What are you guys? Some epic gamers? You're like two balls in a sak!"]],
+   trio:[["UnCoolguy16","You guys are stupid and dumb. Also die."]],
+   squad:[["UnCoolguy16","I can take four at once easy! Not like that, no no no"]]},
+  {solo:[["Evil Spong","BALALLALALA"]],
+   duo:[["Evil Spong","Fungus bubbles, shoot!"]],
+   trio:[["Evil Spong","I can take three! I have plenty more holes!"]],
+   squad:[["Evil Spong","I'll fill all your lungs with my fungus!"]]},
+  {solo:[["Xiao Long Bao","You look like a lost puppy. Go home, little guy."],["UnCoolguy16","What the fuck"],["Xiao Long Bao","Oh come on, it was a compliment. NOW LET'S FIGHT."],["Xiao Long Bao","Xiao Long Bao is my name and being the best chef is my game!"],["UnCoolguy16","Such a silly baka! Hahaha!"]],
+   duo:[["UnCoolguy16","Oh yeah now its fair, imma crank hella 90s"],["Xiao Long Bao","This is for dishonouring my ancestors!"],["Xiao Long Bao","A 2v2 duel, just like in Beijing!"],["UnCoolguy16","I'll finally prove I'm the cooler guy"]],
+   trio:[["Xiao Long Bao","I will eat you all alive!"],["UnCoolguy16","Okay, team meeting. Bao, what's the plan?"],["Xiao Long Bao","Hit harder!"]],
+   squad:[["Xiao Long Bao","When I was three I ate my oven…"],["Xiao Long Bao","And then my parents used me as a stove"],["Xiao Long Bao","It took me 23 years to shit it out"],["UnCoolguy16","Holy shit"]]},
+  {solo:[["Evil Zach","That smells amazing!"],["Evil Zach","What did you eeeat?"]],
+   duo:[["Evil Zach","I'm the better zach, cuz i'm evil"],["Evil Zach","Evil? Resident Evil? PLAY RESIDENT EVIL 4 JAMESON PLEASE ITS SO GOOD"]],
+   trio:[["Evil Zach","Heh, I can counter ALL of zachs moves."],["Evil Zach","You bet I'll sit on ALL of you"]],
+   squad:[["Evil Zach","Four big guys? Ts not for the weak 😭✌️🥀"],["Evil Zach","Once im done with you im gonna eat you all up in my big voluptuous belly"]]},
+  {solo:[["Fella","hah, baseball is like interesting cricket. I'm gonna punish you by making you play cricket for eternity."],["Fella","(one cricket game btw)"]],
+   duo:[["Fella","You're gonna need more than two to get me arrested for my several charges! hah!"],["Fella","…my wife hates me"]],
+   trio:[["Fella","Like ketchup?"],["Fella","Imma cover you and YOUR MOMS in sauce!"],...CROWD],
+   squad:[["Fella","Just like backyard whiffle ball! Haha!"],["Fella","Ugh, I need a nap after all that."],...CROWD]}
  ],
  phase:[
-  [ {solo:["Xiao Long Bao","You cracked my wrapper alone? I'll turn the heat up until the basket sings!"],duo:["Xiao Long Bao","Two of you still standing? Double steam, double trouble!"],trio:["Xiao Long Bao","Three challengers and not one of you has read the safety card!"],squad:["Xiao Long Bao","Four of you in my kitchen? EVERYONE gets the special steam!"]}, {solo:["Xiao Long Bao","No backup. No mercy. The pressure cooker is now a pressure catastrophe!"],duo:["Xiao Long Bao","Stop trading turns! I'll steam both halves of the arena!"],trio:["Xiao Long Bao","Three at once? Fine—I'll season the whole battlefield."],squad:["Xiao Long Bao","Four challengers and I am still the best chef here! I THINK!"]} ],
-  [ {solo:["UnCoolguy16","You landed that hit alone? Annoying. I was hoping for a committee to blame."],duo:["UnCoolguy16","Two of you coordinating? Stop making this look like a team sport."],trio:["UnCoolguy16","Three people and I still feel outnumbered by the confidence."],squad:["UnCoolguy16","Four challengers. I'm filing a complaint with your manager."]}, {solo:["UnCoolguy16","No teammate to save you. Just you, me, and this extremely persuasive pipe."],duo:["UnCoolguy16","Stop covering each other! This isn't a group assignment!"],trio:["UnCoolguy16","Three angles? Fine. I'll attack the angle you forgot about."],squad:["UnCoolguy16","Four of you and you still keep dodging into each other. Beautiful."]} ],
-  [ {solo:["Evil Spong","You're popping bubbles alone? I admire the commitment. I resent it, too."],duo:["Evil Spong","Two bubble-poppers! This is targeted harassment of my hobby."],trio:["Evil Spong","Three of you against my bubbles? I'm contacting the bubble union."],squad:["Evil Spong","Four opponents! I need a bigger bubble and a lawyer."]}, {solo:["Evil Spong","No teammates to hide behind. Now you get the deluxe bubble treatment."],duo:["Evil Spong","Stay together if you want. My bubbles have a wide splash radius!"],trio:["Evil Spong","Three targets, one bubble budget. I'm going over budget."],squad:["Evil Spong","EVERYBODY gets a bubble! Nobody asked for a refund!"]} ],
-  [ {solo:["Xiao Long Bao","One challenger, two bosses. This is the part where we should feel guilty."],duo:["UnCoolguy16","Two on two. Bao, please don't ruin the symmetry."],trio:["Xiao Long Bao","Three opponents! Uncool, use the plan!"],squad:["UnCoolguy16","Four challengers. Spread out, Bao—this is not a queue at your restaurant."]}, {solo:["UnCoolguy16","Still standing alone? I almost respect it. Don't make me say that again."],duo:["Xiao Long Bao","Two of them, one of me, and he keeps stealing my good attacks!"],trio:["UnCoolguy16","Three still up. Bao, cover the top lane; I'll take the bottom."],squad:["Xiao Long Bao","Four challengers! Uncool, this is our last stand!" ]} ],
-  [ {solo:["Evil Zach","You're still here alone? Fine. I'll stop pretending I need a warm-up."],duo:["Evil Zach","Two challengers. One distraction, one target. Guess which is which."],trio:["Evil Zach","Three players. I can fake out one, dash through one, and annoy the last one."],squad:["Evil Zach","Four opponents and you're STILL interrupting my combo. Rude."]}, {solo:["Evil Zach","No backup is coming. This is where the imitation becomes the original."],duo:["Evil Zach","Covering each other? Cute. I'll make the floor your third teammate."],trio:["Evil Zach","Three of you, one me. The math is ugly. Fortunately, so am I."],squad:["Evil Zach","Four challengers. I'm about to make this look embarrassingly easy."]} ],
-  [ {solo:["Fella","Warm-up is over. Watch my shoulders—the bat tells you where the hit is going."],duo:["Fella","One draws the bat, the other gets the bunt. That's the playbook."],trio:["Fella","Three on the field. I can cover the whole diamond now."],squad:["Fella","Four on the field! Bases loaded means the next hit is going to be spectacular."]}, {solo:["Fella","WALK-OFF TIME! No backup, no excuses, no clean shoes."],duo:["Fella","Stay in pairs if you like. The sauce rain hits both sides."],trio:["Fella","Three runners left? Every pitch lane but one is mine."],squad:["Fella","FOUR OF YOU? Fine. I'm turning the whole field into a strike zone!"]} ]
+  [ {solo:[["Xiao Long Bao","You remind me of my mother, I'm gonna kill you too!!"]],
+     duo:[["Xiao Long Bao","You are not going to kill me!! I have 60000 power in rise of kingdoms!"]],
+     trio:[["Xiao Long Bao","This is not food health and safety! Not that I care, I cook you like a Sunday roast!"]],
+     squad:[["Xiao Long Bao","That will be sixty dollars, four person holy count!"]]},
+    {solo:[["Xiao Long Bao","You making me waste so many dumplings!"]],
+     duo:[["Xiao Long Bao","My father invented dumplings! No one disrespects my father!"]],
+     trio:[["Xiao Long Bao","I will make all three of you into a dumpling platter!"]],
+     squad:[["Xiao Long Bao","Agh shitty shit! My knees are weak from you guys quadruple teaming me!"]]} ],
+  [ {solo:[["UnCoolguy16","Ouch what the hell dude"]],duo:[["UnCoolguy16","Guys that isn't fair I need a partner!"]],trio:[["UnCoolguy16","Yo yo ay ay that lowkey hurts ngl"]],squad:[["UnCoolguy16","OW WTF cool guy you suck"]]},
+    {solo:[["UnCoolguy16","You can't kill me i'm better."]],duo:[["UnCoolguy16","Stop double teaming me! Hackers!!"]],trio:[["UnCoolguy16","Don't make me use the goop..."]],squad:[["UnCoolguy16","Frick dialogue, yokoyokonokonoko"]]} ],
+  [ {solo:[["Evil Spong","No one to save you from my goop!!"]],duo:[["Evil Spong","Don't make me get The Rick on you two…"]],trio:[["Evil Spong","You'll explode from my krabby patties"]],squad:[["Evil Spong","You guys can't beat me no matter how many of you there are!"]]},
+    {solo:[["Evil Spong","Ow! Stop winning, I am NOT feeling tremendous!"]],duo:[["Evil Spong","Stop popping my bubbles, they're expensive"]],trio:[["Evil Spong","August 6th 2036 the heat death of the universe"]],squad:[]} ],
+  [ {solo:[["Xiao Long Bao","This little bit really trying to beat us?"],...STEAM_EXT],duo:[["UnCoolguy16","Haha! Hey little ones"],...STEAM_EXT],trio:[["Xiao Long Bao","I will make you into soup eggs! Boiled, peeled, and very confused!"],...STEAM_EXT],squad:[["UnCoolguy16","i wish my parents loved me"],...STEAM_EXT]},
+    {solo:[["UnCoolguy16","You're still standing? Better than you ever did? Looking like a true survivor, feeling like a little kid?"],...BOSS4_P3_EXT],duo:[["Xiao Long Bao","This reminds me of the ancient monkey balls chronicle"],...BOSS4_P3_EXT],trio:[["UnCoolguy16","You think we'll lose? Heh! No thanks bro"],...BOSS4_P3_EXT],squad:[["Xiao Long Bao","NO, we cannot lose! For my ancestors!!!"],...BOSS4_P3_EXT]} ],
+  [ {solo:[["Evil Zach","OW! Not cool vro, time to get kawaii!"]],duo:[["Evil Zach","You two think you can beat me? Haha, nope!"]],trio:[["Evil Zach","MMMM burgers"]],squad:[["Evil Zach","STOP HITTING ME IM TRYNNA HIT A CLIP"]]},
+    {solo:[["Evil Zach","Well… fuck you"]],duo:[["Evil Zach","Ouch! No one hurts the chungus chuddy buggy!"]],trio:[["Evil Zach","Hah, you wanna dance? Well, let's dance!"]],squad:[["Evil Zach","Don't make me use satchel strat"]]} ],
+  [ {solo:[["Fella","I'm already down 3 beers."]],duo:[["Fella","I LOVE alcohol, it's the best legal drug ever! #alcoholabuse #livercancer"]],trio:[["Fella","Watch me get a home run, isn't awesome how people with significant money and power just get away with serious crimes?"]],squad:[["Fella","Yeah have some sauce with a side of dying!"]]},
+    {solo:[["Fella","I didn't hear no bell?."],...WALK_EXT],duo:[["Fella","Yowchies! You guys actually aren't bad? Ugh, fine."],...WALK_EXT],trio:[["Fella","Wow i… i'm gonna touch the sky, gotta testify come up in the spot lookin extra fly."],...WALK_EXT],squad:[["Fella","SSSSSTRIKE! You guys have done it now"],...WALK_EXT]} ]
  ],
  outro:[
-  {solo:["Xiao Long Bao","One challenger defeated my best recipe. I'm rewriting the cookbook."],duo:["Xiao Long Bao","Two of you ruined dinner. I'm charging you both for the table."],trio:["Xiao Long Bao","Three challengers. Three stars. I refuse to give you five."],squad:["Xiao Long Bao","Four challengers and not one complimentary review. Unbelievable."]},
-  {solo:["UnCoolguy16","You beat me alone? Fine. That's objectively annoying."],duo:["UnCoolguy16","Two of you beat me. I'll call it teamwork so I don't have to call it skill."],trio:["UnCoolguy16","Three challengers. I'm outnumbered and underappreciated."],squad:["UnCoolguy16","Four of you. This is why I don't join group chats."]},
-  {solo:["Evil Spong","My bubble is gone. Don't tell anyone I named it Kevin."],duo:["Evil Spong","Two challengers popped the whole bubble. Kevin deserved better."],trio:["Evil Spong","Three of you? I want a rematch and a new bubble budget."],squad:["Evil Spong","Four challengers. I have been bubble-bullied by a committee."]},
-  {solo:["Xiao Long Bao","We lost to one person. Uncool, was our plan just yelling?"],duo:["UnCoolguy16","Two of them beat two of us. That's fair. Don't write it down."],trio:["Xiao Long Bao","Three opponents got through. Uncool, we owe each other an apology."],squad:["UnCoolguy16","Four challengers beat us. Bao, no sequel. I'm serious." ]},
-  {solo:["Evil Zach","One person saw through my act. That was not in the script."],duo:["Evil Zach","Two challengers ruined my perfect camera angle. I hate cinema."],trio:["Evil Zach","Three players and all of you have terrible taste in villains."],squad:["Evil Zach","Four challengers. Fine, you can keep your faces. For now."]},
-  {solo:["Fella","One batter cleared the diamond. I'm retiring the sauce bottle. Maybe."],duo:["Fella","Two challengers beat the cleanup crew. The locker room is going to hear about this."],trio:["Fella","Three of you crossed home. That's a clean sweep. I hate clean sweeps."],squad:["Fella","Four players and the whole stadium watched me lose. Great. Fantastic."]}
+  {solo:[["Xiao Long Bao","How could one little shit kill me? I should've steam fried your ass!"]],duo:[["Xiao Long Bao","No couples for discount for you, you cheaters!"]],trio:[["Xiao Long Bao","I will kill you in the afterlife, especially Zach!"]],squad:[["Xiao Long Bao","Ow ow ow! This is just like prison after I killed my mum. Help me."]]},
+  {solo:[["UnCoolguy16","Ouch, you totally beat me! I definitely won't come back….alone."]],duo:[["UnCoolguy16","No fair you guys were totally cheating"]],trio:[["UnCoolguy16","You guys are clearly using aimbot, wait that's a feature? You suck."]],squad:[["UnCoolguy16","you guys are mean I'm calling mom"]]},
+  {solo:[["Evil Spong","Nahhh I'm dead asf now"]],duo:[["Evil Spong","Squidward and patrick are better than you two! They accepted my fungus…"]],trio:[["Evil Spong","Damn son that was not chill"]],squad:[["Evil Spong","I guess I… don't live in a pineapple under the sea"]]},
+  {solo:[["Xiao Long Bao","WHAT? HOW? Nooooooo!"]],duo:[["UnCoolguy16","I guess that really was… BOSS RUSH"]],trio:[["Xiao Long Bao","Three opponents got through. Uncool, we owe each other an apology."]],squad:[["UnCoolguy16","Ts was hacked! Screen peak! Noclip! I have not lost, this shits ai!"]]},
+  {solo:[["Evil Zach","I'M…I'M NOT FULL!"]],duo:[["Evil Zach","THIS IS ALMOST AS BAD AS THE DAY THE MCSMART MEAL RAISED PRICES"]],trio:[["Evil Zach","I guess the real BOSS RUSH were the friends we made along the way…"]],squad:[["Evil Zach","Do you really think you won? IM FATTER THAN YOU"]]},
+  {solo:[["Fella","What… are you… the alpha?"]],duo:[["Fella","Nooo! Now I'm gonna get arrested for the public indecency… shit, what seems to be the officer, problem?"]],trio:[["Fella","What? I THOUGHT THIS WAS AMERICA"]],squad:[["Fella","That was… not goochtastic"]]}
  ]
 };
+// Patrick and Evil Spong: plays at the Evil Spong intro when Patrick is in the run.
+const STORY_PATSPONG=[["Patrick","Spong! What are you doing…?"],["Patrick","hehehe…"],["Patrick","You thought Plankton worked alone?"],["Evil Spong","Sorry Patrick…"],["Evil Spong","There can only be one star of the show."],["Patrick","PLEASE SPONG!"],["Evil Spong","Even stars die out, Pat"]];
 const STORY_PLAYER={
  intro:{
-  cg:["Coolguy15","Okay. One boss, one arena, no clue what the exit policy is."],
-  zach:["Zach","I brought a knife. You brought a kitchen. Let's keep this simple."],
-  mixed:[["Coolguy15","I'll control the space. Zach, don't stab the things I'm standing beside."],["Zach","No promises. But I'll try to aim away from your shoes."]],
-  jay:["Jay","Everybody stay close. I packed a pan, snacks, and a cardboard box. Priorities."],
-  terry:["Terry","Relax. I've got a money gun, a briefcase, and one rule: never pay full price."]
+  cg:["Coolguy15","Ay ay yo yo"],
+  zach:["Zach","Zach, that's my name don't wear it out!"],
+  mixed:[["Coolguy15","Ay ay yo yo"],["Zach","No promises. Let's get ts overwith i wanna play jjs"]],
+  jay:["Jay","Sup ladies"],
+  terry:["Terry","Hey. It's me, Terry."],
+  pat:["Patrick","Relax. Where's my homie spung??"]
  },
  phase:{
-  cg:["Coolguy15","That pattern changed. Read the warning, then make a safe lane."],
-  zach:["Zach","They're getting desperate. That's when the hits get messy."],
-  mixed:[["Coolguy15","I'll call the openings. Don't chase them into the warning zones."],["Zach","And I'll punish the opening. Team plan: fewer accidental stabs."]],
-  jay:["Jay","Boss is getting cranky, so snack drop incoming. Grab what you can!"],
-  terry:["Terry","Sweaty bosses drop change. Keep them sweating."]
+  cg:["Coolguy15","Wait thats actually smart"],
+  zach:["Zach","Hot damn"],
+  mixed:[["Coolguy15","gg ez"],["Zach","hahaahhaha, I'm on a roll!"]],
+  jay:["Jay","My metal gear is rising"],
+  terry:["Terry","Terry terry terry"],
+  pat:["Patrick","Is mayonnaise an instrument."]
  },
  outro:{
-  cg:["Coolguy15","Check everyone. Catch your breath. The next one heard that fight."],
-  zach:["Zach","One down. Don't celebrate yet; there is definitely another weird guy waiting."],
-  mixed:[["Coolguy15","That was close. Good follow-through, Zach."],["Zach","Good calls. Never quote me saying that."]],
-  jay:["Jay","Everybody made it through. Snacks on the floor are still fair game, though."],
-  terry:["Terry","Counted the damage. No refunds for the boss, sorry."]
+  cg:["Coolguy15","To be fair, thats actually smart"],
+  zach:["Zach","One down. Burgers"],
+  mixed:[["Coolguy15","wait… thats actually smart"],["Zach","Yeah, I'll allow it. Don't let it go to your head."]],
+  jay:["Jay","My heals literally carry, I CANNOT be nerfed"],
+  terry:["Terry","i have a briefcase"],
+  pat:["Patrick","No! This is Patrick."]
  },
  win:{
-  cg:["Coolguy15","We actually cleared the whole rush. Please tell me there's a snack table."],
-  zach:["Zach","Six bosses. One victory. I'm taking the good chair and all the burgers."],
-  mixed:[["Coolguy15","We made it through. Together."],["Zach","Fine, teamwork was useful. This confession expires in five seconds."]],
-  jay:["Jay","We cleared the whole rush and didn't waste a single snack. Okay, maybe one."],
-  terry:["Terry","Cash in hand, boss on the floor. Pleasure doing business."]
+  cg:["Coolguy15","That was pretty cool, guy. 15."],
+  zach:["Zach","zach+dih= zih🥀"],
+  mixed:[["Coolguy15","I guess the real BOSS RUSH was the friends we made along the way"],["Zach","Yeah. Friends are cool, I guess."]],
+  jay:["Jay","Anyone wanna hit GYG?"],
+  terry:["Terry","i like money"],
+  pat:["Patrick","Gu he hehe"]
  }
 };
 const STORY_CAMEO={
  outro:[
-  [["UnCoolguy16","Bao's down? Huh. I was going to tell him that was a terrible plan." ]],
-  [["Evil Spong","I watched that entire fight from inside a bubble. My review: stressful." ]],
-  [["Xiao Long Bao","The sponge is down! Uncool, we've got one chance left."],["UnCoolguy16","Don't say 'one chance' like a movie trailer. ...Okay, yes, one chance."]],
-  [["Evil Zach","A tag-team loss. I would have made it look better. You're welcome." ]],
-  [["Fella","That was a lot of knife work. I prefer a bat: one swing, one very clear complaint." ]],
-  [["Xiao Long Bao","They cleared the whole rush? I owe them a meal."],["UnCoolguy16","You mean the meal you tried to fight them with?"],["Evil Spong","Can we all agree to never call this a tournament again?"]]
+  [["UnCoolguy16","Shit what you killed a dumpling? Heh, like I care, I'm tremendous!"]],
+  [["Evil Spong","You're COOKED, Iiiiii'm Spong…"]],
+  [["Xiao Long Bao","Did Evil Spong just get slimed out? WE must avenge him"],["UnCoolguy16","I'm gettin angry…you don't wanna see me when I'm angry!"]],
+  [["Evil Zach","Ha ha, literal idiots. I don't need them anyway, I'm a one man garlic beater"]],
+  [["Fella","He sure did larp. Wait is this BOSS RUSH? Are you jameson? Yo whats up jameson."]],
+  [["Xiao Long Bao","Wait… is this the afterlife? Wow, this place sucks total donkey bars!"],["UnCoolguy16","Why is everyone yelling in this game?"],["Evil Spong","I….I wasn't ready"]]
  ]
 };
+
 function chars(){return [...new Set(Object.values(S.pl||{}).map(p=>p.ch))]}
-STORY_PLAYER.intro.pat=["Patrick","I'm gonna stand here really still and be rock-solid. Then I'm gonna jump on it."];
-STORY_PLAYER.phase.pat=["Patrick","My rock is in the corner. Don't tell it where I am."];
-STORY_PLAYER.outro.pat=["Patrick","We won? That's the best nap I've ever had."];
-STORY_PLAYER.win.pat=["Patrick","Did I win, or did I just stand still the whole time?"];
-function compose(_old,event='intro',level=0){
+function compose(_unused,event='intro',level=0){
  const players=Object.values(S.pl||{}),count=Math.max(1,players.length),bucket=partyBucket(count),ci=bidx(),d=STORY_PARTY[event]&&STORY_PARTY[event][ci];
  const hasPat=players.some(p=>p.ch==='pat'),hasCg=players.some(p=>p.ch==='cg'),hasZach=players.some(p=>p.ch==='zach'),mix=hasCg&&hasZach,hasJay=players.some(p=>p.ch==='jay'),hasTerry=players.some(p=>p.ch==='terry');
  const out=[];const add=x=>{if(Array.isArray(x)&&x.length&&Array.isArray(x[0]))out.push(...x);else if(Array.isArray(x)&&x.length===2)out.push(x)};
+ // One line per character in the run. Coolguy15 and Zach share lines when both are present.
+ const playerLines=k=>{const L=STORY_PLAYER[k];if(mix)add(L.mixed);else if(hasCg)add([L.cg]);else if(hasZach)add([L.zach]);if(hasJay)add([L.jay]);if(hasTerry)add([L.terry]);if(hasPat)add([L.pat])};
  if(event==='intro'){
   add(STORY_OPEN[ci]);
   if(d&&d[bucket])add(d[bucket]);
-  if(ci===3){if(bucket==='solo')add([["Xiao Long Bao","Our one opponent is staring at us."],["UnCoolguy16","I'm staring because you forgot the plan. Again."]]);else if(bucket==='duo')add([["Xiao Long Bao","Two versus two. No excuses."],["UnCoolguy16","You will find several excuses. I'll list them after."]]);}
-  if(ci===4)add([["Evil Zach",count===1?'No partner means every bad decision is yours. Convenient.':`I see ${count} challengers. That is ${count} chances to watch me win.`]]);
-  if(ci===5&&count>=3)add([["Fella","Crowd count confirmed. Switching to full-field pitching."]]);
-  if(mix)add(STORY_PLAYER.intro.mixed);else if(hasCg)add([STORY_PLAYER.intro.cg]);else if(hasZach)add([STORY_PLAYER.intro.zach]);if(hasJay)add([STORY_PLAYER.intro.jay]);if(hasTerry)add([STORY_PLAYER.intro.terry]);if(hasPat)add([STORY_PLAYER.intro.pat]);
+  if(ci===2&&hasPat)add(STORY_PATSPONG);
+  if(ci===4)add([["Evil Zach",count===1?"You'll make a nice appetizer to my FIFTY cheeseburgers.":`I see ${count} challengers. That's ${count} things to eat!`]]);
+  playerLines('intro');
  }else if(event==='phase'){
   const lv=Math.max(0,Math.min(1,level-1));
-  const arr=STORY_PARTY.phase[ci][lv];if(arr&&arr[bucket])add([arr[bucket]]);
-  if(ci===3){if(lv===0)add([["Xiao Long Bao","Uncool, use the synchronized attack!"],["UnCoolguy16","We synchronized one thing: our dislike of your plan."]]);else add([["UnCoolguy16","This is the last stand, Bao. Cover the bottom!"],["Xiao Long Bao","I am covering everything!"],["UnCoolguy16","That's why we keep getting hit!"]]);}
-  if(ci===5&&lv===1)add([["Fella","The scoreboard says WALK-OFF. The scoreboard has never been wrong. Except all those times."]]);
-  if(mix)add(STORY_PLAYER.phase.mixed);else if(hasCg)add([STORY_PLAYER.phase.cg]);else if(hasZach)add([STORY_PLAYER.phase.zach]);if(hasJay)add([STORY_PLAYER.phase.jay]);if(hasTerry)add([STORY_PLAYER.phase.terry]);if(hasPat)add([STORY_PLAYER.phase.pat]);
+  const arr=STORY_PARTY.phase[ci]&&STORY_PARTY.phase[ci][lv];if(arr&&arr[bucket])add(arr[bucket]);
+  playerLines('phase');
  }else if(event==='outro'){
-  if(d&&d[bucket])add([d[bucket]]);
+  if(d&&d[bucket])add(d[bucket]);
   if(STORY_CAMEO.outro[ci])add(STORY_CAMEO.outro[ci]);
   if(ci===6)add(TRIO_OUTRO);
-  if(mix)add(STORY_PLAYER.outro.mixed);else if(hasCg)add([STORY_PLAYER.outro.cg]);else if(hasZach)add([STORY_PLAYER.outro.zach]);if(hasJay)add([STORY_PLAYER.outro.jay]);if(hasTerry)add([STORY_PLAYER.outro.terry]);if(hasPat)add([STORY_PLAYER.outro.pat]);
+  playerLines('outro');
  }else if(event==='win'){
-  if(ci===6)add(TRIO_WIN);else{add([["Fella","The scoreboard has been unplugged. That means you officially win, right?"],["Fella","I'm keeping the bat. You can keep the ketchup stains."]]);add(STORY_CAMEO.outro[5])}
-  if(mix)add(STORY_PLAYER.win.mixed);else if(hasCg)add([STORY_PLAYER.win.cg]);else if(hasZach)add([STORY_PLAYER.win.zach]);if(hasJay)add([STORY_PLAYER.win.jay]);if(hasTerry)add([STORY_PLAYER.win.terry]);if(hasPat)add([STORY_PLAYER.win.pat]);
+  add(TRIO_WIN);
+  playerLines('win');
   add([["Xiao Long Bao",`The final tally: ${count} challenger${count===1?'':'s'}, ${BD.length} bosses, and one extremely confusing dinner.`],["UnCoolguy16","Can we all go home now? I need a nap and a new name."]]);
  }
  return out;
 }
-// ===== END REWRITTEN STORY SYSTEM =====
 const dur=l=>1.8+l[1].length*.03;
 function say(L,next,st){S.dlg={L,i:0,t:0,dur:dur(L[0]),next};S.st=st||'dlg'}
 function endDlg(){const n=S.dlg.next;S.dlg=null;const b=S.bs;
  if(n==='fight'){S.st='fight';b.inv=0}
  else if(n==='ezult'){beginEvilZachBeam()}
  else if(n==='phase'){b.ph++;if(S.bs2)S.bs2.ph=b.ph;if(bidx()===2)b.img=['sp1','sp2','sp3'][Math.min(2,b.ph)];if(b.idx===5){X('fellaGrandSlam');fx(['f','#ff3048']);fx(['r',b.x,b.y,b.ph>=2?220:170,b.ph>=2?'#fff0d4':'#ff3048']);for(let j=0;j<34;j++){const a=rnd(0,PI*2);fx(['p',b.x+Math.cos(a)*rnd(24,145),b.y+Math.sin(a)*rnd(18,100),3,j%4?'#ff3048':'#fff0d4',rnd(150,360),.55,6,'pixel'])}b.cd=.55}b.inv=0;if(b.idx!==5)b.cd=1.5;S.st='fight';alive().forEach(p=>p.hp=Math.min(p.max,p.hp+p.max*.15))}
- else if(n==='post'){if(bidx()===3){S.st='survival';S.survMax=93.179;S.survT=S.survMax;S.survElapsed=0;S.survAttackCd=1.0;S.survWave=0;S.survFx=0;S.survPickupCd=5.5;S.survName='ENCORE TIME!';S.pr=[];S.wr=[];S.zn=[];S.pk=[];X('survival');fx(['f','#ffb347']);fx(['s',14]);for(let i=0;i<40;i++)fx(['p',rnd(20,W-20),rnd(90,H-20),rnd(2,7),i%2?'#ffd34a':'#ff5a5a',rnd(120,420),rnd(.45,1.15),5])}else if(bidx()>=BD.length-1){say(compose({cg:WIN.cg,zach:WIN.zach},'win'),'end')}else{S.st='up';S.opts=pick3();S.votes={};S.vt=20}}
+ else if(n==='post'){if(bidx()===3){S.st='survival';S.survMax=93.179;S.survT=S.survMax;S.survElapsed=0;S.survAttackCd=1.0;S.survWave=0;S.survFx=0;S.survPickupCd=5.5;S.survName='ENCORE TIME!';S.pr=[];S.wr=[];S.zn=[];S.pk=[];X('survival');fx(['f','#ffb347']);fx(['s',14]);for(let i=0;i<40;i++)fx(['p',rnd(20,W-20),rnd(90,H-20),rnd(2,7),i%2?'#ffd34a':'#ff5a5a',rnd(120,420),rnd(.45,1.15),5])}else if(bidx()>=BD.length-1){say(compose(null,'win'),'end')}else{S.st='up';S.opts=pick3();S.votes={};S.vt=20}}
  else if(n==='lose'){S.st='over';X('lose')}
  else if(n==='end'){S.st='win';ach('clear');X('win')}}
-function startCut(){const b=S.bs;S.pr=[];S.wr=[];b.mode=null;if(S.bs2){S.bs2.mode=null;S.bs2.nd=0}b.nd=0;b.inv=1;b.gun=0;b.pipeOn=0;b.beam=null;b.cmb=null;b.air=0;b.rolling=0;b.nd=0;S.zn=[];fx(['f','#fff']);fx(['s',14]);X('phase');say(compose(PH[bidx()][b.ph+1],'phase',b.ph+1),'phase','cut')}
-function bossDead(){const b=S.bs;ach('b'+bidx());if(nPl()===1)ach('solo');if(lp()>=1)ach('loop');if(Object.values(S.pl).some(p=>(p.dd||0)>=3000))ach('dealer');if(!Object.values(S.pl).some(p=>p.tk>0))ach('flawless');if(nPl()>1)ach('team');S.pr=[];S.wr=[];b.mode=null;b.inv=1;b.gun=0;b.pipeOn=0;b.beam=null;b.cmb=null;b.air=0;b.rolling=0;b.nd=0;S.zn=[];S.jf=[];S.tc=[];fx(['f','#fff']);fx(['s',18]);X('bossdie');S.bdT=2;fx(['p',b.x,b.y,70,b.d.col[0],420,1.2,6]);say(compose(OUTRO[bidx()],'outro'),'post')}
+function startCut(){const b=S.bs;S.pr=[];S.wr=[];b.mode=null;if(S.bs2){S.bs2.mode=null;S.bs2.nd=0}b.nd=0;b.inv=1;b.gun=0;b.pipeOn=0;b.beam=null;b.cmb=null;b.air=0;b.rolling=0;b.nd=0;S.zn=[];fx(['f','#fff']);fx(['s',14]);X('phase');say(compose(null,'phase',b.ph+1),'phase','cut')}
+function bossDead(){const b=S.bs;ach('b'+bidx());if(nPl()===1)ach('solo');if(lp()>=1)ach('loop');if(Object.values(S.pl).some(p=>(p.dd||0)>=3000))ach('dealer');if(!Object.values(S.pl).some(p=>p.tk>0))ach('flawless');if(nPl()>1)ach('team');S.pr=[];S.wr=[];b.mode=null;b.inv=1;b.gun=0;b.pipeOn=0;b.beam=null;b.cmb=null;b.air=0;b.rolling=0;b.nd=0;S.zn=[];S.jf=[];S.tc=[];fx(['f','#fff']);fx(['s',18]);X('bossdie');S.bdT=2;fx(['p',b.x,b.y,70,b.d.col[0],420,1.2,6]);say(compose(null,'outro'),'post')}
 
 function startEvilZachUltimate(){
  const b=S.bs;if(!b||b.idx!==4||S.ezUlt)return;
@@ -1319,8 +1254,8 @@ const TRI_HOME=[{x:480,y:200},{x:215,y:330},{x:745,y:330}];
 const TRI_POOL=[['spiritChase','auraOrbit','zigzagBugs','chakraPulse'],['reloadBarrage','twigSweep','pinballRounds','rulerGrid'],['pizzaBoomerang','burgerDrop','sausageRoll','hotDogSplit']];
 const MAP_POOL=['foodRain','bugHorde','rulerSlam','sauceFlood'];
 const TRIO_OPEN=[["Will","we found them boys"],["Jackson","damn son"]];
-const TRIO_OUTRO=[["Will","Hovering was never the problem. The bats were."],["Mason","Hey, I was a bat, not a wall. Nobody warned me."]];
-const TRIO_WIN=[["Mason","Three down. Put the bat away, Jackson."],["Jackson","Fine. I'm keeping the gun, though."],["Will","Good hovering, everybody."]];
+const TRIO_OUTRO=[["Will","Oh jackson… WILLY BUM"],["Mason","I tried to eat my bat but it didn’t taste like zachs dih 🥀"]];
+const TRIO_WIN=[["Mason","If i die then… i’ll be with TUNG! BRAAAIN"],["Jackson","damn son"],["Will","I guffawed my way down to silly town to get a halarity smoothie"]];
 // Intro positions depend only on the time since the cutscene began, so the host and online clients draw the same frame.
 function triPose(t){
  const ease=p=>p*p*(3-2*p),prog=(a,d)=>ease(cl((t-a)/d,0,1));
@@ -1643,7 +1578,7 @@ const SEC_HARD={warn:.72,tele:.75,speed:1.25,hit:1.2,curve:.9,enrage:1.7,double:
 const SRC_NAME={xlb:'XIAO LONG BAO',ucg:'UNCOOLGUY16',sp1:'EVIL SPONG',ez:'EVIL ZACH',fella:'FELLA',will:'WILL',jackson:'JACKSON',mason:'MASON'};
 // Copied moves: each one rebuilds a real move from another boss, drawn in black.
 const SEC_COPY=[
- {src:'xlb',n:'DUMPLING RING',f:q=>{for(let k=0;k<12;k++)bp(q.x,q.y,k*PI/6+.26,190,darkOpt({img:'dump',sz:42,r:14,dmg:11,life:4}))}},
+ {src:'xlb',n:'STEAM RING',f:q=>{for(let k=0;k<12;k++)bp(q.x,q.y,k*PI/6+.26,190,darkOpt({img:'dump',sz:42,r:14,dmg:11,life:4}))}},
  {src:'ucg',n:'PISTOL SPRAY',f:q=>{for(let k=-2;k<=2;k++)bp(q.x,q.y,q.a+k*.16,330,darkOpt({img:'ebul',sz:34,r:12,dmg:12,life:3}))}},
  {src:'ucg',n:'SNIPER LINE',f:q=>{const x=q.x,y=q.y,a=q.a;warn({k:'l',x,y,a,r:1500,dur:.85,fn:()=>{X('shoot');bp(x,y,a,900,darkOpt({img:'ebul',sz:40,r:12,dmg:18,life:2.2}))}})}},
  {src:'sp1',n:'BUBBLE PRISON',f:q=>{for(let k=0;k<12;k++){const a=k*2*PI/12,x=cl(q.x+Math.cos(a)*280,40,W-40),y=cl(q.y+Math.sin(a)*200,110,H-70);bp(x,y,Math.atan2(q.y-y,q.x-x),130,darkOpt({img:'bubble3',sz:44,r:15,dmg:11,life:4.5}))}}},
@@ -1660,7 +1595,7 @@ const SEC_FIRE={
  // Spear Volley: lanes mark the arena, then black spears fall through them. The spear hitbox now matches its lane.,
  spearVolley(q,t,ph){const L=alive();if(!L.length)return;X('throw');const n=4+ph*2;for(let k=0;k<n;k++){const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-20,20),60,W-60);warn({k:'l',x,y:0,a:PI/2,r:H,dur:.6+k*.12,fn:()=>{X('whoosh');bp(x,96,PI/2,520,darkOpt({shape:2,sz:70,r:20,dmg:16,life:2.6}))}})}},
  // Copy: borrows a real move from another boss. Its sprite flickers over him as an echo, then the black copy fires. Never the same copy twice in a row; Phase III copies two.,
- copyAttack(q,t,ph){let pick=SEC_COPY[Math.floor(R()*SEC_COPY.length)];if(SEC_COPY.length>1&&pick===q.lastCopy)pick=SEC_COPY[(SEC_COPY.indexOf(pick)+1)%SEC_COPY.length];q.lastCopy=pick;S.secBanner={txt:'COPYING '+SRC_NAME[pick.src]+': '+pick.n,t:2.4};X('bfCharge');s7add({k:'echo',boss:q,t:0,dur:.8,img:pick.src,fire:pick.f,ph});if(ph>=2){let p2=SEC_COPY[Math.floor(R()*SEC_COPY.length)];if(p2===pick)p2=SEC_COPY[(SEC_COPY.indexOf(p2)+3)%SEC_COPY.length];s7add({k:'echo',boss:q,t:-1.3,dur:.8,img:p2.src,fire:p2.f,ph})}},
+ copyAttack(q,t,ph){let pick=SEC_COPY[Math.floor(R()*SEC_COPY.length)];if(SEC_COPY.length>1&&pick===q.lastCopy)pick=SEC_COPY[(SEC_COPY.indexOf(pick)+1)%SEC_COPY.length];q.lastCopy=pick;S.secBanner={txt:'COPYING: '+pick.n+' - '+SRC_NAME[pick.src],t:2.4};X('bfCharge');s7add({k:'echo',boss:q,t:0,dur:.8,img:pick.src,fire:pick.f,ph});if(ph>=2){let p2=SEC_COPY[Math.floor(R()*SEC_COPY.length)];if(p2===pick)p2=SEC_COPY[(SEC_COPY.indexOf(p2)+3)%SEC_COPY.length];s7add({k:'echo',boss:q,t:-1.3,dur:.8,img:p2.src,fire:p2.f,ph})}},
  // // Eclipse Spiral: a curling spiral of black flame.,
  eclipseSpiral(q,t,ph){X('whoosh');const n=ph>=1?48:36,a0=R()*PI*2;for(let k=0;k<n;k++)bp(q.x,q.y,a0+k*.42,190+k*6,darkOpt({shape:1,sz:26,r:10,dmg:11,life:4,curve:.55,curveLife:1.4}))},
  // // Void Pulse: rings of darkness expand outward. Stand between them.,
@@ -1763,7 +1698,7 @@ function secTransform(m){
  S.sc=null;S.secOn=1;S.secT=SEC_TIME;S.st='fight';S.s7=[];S.pr=[];S.wr=[];S.zn=[];
  m.hp=0;m.inv=1;S.bs.inv=0;
  const secHp=Math.round(16666*(1+.5*(nPl()-1)));S.sec={x:m.x,y:m.y,hp:secHp,max:secHp,fl:0,ph:0,t:0,cd:2.2,a:0,last:'',pool:SEC_POOL,inv:0,vanish:0,busy:0,stun:0,r:60};
- S.secBanner={txt:'HATEFUL DOOM',t:3.2};
+ S.secBanner={txt:'HATEFUL DOOM',t:3.2};say([["Jackson","That's NOT mason…"],["Will","If that's not mason… then who the hell are you?"]],'fight');
  fx(['f','#ff1c3a']);fx(['s',22]);X('bossdie');fx(['r',m.x,m.y,260,'#ff1c3a']);fx(['r',m.x,m.y,170,'#2a5bff']);
 }
 /* ===== PAUSE MENU (Esc), ADMIN PANEL (typed password) and the Hateful Doom timer ===== */
@@ -1870,7 +1805,7 @@ function stepSecret(dt){
  const q=S.sec;if(!q)return;
  S.secT=Math.max(0,S.secT-dt);
  if(S.secBanner){S.secBanner.t-=dt;if(S.secBanner.t<=0)S.secBanner=null}
- if(S.secT<=0){if(S.pixT==null){S.pixT=0;S.pr=[];S.wr=[];S.zn=[];S.s7=[];X('lose');fx(['f','#000000'])}S.pixT+=dt;if(S.pixT>=PIX_T){S.pixT=null;S.secOn=0;S.sec=null;S.secT=0;S.st='lobby';S.bs=null;S.pr=[];S.wr=[];S.zn=[];S.s7=[];note('Time ran out. Hateful Doom wins.')}return}
+ if(S.secT<=0){if(S.pixT==null){S.pixT=0;S.pr=[];S.wr=[];S.zn=[];S.s7=[];X('lose');fx(['f','#000000'])}S.pixT+=dt;if(S.pixT>=PIX_T){S.pixT=null;S.secOn=0;S.sec=null;S.secT=0;S.st='lobby';S.bs=null;S.pr=[];S.wr=[];S.zn=[];S.s7=[];note("It's over.")}return}
  const secNow=Math.ceil(S.secT);if(secNow!==S.secLast){S.secLast=secNow;if(secNow>0&&secNow<=30)X(secNow<=10?'blip':'warn')}
  const f=q.hp/q.max,ph=f>.66?0:f>.33?1:2;
  if(ph>q.ph){q.ph=ph;X('phase');fx(['f','#ff1c3a']);fx(['s',16]);fx(['r',q.x,q.y,260,'#2a5bff']);secBurst(q.x,q.y,'#ff1c3a',60,1.4);S.secBanner={txt:ph===1?'PHASE II: THE BLACK FIRE':'PHASE III: NO MORE SONG',t:2.6}}
@@ -1913,7 +1848,7 @@ function secLose(){
 function secWin(){
  const q=S.sec;q.hp=0;S.s7=[];S.pr=[];S.wr=[];S.zn=[];ach('secret');
  fx(['f','#ffffff']);fx(['s',22]);X('bossdie');fx(['r',q.x,q.y,280,'#ff1c3a']);
- const L=[["Mason","...You left me for last. And you still beat me."],["Mason","Hateful Doom was the last song I had."]];
+ const L=[["Mason","Alas poor mason"]];
  S.dlg={L,i:0,t:0,dur:dur(L[0]),noSkip:1,next:'end'};S.st='dlg';
 }
 function snapSec(){const q=S.sec;return{x:q.x|0,y:q.y|0,hp:Math.ceil(q.hp),max:q.max,fl:q.fl>0?1:0,vanish:q.vanish?1:0,ph:q.ph|0,r:q.r,stun:q.stun>0?1:0}}
@@ -2481,7 +2416,7 @@ function drawFellaArena(t,v){
  const turf=g.createLinearGradient(0,90,0,H);turf.addColorStop(0,'#174b35');turf.addColorStop(.48,'#14613b');turf.addColorStop(1,'#082d25');g.fillStyle=turf;g.fillRect(0,72,W,H-72);
  for(let i=0;i<12;i++){g.fillStyle=i%2?'rgba(125,255,160,.045)':'rgba(0,0,0,.06)';g.fillRect(i*82,155,42,H-155)}
  g.fillStyle='#20263a';g.fillRect(0,72,W,66);for(let i=0;i<42;i++){const x=i*24,y=83+(i%3)*12;g.fillStyle=['#ff7e87','#ffcc6c','#92d9ff','#eee8ff'][i%4];g.fillRect(x,y,8,8);g.fillRect(x+9,y+3,5,5)}
- g.fillStyle='#351e2a';g.fillRect(0,130,W,17);g.fillStyle='#ddcaa1';g.fillRect(0,147,W,4);g.fillStyle='#b8d3c7';g.font='bold 13px monospace';g.textAlign='center';g.fillText('FELLA FIELD  •  WALK-OFF ZONE',W/2,95);
+ g.fillStyle='#351e2a';g.fillRect(0,130,W,17);g.fillStyle='#ddcaa1';g.fillRect(0,147,W,4);g.fillStyle='#b8d3c7';g.font='bold 13px monospace';g.textAlign='center';g.fillText('FELLA FIELD - WALK-OFF ZONE',W/2,95);
  // Outfield wall and chalk field.
  g.fillStyle='#15302a';g.fillRect(0,148,W,18);g.strokeStyle='#e8e8c9';g.lineWidth=3;g.beginPath();g.moveTo(W/2,282);g.lineTo(115,470);g.lineTo(480,515);g.lineTo(845,470);g.closePath();g.stroke();
  g.fillStyle='rgba(206,155,112,.16)';g.beginPath();g.moveTo(W/2,282);g.lineTo(115,470);g.lineTo(480,515);g.lineTo(845,470);g.closePath();g.fill();
@@ -2598,8 +2533,8 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];
  if(v.b&&st!=='up'&&st!=='survival'&&st!=='intro7'&&!v.secOn)drawBossBar(v.b,dt);if(v.tri&&st==='fight'&&!v.secOn)drawTriBars(v.tri);if(v.sec&&st==='fight'){drawSecBar(v);drawSecTimer(v,t)}
  if(v.bs2&&st!=='up'&&st!=='survival'){const q=v.bs2,x=140,y=83,w=680,h=13,r=q.max?cl(q.hp/q.max,0,1):0;g.fillStyle='#250912';g.fillRect(x,y,w,h);g.fillStyle='#ff465d';g.fillRect(x,y,w*r,h);g.strokeStyle='#ff9ba8';g.lineWidth=2;g.strokeRect(x,y,w,h);T('UNCOOLGUY16  '+Math.ceil(q.hp)+' / '+Math.ceil(q.max),x,y+25,11,'#ff9ba8','left')}
  if(st==='fight'||st==='up')drawHud(v,dt);
- if(st==='survival'){const remain=Math.max(0,v.survT||0),pct=1-remain/(v.survMax||93.179);g.fillStyle='rgba(30,8,6,.78)';g.fillRect(0,0,W,94);TS('PHASE 4.5 — SURVIVE THE ENCORE',W/2,24,23,'#ffd34a');TS(remain.toFixed(1)+' SECONDS LEFT',W/2,55,27,'#fff');g.fillStyle='#3a1a14';g.fillRect(120,75,720,9);g.fillStyle='#ff8a1f';g.fillRect(120,75,720*cl(pct,0,1),9);
- TS(v.survName||'DODGE THE ARENA',W/2,128,16,'#ffe08a');TS('COLLECT BURGERS TO RESTORE 20% HP',W/2,148,11,'#aaffd5');TS('BAO + UNCOOLGUY16 ENCORE  •  ATTACK '+(v.survWave||0),W/2,516,10,'#ffb347'); }
+ if(st==='survival'){const remain=Math.max(0,v.survT||0),pct=1-remain/(v.survMax||93.179);g.fillStyle='rgba(30,8,6,.78)';g.fillRect(0,0,W,94);TS('PHASE 4.5 - SURVIVE THE ENCORE',W/2,24,23,'#ffd34a');TS(remain.toFixed(1)+' SECONDS LEFT',W/2,55,27,'#fff');g.fillStyle='#3a1a14';g.fillRect(120,75,720,9);g.fillStyle='#ff8a1f';g.fillRect(120,75,720*cl(pct,0,1),9);
+ TS(v.survName||'DODGE THE ARENA',W/2,128,16,'#ffe08a');TS('Burgers spawn more often',W/2,148,11,'#aaffd5');TS('BAO + UNCOOLGUY16 ENCORE - ATTACK '+(v.survWave||0),W/2,516,10,'#ffb347'); }
  if(st==='intro7'&&v.in7>=T7.clock&&v.in7<T7.clock+T7.fade){g.fillStyle='rgba(0,0,0,'+(1-(v.in7-T7.clock)/T7.fade)+')';g.fillRect(0,0,W,H)}if(st==='secretcut')drawSecretCutFx(v,t);if(ST.vignette)drawVignette(st);if(v.dlg)drawDlg(v.dlg);
  if(v.dlg&&v.dlg.intro&&v.dlg.i===0&&v.dlg.t<2.4&&v.b){const a=Math.min(1,(2.4-v.dlg.t)*2,v.dlg.t*3);g.globalAlpha=a;TS('BOSS '+(v.bi+1)+(v.loop?'  -  LOOP '+(v.loop+1):''),W/2,H/2-100,26,'#fff');TS(v.b.name.toUpperCase(),W/2,H/2-45,58,BD[v.bi].col[0]);TS(BD[v.bi].title,W/2,H/2+5,24,'#ddd');g.globalAlpha=1}
  if(st==='up')drawUp(v,now);
