@@ -1,7 +1,19 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v32)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v33)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 33 — Patrick: slam, orbiting rocks, Eureka Burst
+
+- **Knife removed:** Patrick no longer draws the generic knife.
+- **Belly Flop:** while you hold M1, a ring on the ground shows exactly where you will land and how wide the slam will be. The ring fills as the charge builds. On release Patrick hops up with a shadow that shrinks, squashes on landing, and the slam leaves an expanding shock ring, cracks spreading out, and dust.
+- **Damage x1.75:** every Patrick damage source is multiplied by 1.75: slams and aftershocks, orbiting rock chip damage, food that hits bosses, and Eureka Burst.
+- **Rock mode (Q):** summons pet rocks that orbit Patrick and block enemy shots. Double Tap adds one more rock. Q does nothing while rocks are already orbiting. They last 12 s, with an 8 s cooldown. The old place-and-swap is gone.
+  - Smaller hitboxes: a shot is blocked within about 14 px of the rock's centre (was 26 px), and a rock chips a boss only when touching it within about 30 px (was 58 px).
+- **Eureka Burst (E, replaces Think Hard):** Patrick thinks for 1 s (a lightbulb glows over him and the burst range fills in), then bursts. The burst clears enemy shots within about 190 px and damages bosses in range. His next belly flop hits 50% harder for 5 s. Cooldown 14 s.
+- **Mode label:** "ROCK MODE" or "SPONGEBOB MODE" now shows above the ability bar, not on the character.
+- **SpongeBob heal:** 1.5–3.5% of max HP per food (was 1–3%).
+- **Testing note:** checked headless: orbit radius and blocking, the second-Q block, the charge ring, a real mouse-held charge that hops and slams (11 cracks), Eureka timing, the clear and buff, heal range 1.9–3.8%, all 26 upgrades, and screenshots. Not played by hand, so balance still needs a real run-through. Eureka's damage and the 1.75x multiplier are unverified against the bosses' HP.
 
 ## Version 32 — Patrick: 105 HP, Rock and SpongeBob modes
 
