@@ -1,7 +1,34 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v30)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v32)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 32 — Patrick: 105 HP, Rock and SpongeBob modes
+
+- **HP:** Patrick now has 105 HP (was 160).
+- **Switch Mode (R):** flips between Rock mode and SpongeBob mode. It has a short cooldown, and Ghost Step halves it. A label above Patrick shows the current mode. **Gas Cloud is gone:** R was the only free key, so the third key became the switch.
+- **Rock mode (Q):** the pet rock from before. Q places it, and Q again swaps places with it.
+- **SpongeBob mode (Q):** SpongeBob pops in where Patrick stands and stays for 5 seconds. Every 0.8 s he fires a food item (burger, or one of the Jay food sprites) at the nearest player.
+  - Food that touches a player heals them 1–3% of their max HP.
+  - Food that touches a boss does 5 damage.
+  - Only one SpongeBob can be out at a time. He has a 10 s cooldown after placing.
+- **Effects:** SpongeBob bobs and pops in with an overshoot. He squashes and stretches on each shot, with a muzzle ring and sparks. Food spins with a trail, and heal numbers float up when it lands.
+- **Upgrades in SpongeBob mode:** Double Tap fires an extra food per volley. Big Bite makes SpongeBob and the food bigger. Piercing adds 25% per level to heals and boss damage.
+- **Testing note:** checked headless (mode switch, duplicate blocking, the 5-second lifetime, the 2.9% heal, all 26 upgrade configurations, and a screenshot). Shot cadence was checked by reading the timer, not by counting shots. Not played by hand, so the balance still needs a real run-through.
+
+## Version 31 — Patrick remade from scratch
+
+Patrick's old kit borrowed too much from other characters, so the whole kit is new. None of it is a copy of Coolguy15, Zach, Jay or Terry.
+
+- **Stats:** 160 HP, speed 205.
+- **Passive, Stillness:** standing still for one second builds a rock stance (+30% damage dealt, -25% damage taken). Moving drops it. A grey ring shows when it is active.
+- **Basic attack, Belly Flop:** hold to charge (up to 1.2 s), release to leap along your aim. The leap distance and the shockwave both grow with the charge. The shockwave hits each boss once and clears enemy shots. Double Tap adds aftershocks, and Ghost Step halves the recovery. A pink ring shows the charge.
+- **Q, Pet Rock:** plants a rock where Patrick stands. It chips bosses and blocks enemy shots for 12 s. Press Q again to swap places with the rock, which is then used up.
+- **E, Think Hard:** every enemy shot on screen freezes for about 2.2 s (Double Tap adds 0.4 s), then resumes at its old speed.
+- **R, Gas Cloud:** a cloud 150 px in front of Patrick for 5 s (Double Tap adds 1.5 s). It heals every player inside it by 2% per 0.5 s and burns bosses.
+- **Upgrades:** damage, speed, HP, regen, crit, lifesteal, shield, shock, berserker, rush, meteor, revive, time warp and Snack Time work through the shared code. Piercing boosts the shockwave, the rock and the gas burn. Big Bite grows the shockwave, rock and cloud. Cooldown Crunch shortens the three abilities. Ghost Step halves the Belly Flop recovery. Explosive Rounds applies to the shockwave.
+- **Note:** the SpongeBob sprite is no longer used by Patrick. The file is still in the folder.
+- **Testing note:** checked headless (every mechanic on its own, the 24-upgrade sweep, a 4-second real loop, and a screenshot). Not played by hand, so the balance still needs a real run-through.
 
 ## Version 30 — Patrick joins the roster
 
