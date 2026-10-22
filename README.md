@@ -1,7 +1,19 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v29)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v30)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 30 — Patrick joins the roster
+
+- **Patrick** (150 HP, speed 215, the tank). Sprites are the ones you supplied: the idle frames, the walk frames, the rock and SpongeBob.
+- **Passive:** 10% of incoming hits are shrugged off.
+- **Pebble Flick (attack):** rock projectiles that use every bullet upgrade: Double Tap (multi), Piercing Rounds, Big Bite (size), Lucky Strike (crit) and Explosive Rounds.
+- **Yoink! (Q):** throws SpongeBob along his aim. He swats boss shots out of the air, hits each boss once on the way out and once on the way back, then returns to Patrick.
+- **Nap Time (E):** heals 25% of max HP over 3 seconds at 60% speed. Snack Time, Cooldown Crunch and the other cooldown upgrades apply.
+- **Rock Roll (R):** a roll that is invulnerable and hits each boss once. Ghost Step cuts its cooldown.
+- **Upgrades:** all 24 were run against him headlessly with no errors. The generic ones (damage, speed, HP, regen, crit, lifesteal, shield, shock, berserker, rush, meteor, revive, time warp) apply through the shared code.
+- **Story:** Patrick has his own lines in the intro, phase, outro and win dialogue.
+- **Testing note:** checked headless (every upgrade, every attack and ability, a run of the real loop, and the lobby). Not played by hand, so the balance still needs a real run-through.
 
 ## Version 29 — Hateful Doom health scales with the party
 

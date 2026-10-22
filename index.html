@@ -9,14 +9,15 @@
 window.addEventListener('error',e=>{let d=document.getElementById('err');if(!d){d=document.createElement('pre');d.id='err';d.style.cssText='position:fixed;left:0;top:0;right:0;margin:0;padding:8px;background:#600;color:#fff;font:12px monospace;z-index:9;white-space:pre-wrap';document.body.appendChild(d)}d.textContent='Game error: '+e.message+' (line '+e.lineno+')\n'+d.textContent});
 const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=W;cv.height=H;g.imageSmoothingEnabled=false;
 const R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d),sideOfLane=i=>i%2?W-12:12;
-const F={start:'startbutton.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png'};
+const F={start:'startbutton.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png',pi1:'Patrick character idle1.png',pi2:'Patrick character idle2.png',pw1:'Patrick character walk1.png',pw2:'Patrick character walk2.png',prock:'Patrick rock.png',pyoink:'SpongeBob (yoink).png'};
 const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp3',m1:'Cheese Crusade V2 (boss 1).mp3',m2:'The guy(Boss 2).mp3',m3:'SpongeSwap - Hell Or High Water_Phase 2 (boss 3).mp3',m4:'Pyrosomni (boss 4).mp3',surv:'Timebomb Madness OST - Overdue - blocco (boss 4.5).mp3',m5:'SpongeBob SquarePants SuperSponge - Vs. Patrick (boss 5).mp3',m6:'Vs. Randy boss 6.mp3',m7:'Suffocate_In_Dust_II_boss_7.mp3',m8:'Hateful_Doom_secret_boss_8.mp3'};
 /* ---------- DATA ---------- */
 const CH={cg:{n:'Coolguy15',hp:100,spd:230,i:['cgi1','cgi2'],w:['cgw1','cgw2'],ab:['Brick Toss','Overclock','Roll'],dsc:['Hurl a huge piercing brick','4s of double fire rate','Invulnerable dash'],wp:'Gun: aim with mouse, hold click to shoot'},
  zach:{n:'Zach',hp:130,spd:250,i:['zi1','zi2'],w:['zw1','zw2'],ab:['Burger Break','Knife Whirl','Lunge'],dsc:['Throw a burger, heal 15% HP','Spin-slash everything nearby','Dash-stab through the boss'],wp:'Knife M1: slash, reverse slash, stab; parries shots'},
  jay:{n:'Jay',hp:80,spd:245,i:['ji1','ji3'],w:['jw1','jw2'],ab:['Food Barrage','Pan Boomerang','Box Hide'],dsc:['Scatter 11 snacks','Pan hits boss 4 times','Hide 3s, attacks pass'],wp:'Swing the pan up close, or toss snacks from range.'},
- terry:{n:'Terry',hp:110,spd:240,i:['tI1','tI2'],w:['tW1','tW2'],ab:['Lucky Coin','Briefcase Bomb','Cash Shield'],dsc:['Flip 5 coins that bounce twice','Case hits 20, then cash burst','Block shots, fire them back'],wp:'Hustler. Hold click for a rapid-fire money gun.'}};
-const CD={cg:[6,12,5],zach:[9,8,5],jay:[20,10,7],terry:[9,12,10]};
+ terry:{n:'Terry',hp:110,spd:240,i:['tI1','tI2'],w:['tW1','tW2'],ab:['Lucky Coin','Briefcase Bomb','Cash Shield'],dsc:['Flip 5 coins that bounce twice','Case hits 20, then cash burst','Block shots, fire them back'],wp:'Hustler. Hold click for a rapid-fire money gun.'},
+ pat:{n:'Patrick',hp:150,spd:215,i:['pi1','pi2'],w:['pw1','pw2'],ab:['Yoink!','Nap Time','Rock Roll'],dsc:['Throw SpongeBob. He boomerangs back, hitting twice','Heal 25% HP over 3 s, slowed. Snack Time still works','Roll through bosses, invulnerable, one hit each'],wp:'Hold click to flick pebbles. 10% of hits bounce off.'}};
+const CD={cg:[6,12,5],zach:[9,8,5],jay:[20,10,7],terry:[9,12,10],pat:[9,14,7]};
 const BD=[{n:'Xiao Long Bao',title:'The Steamed Tyrant',img:'xlb',hp:2400,sz:150,col:['#ffe08a','#ff8a1f'],bg:['#4a2a12','#1a0f08'],mus:'m1'},
   {n:'UnCoolguy16',title:'The Uncool Twin',img:'ucg',hp:3500,sz:150,col:['#ff6060','#7a0010'],bg:['#2a0c18','#07040a'],mus:'m2'},
  {n:'Evil Spong',title:'The Bubble Bouncer',img:'sp1',hp:4800,sz:165,col:['#44eaff','#bd55ff'],bg:['#092d48','#090b26'],mus:'m3'},
@@ -24,8 +25,8 @@ const BD=[{n:'Xiao Long Bao',title:'The Steamed Tyrant',img:'xlb',hp:2400,sz:150
  {n:'Evil Zach',title:'The Bootleg Zach',img:'ez',hp:6000,sz:158,col:['#f9e84c','#fa3152'],bg:['#241423','#080711'],mus:'m5'},
  {n:'Fella',title:'The Walk-Off Menace',img:'fella',hp:8800,sz:160,col:['#ff364e','#ffdf8b'],bg:['#102c20','#090a14'],mus:'m6'},
  {n:'Will',title:'The Hover Trio',img:'will',hp:2600,sz:150,col:['#9dffb0','#2fb7ff'],bg:['#0e2a33','#070611'],mus:'m7',allies:[{n:'Jackson',img:'jackson',hp:3000,col:['#ff9a3c','#ff3d00']},{n:'Mason',img:'mason',hp:3400,col:['#7dd3ff','#2050ff']}]}];
-const SC={'Will':'#9dffb0','Jackson':'#ff9a3c','Mason':'#7dd3ff','Xiao Long Bao':'#ffcf5a','UnCoolguy16':'#ff5a5a','Evil Zach':'#f9e84c','Coolguy15':'#8fd8ff','Zach':'#ffe14a','Evil Spong':'#44eaff','Fella':'#ff465f','Jay':'#ffb347','Terry':'#7dff9a'};
-const PORT={'Will':'will','Jackson':'jackson','Mason':'mason','Xiao Long Bao':'xlb','UnCoolguy16':'ucg','Evil Zach':'ez','Coolguy15':'cgi1','Zach':'zi1','Evil Spong':'sp1','Fella':'fella','Jay':'ji1','Terry':'tI1'};
+const SC={'Patrick':'#ffa7d8','Will':'#9dffb0','Jackson':'#ff9a3c','Mason':'#7dd3ff','Xiao Long Bao':'#ffcf5a','UnCoolguy16':'#ff5a5a','Evil Zach':'#f9e84c','Coolguy15':'#8fd8ff','Zach':'#ffe14a','Evil Spong':'#44eaff','Fella':'#ff465f','Jay':'#ffb347','Terry':'#7dff9a'};
+const PORT={'Will':'will','Jackson':'jackson','Mason':'mason','Xiao Long Bao':'xlb','UnCoolguy16':'ucg','Evil Zach':'ez','Coolguy15':'cgi1','Zach':'zi1','Evil Spong':'sp1','Fella':'fella','Jay':'ji1','Terry':'tI1','Patrick':'pi1'};
 // ===== STORY: THE GRAND STEAMER (light-hearted) =====
 // Everyone here wants you gone, but mostly they just want to bicker with each other.
 // BAO: theatrical, vain chef. UNCOOL: deadpan, jealous of "cool". SPONG: dramatic bubble-obsessed. EVIL ZACH: smug bootleg Zach.
@@ -265,9 +266,13 @@ const STORY_CAMEO={
  ]
 };
 function chars(){return [...new Set(Object.values(S.pl||{}).map(p=>p.ch))]}
+STORY_PLAYER.intro.pat=["Patrick","I'm ready! I brought a rock, a starfish brain, and SpongeBob. He's a sponge. He's also my best friend."];
+STORY_PLAYER.phase.pat=["Patrick","Ow! It hit my head. My head is a rock, so that's fine. I think."];
+STORY_PLAYER.outro.pat=["Patrick","We won? Can we go jellyfishing now? I'll bring the rock."];
+STORY_PLAYER.win.pat=["Patrick","Nap time. Right after I win."];
 function compose(_old,event='intro',level=0){
  const players=Object.values(S.pl||{}),count=Math.max(1,players.length),bucket=partyBucket(count),ci=bidx(),d=STORY_PARTY[event]&&STORY_PARTY[event][ci];
- const hasCg=players.some(p=>p.ch==='cg'),hasZach=players.some(p=>p.ch==='zach'),mix=hasCg&&hasZach,hasJay=players.some(p=>p.ch==='jay'),hasTerry=players.some(p=>p.ch==='terry');
+ const hasPat=players.some(p=>p.ch==='pat'),hasCg=players.some(p=>p.ch==='cg'),hasZach=players.some(p=>p.ch==='zach'),mix=hasCg&&hasZach,hasJay=players.some(p=>p.ch==='jay'),hasTerry=players.some(p=>p.ch==='terry');
  const out=[];const add=x=>{if(Array.isArray(x)&&x.length&&Array.isArray(x[0]))out.push(...x);else if(Array.isArray(x)&&x.length===2)out.push(x)};
  if(event==='intro'){
   add(STORY_OPEN[ci]);
@@ -275,21 +280,21 @@ function compose(_old,event='intro',level=0){
   if(ci===3){if(bucket==='solo')add([["Xiao Long Bao","Our one opponent is staring at us."],["UnCoolguy16","I'm staring because you forgot the plan. Again."]]);else if(bucket==='duo')add([["Xiao Long Bao","Two versus two. No excuses."],["UnCoolguy16","You will find several excuses. I'll list them after."]]);}
   if(ci===4)add([["Evil Zach",count===1?'No partner means every bad decision is yours. Convenient.':`I see ${count} challengers. That is ${count} chances to watch me win.`]]);
   if(ci===5&&count>=3)add([["Fella","Crowd count confirmed. Switching to full-field pitching."]]);
-  if(mix)add(STORY_PLAYER.intro.mixed);else if(hasCg)add([STORY_PLAYER.intro.cg]);else if(hasZach)add([STORY_PLAYER.intro.zach]);if(hasJay)add([STORY_PLAYER.intro.jay]);if(hasTerry)add([STORY_PLAYER.intro.terry]);
+  if(mix)add(STORY_PLAYER.intro.mixed);else if(hasCg)add([STORY_PLAYER.intro.cg]);else if(hasZach)add([STORY_PLAYER.intro.zach]);if(hasJay)add([STORY_PLAYER.intro.jay]);if(hasTerry)add([STORY_PLAYER.intro.terry]);if(hasPat)add([STORY_PLAYER.intro.pat]);
  }else if(event==='phase'){
   const lv=Math.max(0,Math.min(1,level-1));
   const arr=STORY_PARTY.phase[ci][lv];if(arr&&arr[bucket])add([arr[bucket]]);
   if(ci===3){if(lv===0)add([["Xiao Long Bao","Uncool, use the synchronized attack!"],["UnCoolguy16","We synchronized one thing: our dislike of your plan."]]);else add([["UnCoolguy16","This is the last stand, Bao. Cover the bottom!"],["Xiao Long Bao","I am covering everything!"],["UnCoolguy16","That's why we keep getting hit!"]]);}
   if(ci===5&&lv===1)add([["Fella","The scoreboard says WALK-OFF. The scoreboard has never been wrong. Except all those times."]]);
-  if(mix)add(STORY_PLAYER.phase.mixed);else if(hasCg)add([STORY_PLAYER.phase.cg]);else if(hasZach)add([STORY_PLAYER.phase.zach]);if(hasJay)add([STORY_PLAYER.phase.jay]);if(hasTerry)add([STORY_PLAYER.phase.terry]);
+  if(mix)add(STORY_PLAYER.phase.mixed);else if(hasCg)add([STORY_PLAYER.phase.cg]);else if(hasZach)add([STORY_PLAYER.phase.zach]);if(hasJay)add([STORY_PLAYER.phase.jay]);if(hasTerry)add([STORY_PLAYER.phase.terry]);if(hasPat)add([STORY_PLAYER.phase.pat]);
  }else if(event==='outro'){
   if(d&&d[bucket])add([d[bucket]]);
   if(STORY_CAMEO.outro[ci])add(STORY_CAMEO.outro[ci]);
   if(ci===6)add(TRIO_OUTRO);
-  if(mix)add(STORY_PLAYER.outro.mixed);else if(hasCg)add([STORY_PLAYER.outro.cg]);else if(hasZach)add([STORY_PLAYER.outro.zach]);if(hasJay)add([STORY_PLAYER.outro.jay]);if(hasTerry)add([STORY_PLAYER.outro.terry]);
+  if(mix)add(STORY_PLAYER.outro.mixed);else if(hasCg)add([STORY_PLAYER.outro.cg]);else if(hasZach)add([STORY_PLAYER.outro.zach]);if(hasJay)add([STORY_PLAYER.outro.jay]);if(hasTerry)add([STORY_PLAYER.outro.terry]);if(hasPat)add([STORY_PLAYER.outro.pat]);
  }else if(event==='win'){
   if(ci===6)add(TRIO_WIN);else{add([["Fella","The scoreboard has been unplugged. That means you officially win, right?"],["Fella","I'm keeping the bat. You can keep the ketchup stains."]]);add(STORY_CAMEO.outro[5])}
-  if(mix)add(STORY_PLAYER.win.mixed);else if(hasCg)add([STORY_PLAYER.win.cg]);else if(hasZach)add([STORY_PLAYER.win.zach]);if(hasJay)add([STORY_PLAYER.win.jay]);if(hasTerry)add([STORY_PLAYER.win.terry]);
+  if(mix)add(STORY_PLAYER.win.mixed);else if(hasCg)add([STORY_PLAYER.win.cg]);else if(hasZach)add([STORY_PLAYER.win.zach]);if(hasJay)add([STORY_PLAYER.win.jay]);if(hasTerry)add([STORY_PLAYER.win.terry]);if(hasPat)add([STORY_PLAYER.win.pat]);
   add([["Xiao Long Bao",`The final tally: ${count} challenger${count===1?'':'s'}, ${BD.length} bosses, and one extremely confusing dinner.`],["UnCoolguy16","Can we all go home now? I need a nap and a new name."]]);
  }
  return out;
@@ -476,7 +481,7 @@ function dmgB(v,x,y,col,crit,p,target='main'){const b=S.bs;if(!b||b.inv)return;a
   const f=(b.hp+b.hp2)/(b.max+b.max2),th=b.ph===0?.66:.33;if(b.ph<2&&f<=th&&!b.inv)startCut();return}if(b.hp<=0)return;b.hp-=v;b.fl=.12;fx(['d',x,y,v,col,crit]);X(crit?'crit':'hit');if(p)p.dd+=v;if(p&&p.m&&p.m.ls)p.hp=Math.min(p.max,p.hp+v*p.m.ls);
  const th=b.max*(1-(b.ph+1)/3);if(b.ph<2&&b.hp<=th){b.hp=th;startCut()}else if(b.hp<=0&&b.ph>=2){b.hp=0;if(b.idx===4&&!S.ezUlt){startEvilZachUltimate();return}bossDead()}}
 function hitB(p,base,x,y,kind,target='main'){const d=pd(p,base);dmgB(d.v,x,y,d.c?'#ffe14a':'#fff',d.c,p,target);fx(['p',x,y,6,'#fff',170,.4,4]);if(p.m.expl&&kind==='b')boom(x,y,60,d.v*.4,'p','#ffb347')}
-function hitP(p,dmg,exact=false){if(p.dead||p.inv>0||p.hide>0||ADMIN.god)return;if(p.sh){p.sh=0;p.inv=.8;X('shield');fx(['r',p.x,p.y,50,'#6cf']);return}dmg=exact?Math.round(dmg):Math.round(dmg*.88*[.75,1,1.4][S.set.diff]*(1+.15*lp())*(S.secOn?1.3:1));p.hp-=dmg;p.tk+=dmg;X('hurt');if(p.hp>0&&p.hp/p.max<.1)ach('lowhp');if(p.tk>=150)ach('tank');p.inv=.7;p.rage=p.m.rush?5:0;fx(['d',p.x,p.y-30,'-'+dmg,'#ff5050',0]);fx(['p',p.x,p.y,10,'#f55',200,.5,4]);fx(['s',6]);
+function hitP(p,dmg,exact=false){if(p.dead||p.inv>0||p.hide>0||ADMIN.god)return;if(p.ch==='pat'&&R()<.1){fx(['d',p.x,p.y-30,'NOPE','#fff',0]);X('shield');return}if(p.sh){p.sh=0;p.inv=.8;X('shield');fx(['r',p.x,p.y,50,'#6cf']);return}dmg=exact?Math.round(dmg):Math.round(dmg*.88*[.75,1,1.4][S.set.diff]*(1+.15*lp())*(S.secOn?1.3:1));p.hp-=dmg;p.tk+=dmg;X('hurt');if(p.hp>0&&p.hp/p.max<.1)ach('lowhp');if(p.tk>=150)ach('tank');p.inv=.7;p.rage=p.m.rush?5:0;fx(['d',p.x,p.y-30,'-'+dmg,'#ff5050',0]);fx(['p',p.x,p.y,10,'#f55',200,.5,4]);fx(['s',6]);
  if(p.hp<=0){if(p.m.revive&&!p.revived){p.revived=1;p.hp=p.max*.25;p.inv=1;X('revive');ach('revive');fx(['r',p.x,p.y,90,'#ff0'])}else{p.dead=1;p.hp=0;fx(['p',p.x,p.y,24,'#fff',300,.8,5]);X('die');ach('fallen');if(!alive().length){S.st='over';X('lose')}}}}
 function boom(x,y,r,dmg,own,col){X('boom');fx(['r',x,y,r,col||'#fff']);fx(['p',x,y,16,col||'#fff',260,.5,5]);fx(['s',own==='b'?5:3]);
  if(own==='b')alive().forEach(p=>{if(dist(x,y,p.x,p.y)<r*ATK_HIT+PLAYER_HIT_R)hitP(p,dmg)});else{const target=bossTargetAt(x,y,r);if(target)dmgB(dmg,x,y,col||'#ffa',0,null,target.id)}}
@@ -485,7 +490,7 @@ const bp=(x,y,a,sp,o)=>{if(!(o&&o.own==='p'))sp*=.92;if(S.secOn&&o&&o.dark){sp*=
 const warn=o=>S.wr.push(Object.assign({t:0,dur:1,k:'c',r:50,a:0},o,{dur:(o&&o.dur!=null?o.dur:1)*1.1*(S.secOn?SEC_HARD.warn:1)}));
 function nearest(x,y){let b=null,bd=1e9;alive().forEach(p=>{const d=dist(x,y,p.x,p.y);if(d<bd){bd=d;b=p}});return b}
 function ang2(a,b){const d=Math.abs(a-b)%(2*PI);return d>PI?2*PI-d:d}
-function attack(p){const m=p.m,rate=(p.buf>0?2:1)*m.rate;if(p.ch==='jay'){jayAttack(p,rate);return}if(p.ch==='terry'){terryAttack(p,rate);return}
+function attack(p){const m=p.m,rate=(p.buf>0?2:1)*m.rate;if(p.ch==='jay'){jayAttack(p,rate);return}if(p.ch==='terry'){terryAttack(p,rate);return}if(p.ch==='pat'){patAttack(p,rate);return}
  if(p.ch==='cg'){p.atk=.24/rate;p.kick=1;X('shoot');const n=1+m.multi;for(let k=0;k<n;k++){const a=p.ang+(n>1?(k-(n-1)/2)*.14:0)+rnd(-.03,.03);bp(p.x+Math.cos(a)*44,p.y+Math.sin(a)*44+6,a,720,{own:'p',r:11*m.size,dmg:10,img:'bul',sz:40*m.size,life:1.1,pierce:m.pierce,pid:p.id,kind:'b'})}fx(['p',p.x+Math.cos(p.ang)*50,p.y+Math.sin(p.ang)*50,4,'#ffd34a',180,.2,3,'spark'])}
  else{
   // Zach's M1 is a three-hit chain: slash, reverse slash, then a committed thrust.
@@ -504,7 +509,7 @@ function stepM1Hit(p,dt){const h=p.m1Hit;if(!h)return;h.t-=dt;if(h.t<=0){p.m1Hit
  const m=p.m||{dmg:1,multi:0};bossTargets().forEach(q=>{if(h.hit.includes(q.id)||!sectorContains(h,q.x,q.y,q.r))return;h.hit.push(q.id);const base=h.kind==='pan'?13:h.kind==='stab'?30:h.kind==='reverse'?23:21;hitB(p,base*(1+.6*m.multi),q.x,q.y,'k',q.id);if(h.kind==='pan')X('panHit');fx(['p',q.x,q.y,h.kind==='stab'?12:8,h.kind==='stab'?'#fff1a0':'#ffe07a',h.kind==='stab'?250:220,h.kind==='stab'?.34:.3,h.kind==='stab'?5:4,h.kind==='stab'?'pixel':'shard'])});
  S.pr.forEach(q=>{if(q.own==='b'&&q.life>0&&sectorContains(h,q.x,q.y,q.r||10)){q.life=0;X('parry');fx(['p',q.x,q.y,6,h.kind==='stab'?'#fff8d8':'#ffc84b',190,.28,4,'spark'])}})
 }
-function ability(p,k){if(p.ch==='jay'){jayAbility(p,k);return}if(p.ch==='terry'){terryAbility(p,k);return}const m=p.m,ca=Math.cos(p.ang),sa=Math.sin(p.ang);p.cd[k]=p.cdm[k]=CD[p.ch][k]*m.cdr*(k===2?m.cdr3:1);if(m.snack)p.hp=Math.min(p.max,p.hp+m.snack);X(k===2?'dash':(p.ch==='cg'&&k===1)?'power':(p.ch==='zach'&&k===1)?'whirl':'throw');
+function ability(p,k){if(p.ch==='pat'){patAbility(p,k);return}if(p.ch==='jay'){jayAbility(p,k);return}if(p.ch==='terry'){terryAbility(p,k);return}const m=p.m,ca=Math.cos(p.ang),sa=Math.sin(p.ang);p.cd[k]=p.cdm[k]=CD[p.ch][k]*m.cdr*(k===2?m.cdr3:1);if(m.snack)p.hp=Math.min(p.max,p.hp+m.snack);X(k===2?'dash':(p.ch==='cg'&&k===1)?'power':(p.ch==='zach'&&k===1)?'whirl':'throw');
  if(p.ch==='cg'){if(k===0)bp(p.x+ca*40,p.y+sa*40,p.ang,430,{own:'p',r:30*m.size,dmg:70,img:'brick',sz:92*m.size,life:1.6,spin:12,pid:p.id,kind:'k'});
   else if(k===1){p.buf=4;fx(['r',p.x,p.y,80,'#ffd34a'])}else{const l=Math.hypot(p.in.kx,p.in.ky);const dx=l?p.in.kx/l:ca,dy=l?p.in.ky/l:sa;p.dash=.22;p.dvx=dx*900;p.dvy=dy*900;p.inv=Math.max(p.inv,.45)}}
  else{if(k===0){bp(p.x+ca*40,p.y+sa*40,p.ang,520,{own:'p',r:20*m.size,dmg:38,img:'burger',sz:60*m.size,life:1.2,spin:8,pid:p.id,kind:'k'});p.hp=Math.min(p.max,p.hp+p.max*.15);X('heal');fx(['d',p.x,p.y-34,'+'+Math.round(p.max*.15),'#6f6',0])}
@@ -513,10 +518,11 @@ function stepPl(p,dt){if(p.dead){p.boom=null;p.windup=0;p.hide=0;p.cs=0;return}c
  p.cd=p.cd.map(c=>Math.max(0,c-dt));if(ADMIN.cd)p.cd=[0,0,0];p.sauceSlow=Math.max(0,(p.sauceSlow||0)-dt);const sauceMove=p.sauceSlow>0?.48:1;['atk','stab','whirl','inv','buf','rage'].forEach(k=>p[k]=Math.max(0,p[k]-dt));p.m1T=Math.max(0,(p.m1T||0)-dt);if(p.m1T<=0)p.m1Anim=0;stepM1Hit(p,dt);if(p.ch==='jay')stepJay(p,dt);p.kick=Math.max(0,p.kick-dt*6);
  if(m.regen)p.hp=Math.min(p.max,p.hp+m.regen*dt);
  if(m.shield&&!p.sh){p.shT=(p.shT||0)+dt;if(p.shT>10){p.sh=1;p.shT=0}}
- const l=Math.hypot(i.kx,i.ky);p.walk=l>0?1:0;p.ang=i.ang;
+ const l=Math.hypot(i.kx,i.ky);p.walk=l>0?1:0;p.ang=i.ang;if(p.nap>0){p.nap=Math.max(0,p.nap-dt);p.hp=Math.min(p.max,p.hp+p.max*.25/3*dt)}
  if(p.dash>0){p.dash-=dt;p.x+=p.dvx*dt*sauceMove;p.y+=p.dvy*dt*sauceMove;fx(['p',p.x,p.y,1,p.ch==='cg'?'#8fd8ff':'#ffe14a',30,.3,6]);
+  if(p.ch==='pat')patRoll(p);
   if(p.ch==='zach'&&!p.lh){const target=bossTargetAt(p.x,p.y,45);if(target){p.lh=1;hitB(p,40,target.x,target.y,'k',target.id)}}}
- else if(l>0){const sp=CH[p.ch].spd*m.spd*(p.rage>0?1+m.rush:1)*sauceMove*(p.windup>0?.35:1);p.x+=i.kx/l*sp*dt;p.y+=i.ky/l*sp*dt}
+ else if(l>0){const sp=CH[p.ch].spd*m.spd*(p.rage>0?1+m.rush:1)*sauceMove*(p.windup>0?.35:1)*(p.nap>0?.6:1);p.x+=i.kx/l*sp*dt;p.y+=i.ky/l*sp*dt}
  p.x=cl(p.x,30,W-30);p.y=cl(p.y,100,H-85);
  if(p.whirl>0){p.wt-=dt;if(p.wt<=0){p.wt=.2;const rg=110*m.size;fx(['r',p.x,p.y,rg,'#ffe14a']);bossTargets().filter(q=>dist(p.x,p.y,q.x,q.y)<rg+q.r).forEach(q=>hitB(p,16,q.x,q.y,'k',q.id));S.pr.forEach(q=>{if(q.own==='b'&&dist(p.x,p.y,q.x,q.y)<rg)q.life=0})}}
  if(i.d&&p.atk<=0&&p.dash<=0)attack(p);
@@ -606,6 +612,62 @@ function stepJayWorld(dt){
  S.jf=S.st==='fight'?next:[];
 }
 
+/* ===== PATRICK (starfish tank): pebble flick, SpongeBob yoink, nap time, rock roll ===== */
+// Pebble Flick: the basic attack. Every upgrade that touches bullets (multi, pierce, size, crit, explosive) applies.
+function patAttack(p,rate){
+ const m=p.m;p.atk=.36/rate;const n=1+m.multi;
+ for(let k=0;k<n;k++){const a=p.ang+(n>1?(k-(n-1)/2)*.16:0)+rnd(-.03,.03);
+  bp(p.x+Math.cos(a)*40,p.y+Math.sin(a)*40,a,560,{own:'p',r:10*m.size,dmg:12,img:'prock',sz:34*m.size,life:1,spin:9,pid:p.id,kind:'b',pierce:m.pierce})}
+ X('shoot');
+}
+// Yoink!: Patrick throws SpongeBob along his aim. He swats boss shots out of the air, hits each boss once on the way out,
+// then boomerangs back to Patrick and hits each boss once more on the way home.
+function patYoink(p){
+ const m=p.m,ca=Math.cos(p.ang),sa=Math.sin(p.ang);
+ if(!S.yo)S.yo=[];
+ S.yo.push({id:S.id++,pid:p.id,x:p.x+ca*40,y:p.y+sa*40,vx:ca*640,vy:sa*640,rot:0,t:0,back:0,hits:[],size:m.size});
+}
+function stepPatWorld(dt){
+ if(!S.yo||!S.yo.length)return;
+ if(S.st!=='fight'){S.yo=[];return}
+ S.yo=S.yo.filter(y=>{
+  const p=S.pl[y.pid];
+  if(!p||p.dead)return false;
+  y.t+=dt;y.rot+=dt*26;
+  if(!y.back){
+   y.x=cl(y.x+y.vx*dt,20,W-20);y.y=cl(y.y+y.vy*dt,110,H-20);
+   if(y.t>=.6){y.back=1;y.hits=[]}
+  }else{
+   const a=Math.atan2(p.y-y.y,p.x-y.x),sp=720;
+   y.x+=Math.cos(a)*sp*dt;y.y+=Math.sin(a)*sp*dt;
+   if(dist(y.x,y.y,p.x,p.y)<30)return false;
+  }
+  const rr=26*y.size;
+  bossTargets().forEach(q=>{if(y.hits.includes(q.id)||dist(y.x,y.y,q.x,q.y)>=q.r+rr)return;y.hits.push(q.id);hitB(p,34,y.x,y.y,'b',q.id);X('panHit')});
+  S.pr.forEach(q=>{if(q.own==='b'&&q.life>0&&dist(y.x,y.y,q.x,q.y)<(q.r||10)+rr){q.life=0;fx(['p',q.x,q.y,6,'#ffe14a',190,.28,4,'spark'])}});
+  return true;
+ });
+}
+function drawPatWorld(v,t){(v.yo||[]).forEach(([x,y,rot,back,size])=>{
+ const s=size||1,col=back?'rgba(255,167,216,1)':'rgba(255,230,120,1)';
+ glow(x,y,46*s,col);spr('pyoink',x,y,66*s,rot,1,1,1);
+});}
+// Nap Time: heal 25% of max HP over three seconds at 60% speed, shown with a soft glow.
+// Snack Time, Cooldown Crunch and the rest of the cooldown upgrades apply.
+// Rock Roll: a roll that is invulnerable and hits each boss once, however long it lasts.
+function patRoll(p){
+ if(!p.rh)p.rh=[];
+ bossTargets().forEach(q=>{if(p.rh.includes(q.id)||dist(p.x,p.y,q.x,q.y)>=q.r+34)return;p.rh.push(q.id);hitB(p,26,q.x,q.y,'k',q.id);X('panHit')});
+ if(R()<.5)fx(['p',p.x,p.y,2,'#ffc2ea',140,.25,4,'pixel']);
+}
+function patAbility(p,k){
+ const m=p.m,ca=Math.cos(p.ang),sa=Math.sin(p.ang);
+ p.cd[k]=p.cdm[k]=CD.pat[k]*m.cdr*(k===2?m.cdr3:1);
+ if(m.snack)p.hp=Math.min(p.max,p.hp+m.snack);
+ if(k===0){X('throw');patYoink(p);fx(['r',p.x,p.y,50,'#ffe14a'])}
+ else if(k===1){p.nap=3;X('heal');fx(['r',p.x,p.y,70,'#9be7ff']);fx(['p',p.x,p.y,12,'#d8f6ff',200,.5,4,'spark'])}
+ else{const l=Math.hypot(p.in.kx,p.in.ky),dx=l?p.in.kx/l:ca,dy=l?p.in.ky/l:sa;p.dash=.28;p.dvx=dx*800;p.dvy=dy*800;p.inv=Math.max(p.inv,.35);p.rh=[];X('dash');fx(['r',p.x,p.y,40,'#ffb6e6'])}
+}
 /* ===== TERRY (hustler): rapid money gun, lucky coin fan, bouncing briefcase bomb, cash shield ===== */
 function terryAttack(p,rate){
  const m=p.m,ca=Math.cos(p.ang),sa=Math.sin(p.ang);
@@ -1073,7 +1135,7 @@ function step(dt){if(S.paused)return;S.t+=dt;if(S.st==='intro7'){stepTrioIntro(d
  Object.values(S.pl).forEach(p=>stepPl(p,dt));if(S.st!=='fight')return;
  if(S.secOn){stepSecret(dt);if(S.st!=='fight')return}else if(b.idx===6)stepTrio(dt);else{stepBoss(b,dt);if(b.idx===3&&S.bs2&&S.bs2.hp>0){stepBoss(S.bs2,dt,1)}} 
  updZones(dt);
- stepJayWorld(dt);stepTerryWorld(dt);S.pkT-=dt;if(S.pkT<=0&&S.pk.length<2){S.pkT=18;S.pk.push({x:rnd(80,880),y:rnd(150,450)})}
+ stepJayWorld(dt);stepTerryWorld(dt);stepPatWorld(dt);S.pkT-=dt;if(S.pkT<=0&&S.pk.length<2){S.pkT=18;S.pk.push({x:rnd(80,880),y:rnd(150,450)})}
  S.pk=S.pk.filter(k=>{for(const p of alive())if(dist(k.x,k.y,p.x,p.y)<PICKUP_HIT_R+PLAYER_HIT_R){const h=Math.round(p.max*.15);p.hp=Math.min(p.max,p.hp+h);fx(['d',p.x,p.y-34,'+'+h,'#6f6',0]);fx(['p',k.x,k.y,14,'#ffd34a',200,.5,4]);X('heal');ach('burger');return false}return true});
  for(const q of S.pr){q.life-=dt;if(q.life<=0&&q.pop&&q.own==='b'&&!q.didPop){q.didPop=1;for(let k=0;k<10;k++)bp(q.x,q.y,k*2*PI/10,205,{img:'bubble3',sz:44,r:14,dmg:11,life:3.2});fx(['r',q.x,q.y,70,'#4df2ff'])}if(q.life<=0&&q.split&&!q.didSplit){q.didSplit=1;fx(['r',q.x,q.y,40,'#ffb347']);for(let k=0;k<q.split;k++){const a=k*2*PI/q.split+q.rot;bp(q.x,q.y,a,190,{img:'jf1',sz:26,r:10,dmg:8,life:1.6})}}if(q.wave){q.wt=(q.wt||0)+dt;const wa=q.wave.a0+Math.sin(q.wt*q.wave.f)*q.wave.amp;q.vx=Math.cos(wa)*q.wave.sp;q.vy=Math.sin(wa)*q.wave.sp}if(q.home&&q.own==='b'){const tg=nearest(q.x,q.y);if(tg){const sp=Math.hypot(q.vx,q.vy),cur=Math.atan2(q.vy,q.vx);let d=Math.atan2(tg.y-q.y,tg.x-q.x)-cur;d=Math.atan2(Math.sin(d),Math.cos(d));const m=Math.max(-q.home*dt,Math.min(q.home*dt,d)),na=cur+m;q.vx=Math.cos(na)*sp;q.vy=Math.sin(na)*sp}}if(q.boomer&&q.own==='b'){q.bt-=dt;if(q.bt<=0&&q.ref&&q.ref.hp>0){const o=q.ref,a=Math.atan2(o.y-q.y,o.x-q.x);q.vx=Math.cos(a)*q.boomer;q.vy=Math.sin(a)*q.boomer;if(dist(q.x,q.y,o.x,o.y)<34)q.life=0}}const sl=q.own==='b'?S.slowm:1;if(q.curve){const aa=q.curve*dt,cs=Math.cos(aa),sn=Math.sin(aa),vx=q.vx;q.vx=vx*cs-q.vy*sn;q.vy=vx*sn+q.vy*cs;if(q.curveLife!=null){q.curveLife-=dt;if(q.curveLife<=0)q.curve=0}}q.x+=q.vx*dt*sl;q.y+=q.vy*dt*sl;q.rot+=q.spin*dt;
   if(q.bounce>0){let bn=0;if(q.x<12||q.x>W-12){q.vx*=-1;q.x=cl(q.x,12,W-12);bn=1}if(q.y<100||q.y>H-12){q.vy*=-1;q.y=cl(q.y,100,H-12);bn=1}if(bn){q.bounce--;fx(['p',q.x,q.y,4,'#f66',120,.3,4])}}
@@ -1854,7 +1916,7 @@ function drawTriBars(list){
 }
 // ===== END BOSS 7 =====
 
-function snap(){const b=S.bs,D=S.dlg;return{st:S.st,secOn:S.secOn?1:0,sec:S.sec?snapSec():null,secT:S.secT||0,pix:S.pixT==null?-1:+S.pixT.toFixed(2),sc:S.sc?{t:+S.sc.t.toFixed(2),ms:+S.sc.ms.toFixed(3),wf:+S.sc.wf.toFixed(3),jf:+S.sc.jf.toFixed(3),who:S.sc.who|0,tf:+S.sc.tf.toFixed(3),iw:S.sc.impW|0,ij:S.sc.impJ|0}:null,secBanner:S.secBanner?S.secBanner.txt:'',s7:S.s7&&snapS7(),in7:S.in7?+S.in7.t.toFixed(2):-1,tri:S.tri&&S.tri.map(q=>({name:q.name,img:q.img,x:q.x|0,y:q.y|0,hp:Math.ceil(q.hp),max:q.max,fl:q.fl>0?1:0,stun:q.stun>0?1:0,a:+(q.a||0).toFixed(2),r:q.r})),bi:bidx(),loop:lp(),paused:S.paused,ezUlt:S.ezUlt?{stage:S.ezUlt.stage,t:S.ezUlt.t,beamT:S.ezUlt.beamT,flashT:S.ezUlt.flashT}:null,bfAfter:S.bfAfter?{t:S.bfAfter.t,dur:S.bfAfter.dur,x:S.bfAfter.x,y:S.bfAfter.y,a:S.bfAfter.a,fin:S.bfAfter.fin}:null,bfCut:S.bfCut?{t:S.bfCut.t,dur:S.bfCut.dur,x:S.bfCut.x,y:S.bfCut.y,bx:S.bfCut.bx,by:S.bfCut.by,a:S.bfCut.a,finisher:S.bfCut.finisher||0,targetName:S.bfCut.targetName||'CHALLENGER',targetCh:S.bfCut.targetCh||'cg',damage:S.bfCut.damage||44}:null,runT:S.t,survT:S.survT,survMax:S.survMax,survName:S.survName,survWave:S.survWave,bs2:S.bs2&&{img:S.bs2.img,x:S.bs2.x,y:S.bs2.y,hp:S.bs2.hp,max:S.bs2.max,idx:1,sz:S.bs2.sz||150,fl:S.bs2.fl>0?1:0,a:S.bs2.a||0,gun:S.bs2.gun?1:0,pipe:S.bs2.pipeOn?S.bs2.pa:null,beam:S.bs2.beam==null?null:S.bs2.beam,mode:S.bs2.mode||'',sp:S.bs2.rolling?S.bs2.t*14:0},zn:S.zn.map(z=>[z.x|0,z.y|0,z.r,+(z.life/z.max).toFixed(2),z.col||'',z.dmg||10,z.slowField?1:0]),pk:S.pk.map(k=>[k.x|0,k.y|0]),tc:(S.tc||[]).map(c=>[c.x|0,c.y|0,+Math.sin(c.rot).toFixed(2),+c.t.toFixed(2)]),jf:(S.jf||[]).filter(f=>f.delay<=0).map(f=>[f.x|0,f.y|0,Math.round(f.z||0),f.img,+(f.rot||0).toFixed(2),f.landed?1:0,+(f.life||0).toFixed(1)]),set:S.set,vt:S.vt,ups:S.ups,opts:S.opts,votes:S.votes,room,n:nPl(),
+function snap(){const b=S.bs,D=S.dlg;return{st:S.st,secOn:S.secOn?1:0,sec:S.sec?snapSec():null,secT:S.secT||0,pix:S.pixT==null?-1:+S.pixT.toFixed(2),sc:S.sc?{t:+S.sc.t.toFixed(2),ms:+S.sc.ms.toFixed(3),wf:+S.sc.wf.toFixed(3),jf:+S.sc.jf.toFixed(3),who:S.sc.who|0,tf:+S.sc.tf.toFixed(3),iw:S.sc.impW|0,ij:S.sc.impJ|0}:null,secBanner:S.secBanner?S.secBanner.txt:'',s7:S.s7&&snapS7(),in7:S.in7?+S.in7.t.toFixed(2):-1,tri:S.tri&&S.tri.map(q=>({name:q.name,img:q.img,x:q.x|0,y:q.y|0,hp:Math.ceil(q.hp),max:q.max,fl:q.fl>0?1:0,stun:q.stun>0?1:0,a:+(q.a||0).toFixed(2),r:q.r})),bi:bidx(),loop:lp(),paused:S.paused,ezUlt:S.ezUlt?{stage:S.ezUlt.stage,t:S.ezUlt.t,beamT:S.ezUlt.beamT,flashT:S.ezUlt.flashT}:null,bfAfter:S.bfAfter?{t:S.bfAfter.t,dur:S.bfAfter.dur,x:S.bfAfter.x,y:S.bfAfter.y,a:S.bfAfter.a,fin:S.bfAfter.fin}:null,bfCut:S.bfCut?{t:S.bfCut.t,dur:S.bfCut.dur,x:S.bfCut.x,y:S.bfCut.y,bx:S.bfCut.bx,by:S.bfCut.by,a:S.bfCut.a,finisher:S.bfCut.finisher||0,targetName:S.bfCut.targetName||'CHALLENGER',targetCh:S.bfCut.targetCh||'cg',damage:S.bfCut.damage||44}:null,runT:S.t,survT:S.survT,survMax:S.survMax,survName:S.survName,survWave:S.survWave,bs2:S.bs2&&{img:S.bs2.img,x:S.bs2.x,y:S.bs2.y,hp:S.bs2.hp,max:S.bs2.max,idx:1,sz:S.bs2.sz||150,fl:S.bs2.fl>0?1:0,a:S.bs2.a||0,gun:S.bs2.gun?1:0,pipe:S.bs2.pipeOn?S.bs2.pa:null,beam:S.bs2.beam==null?null:S.bs2.beam,mode:S.bs2.mode||'',sp:S.bs2.rolling?S.bs2.t*14:0},zn:S.zn.map(z=>[z.x|0,z.y|0,z.r,+(z.life/z.max).toFixed(2),z.col||'',z.dmg||10,z.slowField?1:0]),pk:S.pk.map(k=>[k.x|0,k.y|0]),tc:(S.tc||[]).map(c=>[c.x|0,c.y|0,+Math.sin(c.rot).toFixed(2),+c.t.toFixed(2)]),yo:(S.yo||[]).map(y=>[y.x|0,y.y|0,+(y.rot%(2*PI)).toFixed(2),y.back|0,y.size]),jf:(S.jf||[]).filter(f=>f.delay<=0).map(f=>[f.x|0,f.y|0,Math.round(f.z||0),f.img,+(f.rot||0).toFixed(2),f.landed?1:0,+(f.life||0).toFixed(1)]),set:S.set,vt:S.vt,ups:S.ups,opts:S.opts,votes:S.votes,room,n:nPl(),
  pl:Object.values(S.pl).map(p=>({id:p.id,ch:p.ch,x:p.x|0,y:p.y|0,hp:Math.ceil(p.hp),max:p.max,ang:+p.ang.toFixed(2),walk:p.walk,stab:p.stab,sd:p.sd,dead:p.dead,sh:p.sh,name:p.name,cd:p.cd,cdm:p.cdm,wh:p.whirl>0?1:0,kick:p.kick,dash:p.dash||0,inv:p.inv>0?1:0,buf:p.buf>0?1:0,sauce:p.sauceSlow>0?1:0,orb:p.m?p.m.orbit:0,oa:p.oa||0,dd:p.dd,tk:p.tk,m1Anim:p.m1Anim||0,m1T:p.m1T||0,m1Dur:p.m1Dur||.3,m1Angle:p.m1Angle==null?p.ang:p.m1Angle,m1Hit:p.m1Hit&&p.m1Hit.t>0?{x:p.m1Hit.x,y:p.m1Hit.y,a:p.m1Hit.a,r:p.m1Hit.r,half:p.m1Hit.half,kind:p.m1Hit.kind,t:p.m1Hit.t}:null,cs:p.cs>0?1:0,jh:p.hide>0?1:0,jw:p.windup>0?+(1-p.windup/.75).toFixed(2):-1,jb:p.boom?[p.boom.px|0,p.boom.py|0,+(p.boom.rot||0).toFixed(2),+p.boom.t.toFixed(2)]:null})),
  b:b&&{img:b.img,name:b.d.n,x:b.x|0,y:b.y|0,hp:b.hp,max:b.max,ph:b.ph,fl:b.fl>0?1:0,inv:b.inv,sz:b.sz,a:b.a||0,gun:b.gun?1:0,pipe:b.pipeOn?b.pa:null,beam:b.beam==null?null:b.beam,air:b.air||0,sp:b.rolling?b.t*14:0,mode:b.mode||'',cdash:b.cdash||0,idx:bidx(),hp2:b.hp2||0,max2:b.max2||0,fc:b.fc?{i:b.fc.i,t:b.fc.t,a:b.fc.a}:null,fr:b.fr?{phase:b.fr.phase,t:b.fr.t,a:b.fr.a,dx:b.fr.dx,dy:b.fr.dy}:null,fs:b.fs?{phase:b.fs.phase,t:b.fs.t,x:b.fs.x,y:b.fs.y}:null,gs:b.gs?{phase:b.gs.phase,t:b.gs.t,safeLane:b.gs.safeLane}:null,hr:b.hr?{phase:b.hr.phase,t:b.hr.t,x:b.hr.x,y:b.hr.y}:null,cmb:b.cmb?[b.cmb.k,+b.cmb.a.toFixed(2),+b.cmb.p.toFixed(2),b.cmb.s==='swing'?1:0,b.cmb.r,b.cmb.h]:null},
  pr:S.pr.map(q=>[q.id,q.img,q.x|0,q.y|0,+q.rot.toFixed(2),q.sz,q.own,q.r,q.dark?1:0,q.shape|0]),
@@ -2361,7 +2423,7 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];
  if(v.s7&&st==='fight')drawS7(v.s7,t);if(v.tri&&st!=='up'&&st!=='survival'&&!v.secOn&&st!=='secretcut')drawTriAllies(v.tri,t);if(st==='secretcut')drawSecretCut(v,t);if(v.sec&&st!=='up'&&st!=='survival')drawSecBoss(v.sec,t);if(v.s7&&v.secOn&&st==='fight')drawSecEchoes(v.s7,t);
  [...v.pl].sort((a,b)=>a.y-b.y).forEach(p=>drawPlayer(p,t));
  v.pr.forEach(([id,img,x,y,rot,sz,own,rr,dk,sh])=>{const o=sm(id,x,y),col=dk?'rgba(255,28,58,1)':projectileColor(img,own==='p'?undefined:v.bi);glow(o.x,o.y,sz*.9,col);if(R()<.4&&PT.length<700)PT.push({x:o.x,y:o.y,vx:rnd(-15,15),vy:rnd(-15,15),l:.3,m:.3,c:col,s:sz*.2,shape:particleShape(col),rot:rot,spin:rnd(-8,8)});if(dk)drawDarkProj(o.x,o.y,rot,sz,sh,img);else spr(img,o.x,o.y,sz,rot)});
- drawJayFood(v,t);drawJayPans(v,t);drawTerryCases(v,t);drawHitboxes(v,t);
+ drawJayFood(v,t);drawJayPans(v,t);drawTerryCases(v,t);drawPatWorld(v,t);drawHitboxes(v,t);
  RG.forEach(r=>{g.strokeStyle=r.c;g.globalAlpha=r.l/.35;g.lineWidth=5;g.beginPath();g.arc(r.x,r.y,r.R*(1-r.l/.35*.7),0,PI*2);g.stroke();g.globalAlpha=1});
  {const pd=ST.particles/100;if(pd>0)PT.forEach(p=>{if(p.q===undefined)p.q=Math.random();if(pd>=1||p.q<pd)drawParticle(p)})}g.globalAlpha=1;
  if(ST.dmgNums)DN.forEach(d=>{g.globalAlpha=1-d.t*d.t;TS(d.s,d.x,d.y-d.t*50,(d.b?26:17)*ST.dmgSize/100,d.c);g.globalAlpha=1});
