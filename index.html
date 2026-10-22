@@ -1188,6 +1188,36 @@ function stepS7(dt){
    o.lanes.forEach(l=>{if(!l.done&&o.t>=l.at){l.done=1;X('whoosh');alive().forEach(p=>{if(Math.abs(p.x-l.x)<30+PLAYER_HIT_R)hitP(p,15)});fx(['p',l.x,300,12,'#ff1c3a',320,.45,5,'pixel'])}});
    return o.t<o.dur;
   }
+  if(o.k==='launch'){
+   let open=0;
+   o.list.forEach(it=>{if(it.done)return;if(o.t<it.at){open++;return}it.done=1;const pj=it.pj;
+    if(pj&&pj.life>0){const tg=nearest(pj.x,pj.y),a=tg?Math.atan2(tg.y-pj.y,tg.x-pj.x):0;pj.vx=Math.cos(a)*o.sp;pj.vy=Math.sin(a)*o.sp;pj.rot=a;fx(['r',pj.x,pj.y,26,'#ff1c3a']);fx(['p',pj.x,pj.y,5,'#050207',150,.35,4,'pixel']);X('eshoot')}});
+   return open>0;
+  }
+  if(o.k==='shuffle'){
+   const b=owner;
+   if(!b||b.hp<=0)return false;
+   b.busy=Math.max(b.busy||0,.2);
+   o.swapT-=dt;
+   if(o.t<o.dur-.7&&o.swapT<=0){
+    o.swapT=o.gap*(.9+R()*.2);
+    const i=Math.floor(R()*3),j=(i+1+Math.floor(R()*2))%3,A=o.ents[i],B=o.ents[j];
+    [A.tx,B.tx]=[B.tx,A.tx];[A.ty,B.ty]=[B.ty,A.ty];
+    A.sx=A.x;A.sy=A.y;B.sx=B.x;B.sy=B.y;A.u=0;B.u=0;X('whoosh');
+   }
+   o.ents.forEach(e=>{e.u=Math.min(1,e.u+dt/.26);const k=secEase(e.u);e.x=e.sx+(e.tx-e.sx)*k;e.y=e.sy+(e.ty-e.sy)*k});
+   const r=o.ents[o.real];b.x=r.x;b.y=r.y;
+   o.tellT-=dt;if(o.tellT<=0){o.tellT=.4+R()*.5;o.tellOn=.16}o.tellOn=Math.max(0,o.tellOn-dt);
+   if(o.t<o.dur)return true;
+   // The swapping ends: the real one fires a fan, the copies each fire one aimed shot.
+   b.busy=0;X('eshoot');
+   o.ents.forEach((e,idx)=>{const tg=nearest(e.x,e.y),a=tg?Math.atan2(tg.y-e.y,tg.x-e.x):0;
+    if(idx===o.real){for(let k=-2;k<=2;k++)bp(e.x,e.y,a+k*.2,330,darkOpt({img:'ebul',sz:36,r:12,dmg:12,life:3.2}))}
+    else bp(e.x,e.y,a,300,darkOpt({img:'ebul',sz:34,r:12,dmg:12,life:3.2}));
+    fx(['r',e.x,e.y,50,'#2a5bff']);
+   });
+   return false;
+  }
   if(!owner||owner.hp<=0)return false;
   if(o.k==='echo'){
    if(o.t<0)return true;
@@ -1203,7 +1233,7 @@ function stepS7(dt){
    X('eshoot');return false;
   }
   if(o.k==='sweep'){
-   o.cur=o.t<o.tele?o.a0:o.a0+(o.a1-o.a0)*cl((o.t-o.tele)/o.dur,0,1);
+   const uu=cl((o.t-o.tele)/o.dur,0,1);o.cur=o.t<o.tele?o.a0:o.a0+(o.a1-o.a0)*(o.pp?(uu<.5?uu*2:2-uu*2):uu);
    if(o.t>=o.tele){const c=Math.cos(o.cur),s=Math.sin(o.cur);alive().forEach(p=>{if(o.hit[p.id]>0)return;const dx=p.x-owner.x,dy=p.y-owner.y,along=dx*c+dy*s,across=-dx*s+dy*c;if(along>0&&along<1500&&Math.abs(across)<20+PLAYER_HIT_R){o.hit[p.id]=.35;hitP(p,10)}})}
    for(const id in o.hit)o.hit[id]-=dt;
    return o.t<o.tele+o.dur;
@@ -1260,9 +1290,9 @@ function stepS7(dt){
  });
  S.s7=keep.concat(S.s7);
 }
-function snapS7(){return S.s7.map(o=>({k:o.k,x:o.x|0,y:o.y|0,r:o.r|0,max:o.max|0,t:+(o.t||0).toFixed(2),dur:o.dur,tele:o.tele,a0:o.a0,a1:o.a1,a:o.cur,pts:o.pts?o.pts.map(p=>[p[0]|0,p[1]|0]):null,ln:o.lanes?o.lanes.map(l=>[l.x|0,+(l.at-(o.t||0)).toFixed(2),l.done?1:0]):null,img:o.img||'',bx:o.boss?o.boss.x|0:0,by:o.boss?o.boss.y|0:0,dk:o.dark?1:0}))}
+function snapS7(){return S.s7.map(o=>({k:o.k,x:o.x|0,y:o.y|0,r:o.r|0,max:o.max|0,t:+(o.t||0).toFixed(2),dur:o.dur,tele:o.tele,a0:o.a0,a1:o.a1,a:o.cur,pts:o.pts?o.pts.map(p=>[p[0]|0,p[1]|0]):null,ln:o.lanes?o.lanes.map(l=>[l.x|0,+(l.at-(o.t||0)).toFixed(2),l.done?1:0]):null,img:o.img||'',bx:o.boss?o.boss.x|0:0,by:o.boss?o.boss.y|0:0,dk:o.dark?1:0,ents:o.ents?o.ents.map(e=>[e.x|0,e.y|0]):null,real:o.real|0,tell:o.tellOn>0?1:0}))}
 function drawS7(list,t){
- list.forEach(o=>{
+ list.forEach(o=>{secHazardFx(o,t);
   if(o.k==='orb'){(o.pts||[]).forEach(([x,y],i)=>{
    if(o.dk){glow(x,y,30,'rgba(255,28,58,1)');g.fillStyle='rgba(4,0,8,.96)';g.beginPath();g.arc(x,y,15,0,PI*2);g.fill();g.strokeStyle='rgba(255,28,58,.95)';g.lineWidth=3;g.stroke();g.strokeStyle='rgba(42,91,255,.75)';g.lineWidth=1.5;g.beginPath();g.arc(x,y,20,t*3+i,t*3+i+1.3);g.stroke()}
    else{glow(x,y,30,'rgba(65,240,255,1)');spr('bubble3',x,y,36,Math.sin(t*3+i)*.2)}
@@ -1332,6 +1362,12 @@ function drawS7(list,t){
     g.fillStyle='rgba(42,91,255,.6)';g.fillRect(bx-2,by-h*.6,2,h*.5)}
    g.restore();
   }
+  else if(o.k==='shuffle'&&o.ents){
+   o.ents.forEach(([x,y],i)=>{
+    if(i===o.real){if(o.tell){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,28,58,.95)';g.lineWidth=3;g.beginPath();g.ellipse(x,y+72,64,22,0,0,PI*2);g.stroke();g.restore()}return}
+    drawSecBoss({x,y,vanish:0,fl:0},t);
+   });
+  }
   else if(o.k==='march'&&o.ln){o.ln.forEach(([x,rem])=>{
    if(rem>0&&rem<=.6){const u=1-rem/.6;g.fillStyle='rgba(255,28,58,'+(.06+.16*u)+')';g.fillRect(x-30,0,60,H);g.strokeStyle='rgba(255,28,58,'+(.45+.45*u)+')';g.lineWidth=2;g.strokeRect(x-30,0,60,H)}
    else if(rem<=0&&rem>-.24){const f=1+rem/.24;g.fillStyle='rgba(4,0,8,'+(.85*f)+')';g.fillRect(x-30,0,60,H);g.fillStyle='rgba(255,220,220,'+f+')';g.fillRect(x-4,0,8,H)}
@@ -1365,11 +1401,13 @@ const MAP_FIRE={
 // Unlocked by leaving Mason for last: when the second of Will and Jackson falls, Mason finishes them,
 // Will says "your not mason", and Mason transforms. The fight lasts exactly as long as his track.
 const SEC_TIME=157.07;
-const SEC_POOL=['blackFireRain','spearVolley','copyAttack','eclipseSpiral','voidPulse','shadowDash','umbralSweep','hunterSeq','nightNova','orbShield','graveSpikes','gravityWell','curseSigil','phantomDouble','reaperCrescent','eclipseGaze','blackSun','deathMarch'];
+const SEC_POOL=['blackFireRain','spearVolley','copyAttack','eclipseSpiral','voidPulse','shadowDash','umbralSweep','hunterSeq','nightNova','orbShield','graveSpikes','gravityWell','curseSigil','phantomDouble','reaperCrescent','eclipseGaze','blackSun','deathMarch','decoyShuffle','frozenEchoes','reverseSweep'];
 const darkOpt=o=>Object.assign({dark:1},o);
 const secEase=u=>u*u*(3-2*u);
 // Banner names, shown when Hateful Doom starts a move.
-const SEC_NAME={blackFireRain:'BLACK FIRE RAIN',spearVolley:'SPEAR VOLLEY',eclipseSpiral:'ECLIPSE SPIRAL',voidPulse:'VOID PULSE',shadowDash:'SHADOW DASH',umbralSweep:'UMBRAL SWEEP',hunterSeq:'HUNTER CHAIN',nightNova:'NIGHT NOVA',orbShield:'SHADOW ORBS',graveSpikes:'GRAVE SPIKES',gravityWell:'GRAVITY WELL',curseSigil:'CURSE SIGIL',phantomDouble:'PHANTOM DOUBLE',reaperCrescent:'REAPER CRESCENT',eclipseGaze:'ECLIPSE GAZE',blackSun:'BLACK SUN',deathMarch:'DEATH MARCH'};
+const SEC_NAME={blackFireRain:'BLACK FIRE RAIN',spearVolley:'SPEAR VOLLEY',eclipseSpiral:'ECLIPSE SPIRAL',voidPulse:'VOID PULSE',shadowDash:'SHADOW DASH',umbralSweep:'UMBRAL SWEEP',hunterSeq:'HUNTER CHAIN',nightNova:'NIGHT NOVA',orbShield:'SHADOW ORBS',graveSpikes:'GRAVE SPIKES',gravityWell:'GRAVITY WELL',curseSigil:'CURSE SIGIL',phantomDouble:'PHANTOM DOUBLE',reaperCrescent:'REAPER CRESCENT',eclipseGaze:'ECLIPSE GAZE',blackSun:'BLACK SUN',deathMarch:'DEATH MARCH',decoyShuffle:'THREE OF HIM',frozenEchoes:'FROZEN ECHOES',reverseSweep:'REVERSE SWEEP'};
+// Chance that a move's banner names a different move (the fight is meant to be a little misleading).
+const SEC_LIE=.2;
 // Which boss each copied move comes from. Its sprite flickers over him as an echo, then the black copy fires.
 const SRC_NAME={xlb:'XIAO LONG BAO',ucg:'UNCOOLGUY16',sp1:'EVIL SPONG',ez:'EVIL ZACH',fella:'FELLA',will:'WILL',jackson:'JACKSON',mason:'MASON'};
 // Copied moves: each one rebuilds a real move from another boss, drawn in black.
@@ -1407,7 +1445,7 @@ const SEC_FIRE={
  // // Umbral Sweep: a black beam sweeps across the arena.,
  umbralSweep(q,t,ph){X('whoosh');const span=ph>=1?2.9:2.5,a0=q.a-span/2;s7add({k:'sweep',boss:q,t:0,tele:.6,dur:1.0,a0,a1:a0+span,cur:a0,hit:{},dark:1})},
  // Grave Spikes: warned spots under the players erupt into black spikes.,
- graveSpikes(q,t,ph){const L=alive();if(!L.length)return;X('charge');const n=2+ph;for(let k=0;k<n;k++){const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-26,26),70,W-70),y=cl(tg.y+rnd(-26,26),130,H-70);warn({x,y,r:44,dur:.75+k*.22,fn:()=>{X('stab');fx(['s',9]);fx(['r',x,y,60,'#ff1c3a']);s7add({k:'spike',x,y,t:0,dur:.6,r:44});alive().forEach(p=>{if(dist(x,y,p.x,p.y)<44*ATK_HIT+PLAYER_HIT_R)hitP(p,16)})}})}},
+ graveSpikes(q,t,ph){const L=alive();if(!L.length)return;X('charge');const n=2+ph;for(let k=0;k<n;k++){const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-26,26),70,W-70),y=cl(tg.y+rnd(-26,26),130,H-70);warn({x,y,r:44,dur:.75+k*.22,fn:()=>{X('stab');fx(['s',9]);fx(['r',x,y,60,'#ff1c3a']);secBurst(x,y,'#ff1c3a',16,1.1);s7add({k:'spike',x,y,t:0,dur:.6,r:44});alive().forEach(p=>{if(dist(x,y,p.x,p.y)<44*ATK_HIT+PLAYER_HIT_R)hitP(p,16)})}})}},
  // Gravity Well: a black singularity opens under a player, drags everyone toward it for a few seconds, then implodes.,
  gravityWell(q,t,ph){const L=alive();if(!L.length)return;X('charge');const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-30,30),100,W-100),y=cl(tg.y+rnd(-30,30),160,H-100);warn({x,y,r:64,dur:.7,fn:()=>{X('ring');s7add({k:'well',boss:q,t:0,dur:2.8+ph*.4,x,y,r:240,tick:0})}})},
  // Curse Sigil: sigils lock onto players and follow them, then detonate. Keep moving.,
@@ -1421,7 +1459,18 @@ const SEC_FIRE={
  // Black Sun: a growing sphere of darkness marks a player, then bursts into a ring of black flame.,
  blackSun(q,t,ph){const L=alive(),tg=L.length?L[Math.floor(R()*L.length)]:null,x=tg?cl(tg.x,150,W-150):W/2,y=tg?cl(tg.y,180,H-120):H/2;X('charge');warn({x,y,r:124,dur:1.5+ph*.2,fn:()=>{X('boom');fx(['f','#050207']);fx(['s',16]);fx(['r',x,y,240,'#ff1c3a']);fx(['r',x,y,150,'#2a5bff']);boom(x,y,124,18,'b','#ff1c3a');const n=ph>=1?20:14,a0=rnd(0,PI*2);for(let k=0;k<n;k++){const an=a0+k*2*PI/n;bp(x+Math.cos(an)*70,y+Math.sin(an)*70,an,200+ph*30,darkOpt({shape:1,sz:30,r:11,dmg:12,life:3.2}))}}})},
  // Death March: black lanes strike one after another across the arena, each one telegraphed first.,
- deathMarch(q,t,ph){const n=ph>=1?6:5,lanes=[];for(let k=0;k<n;k++)lanes.push({x:cl(96+k*(W-192)/(n-1)+rnd(-18,18),60,W-60),at:.9+k*.55});X('whoosh');s7add({k:'march',boss:q,t:0,dur:.9+(n-1)*.55+.45,lanes})}
+ deathMarch(q,t,ph){const n=ph>=1?6:5,lanes=[];for(let k=0;k<n;k++)lanes.push({x:cl(96+k*(W-192)/(n-1)+rnd(-18,18),60,W-60),at:.9+k*.55});X('whoosh');s7add({k:'march',boss:q,t:0,dur:.9+(n-1)*.55+.45,lanes})},
+ // Three of Him: he splits into three identical dark copies that swap places. One is real and a red tell flickers under it.
+ // When the swapping ends, the real one fires a fan and the copies each fire one aimed shot.
+ decoyShuffle(q,t,ph){X('charge');const xs=[200,480,760],ents=[];
+  for(let k=0;k<3;k++){const x=xs[k]+rnd(-24,24),y=rnd(190,300);ents.push({x,y,sx:x,sy:y,tx:x,ty:y,u:1})}
+  s7add({k:'shuffle',boss:q,t:0,dur:3.6+ph*.4,gap:ph>=1?.36:.46,swapT:.5,tellT:.5,tellOn:0,ents,real:Math.floor(R()*3)})},
+ // Frozen Echoes: a ring of black shots hangs around him. Each one wakes in turn and snaps toward whoever is nearest then.
+ frozenEchoes(q,t,ph){X('charge');const n=ph>=1?9:7,r0=ph>=2?150:118,list=[];
+  for(let k=0;k<n;k++){const a=k*2*PI/n+rnd(-.08,.08),x=q.x+Math.cos(a)*r0,y=cl(q.y+Math.sin(a)*r0*.7,100,H-60);bp(x,y,a,0,darkOpt({img:'ebul',sz:34,r:12,dmg:12,life:7}));list.push({pj:S.pr[S.pr.length-1],at:.9+k*.06})}
+  s7add({k:'launch',t:0,list,sp:ph>=2?420:350})},
+ // Reverse Sweep: the beam sweeps out, then turns round and sweeps back, so the same ground can be hit twice.
+ reverseSweep(q,t,ph){X('whoosh');const span=ph>=1?2.7:2.3,a0=q.a-span/2;s7add({k:'sweep',boss:q,t:0,tele:.7,dur:2.4,a0,a1:a0+span,cur:a0,hit:{},dark:1,pp:1})}
 };
 Object.assign(TRI_FIRE,SEC_FIRE);
 // Shadow dash: the arrival spot is marked first (his sprite drops into it), then he vanishes, reappears there and slashes.
@@ -1430,7 +1479,7 @@ function stepDash(o){
  if(!q||q.hp<=0){q.vanish=0;q.inv=0;return false}
  q.busy=Math.max(q.busy||0,.2);
  if(o.t<.5){q.vanish=1;q.inv=1;return true}
- if(!o.done){o.done=1;q.vanish=0;q.inv=0;q.x=o.ax;q.y=o.ay;const tg=nearest(q.x,q.y);if(tg)q.a=Math.atan2(tg.y-q.y,tg.x-q.x);X('whoosh');fx(['r',q.x,q.y,70,'#2a5bff']);fx(['r',q.x,q.y,36,'#ff1c3a']);fx(['s',8])}
+ if(!o.done){o.done=1;q.vanish=0;q.inv=0;q.x=o.ax;q.y=o.ay;const tg=nearest(q.x,q.y);if(tg)q.a=Math.atan2(tg.y-q.y,tg.x-q.x);X('whoosh');fx(['r',q.x,q.y,70,'#2a5bff']);fx(['r',q.x,q.y,36,'#ff1c3a']);fx(['s',8]);secBurst(q.x,q.y,'#2a5bff',20,1)}
  if(!o.slashed&&o.t>=.7){o.slashed=1;s7add({k:'arc',boss:q,t:0,x:q.x,y:q.y,a:q.a,a0:q.a-.95,a1:q.a+.95,half:.95,r:140,tele:.1,dur:.26,hit:{},dmg:24})}
  return o.t<1.1;
 }
@@ -1593,7 +1642,7 @@ function stepSecret(dt){
  if(S.secT<=0){if(S.pixT==null){S.pixT=0;S.pr=[];S.wr=[];S.zn=[];S.s7=[];X('lose');fx(['f','#000000'])}S.pixT+=dt;if(S.pixT>=PIX_T){S.pixT=null;S.secOn=0;S.sec=null;S.secT=0;S.st='lobby';S.bs=null;S.pr=[];S.wr=[];S.zn=[];S.s7=[];note('Time ran out. Hateful Doom wins.')}return}
  const secNow=Math.ceil(S.secT);if(secNow!==S.secLast){S.secLast=secNow;if(secNow>0&&secNow<=30)X(secNow<=10?'blip':'warn')}
  const f=q.hp/q.max,ph=f>.66?0:f>.33?1:2;
- if(ph>q.ph){q.ph=ph;X('phase');fx(['f','#ff1c3a']);fx(['s',16]);fx(['r',q.x,q.y,260,'#2a5bff']);S.secBanner={txt:ph===1?'PHASE II: THE BLACK FIRE':'PHASE III: NO MORE SONG',t:2.6}}
+ if(ph>q.ph){q.ph=ph;X('phase');fx(['f','#ff1c3a']);fx(['s',16]);fx(['r',q.x,q.y,260,'#2a5bff']);secBurst(q.x,q.y,'#ff1c3a',60,1.4);S.secBanner={txt:ph===1?'PHASE II: THE BLACK FIRE':'PHASE III: NO MORE SONG',t:2.6}}
  stepS7(dt);
  if(S.st!=='fight')return;
  // Stalking: the further into the fight, the more he leans toward the nearest player.
@@ -1602,13 +1651,14 @@ function stepSecret(dt){
  if(q.last!==lastMove&&q.last){
   // A new move just started: flash, shock ring and sparks, then announce it by name.
   fx(['s',7]);fx(['r',q.x,q.y,80,'#ff1c3a']);fx(['r',q.x,q.y,46,'#2a5bff']);fx(['p',q.x,q.y,14,'#ff1c3a',300,.45,5,'pixel']);
-  if(q.last!=='copyAttack'&&SEC_NAME[q.last]&&(!S.secBanner||S.secBanner.t<.6))S.secBanner={txt:SEC_NAME[q.last],t:1.2};
+  secBurst(q.x,q.y,'#ff1c3a',26,1);secBurst(q.x,q.y,'#2a5bff',12,1);
+  if(q.last!=='copyAttack'&&SEC_NAME[q.last]&&(!S.secBanner||S.secBanner.t<.6)){const names=Object.values(SEC_NAME);S.secBanner={txt:R()<SEC_LIE?names[Math.floor(R()*names.length)]:SEC_NAME[q.last],t:1.2}}
  }
 }
 function secDamage(v,x,y,col,crit,p){
  const q=S.sec;if(!q||q.hp<=0||S.st!=='fight')return;
  if(q.stun>0)v=Math.round(v*1.5);
- q.hp=Math.max(0,q.hp-v);q.fl=.12;fx(['d',x,y,v,col,crit]);X(crit?'crit':'hit');
+ q.hp=Math.max(0,q.hp-v);q.fl=.12;fx(['d',x,y,v,col,crit]);X(crit?'crit':'hit');secBurst(x,y,crit?'#ffffff':'#ff1c3a',crit?14:6,crit?1.2:.8);
  if(p)p.dd+=v;if(p&&p.m&&p.m.ls)p.hp=Math.min(p.max,p.hp+v*p.m.ls);
  if(q.hp<=0)secWin();
 }
@@ -1649,6 +1699,7 @@ function drawSecBoss(q,t){
  // Dark motes stream into him, so he always looks like he is pulling the dark in.
  if(!q.vanish&&PT.length<650&&R()<.55){const an=R()*PI*2,d=rnd(90,150);PT.push({x:x+Math.cos(an)*d,y:y+Math.sin(an)*d*.7,vx:-Math.cos(an)*rnd(70,130),vy:-Math.sin(an)*rnd(70,130),l:.7,m:.7,c:R()<.6?'#ff1c3a':'#2a5bff',s:rnd(3,6),shape:'shard',rot:an,spin:rnd(-6,6)})}
  g.save();
+ if(!q.vanish&&PT.length<640&&R()<.5){const an=R()*PI*2,d=rnd(40,70);PT.push({x:x+Math.cos(an)*d,y:y+Math.sin(an)*d*.7,vx:Math.cos(an)*rnd(90,200),vy:Math.sin(an)*rnd(90,200)*.7,l:.5,m:.5,c:R()<.5?'#ffffff':'#ff1c3a',s:rnd(3,5),shape:'spark',rot:an,spin:rnd(-12,12)})}
  glow(x,y,135,'rgba(255,28,58,1)');glow(x-16,y,115,'rgba(42,91,255,1)');
  spr(f,x+5,y,172,0,1,1,.45*al);spr(f,x-5,y,172,0,1,1,.45*al);
  // Now and then a glitch slice tears across him.
@@ -1662,7 +1713,7 @@ function drawSecEchoes(list,t){
  list.forEach(o=>{
   if(o.k!=='echo'||o.t<0)return;
   const u=cl(o.t/o.dur,0,1),pulse=.5+.5*Math.sin(o.t*34);
-  glow(o.x,o.y,120,'rgba(255,28,58,1)');
+  glow(o.x,o.y,120,'rgba(255,28,58,1)');if(R()<.6&&PT.length<640)PT.push({x:o.x+rnd(-50,50),y:o.y+rnd(-50,50),vx:rnd(-80,80),vy:rnd(-160,-40),l:.6,m:.6,c:R()<.5?'#ff1c3a':'#2a5bff',s:rnd(3,5),shape:'shard',rot:rnd(0,6),spin:rnd(-6,6)});
   spr(o.img,o.x,o.y,150,0,1,1,.2+.35*pulse*(1-u*.5));
   g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,28,58,'+(1-u)+')';g.lineWidth=5;g.beginPath();g.arc(o.x,o.y,40+u*120,0,PI*2);g.stroke();g.restore();
  });
@@ -1678,28 +1729,71 @@ function drawSecBar(v){
  if(q.stun)TS('EXPOSED  -  TAKING +50% DAMAGE',W/2,y+h+14,13,'#ff7a8a');
  if(v.secBanner)TS(v.secBanner,W/2,H/2-150,30,'#ff1c3a');
 }
-// Secret stage: a grey-black alley whose gradient, bars and ribbon follow the music's spectrum.
+// Secret stage visualizer, "the eclipse": a black sun at the centre ringed by spectrum spokes
+// (red on the left, blue on the right). Each beat throws a shockwave out of the sun and sheds shards,
+// hi-hats tear the screen with glitch slices, and ash drifts up the whole fight.
+const SV2={sm:new Float32Array(64),pb:0,rings:[],rot:0,flash:0,sd:0,glitch:0};
 function drawSecretBg(t){
- const sp=musicSpectrum();let bass=0,mid=0;
- if(sp){for(let i=0;i<8;i++)bass+=sp[i];bass=bass/8/255;for(let i=8;i<48;i++)mid+=sp[i];mid=mid/40/255}
- else{bass=.35+.3*Math.sin(t*2.1);mid=.25+.2*Math.sin(t*3.3)}
- const gr=g.createLinearGradient(0,0,0,H);
- gr.addColorStop(0,'rgb('+Math.round(14+bass*46)+',14,'+Math.round(20+mid*40)+')');
- gr.addColorStop(.55,'rgb(12,12,16)');
- gr.addColorStop(1,'rgb('+Math.round(8+bass*120)+',0,'+Math.round(14+mid*70)+')');
- g.fillStyle=gr;g.fillRect(0,0,W,H);
- g.strokeStyle='rgba(190,190,200,.05)';g.lineWidth=1;
- for(let x=0;x<W;x+=40){g.beginPath();g.moveTo(x,90);g.lineTo(x,H);g.stroke()}
- for(let y=90;y<H;y+=40){g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}
- const N=40;
- for(let i=0;i<N;i++){const amp=sp?sp[Math.floor(i*96/N)]/255:(.5+.5*Math.sin(t*4+i*.7))*.6,hh=10+amp*190,x=i*W/N;g.fillStyle=(i%2?'rgba(42,91,255,':'rgba(255,28,58,')+(.18+amp*.55)+')';g.fillRect(x+1,H-hh,W/N-3,hh)}
- g.strokeStyle='rgba(255,28,58,'+(.3+bass*.5)+')';g.lineWidth=2;g.beginPath();
- for(let x=0;x<=W;x+=12){const i=Math.floor(x/W*96),amp=sp?sp[i]/255:.3,y=300+Math.sin(x*.03+t*2)*(12+mid*60)+(amp-.3)*60;if(x)g.lineTo(x,y);else g.moveTo(x,y)}
- g.stroke();
- if(bass>.55){for(let k=0;k<5;k++){g.fillStyle=Math.random()<.5?'rgba(255,28,58,.5)':'rgba(42,91,255,.5)';g.fillRect(Math.random()*W,Math.random()*H,4+Math.random()*60,2+Math.random()*4)}}
- const ph=V&&V.sec?V.sec.ph:0,beat=Math.pow(Math.max(0,Math.sin(t*(1.2+ph*.5)*PI)),14);
- if(beat>.02){g.fillStyle='rgba(255,28,58,'+(beat*(.05+ph*.04))+')';g.fillRect(0,0,W,H)}
- const vg=g.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.8);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.7)');g.fillStyle=vg;g.fillRect(0,0,W,H);
+ const sp=musicSpectrum(),N=64,cx=W/2,cy=H*.5,dt=1/60;
+ let bass=0,mid=0,hi=0;
+ if(sp){for(let i=0;i<8;i++)bass+=sp[i];bass=bass/8/255;for(let i=8;i<48;i++)mid+=sp[i];mid=mid/40/255;for(let i=48;i<96;i++)hi+=sp[i];hi=hi/48/255}
+ else{bass=.35+.3*Math.sin(t*2.1);mid=.25+.2*Math.sin(t*3.3);hi=.2+.15*Math.sin(t*5.7)}
+ const ph=V&&V.sec?V.sec.ph:0,lift=1+ph*.12,r0=118+bass*16;
+ for(let i=0;i<N;i++){const src=sp?sp[Math.floor(i*96/N)]/255:(.5+.5*Math.sin(t*3+i*.45))*.5;SV2.sm[i]+=(src-SV2.sm[i])*.4}
+ // beat: a shockwave leaves the sun and sheds shards
+ if(bass>SV2.pb+.07&&bass>.34){const side=SV2.sd;SV2.sd=1-SV2.sd;SV2.rings.push({r:96,a:1,k:side});SV2.flash=.5;
+  for(let i=0;i<16&&PT.length<640;i++){const an=rnd(0,PI*2),d=rnd(110,140);PT.push({x:cx+Math.cos(an)*d,y:cy+Math.sin(an)*d*.9,vx:Math.cos(an)*rnd(120,280),vy:Math.sin(an)*rnd(120,280)*.9,l:.9,m:.9,c:side?'#2a5bff':'#ff1c3a',s:rnd(3,5),shape:'shard',rot:an,spin:rnd(-7,7)})}}
+ SV2.pb=bass;SV2.flash=Math.max(0,SV2.flash-.035);SV2.rot+=.0025+mid*.012;SV2.glitch=Math.max(0,SV2.glitch-.07);
+ if(hi>.42&&R()<.3)SV2.glitch=1;
+ SV2.rings.forEach(r=>{r.r+=300*dt;r.a-=.75*dt});SV2.rings=SV2.rings.filter(r=>r.a>0);
+ // backdrop: near-black, with a red floor glow that breathes on the bass
+ const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'rgb(6,4,10)');gr.addColorStop(.6,'rgb(12,6,16)');gr.addColorStop(1,'rgb('+Math.round(22+bass*100)+',0,'+Math.round(18+mid*44)+')');g.fillStyle=gr;g.fillRect(0,0,W,H);
+ // perspective floor grid rising toward the sun
+ g.strokeStyle='rgba(200,200,220,'+(.05+bass*.05)+')';g.lineWidth=1;
+ for(let i=-12;i<=12;i++){g.beginPath();g.moveTo(cx+i*14,H*.66);g.lineTo(cx+i*110,H);g.stroke()}
+ for(let k=0;k<7;k++){const y=H*.66+Math.pow(k/7,1.7)*(H*.34);g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}
+ // halo behind the sun
+ g.save();g.globalCompositeOperation='lighter';const hg=g.createRadialGradient(cx,cy,80,cx,cy,400+bass*60);hg.addColorStop(0,'rgba(255,28,58,'+(.16+bass*.2)+')');hg.addColorStop(.45,'rgba(42,91,255,'+(.05+mid*.08)+')');hg.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=hg;g.fillRect(0,0,W,H);g.restore();
+ // sun space: everything below is drawn around (0,0) and squashed a little so it sits on the floor
+ g.save();g.translate(cx,cy);g.scale(1,.9);
+ g.save();g.lineCap='round';g.globalCompositeOperation='lighter';
+ for(let i=0;i<N;i++){const a=-PI/2+i*2*PI/N+SV2.rot,v=SV2.sm[i],len=8+v*(96+bass*40)*lift,ca=Math.cos(a),sa=Math.sin(a),red=ca<0;
+  g.strokeStyle='rgba('+(red?'255,28,58':'42,91,255')+','+(.35+v*.6)+')';g.lineWidth=3.2;g.beginPath();g.moveTo(ca*r0,sa*r0);g.lineTo(ca*(r0+len),sa*(r0+len));g.stroke();
+  if(v>.7){g.strokeStyle='rgba(255,240,240,'+Math.min(1,(v-.7)*3)+')';g.lineWidth=1.6;g.beginPath();g.moveTo(ca*(r0+len),sa*(r0+len));g.lineTo(ca*(r0+len+7),sa*(r0+len+7));g.stroke()}
+ }
+ g.restore();
+ // the sun: a black disc with a corona; its red and blue fringes pull apart on the bass
+ const sr=100+bass*14,off=3+bass*9;
+ const cor=g.createRadialGradient(0,0,sr*.9,0,0,sr*1.9);cor.addColorStop(0,'rgba(255,28,58,'+(.5+bass*.3)+')');cor.addColorStop(.45,'rgba(120,20,60,.18)');cor.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=cor;g.beginPath();g.arc(0,0,sr*1.9,0,PI*2);g.fill();
+ g.lineWidth=2.5;g.strokeStyle='rgba(255,28,58,.85)';g.beginPath();g.arc(-off,0,sr+6,0,PI*2);g.stroke();
+ g.strokeStyle='rgba(42,91,255,.85)';g.beginPath();g.arc(off,0,sr+6,0,PI*2);g.stroke();
+ g.fillStyle='#000';g.beginPath();g.arc(0,0,sr,0,PI*2);g.fill();
+ // dark motes orbit the sun
+ for(let i=0;i<16;i++){const a=SV2.rot*7+i*2*PI/16,rr=sr+24+(i%4)*11+mid*36;g.fillStyle=i%2?'rgba(42,91,255,.9)':'rgba(255,28,58,.9)';g.fillRect(Math.cos(a)*rr-2,Math.sin(a)*rr-2,4,4)}
+ // shockwaves
+ SV2.rings.forEach(r=>{g.strokeStyle=(r.k?'rgba(42,91,255,':'rgba(255,28,58,')+(r.a*.85)+')';g.lineWidth=1.5+r.a*4.5;g.beginPath();g.arc(0,0,r.r,0,PI*2);g.stroke()});
+ g.restore();
+ // floor equalizer, red on the left and blue on the right
+ const bw=W/N;
+ for(let i=0;i<N;i++){const v=SV2.sm[i],hh=4+v*110*lift;g.fillStyle=(i<N/2?'rgba(255,28,58,':'rgba(42,91,255,')+(.12+v*.42)+')';g.fillRect(i*bw+1,H-hh,bw-2,hh)}
+ if(SV2.flash>0){g.fillStyle='rgba(255,28,58,'+SV2.flash*.1+')';g.fillRect(0,0,W,H)}
+ if(SV2.glitch>0){for(let k=0;k<4;k++){g.fillStyle=R()<.5?'rgba(255,28,58,'+(.3*SV2.glitch)+')':'rgba(42,91,255,'+(.28*SV2.glitch)+')';g.fillRect(rnd(-30,30),R()*H,W,2+R()*9)}}
+ // ash and embers drift up the whole fight
+ for(let i=0;i<2&&PT.length<560;i++){PT.push({x:rnd(0,W),y:H+10,vx:rnd(-18,18),vy:-rnd(30,90)*(1+bass*1.1),l:rnd(2.2,4),m:3.6,c:R()<.55?'rgba(255,28,58,1)':R()<.8?'rgba(42,91,255,1)':'rgba(220,220,232,1)',s:rnd(2,4),shape:R()<.5?'pixel':'spark',rot:0,spin:rnd(-3,3)})}
+ // loud spokes throw sparks outward
+ if(PT.length<560)for(let i=0;i<N;i++){if(SV2.sm[i]>.78&&R()<.08){const a=-PI/2+i*2*PI/N+SV2.rot,d=r0+8,x=cx+Math.cos(a)*d,y=cy+Math.sin(a)*d*.9;PT.push({x,y,vx:Math.cos(a)*rnd(60,160),vy:Math.sin(a)*rnd(60,160)*.9,l:.5,m:.5,c:Math.cos(a)<0?'#ff1c3a':'#2a5bff',s:rnd(2,4),shape:'spark',rot:a,spin:rnd(-6,6)})}}
+ const vg=g.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.8);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.72)');g.fillStyle=vg;g.fillRect(0,0,W,H);
+}
+// Burst helper: a mix of shards, pixels and sparks in one call.
+function secBurst(x,y,col,n,k){const s=k==null?1:k;fx(['p',x,y,n,col,260*s,.55,5,'shard']);fx(['p',x,y,Math.ceil(n*.7),col,170*s,.45,4,'pixel']);fx(['p',x,y,Math.ceil(n*.5),'#ffffff',330*s,.3,3,'spark'])}
+// Particles for the hazards themselves: wells drain inward, sweeps throw sparks, spikes spit shards, sigils bleed, orbs trail.
+function secHazardFx(o,t){
+ if(!V||!V.secOn||PT.length>620)return;
+ if(o.k==='well'&&o.t>=0){for(let i=0;i<3;i++){const an=R()*PI*2,d=(o.r||240)*rnd(.75,1);PT.push({x:o.x+Math.cos(an)*d,y:o.y+Math.sin(an)*d*.7,vx:-Math.cos(an)*d*1.5,vy:-Math.sin(an)*d*1.05,l:.6,m:.6,c:R()<.5?'#ff1c3a':'#2a5bff',s:rnd(3,6),shape:R()<.5?'streak':'shard',rot:an,spin:rnd(-8,8)})}}
+ else if(o.k==='sweep'&&o.t>=o.tele){const ca=Math.cos(o.a),sa=Math.sin(o.a);for(let i=0;i<2;i++){const d=rnd(60,900);PT.push({x:o.bx+ca*d,y:o.by+sa*d,vx:-sa*rnd(40,120),vy:ca*rnd(40,120),l:.45,m:.45,c:R()<.6?'#ff1c3a':'#ffffff',s:rnd(3,6),shape:'spark',rot:o.a,spin:rnd(-10,10)})}}
+ else if(o.k==='spike'&&o.t<.14){for(let i=0;i<4;i++)PT.push({x:o.x+rnd(-30,30),y:o.y+rnd(-8,8),vx:rnd(-120,120),vy:rnd(-260,-120),l:.7,m:.7,c:R()<.5?'#050207':'#ff1c3a',s:rnd(3,6),shape:'shard',rot:rnd(0,6),spin:rnd(-9,9)})}
+ else if(o.k==='mark'&&o.t>=0){const an=R()*PI*2;PT.push({x:o.x+Math.cos(an)*o.r,y:o.y+Math.sin(an)*o.r,vx:-Math.cos(an)*70,vy:-Math.sin(an)*70,l:.5,m:.5,c:'#ff1c3a',s:4,shape:'pixel',rot:0,spin:0})}
+ else if(o.k==='orb'&&o.pts&&o.dk){o.pts.forEach(([x,y])=>{if(R()<.6)PT.push({x:x+rnd(-6,6),y:y+rnd(-6,6),vx:rnd(-40,40),vy:rnd(-40,40),l:.35,m:.35,c:'#2a5bff',s:3,shape:'bubble',rot:0,spin:2})})}
 }
 // ===== END SECRET BOSS 8 =====
 

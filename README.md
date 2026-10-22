@@ -1,7 +1,26 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v26)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v27)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 27 — Hateful Doom: eclipse visualizer, particle storm, stranger moves
+
+- **New visualizer ("the eclipse"):** a black sun sits in the middle of the secret stage. Spectrum spokes ring it (red on the left, blue on the right). Each beat throws a shockwave out of the sun and sheds shards. Hi-hats tear the screen with glitch slices, and the floor equalizer is split red and blue. The sun's red and blue fringes pull apart on the bass.
+- **Particles everywhere in the secret fight:**
+  - Ash and embers drift up the whole fight.
+  - Every hit bursts into shards, pixels and sparks (a bigger burst on crits).
+  - Phase changes and every new move throw a burst.
+  - Dashes and spike eruptions burst on arrival.
+  - Gravity wells drain particles inward, sweeps spit sparks along the beam, sigils bleed, shadow orbs trail, and loud spokes throw sparks.
+  - Dark bullets leave streaks, and his aura throws sparks.
+  - The particle budget is capped, so the Particle Amount setting and the Performance Preset still apply.
+- **Three new moves (Hateful Doom now has 21):**
+  - **Three of Him** (`THREE OF HIM`): he splits into three identical dark copies that swap places every half second. Only one is real. A red ring flickers under the real one now and then, and his motes stream only from him. When the swapping stops, the real one fires a fan and each copy fires one aimed shot.
+  - **Frozen Echoes** (`FROZEN ECHOES`): a ring of black shots hangs around him. Each one wakes in turn and snaps toward whoever is nearest at that moment. Stand still near the ring and it hits you.
+  - **Reverse Sweep** (`REVERSE SWEEP`): a black beam sweeps out, then turns round and sweeps back, so the same ground can be hit twice.
+- **Misleading banners:** about 1 move in 5 is announced with the name of a different move. The chance is set by `SEC_LIE` near the top of the Hateful Doom section (set it to `0` to turn this off).
+- **Balance note:** the three new moves add pressure in phase III, because the Frozen Echoes ring can block new casts while it is pending. Tune `SEC_LIE`, the `dur` in Three of Him, and the `at` timings in Frozen Echoes if the fight feels unfair.
+- **Testing note:** checked headless (every move fired once, a timed run of the real loop, and screenshots of the visualizer and the new moves). Not played by hand, so the feel and balance still need a real run-through.
 
 ## Version 26 — Trio HP cut, Hateful Doom rework
 
