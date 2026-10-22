@@ -1,7 +1,11 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v33)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v34)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 34 — bug fix
+
+- **Equipping Patrick no longer crashes:** the state snapshot read `p.m.size` before Patrick's stats were set, so equipping him in the lobby threw "Cannot read properties of null (reading 'size')" every frame. The read is now guarded, matching the existing guard for orbit.
 
 ## Version 33 — Patrick: slam, orbiting rocks, Eureka Burst
 
