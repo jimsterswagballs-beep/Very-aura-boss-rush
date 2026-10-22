@@ -1,7 +1,24 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v25)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v26)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 26 — Trio HP cut, Hateful Doom rework
+
+- **Less HP for the Hover Trio:** Will 2,600 (was 3,800), Jackson 3,000 (was 4,400) and Mason 3,400 (was 5,000). They still scale with difficulty and party size. Tune the `hp` values in the boss 7 entry of the `BD` table.
+- **Hateful Doom has 18 moves (8 new):** Grave Spikes (black spikes erupt under players), Gravity Well (a singularity drags everyone in, then implodes), Curse Sigil (sigils lock onto players and follow them), Phantom Double (two shadow copies sweep across and fire), Reaper Crescent (a scythe arc, with a second arc in Phase III), Eclipse Gaze (a line tracks the nearest player, locks, then fires a black beam), Black Sun (a growing sphere of darkness bursts into a ring of black flame) and Death March (black lanes strike one after another across the arena).
+- **Copy rebuilt:** the copied boss's sprite flickers over him for a moment, then the black version fires. The banner names the source boss and the move. A copy never repeats straight after the last one, and in Phase III he copies two moves. The copies are rebuilt from the real sprites (dumplings, bullets, bubbles, knives, bats, sauce, ghosts, twigs and pizza).
+- **Fixes:**
+  - Hunter Chain's shots were the bright red sprite. They are black now.
+  - Hunter Chain's stun did nothing. Afterwards he is EXPOSED for 1.6 s and takes 50% more damage (shown on the health bar).
+  - Shadow Orbs were cyan. They are black now.
+  - Shadow Dash had no warning. The landing spot is marked (his sprite drops into it), then he vanishes, reappears and slashes through a visible arc.
+  - Spear Volley's hitbox now matches its lane.
+  - Sweep telegraphs are red in this fight instead of yellow.
+- **Menace:** he leans toward the nearest player more in each phase, dark motes stream into him, a glitch slice tears across him now and then, the background beats like a heart (faster each phase), and every move is announced by name.
+- **Flash:** each new move starts with a flash, a shock ring and sparks, and the Black Sun, Gravity Well and Eclipse Gaze end in bursts and beams.
+- **Limit:** he holds his next move while nine or more hazards are on screen, so phase III does not stack up unfairly.
+- **Testing note:** these changes were checked headless (every move, every copy, a full 157-second fight, the win path and snapshot serialisation) and by looking at rendered frames. They have not been played by hand, so balance and feel still need a real run-through.
 
 ## Version 25 — Hateful Doom overhaul, pause menu, admin panel
 

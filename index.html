@@ -23,7 +23,7 @@ const BD=[{n:'Xiao Long Bao',title:'The Steamed Tyrant',img:'xlb',hp:2400,sz:150
  {n:'The Unlikely Alliance',title:'Bao & UnCoolguy16',img:'xlb',hp:2400,hp2:3500,sz:150,col:['#ffe08a','#ff5a5a'],bg:['#301622','#080b1b'],mus:'m4'},
  {n:'Evil Zach',title:'The Bootleg Zach',img:'ez',hp:6000,sz:158,col:['#f9e84c','#fa3152'],bg:['#241423','#080711'],mus:'m5'},
  {n:'Fella',title:'The Walk-Off Menace',img:'fella',hp:8800,sz:160,col:['#ff364e','#ffdf8b'],bg:['#102c20','#090a14'],mus:'m6'},
- {n:'Will',title:'The Hover Trio',img:'will',hp:3800,sz:150,col:['#9dffb0','#2fb7ff'],bg:['#0e2a33','#070611'],mus:'m7',allies:[{n:'Jackson',img:'jackson',hp:4400,col:['#ff9a3c','#ff3d00']},{n:'Mason',img:'mason',hp:5000,col:['#7dd3ff','#2050ff']}]}];
+ {n:'Will',title:'The Hover Trio',img:'will',hp:2600,sz:150,col:['#9dffb0','#2fb7ff'],bg:['#0e2a33','#070611'],mus:'m7',allies:[{n:'Jackson',img:'jackson',hp:3000,col:['#ff9a3c','#ff3d00']},{n:'Mason',img:'mason',hp:3400,col:['#7dd3ff','#2050ff']}]}];
 const SC={'Will':'#9dffb0','Jackson':'#ff9a3c','Mason':'#7dd3ff','Xiao Long Bao':'#ffcf5a','UnCoolguy16':'#ff5a5a','Evil Zach':'#f9e84c','Coolguy15':'#8fd8ff','Zach':'#ffe14a','Evil Spong':'#44eaff','Fella':'#ff465f','Jay':'#ffb347','Terry':'#7dff9a'};
 const PORT={'Will':'will','Jackson':'jackson','Mason':'mason','Xiao Long Bao':'xlb','UnCoolguy16':'ucg','Evil Zach':'ez','Coolguy15':'cgi1','Zach':'zi1','Evil Spong':'sp1','Fella':'fella','Jay':'ji1','Terry':'tI1'};
 // ===== STORY: THE GRAND STEAMER (light-hearted) =====
@@ -1147,7 +1147,7 @@ function triBoss(q,dt,ph,enrage,home,speed){
  const t=nearest(q.x,q.y);if(!t)return;
  q.a=Math.atan2(t.y-q.y,t.x-q.x);
  q.cd-=dt*enrage;
- if(q.cd<=0){const pool=(q.pool||TRI_POOL[q.pi]).filter(k=>k!==q.last),k=pool[Math.floor(R()*pool.length)];q.last=k;TRI_FIRE[k](q,t,ph);q.cd=[2.3,1.75,1.3][ph]*(.8+R()*.4)}
+ if(q.cd<=0){if(S.secOn&&(S.s7||[]).length>=9){q.cd=.4;return}const pool=(q.pool||TRI_POOL[q.pi]).filter(k=>k!==q.last),k=pool[Math.floor(R()*pool.length)];q.last=k;TRI_FIRE[k](q,t,ph);q.cd=[2.3,1.75,1.3][ph]*(.8+R()*.4)}
 }
 // ----- Boss 7 attacks (v22). Every attack has its own gimmick. -----
 // Will (aura): ghosts that home in, orbs that circle and then fire, bugs that zig-zag, and pulses that ripple out.
@@ -1171,21 +1171,35 @@ function s7add(o){(S.s7=S.s7||[]).push(o);return o}
 // Timed boss-7 hazards (orbs, beams, pulses, reloads, rolls). Runs on the host every frame of the fight.
 function stepS7(dt){
  if(!S.s7)return;
- S.s7=S.s7.filter(o=>{
+ // Objects added while this loop runs (echoes, arcs, spikes) go into the fresh list and are kept below.
+ const list=S.s7;S.s7=[];
+ const keep=list.filter(o=>{
   o.t+=dt;
-  const owner=o.boss;if(o.k==='dash')return stepDash(o);
+  const owner=o.boss;
+  if(o.k==='dash')return stepDash(o);
   if(o.k==='pulse'){
    if(o.t<0)return true;
    o.r=o.max*Math.min(1,o.t/o.dur);
    alive().forEach(p=>{if(o.hit[p.id])return;if(Math.abs(dist(p.x,p.y,o.x,o.y)-o.r)<20+PLAYER_HIT_R){o.hit[p.id]=1;hitP(p,o.dark?8:12)}});
    return o.t<o.dur;
   }
+  if(o.k==='spike')return o.t<o.dur;
+  if(o.k==='march'){
+   o.lanes.forEach(l=>{if(!l.done&&o.t>=l.at){l.done=1;X('whoosh');alive().forEach(p=>{if(Math.abs(p.x-l.x)<30+PLAYER_HIT_R)hitP(p,15)});fx(['p',l.x,300,12,'#ff1c3a',320,.45,5,'pixel'])}});
+   return o.t<o.dur;
+  }
   if(!owner||owner.hp<=0)return false;
+  if(o.k==='echo'){
+   if(o.t<0)return true;
+   o.x=owner.x;o.y=owner.y;
+   if(o.t>=o.dur){o.fire(owner,o.ph);X('bfCrack');return false}
+   return true;
+  }
   if(o.k==='orb'){
    o.pts=[];for(let i=0;i<o.n;i++){const a=o.ang0+o.t*2.6+i*2*PI/o.n;o.pts.push([owner.x+Math.cos(a)*o.r,owner.y+Math.sin(a)*o.r*.62])}
    for(const id in o.hit)o.hit[id]-=dt;
    if(o.t<o.life){alive().forEach(p=>{if(o.hit[p.id]>0)return;if(o.pts.some(([x,y])=>dist(x,y,p.x,p.y)<22+PLAYER_HIT_R)){o.hit[p.id]=.5;hitP(p,9)}});return true}
-   o.pts.forEach(([x,y])=>{const tg=nearest(x,y);if(tg)bp(x,y,Math.atan2(tg.y-y,tg.x-x),300,{img:'bubble3',sz:38,r:14,dmg:12,life:3.6})});
+   o.pts.forEach(([x,y])=>{const tg=nearest(x,y);if(tg)bp(x,y,Math.atan2(tg.y-y,tg.x-x),300,o.dark?darkOpt({img:'bubble3',sz:38,r:14,dmg:12,life:3.6}):{img:'bubble3',sz:38,r:14,dmg:12,life:3.6})});
    X('eshoot');return false;
   }
   if(o.k==='sweep'){
@@ -1195,8 +1209,8 @@ function stepS7(dt){
    return o.t<o.tele+o.dur;
   }
   if(o.k==='seq'){
-   while(o.fired<o.n&&o.t>=o.fired*o.gap){o.fired++;const tg=nearest(owner.x,owner.y);if(tg)bp(owner.x,owner.y,Math.atan2(tg.y-owner.y,tg.x-owner.x),360,{img:'ebul',sz:32,r:11,dmg:12,life:3});X('eshoot')}
-   if(o.fired>=o.n&&o.t>=o.n*o.gap+.2){owner.stun=1.6;X('click');fx(['r',owner.x,owner.y,70,'#ffb347']);return false}
+   while(o.fired<o.n&&o.t>=o.fired*o.gap){o.fired++;const tg=nearest(owner.x,owner.y);if(tg){bp(owner.x,owner.y,Math.atan2(tg.y-owner.y,tg.x-owner.x),360,Object.assign({img:'ebul',sz:o.dark?36:32,r:11,dmg:12,life:3},o.dark?{dark:1}:{}));if(o.dark)fx(['p',owner.x,owner.y,6,'#ff1c3a',200,.25,4,'spark'])}X('eshoot')}
+   if(o.fired>=o.n&&o.t>=o.n*o.gap+.2){owner.stun=1.6;X('click');fx(['r',owner.x,owner.y,70,o.dark?'#ff1c3a':'#ffb347']);return false}
    return true;
   }
   if(o.k==='roll'){
@@ -1205,20 +1219,123 @@ function stepS7(dt){
    if(u>=1){boom(o.x1,o.y1,58,17,'b','#ffb347');return false}
    return true;
   }
+  if(o.k==='mark'){
+   if(o.t<0)return true;
+   const tp=alive().find(p=>p.id===o.pid);if(tp){o.x=tp.x;o.y=tp.y}
+   if(o.t<o.dur)return true;
+   X('boom');boom(o.x,o.y,o.r,17,'b','#ff1c3a');
+   for(let k=0;k<8;k++)bp(o.x,o.y,k*PI/4+PI/8,250,darkOpt({shape:1,sz:28,r:11,dmg:11,life:2.6}));
+   return false;
+  }
+  if(o.k==='phantom'){
+   if(o.t<0)return true;
+   o.x+=o.vx*dt;o.y+=o.vy*dt;
+   while(o.fired<o.n&&o.t>=.3+o.fired*o.gap){o.fired++;const tg=nearest(o.x,o.y);if(tg){bp(o.x,o.y,Math.atan2(tg.y-o.y,tg.x-o.x),320,darkOpt({img:'ebul',sz:36,r:12,dmg:11,life:3.2}));X('eshoot')}}
+   return o.t<o.dur;
+  }
+  if(o.k==='arc'){
+   if(o.t<0)return true;
+   if(!o.hit.done&&o.t>=o.tele){o.hit.done=1;const h={x:o.x,y:o.y,a:o.a,r:o.r,half:o.half};alive().forEach(p=>{if(sectorContains(h,p.x,p.y,PLAYER_HIT_R))hitP(p,o.dmg||16)});X('stab');fx(['p',o.x+Math.cos(o.a)*o.r*.7,o.y+Math.sin(o.a)*o.r*.7,8,'#ff1c3a',240,.35,5,'pixel'])}
+   return o.t<o.tele+o.dur;
+  }
+  if(o.k==='gaze'){
+   if(o.t<0)return true;
+   if(o.t<o.tele){o.cur=owner.a;return true}
+   if(!o.fired){o.fired=1;o.cur=owner.a;X('laser');fx(['s',12]);fx(['f','#ff1c3a'])}
+   for(const id in o.hit)o.hit[id]-=dt;
+   if(o.t<o.tele+o.dur){const c=Math.cos(o.cur),s=Math.sin(o.cur);alive().forEach(p=>{if(o.hit[p.id]>0)return;const dx=p.x-owner.x,dy=p.y-owner.y,along=dx*c+dy*s,across=-dx*s+dy*c;if(along>0&&along<1500&&Math.abs(across)<22+PLAYER_HIT_R){o.hit[p.id]=.35;hitP(p,14)}});return true}
+   return false;
+  }
+  if(o.k==='well'){
+   const u=cl(o.t/o.dur,0,1),pull=130+200*u;
+   alive().forEach(p=>{const dx=o.x-p.x,dy=o.y-p.y,d=Math.hypot(dx,dy);if(d>1&&d<o.r){const k=(1-d/o.r*.7)*pull*dt;p.x=cl(p.x+dx/d*k,30,W-30);p.y=cl(p.y+dy/d*k,100,H-85)}});
+   o.tick=(o.tick||0)-dt;
+   if(o.tick<=0){o.tick=.55;alive().forEach(p=>{if(dist(o.x,o.y,p.x,p.y)<46+PLAYER_HIT_R)hitP(p,9)})}
+   if(o.t<o.dur)return true;
+   X('boom');boom(o.x,o.y,130,20,'b','#ff1c3a');
+   for(let k=0;k<12;k++)bp(o.x,o.y,k*PI/6,240,darkOpt({shape:2,sz:40,r:11,dmg:12,life:3}));
+   return false;
+  }
   return true;
  });
+ S.s7=keep.concat(S.s7);
 }
-function snapS7(){return S.s7.map(o=>({k:o.k,x:o.x|0,y:o.y|0,r:o.r|0,max:o.max|0,t:+(o.t||0).toFixed(2),dur:o.dur,tele:o.tele,a0:o.a0,a1:o.a1,a:o.cur,pts:o.pts?o.pts.map(p=>[p[0]|0,p[1]|0]):null,bx:o.boss?o.boss.x|0:0,by:o.boss?o.boss.y|0:0,dk:o.dark?1:0}))}
+function snapS7(){return S.s7.map(o=>({k:o.k,x:o.x|0,y:o.y|0,r:o.r|0,max:o.max|0,t:+(o.t||0).toFixed(2),dur:o.dur,tele:o.tele,a0:o.a0,a1:o.a1,a:o.cur,pts:o.pts?o.pts.map(p=>[p[0]|0,p[1]|0]):null,ln:o.lanes?o.lanes.map(l=>[l.x|0,+(l.at-(o.t||0)).toFixed(2),l.done?1:0]):null,img:o.img||'',bx:o.boss?o.boss.x|0:0,by:o.boss?o.boss.y|0:0,dk:o.dark?1:0}))}
 function drawS7(list,t){
  list.forEach(o=>{
-  if(o.k==='orb'){(o.pts||[]).forEach(([x,y],i)=>{glow(x,y,30,'rgba(65,240,255,1)');spr('bubble3',x,y,36,Math.sin(t*3+i)*.2)})}
+  if(o.k==='orb'){(o.pts||[]).forEach(([x,y],i)=>{
+   if(o.dk){glow(x,y,30,'rgba(255,28,58,1)');g.fillStyle='rgba(4,0,8,.96)';g.beginPath();g.arc(x,y,15,0,PI*2);g.fill();g.strokeStyle='rgba(255,28,58,.95)';g.lineWidth=3;g.stroke();g.strokeStyle='rgba(42,91,255,.75)';g.lineWidth=1.5;g.beginPath();g.arc(x,y,20,t*3+i,t*3+i+1.3);g.stroke()}
+   else{glow(x,y,30,'rgba(65,240,255,1)');spr('bubble3',x,y,36,Math.sin(t*3+i)*.2)}
+  })}
   else if(o.k==='sweep'){
    g.save();g.translate(o.bx,o.by);g.rotate(o.a);g.globalCompositeOperation='lighter';
-   if(o.t<o.tele){g.fillStyle='rgba(255,220,80,.12)';g.fillRect(0,-16,1500,32);g.strokeStyle='rgba(255,230,120,.85)';g.setLineDash([10,8]);g.lineWidth=2;g.strokeRect(0,-16,1500,32)}
+   if(o.t<o.tele){g.fillStyle=o.dk?'rgba(255,28,58,.14)':'rgba(255,220,80,.12)';g.fillRect(0,-16,1500,32);g.strokeStyle=o.dk?'rgba(255,28,58,.9)':'rgba(255,230,120,.85)';g.setLineDash([10,8]);g.lineWidth=2;g.strokeRect(0,-16,1500,32)}
    else{g.fillStyle=o.dk?'rgba(10,0,6,.75)':'rgba(255,70,60,.45)';g.fillRect(0,-26,1500,52);g.fillStyle=o.dk?'rgba(255,28,58,.95)':'rgba(255,240,230,.95)';g.fillRect(0,-6,1500,12)}
    g.restore();
   }
-  else if(o.k==='pulse'&&o.r>0){g.save();g.strokeStyle=(o.dk?'rgba(255,28,58,':'rgba(157,255,176,')+cl(1-o.r/o.max,0,1)+')';g.lineWidth=14;g.beginPath();g.arc(o.x,o.y,o.r,0,PI*2);g.stroke();g.restore()}
+  else if(o.k==='pulse'&&o.r>0){
+   const a=cl(1-o.r/o.max,0,1);g.save();
+   if(o.dk){g.strokeStyle='rgba(6,0,10,'+(.85*a+.1)+')';g.lineWidth=22;g.beginPath();g.arc(o.x,o.y,o.r,0,PI*2);g.stroke();g.strokeStyle='rgba(255,28,58,'+a+')';g.lineWidth=3;g.beginPath();g.arc(o.x,o.y,o.r+11,0,PI*2);g.stroke();g.beginPath();g.arc(o.x,o.y,Math.max(1,o.r-11),0,PI*2);g.stroke()}
+   else{g.strokeStyle='rgba(157,255,176,'+a+')';g.lineWidth=14;g.beginPath();g.arc(o.x,o.y,o.r,0,PI*2);g.stroke()}
+   g.restore();
+  }
+  else if(o.k==='arc'&&o.t>=0){
+   const telegraph=o.t<o.tele,u=cl((o.t-o.tele)/o.dur,0,1);
+   g.save();g.translate(o.x,o.y);
+   if(telegraph){g.strokeStyle='rgba(255,28,58,'+(.35+.35*Math.sin(o.t*26))+')';g.lineWidth=3;g.setLineDash([10,7]);g.beginPath();g.arc(0,0,o.r,o.a0,o.a1);g.stroke()}
+   else{const cur=o.a0+(o.a1-o.a0)*u;
+    g.globalCompositeOperation='lighter';g.fillStyle='rgba(255,28,58,'+(.22*(1-u))+')';g.beginPath();g.moveTo(0,0);g.arc(0,0,o.r,o.a0,cur);g.closePath();g.fill();
+    g.globalCompositeOperation='source-over';g.strokeStyle='rgba(5,2,7,.95)';g.lineWidth=18*(1-u*.5)+4;g.beginPath();g.arc(0,0,o.r-6,o.a0,cur);g.stroke();
+    g.strokeStyle='rgba(255,28,58,.95)';g.lineWidth=4;g.beginPath();g.arc(0,0,o.r+4,o.a0,cur);g.stroke();
+    g.strokeStyle='rgba(42,91,255,.75)';g.lineWidth=2;g.beginPath();g.arc(0,0,Math.max(1,o.r-16),o.a0,cur);g.stroke();
+   }
+   g.restore();
+  }
+  else if(o.k==='gaze'&&o.t>=0){
+   const tele=o.t<o.tele;
+   g.save();g.translate(o.bx,o.by);g.rotate(o.a);g.globalCompositeOperation='lighter';
+   if(tele){const u=cl(o.t/o.tele,0,1),hw=2+6*u;g.fillStyle='rgba(255,28,58,'+(.05+.12*u)+')';g.fillRect(0,-hw,1500,hw*2);g.strokeStyle='rgba(255,28,58,'+(.4+.5*u)+')';g.lineWidth=2;g.setLineDash([12,8]);g.strokeRect(0,-hw,1500,hw*2)}
+   else{const f=cl((o.t-o.tele)/o.dur,0,1),wd=1-f*.6;g.fillStyle='rgba(255,28,58,'+(.5*wd)+')';g.fillRect(0,-26*wd,1500,52*wd);g.fillStyle='rgba(5,2,7,.92)';g.fillRect(0,-14*wd,1500,28*wd);g.fillStyle='rgba(255,230,230,.85)';g.fillRect(0,-3,1500,6)}
+   g.restore();
+  }
+  else if(o.k==='well'){
+   const u=cl(o.t/o.dur,0,1),R0=o.r*(1-.25*u);
+   g.save();
+   const gr=g.createRadialGradient(o.x,o.y,0,o.x,o.y,R0);gr.addColorStop(0,'rgba(0,0,0,.95)');gr.addColorStop(.55,'rgba(20,0,8,.7)');gr.addColorStop(1,'rgba(255,28,58,0)');
+   g.fillStyle=gr;g.beginPath();g.arc(o.x,o.y,R0,0,PI*2);g.fill();
+   g.globalCompositeOperation='lighter';
+   for(let i=0;i<6;i++){const a0=t*(2.4+u*2)+i*PI/3;g.strokeStyle=(i%2?'rgba(42,91,255,':'rgba(255,28,58,')+(.35+.4*u)+')';g.lineWidth=2.5;g.beginPath();
+    for(let s=0;s<=18;s++){const f=s/18,rad=R0*(1-f*.92),aa=a0+f*2.4,px=o.x+Math.cos(aa)*rad,py=o.y+Math.sin(aa)*rad;s?g.lineTo(px,py):g.moveTo(px,py)}
+    g.stroke()}
+   g.globalCompositeOperation='source-over';g.strokeStyle='rgba(255,28,58,'+(.5+.5*u)+')';g.lineWidth=3;g.beginPath();g.arc(o.x,o.y,R0,0,PI*2);g.stroke();
+   g.restore();
+  }
+  else if(o.k==='mark'&&o.t>=0){
+   const u=cl(o.t/o.dur,0,1),rad=o.r*(1.2-.2*u),rot=o.t*(1.2+u*3);
+   g.save();g.translate(o.x,o.y);g.rotate(rot);g.globalCompositeOperation='lighter';
+   g.fillStyle='rgba(255,28,58,'+(.1+.28*u)+')';g.beginPath();g.arc(0,0,rad,0,PI*2);g.fill();
+   g.strokeStyle='rgba(255,28,58,'+(.6+.4*u)+')';g.lineWidth=3;g.beginPath();g.arc(0,0,rad,0,PI*2);g.stroke();
+   g.globalCompositeOperation='source-over';g.strokeStyle='rgba(8,0,12,.95)';g.lineWidth=3;g.beginPath();
+   for(let i=0;i<=5;i++){const a=i*PI*4/5-PI/2,px=Math.cos(a)*rad*.8,py=Math.sin(a)*rad*.8;i?g.lineTo(px,py):g.moveTo(px,py)}
+   g.stroke();g.restore();
+  }
+  else if(o.k==='phantom'&&o.t>=0){
+   const al=Math.min(1,o.t*3,(o.dur-o.t)*3)*.8;
+   if(al>0){g.save();g.filter='brightness(0) drop-shadow(0 0 5px rgba(255,28,58,.95)) drop-shadow(0 0 9px rgba(42,91,255,.7))';spr(o.img||'dm1',o.x,o.y+Math.sin(t*6+o.x)*5,170,Math.sin(t*2)*.05,1,1,al);g.restore()}
+  }
+  else if(o.k==='spike'){
+   const u=cl(o.t/o.dur,0,1),grow=cl(o.t/.12,0,1),fade=1-u*u;
+   g.save();glow(o.x,o.y,o.r*1.2,'rgba(255,28,58,1)');
+   for(let i=0;i<7;i++){const a=i*PI*2/7+.3,d=o.r*(.25+.5*((i*37)%5)/5),bx=o.x+Math.cos(a)*d,by=o.y+Math.sin(a)*d*.6+10,h=(74+(i%3)*24)*grow*fade;
+    g.fillStyle='rgba(4,0,8,.97)';g.beginPath();g.moveTo(bx-14,by);g.lineTo(bx,by-h);g.lineTo(bx+14,by);g.closePath();g.fill();
+    g.strokeStyle='rgba(255,28,58,.95)';g.lineWidth=2;g.stroke();
+    g.fillStyle='rgba(42,91,255,.6)';g.fillRect(bx-2,by-h*.6,2,h*.5)}
+   g.restore();
+  }
+  else if(o.k==='march'&&o.ln){o.ln.forEach(([x,rem])=>{
+   if(rem>0&&rem<=.6){const u=1-rem/.6;g.fillStyle='rgba(255,28,58,'+(.06+.16*u)+')';g.fillRect(x-30,0,60,H);g.strokeStyle='rgba(255,28,58,'+(.45+.45*u)+')';g.lineWidth=2;g.strokeRect(x-30,0,60,H)}
+   else if(rem<=0&&rem>-.24){const f=1+rem/.24;g.fillStyle='rgba(4,0,8,'+(.85*f)+')';g.fillRect(x-30,0,60,H);g.fillStyle='rgba(255,220,220,'+f+')';g.fillRect(x-4,0,8,H)}
+  })}
  });
 }
 // Stage art for boss 7: a midnight food alley with a checker floor, neon frames, spotlights and steam.
@@ -1248,50 +1365,74 @@ const MAP_FIRE={
 // Unlocked by leaving Mason for last: when the second of Will and Jackson falls, Mason finishes them,
 // Will says "your not mason", and Mason transforms. The fight lasts exactly as long as his track.
 const SEC_TIME=157.07;
-const SEC_POOL=['blackFireRain','spearVolley','copyAttack','eclipseSpiral','voidPulse','shadowDash','umbralSweep','hunterSeq','nightNova','orbShield'];
+const SEC_POOL=['blackFireRain','spearVolley','copyAttack','eclipseSpiral','voidPulse','shadowDash','umbralSweep','hunterSeq','nightNova','orbShield','graveSpikes','gravityWell','curseSigil','phantomDouble','reaperCrescent','eclipseGaze','blackSun','deathMarch'];
 const darkOpt=o=>Object.assign({dark:1},o);
 const secEase=u=>u*u*(3-2*u);
-// Copied attacks: patterns borrowed from the other bosses, rebuilt in black.
+// Banner names, shown when Hateful Doom starts a move.
+const SEC_NAME={blackFireRain:'BLACK FIRE RAIN',spearVolley:'SPEAR VOLLEY',eclipseSpiral:'ECLIPSE SPIRAL',voidPulse:'VOID PULSE',shadowDash:'SHADOW DASH',umbralSweep:'UMBRAL SWEEP',hunterSeq:'HUNTER CHAIN',nightNova:'NIGHT NOVA',orbShield:'SHADOW ORBS',graveSpikes:'GRAVE SPIKES',gravityWell:'GRAVITY WELL',curseSigil:'CURSE SIGIL',phantomDouble:'PHANTOM DOUBLE',reaperCrescent:'REAPER CRESCENT',eclipseGaze:'ECLIPSE GAZE',blackSun:'BLACK SUN',deathMarch:'DEATH MARCH'};
+// Which boss each copied move comes from. Its sprite flickers over him as an echo, then the black copy fires.
+const SRC_NAME={xlb:'XIAO LONG BAO',ucg:'UNCOOLGUY16',sp1:'EVIL SPONG',ez:'EVIL ZACH',fella:'FELLA',will:'WILL',jackson:'JACKSON',mason:'MASON'};
+// Copied moves: each one rebuilds a real move from another boss, drawn in black.
 const SEC_COPY=[
- {n:'STEAM RING - XIAO LONG BAO',f:q=>{for(let k=0;k<12;k++)bp(q.x,q.y,k*PI/6,190,darkOpt({img:'dump',sz:40,r:14,dmg:11,life:4}))}},
- {n:'PISTOL SPRAY - UNCOOLGUY16',f:q=>{for(let k=-2;k<=2;k++)bp(q.x,q.y,q.a+k*.16,330,darkOpt({img:'ebul',sz:34,r:12,dmg:12,life:3}))}},
- {n:'BUBBLE PRISON - EVIL SPONG',f:q=>{for(let k=0;k<10;k++){const a=k*2*PI/10;bp(q.x+Math.cos(a)*60,q.y+Math.sin(a)*60,a,70,darkOpt({shape:1,sz:34,r:13,dmg:11,life:5}))}}},
- {n:'KNIFE FAN - EVIL ZACH',f:q=>{for(let k=-2;k<=2;k++)bp(q.x,q.y,q.a+k*.22,360,darkOpt({shape:2,sz:52,r:11,dmg:13,life:3}))}},
- {n:'BAT SWEEP - FELLA',f:q=>{const x=q.x,y=q.y,c=Math.cos(q.a),s=Math.sin(q.a),L=1500;warn({k:'l',x,y,a:q.a,r:L,dur:.7,fn:()=>alive().forEach(p=>{const dx=p.x-x,dy=p.y-y,along=dx*c+dy*s,across=-dx*s+dy*c;if(along>0&&along<L&&Math.abs(across)<30+PLAYER_HIT_R)hitP(p,16)})})}},
- {n:'SAUCE TIDE - FELLA',f:()=>{for(let k=0;k<4;k++){const x=cl(rnd(120,W-120),60,W-60),y=cl(rnd(170,H-100),110,H-60);warn({x,y,r:46,dur:.6+k*.3,img:'sauce',fn:()=>{S.zn.push({x,y,r:48,life:4.2,max:4.2,col:'#ff2845',dmg:0,slowField:1});boom(x,y,40,10,'b','#ff1c3a')}})}}}
+ {src:'xlb',n:'DUMPLING RING',f:q=>{for(let k=0;k<12;k++)bp(q.x,q.y,k*PI/6+.26,190,darkOpt({img:'dump',sz:42,r:14,dmg:11,life:4}))}},
+ {src:'ucg',n:'PISTOL SPRAY',f:q=>{for(let k=-2;k<=2;k++)bp(q.x,q.y,q.a+k*.16,330,darkOpt({img:'ebul',sz:34,r:12,dmg:12,life:3}))}},
+ {src:'ucg',n:'SNIPER LINE',f:q=>{const x=q.x,y=q.y,a=q.a;warn({k:'l',x,y,a,r:1500,dur:.85,fn:()=>{X('shoot');bp(x,y,a,900,darkOpt({img:'ebul',sz:40,r:12,dmg:18,life:2.2}))}})}},
+ {src:'sp1',n:'BUBBLE PRISON',f:q=>{for(let k=0;k<12;k++){const a=k*2*PI/12,x=cl(q.x+Math.cos(a)*280,40,W-40),y=cl(q.y+Math.sin(a)*200,110,H-70);bp(x,y,Math.atan2(q.y-y,q.x-x),130,darkOpt({img:'bubble3',sz:44,r:15,dmg:11,life:4.5}))}}},
+ {src:'ez',n:'KNIFE FAN',f:q=>{for(let k=-2;k<=2;k++){const a=q.a+k*.22;bp(q.x,q.y,a,360,darkOpt({img:'eknife',sz:52,r:12,dmg:13,life:3,rot:a+PI/2}))}}},
+ {src:'fella',n:'BAT SWEEP',f:q=>{const x=q.x,y=q.y,c=Math.cos(q.a),s=Math.sin(q.a),L=1500;warn({k:'l',x,y,a:q.a,r:L,dur:.7,fn:()=>alive().forEach(p=>{const dx=p.x-x,dy=p.y-y,along=dx*c+dy*s,across=-dx*s+dy*c;if(along>0&&along<L&&Math.abs(across)<30+PLAYER_HIT_R)hitP(p,16)})})}},
+ {src:'fella',n:'SAUCE TIDE',f:()=>{for(let k=0;k<4;k++){const x=cl(rnd(120,W-120),60,W-60),y=cl(rnd(170,H-100),110,H-60);warn({x,y,r:46,dur:.6+k*.3,img:'sauce',fn:()=>{S.zn.push({x,y,r:48,life:4.2,max:4.2,col:'#ff2845',dmg:0,slowField:1});boom(x,y,40,10,'b','#ff1c3a')}})}}},
+ {src:'will',n:'SPIRIT CHASE',f:q=>{for(let k=-1;k<=1;k++)bp(q.x,q.y,q.a+k*.45,150,darkOpt({img:'b7ghost',sz:44,r:15,dmg:11,life:7,home:1.8,spin:2}))}},
+ {src:'jackson',n:'PINBALL RICOCHET',f:q=>{for(let k=-1;k<=1;k++)bp(q.x,q.y,q.a+k*.35,280,darkOpt({img:'b7twig',sz:40,r:13,dmg:12,life:6,bounce:4,spin:9}))}},
+ {src:'mason',n:'PIZZA BOOMERANG',f:q=>{for(let k=-1;k<=1;k++)bp(q.x,q.y,q.a+k*.6,300,darkOpt({img:'jf3',sz:48,r:15,dmg:13,life:3.2,spin:12,pierce:1,boomer:360,bt:.85+Math.abs(k)*.12,ref:q}))}},
 ];
 const SEC_FIRE={
- // Black Fire Rain: marked spots flare, then burst into rings of black flame.
+ // // Black Fire Rain: marked spots flare, then burst into rings of black flame.,
  blackFireRain(q,t,ph){const L=alive();if(!L.length)return;X('boom');const n=4+ph*2;for(let k=0;k<n;k++){const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-30,30),60,W-60),y=cl(tg.y+rnd(-30,30),110,H-60);warn({x,y,r:50,dur:.7+k*.1,fn:()=>{boom(x,y,50,15,'b','#ff1c3a');for(let j=0;j<6;j++)bp(x,y,j*PI/3+k,150,darkOpt({shape:1,sz:30,r:12,dmg:11,life:2.4}))}})}},
- // Spear Volley: lanes mark the arena, then black spears fall through them.
- spearVolley(q,t,ph){const L=alive();if(!L.length)return;X('throw');const n=4+ph*2;for(let k=0;k<n;k++){const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-20,20),60,W-60);warn({k:'l',x,y:0,a:PI/2,r:H,dur:.6+k*.12,fn:()=>{X('whoosh');bp(x,96,PI/2,520,darkOpt({shape:2,sz:70,r:12,dmg:16,life:2.6}))}})}},
- // Copy: fires a random attack from another boss, rebuilt in black.
- copyAttack(q){const pick=SEC_COPY[Math.floor(R()*SEC_COPY.length)];S.secBanner={txt:'COPYING: '+pick.n,t:2.4};X('bfCharge');pick.f(q)},
- // Eclipse Spiral: a curling spiral of black flame.
+ // Spear Volley: lanes mark the arena, then black spears fall through them. The spear hitbox now matches its lane.,
+ spearVolley(q,t,ph){const L=alive();if(!L.length)return;X('throw');const n=4+ph*2;for(let k=0;k<n;k++){const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-20,20),60,W-60);warn({k:'l',x,y:0,a:PI/2,r:H,dur:.6+k*.12,fn:()=>{X('whoosh');bp(x,96,PI/2,520,darkOpt({shape:2,sz:70,r:20,dmg:16,life:2.6}))}})}},
+ // Copy: borrows a real move from another boss. Its sprite flickers over him as an echo, then the black copy fires. Never the same copy twice in a row; Phase III copies two.,
+ copyAttack(q,t,ph){let pick=SEC_COPY[Math.floor(R()*SEC_COPY.length)];if(SEC_COPY.length>1&&pick===q.lastCopy)pick=SEC_COPY[(SEC_COPY.indexOf(pick)+1)%SEC_COPY.length];q.lastCopy=pick;S.secBanner={txt:'COPYING '+SRC_NAME[pick.src]+': '+pick.n,t:2.4};X('bfCharge');s7add({k:'echo',boss:q,t:0,dur:.8,img:pick.src,fire:pick.f,ph});if(ph>=2){let p2=SEC_COPY[Math.floor(R()*SEC_COPY.length)];if(p2===pick)p2=SEC_COPY[(SEC_COPY.indexOf(p2)+3)%SEC_COPY.length];s7add({k:'echo',boss:q,t:-1.3,dur:.8,img:p2.src,fire:p2.f,ph})}},
+ // // Eclipse Spiral: a curling spiral of black flame.,
  eclipseSpiral(q,t,ph){X('whoosh');const n=ph>=1?48:36,a0=R()*PI*2;for(let k=0;k<n;k++)bp(q.x,q.y,a0+k*.42,190+k*6,darkOpt({shape:1,sz:26,r:10,dmg:11,life:4,curve:.55,curveLife:1.4}))},
- // Void Pulse: rings of darkness expand outward. Stand between them.
+ // // Void Pulse: rings of darkness expand outward. Stand between them.,
  voidPulse(q,t,ph){X('ring');s7add({k:'pulse',x:q.x,y:q.y,t:0,dur:2.8,max:460,r:0,hit:{},dark:1});if(ph>=1)s7add({k:'pulse',x:q.x,y:q.y,t:-1.2,dur:2.8,max:460,r:0,hit:{},dark:1})},
- // Hunter Chain: six black shots in a row, each aimed at the nearest player.
- hunterSeq(q){X('eshoot');s7add({k:'seq',boss:q,t:0,n:6,gap:.28,fired:0})},
- // Night Nova: a dense black burst that spins outward. Phase II adds more spokes.
+ // Hunter Chain: six black shots aimed at the nearest player. Afterwards he is EXPOSED for 1.6 s and takes 50% more damage.,
+ hunterSeq(q){X('eshoot');s7add({k:'seq',boss:q,t:0,n:6,gap:.28,fired:0,dark:1})},
+ // // Night Nova: a dense black burst that spins outward. Phase II adds more spokes.,
  nightNova(q,t,ph){X('whoosh');const n=ph>=1?24:18,a0=R()*PI*2;for(let k=0;k<n;k++)bp(q.x,q.y,a0+k*2*PI/n,200+ph*40,darkOpt({shape:2,sz:40,r:12,dmg:12,life:3.4}))},
- // Shadow Orbs: black orbs circle him, then fly at the players.
- orbShield(q,t,ph){X('charge');s7add({k:'orb',boss:q,t:0,life:2.6,n:ph>=2?7:5,r:104,pts:[],ang0:R()*PI*2,hit:{}})},
- // Shadow Dash: he vanishes, reappears beside a player and slashes.
- shadowDash(q){s7add({k:'dash',boss:q,t:0,done:0,slashed:0})},
- // Umbral Sweep: a black beam sweeps across the arena.
- umbralSweep(q,t,ph){X('whoosh');const span=ph>=1?2.9:2.5,a0=q.a-span/2;s7add({k:'sweep',boss:q,t:0,tele:.6,dur:1.0,a0,a1:a0+span,cur:a0,hit:{},dark:1})}
+ // Shadow Orbs: black orbs circle him, then fly at the players.,
+ orbShield(q,t,ph){X('charge');s7add({k:'orb',boss:q,t:0,life:2.8,n:ph>=2?7:5,r:104,pts:[],ang0:R()*PI*2,hit:{},dark:1})},
+ // Shadow Dash: a dark sprite drops into a marked spot beside a player. He vanishes, appears there and slashes through an arc.,
+ shadowDash(q){const L=alive();if(!L.length)return;const tg=L[Math.floor(R()*L.length)],side=tg.x<W/2?1:-1,ax=cl(tg.x+side*72,60,W-60),ay=cl(tg.y,110,H-60);warn({x:ax,y:ay,r:54,dur:.5,img:'dm1'});X('charge');s7add({k:'dash',boss:q,t:0,done:0,slashed:0,ax,ay})},
+ // // Umbral Sweep: a black beam sweeps across the arena.,
+ umbralSweep(q,t,ph){X('whoosh');const span=ph>=1?2.9:2.5,a0=q.a-span/2;s7add({k:'sweep',boss:q,t:0,tele:.6,dur:1.0,a0,a1:a0+span,cur:a0,hit:{},dark:1})},
+ // Grave Spikes: warned spots under the players erupt into black spikes.,
+ graveSpikes(q,t,ph){const L=alive();if(!L.length)return;X('charge');const n=2+ph;for(let k=0;k<n;k++){const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-26,26),70,W-70),y=cl(tg.y+rnd(-26,26),130,H-70);warn({x,y,r:44,dur:.75+k*.22,fn:()=>{X('stab');fx(['s',9]);fx(['r',x,y,60,'#ff1c3a']);s7add({k:'spike',x,y,t:0,dur:.6,r:44});alive().forEach(p=>{if(dist(x,y,p.x,p.y)<44*ATK_HIT+PLAYER_HIT_R)hitP(p,16)})}})}},
+ // Gravity Well: a black singularity opens under a player, drags everyone toward it for a few seconds, then implodes.,
+ gravityWell(q,t,ph){const L=alive();if(!L.length)return;X('charge');const tg=L[Math.floor(R()*L.length)],x=cl(tg.x+rnd(-30,30),100,W-100),y=cl(tg.y+rnd(-30,30),160,H-100);warn({x,y,r:64,dur:.7,fn:()=>{X('ring');s7add({k:'well',boss:q,t:0,dur:2.8+ph*.4,x,y,r:240,tick:0})}})},
+ // Curse Sigil: sigils lock onto players and follow them, then detonate. Keep moving.,
+ curseSigil(q,t,ph){const L=alive();if(!L.length)return;X('charge');const pool=L.slice().sort(()=>R()-.5),n=Math.min(pool.length,ph>=1?3:2);for(let k=0;k<n;k++){const tg=pool[k];s7add({k:'mark',boss:q,pid:tg.id,x:tg.x,y:tg.y,t:-k*.4,dur:1.7,r:56})}},
+ // Phantom Double: two shadow copies of him sweep across the arena and fire at the nearest player.,
+ phantomDouble(q,t,ph){X('ring');const n=ph>=1?3:2;s7add({k:'phantom',boss:q,t:0,dur:3.2,x:-70,y:rnd(170,250),vx:300,vy:rnd(-10,10),img:'dm1',fired:0,n,gap:.5});s7add({k:'phantom',boss:q,t:-.35,dur:3.2,x:W+70,y:rnd(330,410),vx:-300,vy:rnd(-10,10),img:'dm2',fired:0,n,gap:.5})},
+ // Reaper Crescent: a dark scythe arc is drawn across the arena, then swings. Phase III adds a second arc behind him.,
+ reaperCrescent(q,t,ph){X('whoosh');const x=q.x,y=q.y,base=q.a,n=ph>=1?2:1;for(let k=0;k<n;k++){const a=base+(k?PI:0);s7add({k:'arc',boss:q,t:-k*.25,x,y,a,a0:a-1.05,a1:a+1.05,half:1.05,r:150,tele:.6,dur:.32,hit:{},dmg:18})}},
+ // Eclipse Gaze: a dashed red line tracks the nearest player, locks, then a black beam fires down it.,
+ eclipseGaze(q,t,ph){X('charge');const n=ph>=2?2:1;for(let k=0;k<n;k++)s7add({k:'gaze',boss:q,t:-k*.9,tele:1.05,dur:.42,cur:q.a,fired:0,hit:{}})},
+ // Black Sun: a growing sphere of darkness marks a player, then bursts into a ring of black flame.,
+ blackSun(q,t,ph){const L=alive(),tg=L.length?L[Math.floor(R()*L.length)]:null,x=tg?cl(tg.x,150,W-150):W/2,y=tg?cl(tg.y,180,H-120):H/2;X('charge');warn({x,y,r:124,dur:1.5+ph*.2,fn:()=>{X('boom');fx(['f','#050207']);fx(['s',16]);fx(['r',x,y,240,'#ff1c3a']);fx(['r',x,y,150,'#2a5bff']);boom(x,y,124,18,'b','#ff1c3a');const n=ph>=1?20:14,a0=rnd(0,PI*2);for(let k=0;k<n;k++){const an=a0+k*2*PI/n;bp(x+Math.cos(an)*70,y+Math.sin(an)*70,an,200+ph*30,darkOpt({shape:1,sz:30,r:11,dmg:12,life:3.2}))}}})},
+ // Death March: black lanes strike one after another across the arena, each one telegraphed first.,
+ deathMarch(q,t,ph){const n=ph>=1?6:5,lanes=[];for(let k=0;k<n;k++)lanes.push({x:cl(96+k*(W-192)/(n-1)+rnd(-18,18),60,W-60),at:.9+k*.55});X('whoosh');s7add({k:'march',boss:q,t:0,dur:.9+(n-1)*.55+.45,lanes})}
 };
 Object.assign(TRI_FIRE,SEC_FIRE);
-// Shadow dash hazard: vanish, reappear next to the nearest player, then a short slash.
+// Shadow dash: the arrival spot is marked first (his sprite drops into it), then he vanishes, reappears there and slashes.
 function stepDash(o){
  const q=o.boss;
  if(!q||q.hp<=0){q.vanish=0;q.inv=0;return false}
  q.busy=Math.max(q.busy||0,.2);
  if(o.t<.5){q.vanish=1;q.inv=1;return true}
- if(!o.done){o.done=1;const tg=nearest(q.x,q.y);q.vanish=0;q.inv=0;if(tg){q.x=cl(tg.x+(tg.x<W/2?70:-70),60,W-60);q.y=cl(tg.y,110,H-60)}X('whoosh');fx(['r',q.x,q.y,60,'#2a5bff'])}
- if(!o.slashed&&o.t>=.55){o.slashed=1;alive().forEach(p=>{if(Math.abs(p.x-q.x)<130&&Math.abs(p.y-q.y)<70)hitP(p,24)});X('stab');fx(['p',q.x,q.y,20,'#ff1c3a',300,.5,5])}
- return o.t<1;
+ if(!o.done){o.done=1;q.vanish=0;q.inv=0;q.x=o.ax;q.y=o.ay;const tg=nearest(q.x,q.y);if(tg)q.a=Math.atan2(tg.y-q.y,tg.x-q.x);X('whoosh');fx(['r',q.x,q.y,70,'#2a5bff']);fx(['r',q.x,q.y,36,'#ff1c3a']);fx(['s',8])}
+ if(!o.slashed&&o.t>=.7){o.slashed=1;s7add({k:'arc',boss:q,t:0,x:q.x,y:q.y,a:q.a,a0:q.a-.95,a1:q.a+.95,half:.95,r:140,tele:.1,dur:.26,hit:{},dmg:24})}
+ return o.t<1.1;
 }
 // --- Cutscene: Mason finishes Will and Jackson, Will says "your not mason", then Mason transforms ---
 const SC_TF=2.6; // transform length (s)
@@ -1455,10 +1596,18 @@ function stepSecret(dt){
  if(ph>q.ph){q.ph=ph;X('phase');fx(['f','#ff1c3a']);fx(['s',16]);fx(['r',q.x,q.y,260,'#2a5bff']);S.secBanner={txt:ph===1?'PHASE II: THE BLACK FIRE':'PHASE III: NO MORE SONG',t:2.6}}
  stepS7(dt);
  if(S.st!=='fight')return;
- triBoss(q,dt,ph,1.35,t=>({x:480+Math.sin(t*.5)*250,y:250+Math.sin(t*.9)*70}),1.1);
+ // Stalking: the further into the fight, the more he leans toward the nearest player.
+ const tg=nearest(q.x,q.y),lean=.08+.12*ph,hx=tg?tg.x:480,hy=tg?tg.y:250,lastMove=q.last;
+ triBoss(q,dt,ph,1.35,t=>({x:cl(480+Math.sin(t*.5)*250+(hx-480)*lean,90,W-90),y:cl(250+Math.sin(t*.9)*70+(hy-250)*lean,130,H-150)}),1.1+ph*.15);
+ if(q.last!==lastMove&&q.last){
+  // A new move just started: flash, shock ring and sparks, then announce it by name.
+  fx(['s',7]);fx(['r',q.x,q.y,80,'#ff1c3a']);fx(['r',q.x,q.y,46,'#2a5bff']);fx(['p',q.x,q.y,14,'#ff1c3a',300,.45,5,'pixel']);
+  if(q.last!=='copyAttack'&&SEC_NAME[q.last]&&(!S.secBanner||S.secBanner.t<.6))S.secBanner={txt:SEC_NAME[q.last],t:1.2};
+ }
 }
 function secDamage(v,x,y,col,crit,p){
  const q=S.sec;if(!q||q.hp<=0||S.st!=='fight')return;
+ if(q.stun>0)v=Math.round(v*1.5);
  q.hp=Math.max(0,q.hp-v);q.fl=.12;fx(['d',x,y,v,col,crit]);X(crit?'crit':'hit');
  if(p)p.dd+=v;if(p&&p.m&&p.m.ls)p.hp=Math.min(p.max,p.hp+v*p.m.ls);
  if(q.hp<=0)secWin();
@@ -1474,7 +1623,7 @@ function secWin(){
  const L=[["Mason","...You left me for last. And you still beat me."],["Mason","Hateful Doom was the last song I had."]];
  S.dlg={L,i:0,t:0,dur:dur(L[0]),noSkip:1,next:'end'};S.st='dlg';
 }
-function snapSec(){const q=S.sec;return{x:q.x|0,y:q.y|0,hp:Math.ceil(q.hp),max:q.max,fl:q.fl>0?1:0,vanish:q.vanish?1:0,ph:q.ph|0,r:q.r}}
+function snapSec(){const q=S.sec;return{x:q.x|0,y:q.y|0,hp:Math.ceil(q.hp),max:q.max,fl:q.fl>0?1:0,vanish:q.vanish?1:0,ph:q.ph|0,r:q.r,stun:q.stun>0?1:0}}
 // --- Dark art: black fire, black spears, black sprites with red and blue edges ---
 function drawFlame(x,y,sz,t){
  g.save();g.translate(x,y);const f=Math.sin(t*18)*.12;
@@ -1497,23 +1646,36 @@ function drawDarkProj(x,y,rot,sz,shape,img){
 }
 function drawSecBoss(q,t){
  const al=q.vanish?.12:1,x=q.x,y=q.y+Math.sin(t*2.2)*6,f=Math.floor(t/.22)%2?'dm2':'dm1';
+ // Dark motes stream into him, so he always looks like he is pulling the dark in.
+ if(!q.vanish&&PT.length<650&&R()<.55){const an=R()*PI*2,d=rnd(90,150);PT.push({x:x+Math.cos(an)*d,y:y+Math.sin(an)*d*.7,vx:-Math.cos(an)*rnd(70,130),vy:-Math.sin(an)*rnd(70,130),l:.7,m:.7,c:R()<.6?'#ff1c3a':'#2a5bff',s:rnd(3,6),shape:'shard',rot:an,spin:rnd(-6,6)})}
  g.save();
  glow(x,y,135,'rgba(255,28,58,1)');glow(x-16,y,115,'rgba(42,91,255,1)');
  spr(f,x+5,y,172,0,1,1,.45*al);spr(f,x-5,y,172,0,1,1,.45*al);
+ // Now and then a glitch slice tears across him.
+ if(!q.vanish&&R()<.03)spr(f,x+rnd(-16,16),y+rnd(-4,4),172,0,1,1,.5);
  spr(f,x,y,172,Math.sin(t*1.5)*.03,1,1,al);
  if(q.fl>0){g.globalCompositeOperation='lighter';spr(f,x,y,172,0,1,1,.45*al)}
  g.restore();
+}
+// The copied boss flickers over him, then the black copy fires.
+function drawSecEchoes(list,t){
+ list.forEach(o=>{
+  if(o.k!=='echo'||o.t<0)return;
+  const u=cl(o.t/o.dur,0,1),pulse=.5+.5*Math.sin(o.t*34);
+  glow(o.x,o.y,120,'rgba(255,28,58,1)');
+  spr(o.img,o.x,o.y,150,0,1,1,.2+.35*pulse*(1-u*.5));
+  g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,28,58,'+(1-u)+')';g.lineWidth=5;g.beginPath();g.arc(o.x,o.y,40+u*120,0,PI*2);g.stroke();g.restore();
+ });
 }
 function drawSecBar(v){
  const q=v.sec,x=140,y=36,w=680,h=26,r=cl(q.hp/q.max,0,1);
  g.fillStyle='#050507';g.fillRect(x,y,w,h);
  const gr=g.createLinearGradient(x,0,x+w,0);gr.addColorStop(0,'#ff1c3a');gr.addColorStop(.5,'#3a0a14');gr.addColorStop(1,'#2a5bff');
  g.fillStyle=gr;g.fillRect(x,y,w*r,h);
- g.strokeStyle='#d7d7e4';g.lineWidth=2;g.strokeRect(x,y,w,h);
+ g.strokeStyle=q.stun?'#ff7a8a':'#d7d7e4';g.lineWidth=2;g.strokeRect(x,y,w,h);
  TS('MASON  -  HATEFUL DOOM',W/2,22,18,'#e9e9f0');
  T(Math.ceil(q.hp)+' / '+q.max,x+4,y+h+12,12,'#ddd','left');
- const secs=Math.ceil(v.secT||0);
- 
+ if(q.stun)TS('EXPOSED  -  TAKING +50% DAMAGE',W/2,y+h+14,13,'#ff7a8a');
  if(v.secBanner)TS(v.secBanner,W/2,H/2-150,30,'#ff1c3a');
 }
 // Secret stage: a grey-black alley whose gradient, bars and ribbon follow the music's spectrum.
@@ -1535,6 +1697,8 @@ function drawSecretBg(t){
  for(let x=0;x<=W;x+=12){const i=Math.floor(x/W*96),amp=sp?sp[i]/255:.3,y=300+Math.sin(x*.03+t*2)*(12+mid*60)+(amp-.3)*60;if(x)g.lineTo(x,y);else g.moveTo(x,y)}
  g.stroke();
  if(bass>.55){for(let k=0;k<5;k++){g.fillStyle=Math.random()<.5?'rgba(255,28,58,.5)':'rgba(42,91,255,.5)';g.fillRect(Math.random()*W,Math.random()*H,4+Math.random()*60,2+Math.random()*4)}}
+ const ph=V&&V.sec?V.sec.ph:0,beat=Math.pow(Math.max(0,Math.sin(t*(1.2+ph*.5)*PI)),14);
+ if(beat>.02){g.fillStyle='rgba(255,28,58,'+(beat*(.05+ph*.04))+')';g.fillRect(0,0,W,H)}
  const vg=g.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.8);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.7)');g.fillStyle=vg;g.fillRect(0,0,W,H);
 }
 // ===== END SECRET BOSS 8 =====
@@ -2083,7 +2247,7 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];
  v.pk.forEach(([x,y])=>{glow(x,y,46,'rgba(120,255,120,1)');spr('burger',x,y+Math.sin(t*4)*5,48)});
  if(st!=='up'&&st!=='survival'&&v.b&&!v.secOn&&st!=='secretcut'){if(ST.ambient)drawAmbient(t,BD[v.bi].col);if(ST.aura)drawAura(BD[v.bi].col,t,v.b.x,v.b.y,v.b.sz||150);drawBoss(v.b,t);if(v.bi===2){g.save();g.globalAlpha=.14;for(let i=0;i<14;i++){const a=t*.45+i*2*PI/14,rad=112+Math.sin(t*2+i)*20;g.strokeStyle=i%2?'#4df2ff':'#bb6cff';g.lineWidth=2;g.beginPath();g.arc(v.b.x+Math.cos(a)*rad,v.b.y+Math.sin(a)*rad*.58,8+(i%3)*3,0,PI*2);g.stroke()}g.restore();for(let i=0;i<6;i++){const bx=((i*163+t*22)%(W+80))-40,by=(i*89+Math.sin(t*1.7+i)*24+((t*25+i*67)%H));glow(bx,by,18,'rgba(65,240,255,.65)');spr('bubble3',bx,by,20+4*Math.sin(t*2+i))}}if(v.bi===3&&v.b.hp<=0)TS('DEFEATED',v.b.x,v.b.y+90,14,'#ff9aa8')}
  if(v.bs2&&st!=='up'&&st!=='survival'){const q=v.bs2;const wob=Math.sin(t*2.8)*9;g.globalAlpha=q.hp>0?1:.22;glow(q.x,q.y,90,'rgba(255,65,80,1)');if(q.beam!=null){g.save();g.translate(q.x,q.y);g.rotate(q.beam);g.globalCompositeOperation='lighter';g.fillStyle='rgba(255,40,40,.42)';g.fillRect(0,-30,1500,60);g.fillStyle='rgba(255,230,230,.8)';g.fillRect(0,-8,1500,16);g.restore()}if(q.pipe!=null){g.strokeStyle='rgba(255,60,60,.25)';g.lineWidth=34;g.beginPath();g.arc(q.x,q.y,118,q.pipe-.5,q.pipe);g.stroke();spr('pipe',q.x+Math.cos(q.pipe)*110,q.y+Math.sin(q.pipe)*110,178,q.pipe+PI/2)}spr('ucg',q.x,q.y+wob,145,Math.sin(t)*.08);if(q.gun)spr('egun',q.x+Math.cos(q.a)*65,q.y+Math.sin(q.a)*65,67,q.a,1,Math.cos(q.a)<0?-1:1);if(q.fl){g.globalCompositeOperation='lighter';spr('ucg',q.x,q.y+wob,145,0,1,1,.7);g.globalCompositeOperation='source-over'}g.globalAlpha=1;TS(q.hp>0?'UNCOOLGUY16':'DEFEATED',q.x,q.y-92,13,'#ff6868')}
- if(v.s7&&st==='fight')drawS7(v.s7,t);if(v.tri&&st!=='up'&&st!=='survival'&&!v.secOn&&st!=='secretcut')drawTriAllies(v.tri,t);if(st==='secretcut')drawSecretCut(v,t);if(v.sec&&st!=='up'&&st!=='survival')drawSecBoss(v.sec,t);
+ if(v.s7&&st==='fight')drawS7(v.s7,t);if(v.tri&&st!=='up'&&st!=='survival'&&!v.secOn&&st!=='secretcut')drawTriAllies(v.tri,t);if(st==='secretcut')drawSecretCut(v,t);if(v.sec&&st!=='up'&&st!=='survival')drawSecBoss(v.sec,t);if(v.s7&&v.secOn&&st==='fight')drawSecEchoes(v.s7,t);
  [...v.pl].sort((a,b)=>a.y-b.y).forEach(p=>drawPlayer(p,t));
  v.pr.forEach(([id,img,x,y,rot,sz,own,rr,dk,sh])=>{const o=sm(id,x,y),col=dk?'rgba(255,28,58,1)':projectileColor(img,own==='p'?undefined:v.bi);glow(o.x,o.y,sz*.9,col);if(R()<.4&&PT.length<700)PT.push({x:o.x,y:o.y,vx:rnd(-15,15),vy:rnd(-15,15),l:.3,m:.3,c:col,s:sz*.2,shape:particleShape(col),rot:rot,spin:rnd(-8,8)});if(dk)drawDarkProj(o.x,o.y,rot,sz,sh,img);else spr(img,o.x,o.y,sz,rot)});
  drawJayFood(v,t);drawJayPans(v,t);drawTerryCases(v,t);drawHitboxes(v,t);
