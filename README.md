@@ -1,7 +1,36 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v35)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v37)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 37 — vote countdown, tie reveal, run upgrade list, meteor and lightning remade
+
+- **Multiplayer vote countdown.** Once everyone has voted, a 3-second "NEXT BOSS IN" countdown runs before the next boss. Votes are locked during it. Solo runs skip the countdown.
+- **Tie reveal.** If the votes tie when the countdown ends, the screen shows "TIE!", how many upgrades were tied, and which one won (the random pick), for 2.5 s before the boss. A clear winner goes straight to the boss.
+- **Pause menu shows the run's upgrades.** The panel is wider, with an "UPGRADES THIS RUN" list on the right: each upgrade once, with a count if you took it more than once (for example "2x Quick Hands"). Upgrades are shared by the team, so this is the same list for everyone.
+- **Meteor Call remade.** Every 10 s a reticle closes in on the boss ring while a burning meteor falls in from the top right. It lands with a white flash, a crater ring that expands and fades, and cracks. The damage is unchanged (120 x dmg).
+- **Static Shock remade.** Every 3 s a jagged lightning bolt drops from the top of the screen onto the boss, with a flicker, branches, a glow and a strike ring. The damage is unchanged (30 x dmg).
+- **Multiplayer:** the meteor and bolt are spawned and timed by the host, and their state is sent in each snapshot, so online players see the same effect at the same point. Damage is applied by the host only.
+- **Testing note:** checked headless with a second player added: a tie (countdown, reveal, boss), a clear winner (countdown, no reveal) and solo (no countdown). Screenshots were checked for the meteor, the bolt, the countdown, the reveal and the pause list. The smoke sweep of 70 combinations ran with no errors, and a two-browser session ran over the local PeerJS server with no errors. Not played by hand, and the vote countdown was not run over a real network.
+- **Known, not changed:** the "Chosen upgrades" line on the vote screen runs off the edge once there are many upgrades.
+
+## Version 36 — Patrick rock mode and Eureka, SpongeBob faster, optimisation
+
+- **Patrick: Eureka Burst has a Rock mode variant.** In Rock mode the burst also throws a ring of 8 pet stones outward (10 stones with one Double Tap, and so on). Each stone flies until it hits a boss, at 17.5 damage before boss-side modifiers, and it hits each boss once. SpongeBob mode keeps the plain burst. The lobby card now says "Rock: + stone shower".
+- **Patrick: pet rock redrawn.** `Patrick rock.png` is a new lumpy grey stone with a black outline, a glint, cracks and speckles. Same 100 x 100 size and filename.
+- **SpongeBob mode fires every 0.5 s** (was 0.8 s). The interval is one constant, `PSB_SHOT`, near the Patrick code.
+- **Optimised: Hateful Doom (secret boss 8).** In a profile of the fight, drawing the stage and its particles was the heaviest part of the frame.
+  - Particles are drawn without a save, translate, rotate and restore for each one. Points are rotated by hand. This was about a quarter of the frame time.
+  - The static vignette is painted once and then blitted. The sun's halo fills only its own box. The floor grid is one stroke. The 64 spokes are batched into one stroke per colour and alpha step.
+  - Measured in headless Chromium on the same seeded 600-frame fight, the render went from about 0.99 ms to 0.50 ms per frame on average (p95 1.5 ms to 0.9 ms). The old and new frames differ by 0.33 out of 255 on average.
+- **Optimised: multiplayer.**
+  - The host encodes each snapshot once per tick and sends the same string to every client (`sj` messages). Clients still accept the old `s` format.
+  - A client sends input as soon as movement, fire or an ability press changes, instead of waiting up to 33 ms for the next tick. The aim angle still goes on the 33 ms tick.
+  - Display smoothing toward the latest snapshot is per second, not per frame. It looks the same at 60 Hz and no longer runs faster on 144 Hz screens or slower at low frame rates.
+  - Particle events look up their colour's shape once per event, not once per particle. A 1,000-particle burst takes about 0.13 ms to process, down from 0.31 ms.
+  - The snapshot payload is the same size as before.
+- **Testing note:** checked headless with two real browser pages joined through a local PeerJS server. The session ran with no errors and the client moved in step with the host. A smoke sweep of 70 combinations (every boss, five characters, both Patrick modes, plus the secret fight in Rock mode) ran with no errors. The Eureka stone shower was checked for count (8), damage (17.5) and kind, and the SpongeBob interval was checked (3 shots in 2 s, which 0.8 s would not give). Not played by hand, and the sandbox has no real internet path, so real latency and balance still need a real run-through. The input-to-screen latency numbers in the sandbox were too noisy to claim an improvement.
+- **Not changed, for later:** client-side prediction for your own character (the biggest remaining multiplayer lag), and the host's game pausing when its tab is hidden, because the simulation runs on the render loop.
 
 ## Version 35 — full dialogue reference applied
 
