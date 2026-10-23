@@ -1,7 +1,67 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry & The Hover Trio and Hateful Doom (v37)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry, Adrian & The Hover Trio and Hateful Doom (v42)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
+
+## Version 42 — Coolguy17's Rush: the rest of the kit
+
+- **Reflect.** Every 9 s the rematch and second-last Coolguy17 raise a spear or pan for 1.6 s. Player shots that get close to him turn around and hit players for 1.2x damage.
+- **Spear stab.** The rematch jabs a warning circle at the nearest player (26 damage).
+- **Pan boomerang.** The pan splits at its landing point into four homing mini pans, then a fresh pan flies back toward him.
+- **Camera zoom.** During the cave darkness the camera zooms about 22% into the nearest player. The HUD zooms with it.
+- **Upgrade animation.** On the upgrade screen after each Coolguy17 fight, a thought bubble shows him tapping through three cards.
+- **Kill-stealing cameo.** Before the second-last fight, Coolguy17 dashes in across the screen, and "KILLS STOLEN!" appears. This runs after the Hover Trio, not during it, because the trio has its own fight logic.
+- **Not in this version:** the final fight, which you asked to leave out for now. The boomerang return is approximated, and the upgrade animation is a simple tap-through, not a full cutscene.
+- **Testing note:** syntax checked only. Not played in a browser or over a real network.
+
+## Version 41 — Coolguy17's Rush: rematch, second-last encounter, kill intros
+
+- **Rush order.** Coolguy17's rush now runs: Xiao Long Bao, UnCoolguy16, Coolguy17 (replaces Evil Spong), Bao & UnCoolguy16, Coolguy17 rematch (replaces Evil Zach), Fella, the Hover Trio, Coolguy17 second-last. The secret boss and the regular rush are unchanged.
+- **Intro kill animations.** Coolguy17 slides in, slashes the victim (Evil Spong or Evil Zach), and the victim shatters. Then the "COOLGUY17 / THE VILLAIN" card appears.
+- **Rematch (11111 HP).** Evil Zach's knife and copy attacks, plus dashes, ice, lasers, fire, map hazards, and a spear barrage: six warnings, then spears fly through them after 1.2 s. The map is a dark cave with glowing plants. Every 16 s the cave goes dark, with a light around each player. He keeps Evil Zach's dodging.
+- **Second-last (17777 HP).** Pan throws that split into four homing mini pans, a pan slam that stuns players, fire, lasers, eggs and food, and dashes. The map is a fiery desert with heat shimmer and sand.
+- **Stun status.** The pan slam stuns for 1.1 s: no movement, yellow sparks.
+- **10 HP escape** now applies to all three Coolguy17 fights.
+- **Not in this version:** the spear and pan reflect, the spear melee, the boomerang that returns, the camera zoom into the player during the darkness, the upgrade-choosing animation, the second-last cameo during boss 7 (it is a separate fight after the trio), and the final fight.
+- **Testing note:** syntax checked only. Not played in a browser or over a real network.
+
+## Version 40 — Coolguy17's Rush: status effects, forest map, intro card, multiplayer
+
+- **Status effects.** Fire burns: 4 damage every 0.5 s for 3 s. Ice freezes: half movement speed for 1.5 s. Both show sparks on the player.
+- **Snowy forest map.** Drifting fog bands, falling snow and tree silhouettes. Every 12 s a full-screen fog swell covers the arena for about 4 s.
+- **Intro card.** While Coolguy17's first line plays, he drops onto the arena with a shockwave and a "COOLGUY17 / THE VILLAIN" title card.
+- **Escape at 10 HP.** He teleports away in a burst and the upgrade screen follows, using the existing defeat flow so the death dialogue plays.
+- **Multiplayer.** The host sends its rush setting in every snapshot, so joiners load the same bosses, music and dialogue.
+- **Not in this version:** the Evil Zach rematch (dark cave, darkness, camera zoom), the second-last encounter (pan, eggs, food), the spear and pan attacks, the upgrade-choosing animation, and the final fight.
+- **Testing note:** syntax checked only. Not played in a browser or over a real network.
+
+## Version 39 — Coolguy17's Rush (first encounter)
+
+- **Rush picker in the lobby.** Two buttons under the character grid: "Regular Rush" (the default) and "Coolguy17's Rush". Host only. The choice is kept in `S.set.rush` and applied when a run starts.
+- **Coolguy17 replaces Evil Spong (boss 3) in his rush.** 7777 base HP, scaled by party size like every other boss. Attacks: a dash that teleports him and fires a ring (`cgDash`), a fire fan (`cgFire`), a fire ring on a player's spot (`cgFireRing`), an ice burst (`cgIce`), a laser line (`cgLaser`), five map hazards (`cgMap`). He also steals Spong's bubble attacks. Intro and death lines come from Coolguy17_dialog.txt.
+- **Music:** Icicle Ignition II plays in his fight.
+- **Assets:** the Coolguy17 sprites and all three new tracks are in the folder. The rematch and second-last tracks and sprites are copied in but not wired up yet.
+- **Not in this version:** the snowy forest map and fog, fire and ice status effects (burn and freeze), the teleport away at 10 HP, the intro animation, the Evil Zach rematch, the second-last encounter, Uncoolguy17's spears and pan, and the final fight.
+- **Multiplayer:** joiners do not get the rush setting yet, so they may see Spong's name and colours in that fight.
+- **Testing note:** the script was syntax checked only. Not played in a browser yet.
+
+## Version 38 — new character: Adrian
+
+- **New character: Adrian** (the tooth-blob with the boomerang). Lobby card: "Boomerang M1. Last Stand: rise once per boss for 15 s, faster." He has 110 HP.
+- **M1: Boomerang.** He throws a boomerang that flies out about 340 px along his aim, slows, and curves back to his live position. It hits each boss once on the way out and once on the way back, for 28 damage per pass (56 on a boss that is in the path both ways). It clears enemy shots it passes within 24 px. Cooldown is 0.95 s. If he is caught or the boomerang has been out for 1.6 s, it is removed.
+- **Q: Snap Trap** (9 s cooldown). A dashed ring with two jaws appears about 230 px ahead on the aim line. After 0.9 s the jaws close on that spot: 60 damage to any boss inside, and the boss is **exposed for 4 s**, taking 25% more damage from every source. The label "EXPOSED +25%" shows under the boss.
+- **E: Decoy Echo** (12 s cooldown). A faded copy of Adrian stays where he cast it for 5 s. It throws a boomerang at the boss about every 1.1 s, so he can reposition while it works. The decoy's tag sits under its ring.
+- **R: Gum Wall** (10 s cooldown). A sticky pink wall, 200 px long, appears about 90 px ahead for 4 s. A boss shot that hits it is sent back at the boss at 1.5x damage.
+- **Passive: Last Stand.** On death, if it has not been used yet on this boss, he does not fall. He returns at 45% HP (50 of 110) with 1.2 s of invulnerability, and the revive plays a burst of pink and green rings, sparks, shards and a "LAST STAND!" pop-up. For the next 15 s:
+  - All cooldowns are capped at 0.6 s, and abilities re-cast at 0.6 s.
+  - His attacks come 1.7x as fast (attack gap 0.95 s becomes about 0.56 s) and hit 1.25x as hard.
+  - A timer shows as "LAST STAND 14.5s" above the ability bar and as a pink ring under his feet, which empties as the time runs out.
+  - When the 15 s run out he dies for good. If the rest of the team is still alive, he stays down until the next boss.
+- **Assumption (please check):** "once" means once per boss, not once per run. The use is reset when each new boss spawns. If you wanted it once per run, this is one line in the reset code.
+- **Multiplayer:** all of Adrian's boomerangs, traps, decoys, walls and the Last Stand timer are spawned and timed by the host and sent in each snapshot. Damage is applied by the host only, as for the other characters.
+- **Fixes after the first screenshots:** the DECOY tag no longer covers the YOU and HP tags. The EXPOSED label sits under the boss instead of under the top HUD bar. The LAST STAND! pop-up is raised above the YOU tag, and the timer ring moved from over his head to under his feet.
+- **Testing note:** checked headless in Chromium: the boomerang's out and return hits and its one-hit-per-pass lock; the Snap Trap damage (60), exposure (3.9 s left right after the snap in the test), and the 25% bonus on the next hit; the decoy's life and boss damage; the wall's reflection; the Last Stand's timer (15 s), HP (50), cooldown cap, faster attacks, death when the timer ends, and no second revive on the same boss. Smoke sweep: 84 combinations including Adrian, no errors. Two-browser multiplayer session over the local PeerJS server, no errors. Six screenshots were reviewed. Not played by hand, and balance (damage and cooldowns) has not been tested against a real player.
+- **Known, not changed:** the "Chosen upgrades" line on the vote screen still runs off the edge with many upgrades.
 
 ## Version 37 — vote countdown, tie reveal, run upgrade list, meteor and lightning remade
 
