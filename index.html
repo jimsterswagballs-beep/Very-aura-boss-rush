@@ -2819,14 +2819,14 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];
  g.restore();
  if(FL>0&&ST.flash>0){g.fillStyle=FLc;g.globalAlpha=FL*.7*ST.flash/100;g.fillRect(0,0,W,H);g.globalAlpha=1}
  {const mn=v.pl.find(p=>p.id===me);if(mn){if(mn.hp<lastHp)HURT=1;lastHp=mn.hp;const low=ST.lowHp&&mn.hp/mn.max<.3&&!mn.dead?.5+.5*Math.sin(t*6):0,a=Math.max(ST.hurtFx?HURT:0,low*.6);if(a>0){const gr=g.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.85);gr.addColorStop(0,'rgba(255,0,0,0)');gr.addColorStop(1,'rgba(255,0,0,'+(a*.55)+')');g.fillStyle=gr;g.fillRect(0,0,W,H)}}HURT=Math.max(0,HURT-dt*2)}
- if(v.b&&st!=='up'&&st!=='survival'&&st!=='intro7'&&!v.secOn&&!v.c17)drawBossBar(v.b,dt);if(v.tri&&st==='fight'&&!v.secOn)drawTriBars(v.tri);if(v.c17&&st!=='lobby'){drawC17Dark(v.c17);if(v.c17.id===1)drawC17Fog(t);drawC17Bar(v.c17,st,t)}if(v.c17&&st==='c17boom')drawC17Boom(v.c17);
+ if(v.b&&st!=='up'&&st!=='survival'&&st!=='intro7'&&!v.secOn&&!v.c17)drawBossBar(v.b,dt);if(v.tri&&st==='fight'&&!v.secOn)drawTriBars(v.tri);if(v.c17&&st!=='lobby'){drawC17Dark(v.c17);drawC17Bar(v.c17,st,t)}if(v.c17&&st==='c17boom')drawC17Boom(v.c17);
  if(v.sec&&st==='fight'){drawSecBar(v);drawSecTimer(v,t)}
  if(v.bs2&&st!=='up'&&st!=='survival'){const q=v.bs2,x=140,y=83,w=680,h=13,r=q.max?cl(q.hp/q.max,0,1):0;g.fillStyle='#250912';g.fillRect(x,y,w,h);g.fillStyle='#ff465d';g.fillRect(x,y,w*r,h);g.strokeStyle='#ff9ba8';g.lineWidth=2;g.strokeRect(x,y,w,h);T('UNCOOLGUY16  '+Math.ceil(q.hp)+' / '+Math.ceil(q.max),x,y+25,11,'#ff9ba8','left')}
  if(st==='fight'&&v.ufx&&v.ufx.length)drawUfx(v,t);
 if(st==='fight'||st==='up')drawHud(v,dt);
  if(st==='survival'){const remain=Math.max(0,v.survT||0),pct=1-remain/(v.survMax||93.179);g.fillStyle='rgba(30,8,6,.78)';g.fillRect(0,0,W,94);TS('PHASE 4.5 - SURVIVE THE ENCORE',W/2,24,23,'#ffd34a');TS(remain.toFixed(1)+' SECONDS LEFT',W/2,55,27,'#fff');g.fillStyle='#3a1a14';g.fillRect(120,75,720,9);g.fillStyle='#ff8a1f';g.fillRect(120,75,720*cl(pct,0,1),9);
  TS(v.survName||'DODGE THE ARENA',W/2,128,16,'#ffe08a');TS('Burgers spawn more often',W/2,148,11,'#aaffd5');TS('BAO + UNCOOLGUY16 ENCORE - ATTACK '+(v.survWave||0),W/2,516,10,'#ffb347'); }
- if(st==='intro7'&&v.in7>=T7.clock&&v.in7<T7.clock+T7.fade){g.fillStyle='rgba(0,0,0,'+(1-(v.in7-T7.clock)/T7.fade)+')';g.fillRect(0,0,W,H)}if(st==='secretcut')drawSecretCutFx(v,t);if(ST.vignette)drawVignette(st);if(v.dlg)drawDlg(v.dlg);
+ if(st==='intro7'&&v.in7>=T7.clock&&v.in7<T7.clock+T7.fade){g.fillStyle='rgba(0,0,0,'+(1-(v.in7-T7.clock)/T7.fade)+')';g.fillRect(0,0,W,H)}if(st==='secretcut')drawSecretCutFx(v,t);if(v.c17&&v.c17.id===1&&st!=='lobby')drawC17Fog(t);if(ST.vignette)drawVignette(st);if(v.dlg)drawDlg(v.dlg);
  if(v.dlg&&v.dlg.intro&&v.dlg.i===0&&v.dlg.t<2.4&&v.b){const a=Math.min(1,(2.4-v.dlg.t)*2,v.dlg.t*3);g.globalAlpha=a;TS('BOSS '+(v.bi+1)+(v.loop?'  -  LOOP '+(v.loop+1):''),W/2,H/2-100,26,'#fff');TS(v.b.name.toUpperCase(),W/2,H/2-45,58,BD[v.bi].col[0]);TS(BD[v.bi].title,W/2,H/2+5,24,'#ddd');g.globalAlpha=1}
  if(st==='up')drawUp(v,now);
  if(st==='win')drawEnd(v,1);if(st==='over')drawEnd(v,0);if(v.paused)TS('PAUSED  (press '+kn('pause')+')',W/2,H/2,48,'#fff');
@@ -3064,7 +3064,7 @@ requestAnimationFrame(loop);
 const REG_BD=BD.slice();
 const c17fx=e=>{if(e[0]==='r'&&e[3]>44)e[3]=44;fx(e)};
 const C17_DEF={
- 1:{n:'Coolguy17',title:'The Villain',img:'cg17a',hp:7777,sz:150,col:['#9fe8ff','#2a6bff'],bg:['#17293b','#05080f'],mus:'c1',cd:1.5,floor:10,r:44},
+ 1:{n:'Coolguy17',title:'The Villain',img:'cg17a',hp:7777,sz:150,col:['#9fe8ff','#2a6bff'],bg:['#17293b','#05080f'],mus:'c1',cd:1.2,floor:10,r:44},
  2:{n:'Coolguy17',title:'The Rematch',img:'cg17b',hp:17000,sz:150,col:['#ffe36a','#b3121e'],bg:['#1d1411','#050305'],mus:'c2',cd:1.35,floor:10,r:44},
  3:{n:'Coolguy17',title:'Second Last Stand',img:'cg17c',hp:33000,sz:150,col:['#ffb347','#ff4d00'],bg:['#4a1c08','#140703'],mus:'c3',cd:1.25,floor:0,r:44}
 };
@@ -3257,7 +3257,7 @@ function c17BeamsStep(c,dt){
 
 /* ---------- attack pools ---------- */
 const C17POOL={
- 1:[['dash',3],['dashTwice',1],['fireZones',2],['iceZones',2],['lasers',2],['fireballs',2],['iceShards',2],['stealBubbles',2],['stealSpatula',1]],
+ 1:[['dash',2.2],['dashTwice',.8],['fireZones',3.6],['iceZones',3.6],['lasers',1.6],['fireballs',3.4],['iceShards',3.4],['stealBubbles',1.4],['stealSpatula',.8]],
  2:[['guard',2.6],['melee',2],['volley',2],['spearThrow',2],['lasers',1.4],['dash',2],['fireZones',1],['iceZones',1],['stealBurgers',1],['stealKnives',1]],
  3:[['guard',2],['panBoom',3.2],['panStun',2],['eggs',2],['foodShower',1.6],['lasers',2],['fireZones',2],['dash',1],['fireballs',1]]
 };
@@ -3325,7 +3325,7 @@ function snapC17(){const c=S.c17;
   ghosts:c.ghosts.map(q=>[+q.x.toFixed(1),+q.y.toFixed(1),+(q.t/q.life).toFixed(2)]),
   beams:c.beams.map(b=>[+b.x.toFixed(1),+b.y.toFixed(1),+b.a.toFixed(3),b.w,b.len,+b.t.toFixed(2),b.warn,b.fire]),
   banner:c.banner?c.banner.txt:'',gone:c.gone?1:0,boomT:+(c.boomT||0).toFixed(2),
-  dark:+(c.dark||0).toFixed(3),darkX:c.darkX|0,darkY:c.darkY|0,enrage:c.enrage,songOn:c.songOn,songLeft:+(c.songLeft||0).toFixed(2)};
+  dark:+(c.dark||0).toFixed(3),darkX:c.darkX|0,darkY:c.darkY|0,enrage:c.enrage,songOn:c.songOn,songLeft:+(c.songLeft||0).toFixed(2),mus:c.mus};
 }
 
 /* ---------- drawing (reads only snapshot fields, so host and clients draw the same frame) ---------- */
@@ -3367,9 +3367,10 @@ function drawC17Bg(c,t){
  drawC17Clock(c);
 }
 // Fog covers the whole screen for a few seconds out of every 24.
-function drawC17Fog(t){const ph=(t%24)/24;const f=ph>.7?Math.sin((ph-.7)/.3*PI):0;if(f<=0)return;
- g.fillStyle='rgba(220,235,250,'+(.72*f)+')';g.fillRect(0,0,W,H);
- for(let i=0;i<12;i++){g.fillStyle='rgba(255,255,255,'+(.1*f)+')';g.fillRect(((i*211+t*60)%(W+200))-100,(i*97)%H,260,40+(i%3)*20)}}
+function drawC17Fog(t){const ph=(t%24)/24;const f=ph>.6?Math.sin((ph-.6)/.4*PI):0;if(f<=0)return;
+ g.save();g.globalAlpha=1;g.fillStyle='rgba(222,236,250,'+(.88*f)+')';g.fillRect(0,0,W,H);
+ for(let i=0;i<16;i++){g.fillStyle='rgba(255,255,255,'+(.22*f)+')';g.fillRect(((i*211+t*60)%(W+260))-130,(i*97)%H,300,46+(i%3)*22)}
+ g.restore()}
 // Darkness around the focus point during the rematch's darkness events.
 function drawC17Dark(c){if(c.dark<=0)return;const gr=g.createRadialGradient(c.darkX,c.darkY,110,c.darkX,c.darkY,640);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,'+(.9*c.dark)+')');g.fillStyle=gr;g.fillRect(0,0,W,H)}
 function drawC17Zone(x,y,r,f,col,t){const fire=col==='#ff6a1a';const a=.25+.35*f;g.save();g.globalCompositeOperation='lighter';

@@ -5,6 +5,8 @@ This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all 
 
 ## Version 39 — Coolguy17's rush
 
+- **Second pass on Coolguy17 #1:** the first encounter's music was not playing, because the fight snapshot left out the track name and the game asked for an undefined track. It now plays Icicle Ignition II. Cooldowns are about 20% shorter, and fire and ice attacks (fire and ice zones, fireballs, ice shards) are picked much more often. The fog now covers the whole screen, including the boss, the players and the HUD, instead of only the background.
+
 - **Rush picker.** The lobby has a RUSH row under the character cards: REGULAR RUSH (the default) and COOLGUY17'S RUSH. The host sets it in the room settings, and every player sees the same choice. The regular rush is unchanged.
 - **Coolguy17's roster.** Boss 3 (Evil Spong) is replaced by Coolguy17 #1 (the first encounter). Boss 5 (Evil Zach) is replaced by Coolguy17 #2 (the rematch). Coolguy17 #3 (the second last) comes after the Hover Trio. The other bosses are unchanged, and the boss count becomes 8, so "Start at boss" goes up to 8 in this rush.
 - **Coolguy17 #1 — 7,777 HP** (scaled by party size and difficulty). Dashes, fire and ice zones that drop in after a warning, laser sweeps, fireballs, ice shards, and two copies of Evil Spong's attacks (bubble ring and spatula slam). He dodges incoming shots. The map is a snowy forest with fog that covers the screen for a few seconds every 24 seconds. At 10 HP he says "..." and "I'm not ready yet", teleports away, and the upgrade screen follows.
