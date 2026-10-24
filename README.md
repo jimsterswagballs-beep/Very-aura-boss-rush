@@ -1,49 +1,27 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry, Adrian & The Hover Trio and Hateful Doom (v42)
+# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry, Adrian & The Hover Trio, Hateful Doom and Coolguy17's Rush (v39)
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
 
-## Version 42 — Coolguy17's Rush: the rest of the kit
+## Version 39 — Coolguy17's rush
 
-- **Reflect.** Every 9 s the rematch and second-last Coolguy17 raise a spear or pan for 1.6 s. Player shots that get close to him turn around and hit players for 1.2x damage.
-- **Spear stab.** The rematch jabs a warning circle at the nearest player (26 damage).
-- **Pan boomerang.** The pan splits at its landing point into four homing mini pans, then a fresh pan flies back toward him.
-- **Camera zoom.** During the cave darkness the camera zooms about 22% into the nearest player. The HUD zooms with it.
-- **Upgrade animation.** On the upgrade screen after each Coolguy17 fight, a thought bubble shows him tapping through three cards.
-- **Kill-stealing cameo.** Before the second-last fight, Coolguy17 dashes in across the screen, and "KILLS STOLEN!" appears. This runs after the Hover Trio, not during it, because the trio has its own fight logic.
-- **Not in this version:** the final fight, which you asked to leave out for now. The boomerang return is approximated, and the upgrade animation is a simple tap-through, not a full cutscene.
-- **Testing note:** syntax checked only. Not played in a browser or over a real network.
-
-## Version 41 — Coolguy17's Rush: rematch, second-last encounter, kill intros
-
-- **Rush order.** Coolguy17's rush now runs: Xiao Long Bao, UnCoolguy16, Coolguy17 (replaces Evil Spong), Bao & UnCoolguy16, Coolguy17 rematch (replaces Evil Zach), Fella, the Hover Trio, Coolguy17 second-last. The secret boss and the regular rush are unchanged.
-- **Intro kill animations.** Coolguy17 slides in, slashes the victim (Evil Spong or Evil Zach), and the victim shatters. Then the "COOLGUY17 / THE VILLAIN" card appears.
-- **Rematch (11111 HP).** Evil Zach's knife and copy attacks, plus dashes, ice, lasers, fire, map hazards, and a spear barrage: six warnings, then spears fly through them after 1.2 s. The map is a dark cave with glowing plants. Every 16 s the cave goes dark, with a light around each player. He keeps Evil Zach's dodging.
-- **Second-last (17777 HP).** Pan throws that split into four homing mini pans, a pan slam that stuns players, fire, lasers, eggs and food, and dashes. The map is a fiery desert with heat shimmer and sand.
-- **Stun status.** The pan slam stuns for 1.1 s: no movement, yellow sparks.
-- **10 HP escape** now applies to all three Coolguy17 fights.
-- **Not in this version:** the spear and pan reflect, the spear melee, the boomerang that returns, the camera zoom into the player during the darkness, the upgrade-choosing animation, the second-last cameo during boss 7 (it is a separate fight after the trio), and the final fight.
-- **Testing note:** syntax checked only. Not played in a browser or over a real network.
-
-## Version 40 — Coolguy17's Rush: status effects, forest map, intro card, multiplayer
-
-- **Status effects.** Fire burns: 4 damage every 0.5 s for 3 s. Ice freezes: half movement speed for 1.5 s. Both show sparks on the player.
-- **Snowy forest map.** Drifting fog bands, falling snow and tree silhouettes. Every 12 s a full-screen fog swell covers the arena for about 4 s.
-- **Intro card.** While Coolguy17's first line plays, he drops onto the arena with a shockwave and a "COOLGUY17 / THE VILLAIN" title card.
-- **Escape at 10 HP.** He teleports away in a burst and the upgrade screen follows, using the existing defeat flow so the death dialogue plays.
-- **Multiplayer.** The host sends its rush setting in every snapshot, so joiners load the same bosses, music and dialogue.
-- **Not in this version:** the Evil Zach rematch (dark cave, darkness, camera zoom), the second-last encounter (pan, eggs, food), the spear and pan attacks, the upgrade-choosing animation, and the final fight.
-- **Testing note:** syntax checked only. Not played in a browser or over a real network.
-
-## Version 39 — Coolguy17's Rush (first encounter)
-
-- **Rush picker in the lobby.** Two buttons under the character grid: "Regular Rush" (the default) and "Coolguy17's Rush". Host only. The choice is kept in `S.set.rush` and applied when a run starts.
-- **Coolguy17 replaces Evil Spong (boss 3) in his rush.** 7777 base HP, scaled by party size like every other boss. Attacks: a dash that teleports him and fires a ring (`cgDash`), a fire fan (`cgFire`), a fire ring on a player's spot (`cgFireRing`), an ice burst (`cgIce`), a laser line (`cgLaser`), five map hazards (`cgMap`). He also steals Spong's bubble attacks. Intro and death lines come from Coolguy17_dialog.txt.
-- **Music:** Icicle Ignition II plays in his fight.
-- **Assets:** the Coolguy17 sprites and all three new tracks are in the folder. The rematch and second-last tracks and sprites are copied in but not wired up yet.
-- **Not in this version:** the snowy forest map and fog, fire and ice status effects (burn and freeze), the teleport away at 10 HP, the intro animation, the Evil Zach rematch, the second-last encounter, Uncoolguy17's spears and pan, and the final fight.
-- **Multiplayer:** joiners do not get the rush setting yet, so they may see Spong's name and colours in that fight.
-- **Testing note:** the script was syntax checked only. Not played in a browser yet.
+- **Rush picker.** The lobby has a RUSH row under the character cards: REGULAR RUSH (the default) and COOLGUY17'S RUSH. The host sets it in the room settings, and every player sees the same choice. The regular rush is unchanged.
+- **Coolguy17's roster.** Boss 3 (Evil Spong) is replaced by Coolguy17 #1 (the first encounter). Boss 5 (Evil Zach) is replaced by Coolguy17 #2 (the rematch). Coolguy17 #3 (the second last) comes after the Hover Trio. The other bosses are unchanged, and the boss count becomes 8, so "Start at boss" goes up to 8 in this rush.
+- **Coolguy17 #1 — 7,777 HP** (scaled by party size and difficulty). Dashes, fire and ice zones that drop in after a warning, laser sweeps, fireballs, ice shards, and two copies of Evil Spong's attacks (bubble ring and spatula slam). He dodges incoming shots. The map is a snowy forest with fog that covers the screen for a few seconds every 24 seconds. At 10 HP he says "..." and "I'm not ready yet", teleports away, and the upgrade screen follows.
+- **Coolguy17 #2 — 17,000 HP** (the rematch, scaled the same way). Spear: a guard that reflects player shots back at the shooter, a counter lunge once the guard drops, a melee thrust with a warning arc, a spear volley (warnings land first, and the spears fly through them 1.2 s later), a three-spear throw, lasers, and two copies of Evil Zach's attacks (burger rain and knife fan). The map is a dark cave with glowing plants. Every 16 to 22 seconds the map darkens and the camera zooms in on a player. He leaves at 10 HP the same way as #1.
+- **Coolguy17 #3 — second last, 33,000 HP** (scaled the same way). Pan: a guard that reflects shots, a pan boomerang that arcs out and splits into four mini pans which home in before flying straight, a close-range pan swing that stuns players for 1.2 s, egg lobs that split into eight eggs where they land, a food shower, lasers, fire zones, fireballs and dashes. The map is an orange desert with dunes, a sun and embers. At 0 HP he says "Seems like we're near the end…" and "cya there kid(s)", and the run is cleared.
+- **18k speed-up.** When #3 drops to 18/33 of his maximum HP (18,000 at one player, scaled with the party), he says "how about we speed up the process". The last-stand song restarts, a digital countdown of the song's remaining time appears in the background, his attacks hit 20% harder, his cooldowns are 30% shorter, and he uses the pan more often.
+- **Explosion ending.** If the song runs out with Coolguy17 still standing, the screen flashes, explosions roll across the arena, the screen fades to black, and the players return to the lobby. The rush stays set to Coolguy17's.
+- **Status effects.** Burn (fire): 3 seconds of damage over time. Ice: slows movement, and three ice hits in a row freeze a player for 0.7 s. Stun (pan): the player can't move or attack for 1.2 s. Each has an icon above the player.
+- **Trio steal.** In this rush, if the Hover Trio is nearly beaten (under 12% of their combined HP), Coolguy17 #3 interrupts and takes over. There is no upgrade screen in between.
+- **Multiplayer.** The fights run only on the host. Clients receive a copy of the fight in each snapshot (`snap().c17`) and draw it, the same way the secret boss works.
+- **Assumptions (please check):**
+  - Coolguy17 #1 and #2 are not killed. They leave at 10 HP, which matches their death dialogue (they teleport away).
+  - Only one track was supplied for #3, so the speed-up restarts PAN FRIED PIZZA rather than playing a separate last-stand song.
+  - "Steals all your kills" is read as the Trio being taken over once it is under 12% of its combined HP.
+  - The intro cut scenes (Evil Spong being killed and the upgrade-card animation) are simplified to dialogue and a flash.
+- **Testing note:** checked headless in Chromium with 29 scripted checks: the roster swap; all three encounters from spawn to their endings; the 10 HP escape; the guard reflect and counter; the rematch darkness event; the Trio steal; the 18k speed-up; the countdown and the explosion back to the lobby; the second-last defeat; status effects; a snapshot round trip for clients; and the regular rush unchanged. Zero page errors. The lobby, all three maps, the spear guard, the pan, the countdown and the explosion were reviewed as screenshots. Not played by hand, so the balance (HP, damage and cooldowns) still needs a real run-through, and the two-browser online session was not run.
+- **Known, not changed:** the final fight after Coolguy17 #3 is not built, so the run ends after the second last. The music credits list has no entries for the three new tracks yet; the credits screen already runs past the bottom with ten rows.
 
 ## Version 38 — new character: Adrian
 
