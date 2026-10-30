@@ -2400,26 +2400,22 @@ function drawBackdrop(t){const gr=g.createLinearGradient(0,0,0,H);gr.addColorSto
  g.restore();const fl=g.createLinearGradient(0,430,0,H);fl.addColorStop(0,'rgba(0,0,0,0)');fl.addColorStop(1,'rgba(0,0,0,.6)');g.fillStyle=fl;g.fillRect(0,430,W,H-430)}
 function joinPrompt(){const v=prompt('Enter the 6-digit room code (or paste a room link):');if(!v)return;const m=v.match(/room=([^&\s]+)/);let c=(m?m[1]:v).trim();const dg=c.replace(/[\s-]/g,'');if(/^\d{6}$/.test(dg))c=dg;joinRoom(c)}
 function drawTitle(now){const t=now/1000;drawBackdrop(t);
- // Animated embers, sweeping spotlights and a subtle moving stage floor.
- for(let i=0;i<64;i++){const sp=.12+(i%7)*.03,x=(i*137.5+Math.sin(t*.6+i)*30)%W,y=H-((t*sp*400+i*53)%(H+40));g.globalAlpha=.18+.38*Math.abs(Math.sin(t+i));g.fillStyle=i%3?'#ffb347':'#9fe8ff';g.beginPath();g.arc(x,y,1.3+(i%3),0,PI*2);g.fill()}g.globalAlpha=1;
- for(let k=0;k<3;k++){const a=-PI/2+Math.sin(t*.4+k*2.1)*.55;g.save();g.globalAlpha=.075;g.fillStyle='#fff3b0';g.beginPath();g.moveTo(W/2+(k-1)*240,-20);g.lineTo(W/2+(k-1)*240+Math.cos(a+PI/2)*-260,H);g.lineTo(W/2+(k-1)*240+Math.cos(a+PI/2)*260+60,H);g.closePath();g.fill();g.restore()}
- // Stage and character lineup.
- g.fillStyle='rgba(0,0,0,.42)';g.fillRect(0,382,W,158);g.strokeStyle='rgba(255,211,74,.2)';g.lineWidth=2;g.beginPath();g.moveTo(0,414);g.lineTo(W,414);g.stroke();
- [['cgi1',95,405],['zi1',210,414],['xlb',760,399],['ucg',875,410]].forEach(([k,x,y],i)=>{g.fillStyle='rgba(0,0,0,.45)';g.beginPath();g.ellipse(x,y+45,44,8,0,0,PI*2);g.fill();spr(k,x,y+Math.sin(t*2+i)*6,k==='xlb'||k==='ucg'?138:100)});
- // Logo panel with animated gold edge.
- g.save();g.translate(W/2,78);g.rotate(Math.sin(t*.7)*.009);const pul=1+Math.sin(t*2)*.012;g.scale(pul,pul);g.fillStyle='rgba(7,8,20,.86)';rr(-340,-58,680,142,20);g.fill();g.strokeStyle='#ffd34a';g.lineWidth=3;g.stroke();g.shadowColor='#ffb347';g.shadowBlur=28+Math.sin(t*3)*10;TS('BOSS RUSH',0,-8,78,'#ffd34a');g.shadowBlur=0;TS('THE GRAND STEAMER',0,49,23,'#9fe8ff');g.restore();
- T('BEAT THE BOSSES  •  BUILD YOUR LOADOUT  •  SURVIVE THE ENCORE',W/2,158,13,'#d5d8ef','center','');
- // Featured play button.
- const hv=Math.hypot(mx-W/2,my-276)<100;BT.push({x:W/2-100,y:190,w:200,h:164,fn:startSolo});glow(W/2,270,hv?145:122,'rgba(255,190,70,1)');g.save();g.strokeStyle='rgba(255,211,74,.65)';g.lineWidth=2;g.setLineDash([8,10]);g.lineDashOffset=-t*30;g.beginPath();g.arc(W/2,270,hv?108:98,0,PI*2);g.stroke();g.restore();spr('start',W/2,270+Math.sin(t*3)*4,hv?188:172);T('PLAY SOLO / LOCAL',W/2,365,16,'#fff','center');
- // Clean two-row navigation with equal-sized buttons.
- const nA=Object.keys(AU).filter(k=>ACH.some(a=>a[0]===k)).length;
- btn(26,414,286,38,'HOST ONLINE',startHost,{c:'#28569e',f:16});btn(337,414,286,38,'JOIN ROOM',joinPrompt,{c:'#237b70',f:16});btn(648,414,286,38,'SKIN SHOP',()=>{scr='shop'},{c:'#96621b',f:17});
- btn(116,462,218,32,'ACHIEVEMENTS  '+nA+'/'+ACH.length,()=>{scr='ach'},{c:'#57447e',f:13});btn(371,462,218,32,'MUSIC CREDITS',()=>{scr='credits'},{c:'#57447e',f:14});btn(626,462,218,32,'SETTINGS',openSettings,{c:'#3a3f66',f:14});
- btn(12,10,210,30,'NAME: '+(UNAME||'(set username)'),setName,{c:'#303858',f:13});
- // Wallet is always visible in a dedicated badge.
- g.fillStyle='rgba(12,16,31,.9)';rr(W-230,10,218,38,10);g.fill();g.strokeStyle='#d9a92e';g.lineWidth=1.5;g.stroke();glow(W-205,29,20,'rgba(255,211,74,1)');T('Z',W-205,34,17,'#3a2500','center');T(PROFILE.coins.toLocaleString()+' ZACH COINS',W-184,34,14,'#ffd34a','left');
- if(ST.hints)T(titleHint(),W/2,530,11,'#99a','center','');if(S&&S.set&&S.set.rush)T('RUSH MODE ON',W-12,H-10,11,'#ffb347','right','');
- if(!unlocked)T('Click anywhere to enable sound',W/2,24,14,'#ffd34a','center');else if(MERR)T('Audio: '+MERR,W/2,24,12,'#f88','center','')}
+ // Balanced title composition: identity and play on the left, every destination grouped on the right.
+ for(let i=0;i<48;i++){const x=(i*173+t*(8+i%4*3))%W,y=(i*83+Math.sin(t+i)*12)%H;g.globalAlpha=.12+.18*Math.abs(Math.sin(t*1.4+i));g.fillStyle=i%3?'#ffbd61':'#8feaff';g.beginPath();g.arc(x,y,1+i%3,0,PI*2);g.fill()}g.globalAlpha=1;
+ // Framed hero panel
+ g.fillStyle='rgba(7,9,23,.82)';rr(22,24,560,490,22);g.fill();g.strokeStyle='rgba(255,211,74,.55)';g.lineWidth=2;g.stroke();
+ g.save();g.translate(300,112);g.rotate(Math.sin(t*.6)*.008);g.shadowColor='#ffb347';g.shadowBlur=25;TS('BOSS RUSH',0,0,64,'#ffd34a');g.shadowBlur=0;T('THE GRAND STEAMER',0,43,19,'#9fe8ff','center');g.restore();
+ T('BEAT THE BOSSES  •  BUILD YOUR LOADOUT  •  SURVIVE THE ENCORE',300,190,10,'#cbd2e8','center');
+ const hv=mx>=174&&mx<=426&&my>=226&&my<=330;g.fillStyle='rgba(255,190,70,.10)';rr(174,222,252,116,18);g.fill();g.strokeStyle=hv?'#fff0a0':'#d8a438';g.lineWidth=2;rr(174,222,252,116,18);g.stroke();glow(300,276,hv?88:65,'rgba(255,190,70,1)');spr('start',300,267,hv?100:90);T('PLAY SOLO / LOCAL',300,322,16,'#fff','center');BT.push({x:174,y:222,w:252,h:116,fn:startSolo});
+ // Character stage strip
+ g.fillStyle='rgba(0,0,0,.3)';rr(42,365,520,120,14);g.fill();T('MEET THE CREW',62,382,11,'#ffd34a','left');[['cgi1',125,431],['zi1',245,433],['ji1',365,433],['tI1',475,433]].forEach(([k,x,y],i)=>{g.fillStyle='rgba(0,0,0,.4)';g.beginPath();g.ellipse(x,y+29,32,6,0,0,PI*2);g.fill();spr(k,x,y+Math.sin(t*2+i)*3,76)});
+ // Right-hand navigation panel
+ g.fillStyle='rgba(8,11,27,.88)';rr(604,24,334,490,22);g.fill();g.strokeStyle='rgba(143,216,255,.4)';g.lineWidth=2;g.stroke();
+ g.fillStyle='rgba(12,16,31,.95)';rr(622,42,298,54,12);g.fill();T('ZACH COINS',640,60,10,'#9ba9c8','left');T(PROFILE.coins.toLocaleString(),640,81,21,'#ffd34a','left');T('ZC',895,81,12,'#ffd34a','right');
+ T('ONLINE PLAY',640,123,12,'#8fd8ff','left');btn(622,140,298,44,'HOST ONLINE',startHost,{c:'#28569e',f:17});btn(622,192,298,44,'JOIN ROOM',joinPrompt,{c:'#237b70',f:17});
+ T('EXTRAS',640,260,12,'#ffd34a','left');btn(622,277,143,42,'SKIN SHOP',()=>{scr='shop'},{c:'#96621b',f:14});btn(777,277,143,42,'ACHIEVEMENTS',()=>{scr='ach'},{c:'#57447e',f:12});btn(622,327,143,42,'SETTINGS',openSettings,{c:'#3a3f66',f:14});btn(777,327,143,42,'MUSIC CREDITS',()=>{scr='credits'},{c:'#57447e',f:11});
+ btn(622,385,298,38,'CHANGE USERNAME  •  '+(UNAME||'PLAYER'),setName,{c:'#303858',f:13});T('Your progress and cosmetics save automatically.',771,450,10,'#aab6d0','center');T('ESC / SETTINGS  •  HAVE FUN',771,476,10,'#687896','center');
+ if(ST.hints)T(titleHint(),300,503,10,'#99a','center','');if(S&&S.set&&S.set.rush)T('RUSH MODE ON',W-12,H-10,11,'#ffb347','right','');if(!unlocked)T('Click anywhere to enable sound',W/2,12,11,'#ffd34a','center');else if(MERR)T('Audio: '+MERR,W/2,12,10,'#f88','center','')}
 function drawShop(now){const t=now/1000;drawBackdrop(t);
  // Dedicated shop header and wallet strip.
  g.fillStyle='rgba(7,10,24,.92)';rr(20,12,920,82,16);g.fill();g.strokeStyle='#d8a72d';g.lineWidth=2;g.stroke();TS('ZACH COIN MARKET',W/2,45,32,'#ffd34a');T('Collect coins from boss victories. Buy a look, then equip it in Character Select.',W/2,73,11,'#c7cee3','center','');
@@ -2474,40 +2470,33 @@ function drawAch(now){const t=now/1000;drawBackdrop(t);
  btn(W/2-90,498,180,34,'BACK',()=>{scr='title'},{f:18})}
 function startSolo(){skinPickOpen=false;host=true;me='host';S=newS();addPl('host');scr='game';room=null}
 function leaveToTitle(){skinPickOpen=false;try{if(peer)peer.destroy()}catch(e){}peer=null;conn=null;conns={};S=null;V=null;scr='title';host=true;room=null;try{history.replaceState(null,'',location.pathname)}catch(e){}}
-function drawLobby(){const v=V,t=performance.now()/1000;drawBackdrop(t);TS('LOBBY',150,44,40,'#ffd34a');
- const link=v.room?location.origin+location.pathname+'?room='+v.room:null;
- if(link){g.fillStyle='rgba(16,20,36,.9)';rr(330,18,600,66,12);g.fill();g.strokeStyle='#8fd8ff';g.lineWidth=2;g.stroke();T('ROOM CODE',350,36,12,'#8fd8ff','left');T(v.room,350,60,24,'#fff','left');T(link.length>52?link.slice(0,50)+'..':link,520,36,11,'#aab','left','');btn(790,30,130,40,'COPY LINK',()=>{navigator.clipboard?navigator.clipboard.writeText(link).catch(()=>prompt('Copy:',link)):prompt('Copy:',link)},{f:14,c:'#2a4f9a'})}
- else if(host&&peer)T('Creating room...',330,50,16,'#aab','left');else T('Local run. Use HOST ONLINE on the title screen to play with friends.',330,50,13,'#aab','left','');
- const mine=v.pl.find(p=>p.id===me);
- T('ZACH COINS  '+PROFILE.coins.toLocaleString(),700,104,12,'#ffd34a','left');
-
- // Character grid: two columns that grow with the roster, the player list stays on the right.
- const CK=Object.keys(CH),COLS=2,ROWS=Math.ceil(CK.length/COLS),GX=20,GY=104,GW=640,GAP=10,GH=330;
- const CWd=(GW-GAP*(COLS-1))/COLS,CHt=Math.min(160,(GH-GAP*(ROWS-1))/ROWS),compact=CHt<140;
- CK.forEach((k,i)=>{const c=CH[k],col=i%COLS,row=Math.floor(i/COLS),x=GX+col*(CWd+GAP),y=GY+row*(CHt+GAP),sel=mine&&mine.ch===k,w=CWd,h=CHt;
-  g.fillStyle=sel?'#243a5a':'#161b2c';rr(x,y,w,h,12);g.fill();g.strokeStyle=sel?'#ffd34a':'#445';g.lineWidth=sel?3:2;g.stroke();
-  if(sel)glow(x+(compact?30:46),y+h/2,compact?36:54,'rgba(255,200,80,1)');
-  BT.push({x,y,w,h,fn:()=>pick(k)});
-  const ps=compact?54:92,previewSkin=skinById(equippedSkinFor(k)),previewKey=previewSkin?previewSkin.i[Math.floor(t*2)%2]:c.i[Math.floor(t*2)%2];spr(previewKey,x+(compact?30:46),y+h/2+Math.sin(t*3+i)*2,ps);
-  const tx=x+(compact?60:94);
-  T(c.n,tx,y+(compact?14:16),compact?16:20,'#fff','left');
-  if(compact){c.ab.forEach((a,j)=>{const yy=y+36+j*18;g.fillStyle='#ffd34a';rr(tx,yy-7,16,14,4);g.fill();T(kn('ab'+j),tx+8,yy,10,'#201800','center');T(a,tx+22,yy,12,'#ffd34a','left')})}
-  else{c.ab.forEach((a,j)=>{const yy=y+46+j*38;g.fillStyle='#ffd34a';rr(tx,yy-8,18,16,4);g.fill();T(kn('ab'+j),tx+9,yy,11,'#201800','center');T(a,tx+24,yy,13,'#ffd34a','left');T(c.dsc[j],tx+24,yy+14,10,'#ccd','left','')})}
+function drawLobby(){const v=V,t=performance.now()/1000;drawBackdrop(t);const mine=v.pl.find(p=>p.id===me);
+ // Header / room identity
+ g.fillStyle='rgba(8,11,27,.9)';rr(18,14,924,76,16);g.fill();g.strokeStyle='rgba(255,211,74,.55)';g.lineWidth=2;g.stroke();TS('CHARACTER SELECT',42,48,27,'#ffd34a','left');T('Choose your fighter and review their abilities',42,73,10,'#aebbd4','left');
+ const link=v.room?location.origin+location.pathname+'?room='+v.room:null;if(link){T('ROOM '+v.room,590,39,15,'#8fd8ff','left');btn(790,27,130,38,'COPY LINK',()=>{navigator.clipboard?navigator.clipboard.writeText(link).catch(()=>prompt('Copy:',link)):prompt('Copy:',link)},{f:13,c:'#2a4f9a'})}else if(host&&peer)T('Creating room...',590,49,13,'#aab','left');else T('LOCAL RUN',590,49,13,'#aab','left');
+ // Character roster: 3 columns x 2 rows, with clear selection and animated skin preview.
+ const CK=Object.keys(CH),GX=20,GY=108,GW=620,GH=330,gap=10,cw=(GW-gap*2)/3,ch=(GH-gap)/2;
+ CK.forEach((k,i)=>{const c=CH[k],col=i%3,row=Math.floor(i/3),x=GX+col*(cw+gap),y=GY+row*(ch+gap),sel=mine&&mine.ch===k,sk=skinById(equippedSkinFor(k));
+  g.fillStyle=sel?'rgba(57,49,26,.96)':'rgba(13,19,36,.94)';rr(x,y,cw,ch,13);g.fill();g.strokeStyle=sel?'#ffd34a':'#46516e';g.lineWidth=sel?3:1.4;g.stroke();if(sel)glow(x+42,y+49,53,'rgba(255,200,80,1)');
+  const frames=sk?sk.i:c.i; spr(frames[Math.floor(t*2)%frames.length],x+43,y+52,78);
+  T(c.n,x+86,y+25,15,'#fff','left');T('HP '+c.hp+'  •  SPEED '+c.spd,x+86,y+45,9,'#9fdcff','left');
+  const skinName=sk?sk.name:'DEFAULT';T('LOOK: '+skinName.toUpperCase(),x+86,y+62,9,sel?'#ffd34a':'#aab','left');
+  c.ab.forEach((ab,j)=>{const yy=y+91+j*19;g.fillStyle='rgba(255,211,74,.17)';rr(x+12,yy-7,17,14,4);g.fill();T(kn('ab'+j),x+20.5,yy,9,'#ffd34a','center');T(ab,x+36,yy,10,'#e7eaf5','left')});
+  if(sel){g.fillStyle='rgba(255,211,74,.18)';rr(x+cw-75,y+8,65,19,7);g.fill();T('SELECTED',x+cw-42,y+18,8,'#ffd34a','center')}
+  BT.push({x,y,w:cw,h:ch,fn:()=>pick(k)});
  });
- if(mine){const mineSkin=skinById(mine.skin||'');btn(40,440,148,30,'CHANGE SKIN',openSkinPicker,{c:'#8a5a1a',f:13});T('EQUIPPED: '+(mineSkin?mineSkin.name:'Default')+'  |  '+CH[mine.ch].n,202,455,11,'#ffd34a','left','')}
- T('PLAYERS ('+v.n+'/'+v.set.max+')',700,125,18,'#fff','left');
- for(let i=0;i<v.set.max;i++){const p=v.pl[i],y=140+i*32;g.fillStyle=p&&p.id===me?'rgba(60,52,20,.9)':'rgba(20,24,40,.85)';rr(700,y,240,28,8);g.fill();g.strokeStyle=p&&p.id===me?'#ffd34a':'#334';g.lineWidth=1;g.stroke();
-  if(p)T((p.id==='host'?'[HOST] ':'')+p.name+'  -  '+CH[p.ch].n,712,y+14,14,p.id===me?'#ffd34a':'#ddd','left');else T('Waiting for player...',712,y+14,12,'#556','left','')}
- btn(700,264,220,28,'CHANGE USERNAME',setName,{c:'#39466b',f:13});
- const dn=['Easy','Normal','Hard'];T('ROOM SETTINGS',700,300,18,'#fff','left');
- const cyc=(k,max,min)=>{if(!host)return;S.set[k]=S.set[k]>=max?min:S.set[k]+1};
- btn(700,318,220,32,'Difficulty: '+dn[v.set.diff],()=>cyc('diff',2,0),{c:host?null:'#333',f:15});
- btn(700,356,220,32,'Start at boss: '+(v.set.start+1),()=>cyc('start',BD.length-1,0),{c:host?null:'#333',f:15});
- btn(700,394,220,32,'Max players: '+v.set.max,()=>cyc('max',4,2),{c:host?null:'#333',f:15});
- const mult=([.75,1,1.5][v.set.diff]*(1+.8*(v.n-1))).toFixed(2);T('Boss HP x'+mult+' ('+v.n+' player'+(v.n>1?'s':'')+')',700,440,14,'#9f9','left','');
- if(host){const pu=1+Math.sin(t*4)*.03;g.save();g.translate(810,490);g.scale(pu,pu);glow(0,0,110,'rgba(255,80,40,1)');g.restore();btn(700,462,220,56,'START',()=>{if(S.st==='lobby')startRun()},{c:'#b8452a',f:28})}else T('Waiting for host...',700,490,14,'#aab','left','');
- {const rs=v.set.rush|0;T('RUSH',232,468,13,'#ffd34a','left');btn(232,484,220,36,rs?'REGULAR RUSH':'> REGULAR RUSH <',()=>{if(host&&S&&S.st==='lobby'){S.set.rush=0;setRush(0)}},{c:rs?'#2a3350':'#b8452a',f:15});btn(462,484,230,36,rs?"> COOLGUY17'S RUSH <":"COOLGUY17'S RUSH",()=>{if(host&&S&&S.st==='lobby'){S.set.rush=1;setRush(1)}},{c:rs?'#8a2b5a':'#2a3350',f:15});T(rs?'Coolguy17 replaces Evil Spong, Evil Zach and the Hover Trio. He steals Fella\'s kill. Cut scenes between fights.':'The standard boss list.',232,530,11,'#aab','left','')}
-btn(40,478,150,40,'LEAVE',leaveToTitle,{c:'#6a2a2a',f:16})}
+ // Side panel
+ g.fillStyle='rgba(8,11,27,.92)';rr(654,108,286,402,16);g.fill();g.strokeStyle='#46516e';g.lineWidth=1.5;g.stroke();
+ T('YOUR PLAYER',672,130,12,'#8fd8ff','left');T(mine?mine.name:UNAME,672,153,17,'#fff','left');T(mine?CH[mine.ch].n:'Choose a character',672,174,11,'#b8c4dc','left');btn(670,188,254,31,'CHANGE USERNAME',setName,{c:'#39466b',f:12});
+ const mineSkin=mine&&skinById(mine.skin||'');btn(670,227,254,31,'CHANGE SKIN',openSkinPicker,{c:'#8a5a1a',f:13});T('EQUIPPED: '+(mineSkin?mineSkin.name:'Default'),672,273,10,'#ffd34a','left');T('ZACH COINS  '+PROFILE.coins.toLocaleString(),672,295,11,'#ffd34a','left');
+ T('ROOM SETTINGS',672,326,13,'#fff','left');const dn=['Easy','Normal','Hard'];const cyc=(k,max,min)=>{if(!host)return;S.set[k]=S.set[k]>=max?min:S.set[k]+1};
+ btn(670,341,254,29,'Difficulty: '+dn[v.set.diff],()=>cyc('diff',2,0),{c:host?'#35466a':'#333',f:12});btn(670,376,254,29,'Start at boss: '+(v.set.start+1),()=>cyc('start',BD.length-1,0),{c:host?'#35466a':'#333',f:12});btn(670,411,254,29,'Max players: '+v.set.max,()=>cyc('max',4,2),{c:host?'#35466a':'#333',f:12});
+ const mult=([.75,1,1.5][v.set.diff]*(1+.8*(v.n-1))).toFixed(2);T('BOSS HP  x'+mult+'  •  '+v.n+' PLAYERS',672,455,10,'#9f9','left');
+ const rs=v.set.rush|0;btn(670,469,122,25,rs?'REGULAR RUSH':'REGULAR RUSH',()=>{if(host&&S&&S.st==='lobby'){S.set.rush=0;setRush(0)}},{c:rs?'#2a3350':'#75402e',f:9});btn(802,469,122,25,"COOLGUY17'S RUSH",()=>{if(host&&S&&S.st==='lobby'){S.set.rush=1;setRush(1)}},{c:rs?'#8a2b5a':'#2a3350',f:9});
+ // Bottom action bar
+ g.fillStyle='rgba(5,8,19,.88)';rr(18,453,624,57,12);g.fill();T('PLAYERS  '+v.n+'/'+v.set.max,34,470,10,'#aebbd4','left');for(let i=0;i<v.set.max;i++){const p=v.pl[i],x=34+i*145;T(p?(p.id==='host'?'HOST • ':'')+p.name:'Waiting...',x,491,9,p&&p.id===me?'#ffd34a':'#c2cbe0','left')}
+ btn(470,463,164,38,'LEAVE',leaveToTitle,{c:'#6a2a2a',f:14});if(host){glow(850,493,55,'rgba(255,80,40,1)');btn(806,469,118,25,'START GAME',()=>{if(S.st==='lobby')startRun()},{c:'#b8452a',f:12})}else T('WAITING FOR HOST',865,492,10,'#aab','center','');
+}
 // ===== BOSS MAPS: themed set dressing (drawn under everything else) =====
 const hs=(i,m)=>{const x=Math.sin(i*127.1+m*311.7)*43758.5453;return x-Math.floor(x)}; // tiny deterministic random
 function mapSteam(x,y,t,n,col,sz){for(let i=0;i<n;i++){const f=((t*.35+i/n+hs(i,x))%1);g.globalAlpha=(1-f)*.22;g.fillStyle=col||'#fff0d6';g.beginPath();g.arc(x+Math.sin(t*1.3+i*2)*8*f,y-f*70,(sz||7)+f*14,0,PI*2);g.fill()}g.globalAlpha=1}
