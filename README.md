@@ -1,4 +1,48 @@
-# Boss Rush — Black Flash Remake, Evil Zach Ultimate Rework, Fella, Jay, Terry, Adrian & The Hover Trio, Hateful Doom and Coolguy17's Rush (v39)
+# Boss Rush - Coolguy17's Rush Remake and Patrick Rework (v43)
+
+Flat-file edition: keep `index.html`, all `.png` and all `.mp3` files together in the repository root. Keep every filename unchanged.
+
+## Version 43 - Coolguy17's rush remade, Patrick buffed and reworked
+
+### Coolguy17's rush: what changed
+- **Roster:** Bao, UnCoolguy16, **Coolguy17 #1**, the Alliance, **Coolguy17 #2**, Fella, **Coolguy17 #3** (7 bosses; the Hover Trio is not in this rush).
+- **Health cut by about 40%:** #1 7,777 -> **4,600**, #2 17,000 -> **10,000**, #3 33,000 -> **18,000** (all still scale with party size, difficulty and loops). Change `hp` in `C17_DEF`.
+- **Cut scenes between the fights** (all follow `Coolguy17_dialog.txt`; the lines are unchanged, only the staging is new):
+  - **#1 intro:** snowy forest. Coolguy17 dashes in and cuts down **Evil Spong** in two strikes, then **picks an upgrade like a player would** (three cards appear above him, a cursor hovers, one is picked and flies into him). Then the dialogue, then an "ENCOUNTER 1" title card.
+  - **#2 intro:** dark cave. A thrown spear pins **Evil Zach**, who falls apart into pixels. Same upgrade pick. He **spots the party, a "!" pops up and he hops back**, then the dialogue.
+  - **#3 intro (the steal):** when Fella is under 7% HP, Coolguy17 **falls from the sky onto him and takes the kill** ("KILL STOLEN!", kill feed, Fella's bar drains). An orange wave sweeps over the ballpark and turns it into the desert. No upgrade screen between Fella and him. If you start the run directly on #3, a plain drop-in plays instead.
+  - **Leaving at 10 HP (#1, #2):** the camera pushes in, the screen greys, the death lines play, he vanishes in a pillar of light, then the upgrade screen follows after about 1.5 s.
+  - **Last stand (#3):** the speed-up line, the pan slams down, the clock slams in and the last-stand song restarts. **Defeat:** the death lines, then he leaves in a pillar of fire and the run is cleared.
+- **New mechanics (all three fights):**
+  - **Break meter (poise):** damage fills it. When full he is **STAGGERED** for 1.5 s (1.7 s in the last stand), cancels what he was doing and takes **+35% damage**. After a stagger he resists breaking for 5 s.
+  - **Guard (#2 spear, #3 pan):** the guard reflects shots and takes 80% less damage from the front, but it **turns slowly**. Hits from **behind or the side do +25% ("FLANK!")**. Enough damage on the guard **breaks it** (2.1 s stagger). If the guard times out after being hit, he counters whoever hit it.
+  - **Phases:** HP lines at 66% and 33% (#3: 74% and the last stand at 48.5%). Each one is a short invulnerable beat that wipes the field and unlocks new moves.
+  - **Combos:** about 25-45% of attacks queue a follow-up (for example Flicker -> Fan, Volley -> Lance, Burners -> Sizzle).
+  - **Smarter movement:** he orbits the nearest player at a set range (far for #1, close for #2), changes direction, and only sidesteps player shots a few times in a row before he is "tired".
+  - **Better telegraphs:** warning lanes, element-coloured markers, expanding rings with a green **SAFE** wedge, and quadrant warnings.
+  - **Status effects:** burn now **stacks to x3** (more damage per tick); ice slows and freezes after 3 hits; stun from pan, rolling pin and some slams.
+- **#1, fire and ice (16 attacks):** his **stance swaps between FIRE and ICE** every 11 s (6 s in phase 3) and sets the element of most attacks. Flicker Dash, Triple Blink (3 dashes into a ring), Pillars (erupt under predicted positions, leave fire or ice patches), Meteor / Icicle Rain, Ember / Frost Wall (gap lanes), Prism Beams (fire and ice crossing), Shard Fan (a second interleaved fan in phase 2), Nova (ring with a safe gap, two in a row), Orbiting Blades (circle him, then fire), **Blizzard** (wind pushes everyone toward fire pits), Frostbite Combo (3-hit melee that chases), Shadow Step (teleports behind you), Cage (rings of shards close in), copies of Evil Spong (**Bubble Helix**, **Spatula Slam**), and the phase-3 ultimate **Solstice** (four quadrants, two erupt, pick the safe ones). Fog covers the whole screen every 24 s (20 s later).
+- **#2, the spear (17 attacks):** Guard + Counter, Thrust Chain (thrust, sweep, lunge), Volley (two waves), Spear Fan, Spear Wall (gap lanes), Spear Whirl (chases, then a shock ring), Lance (long warning line, pierces, twice in phase 3), Rise (spears under predicted positions), Flaming Spears, **Vault** (leap with a landing marker, ring and radial spears), **Pin Cushion** (planted spears that burst into eight), **Shadow Clones**, **Light Beams**, copies of Evil Zach (Burger Rain, Knife Fan), **darkness hunt** (only while the lights are out: three teleport strikes), and the phase-3 ultimate **Perfect Villain** (he rises out of reach, spears fall in lanes with safe gaps for three waves, then he crashes down, staggered). Darkness events every 15-21 s zoom the camera onto a player.
+- **#3, the pan and the kitchen (15 attacks + 1):** Pan Guard + Counter, Pan Stun chain, Pan Boomerang (more boomerangs each phase, splits into homing mini pans), Pan Flurry, Egg Barrage (splits into eight), Flip (splits into homing pancakes), Pancake Bounce, Syrup Rain (sticky slow), **Rolling Pin** (stuns, along a marked lane), **Stove Burners** (a 5x3 burner grid ignites except four safe spots, two or three waves), Stove Lasers, Sizzle Dash (burn trail), Food Fight, **Heat Wave** (thick ring with a gap), **Pan-Fried Pizza** (a giant bouncing pizza, last stand only), and **LAST CALL** (forced when the song has 80, 50 and 25 s left: corner beams, egg rain, a pizza, then he is out of breath and staggered for 2.2 s).
+- **Last stand:** unchanged rules (the song is the clock, his hits are 20% harder, cooldowns are 30% shorter). The clock now turns red under 20 s. If the song ends with him standing, the screen flashes, explodes, and everyone returns to the lobby.
+
+### Patrick: buffed and reworked
+- **Stats:** 105 HP -> **150 HP**, speed 205 -> **215**, damage multiplier x1.75 -> **x2.1**.
+- **Rock Hard (passive):** stand still for **0.6 s** (was 1 s). It now gives +40% damage dealt (was +30%), **-38% damage taken** (was -25%), and **+2 HP/s**.
+- **Belly Flop (M1):** full charge in 0.9 s (was 1.2 s), bigger and stronger slam (20-50 base damage, was 14-38), shorter recovery (0.55 s). The slam leaves a **Quake**: the cracked ground hurts a boss standing on it for 1.8 s. A **full charge is a BIG FLOP**: +50% damage, +20% size and two extra aftershock rings. Double Tap still adds aftershocks, Ghost Step still halves the recovery.
+- **The mode switch is gone.** Q, E and R each do one clear thing, so both of the old modes are always available:
+  - **Q, Pet Rocks:** 3 rocks orbit and block shots for 10 s. **Press Q again to throw them**: they fly out, then home in on the boss (26 damage each before multipliers). Cooldown 8 s.
+  - **E, Sponge Squad:** SpongeBob **follows you** for 7 s and throws a patty every 0.45 s **at the boss**. **Every 4th patty is a heal** that flies to the weakest ally (3-5% max HP; in a solo run that is Patrick). Cooldown 12 s.
+  - **R, Eureka!:** think for 0.6 s (was 1 s), then a bigger burst (230 range) clears shots, hurts bosses, throws a ring of 10 stones and heals 6%. It starts **BIG BRAIN for 7 s**: flops charge 3x faster, have no recovery and hit 40% harder. Cooldown 16 s.
+- All 26 upgrades were run against the new kit (Double Tap, Piercing, Big Bite, Cooldown Crunch, Ghost Step and Snack Time all still apply).
+
+### Technical notes
+- The whole Coolguy17 section of `index.html` was rewritten. The boss-side hooks are `dmgB` (also starts the Fella steal), the projectile loop (new optional `fn(q,dt)` per-projectile hook, used by orbiting blades), `step()` (new `c17cut` state), and the warning markers (they can now be coloured and have a width).
+- **Multiplayer:** unchanged approach. The host runs the fight and the cut scenes; clients draw from `snap().c17` (which now also carries rings, clones, quadrants, wind, the cut scene id and clock, and the card picks). Patrick's thrown rocks and quakes are in the snapshot too.
+- **Testing note:** checked headless in Chromium: all three cut scenes and the steal, every attack of all three fights (49 in total) firing on its own for 9 s with rendering, stagger, guard front/flank damage, reflect, guard break, all phase changes, the escape at 10 HP into the upgrade screen, the speed-up, the clock, Last Call timing, the explosion ending, the defeat into victory, and a 150 s AI soak per fight with two players and a JSON round trip of every snapshot before drawing. Patrick: flop, quake, rock summon and throw, Sponge Squad, Eureka, Big Brain, and all 26 upgrades. No page errors. Screenshots of the cut scenes, the speed-up and Patrick were reviewed. **Not played by hand**, so the balance (damage, cooldowns, how hard the last stand is against 18,000 HP) still needs a real run-through, and the two-browser online session was not run.
+- **Known, not changed:** the final fight after Coolguy17 #3 is not built, so the run ends after the second last. The music credits list still has no entries for the Coolguy17 tracks (the credits screen already runs past the bottom with ten rows).
+
+## Older versions
 
 This is the **flat-file** edition. Keep `index.html`, all `.png` files, and all `.mp3` files together in the repository root. The game does not require an `assets/` folder. Keep every filename unchanged.
 
