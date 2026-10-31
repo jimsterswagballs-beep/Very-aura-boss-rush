@@ -2973,12 +2973,18 @@ function drawAch(now){const t=now/1000;drawBackdrop(t);
 // Every way into a game goes through here: choose a name on first launch, then show the tutorial once.
 let tutPage=0,tutThen=null;
 const TUT_PAGES=[
- {t:'WELCOME',b:['Boss Rush is a boss fight game for solo or online teams.','Pick a hero, beat the bosses, and get stronger with upgrades.','Zach Coins from runs unlock cosmetics in the Skin Shop.']},
- {t:'MOVING AND FIGHTING',b:['WASD or the arrow keys move your hero.','The mouse aims, and holding click attacks.','Q, E and R use your three abilities. ESC opens settings.']},
- {t:'UPGRADES',b:['Between bosses, pick one of three upgrades.','Click a card, or press 1, 2 or 3, to vote.','Upgrades stack, so build toward a playstyle.']},
- {t:'TEAMWORK',b:['Stand next to a downed teammate for 7.5 seconds.','They come back at 1% HP, so keep them safe while they recover.','If every player falls, the run ends.']}];
-// Optional screenshots: put tut1.png to tut4.png next to index.html and they appear on the matching page
-const TUT_IMG=[1,2,3,4].map(i=>{const im=new Image();im.src='tut'+i+'.png';return im});
+ {t:'WELCOME',b:['Boss Rush is a co-op boss fight game for solo play or online teams.','Pick a hero, fight through a fixed line of bosses, and grow stronger','with upgrades between fights. Every run is a fresh attempt at the bosses.']},
+ {t:'THE BASICS',b:['Move with WASD or the arrow keys. The mouse aims your hero.','Hold the left mouse button to attack in the direction you aim.','Q, E and R use your three abilities. Each one has its own cooldown.','A gold outline means an ability is ready. Grey means it is recharging.','Press ESC at any time to open settings and change your controls.']},
+ {t:'CHOOSE A HERO',b:['Every hero has its own weapon, HP and three abilities.','Coolguy15 uses a gun, Zach a knife, Jay a pan and snacks.','Terry fires coins, Patrick throws rocks, and Adrian uses boomerangs.','Jameson summons minions, and Bomb Barry fights with heat and bombs.','Check the hero card in the lobby for full weapon and ability details.']},
+ {t:'BOSSES',b:['Each run goes through a fixed order of bosses, starting with Xiao Long Bao.','Every boss has its own attacks and HP bar. Watch the warnings on screen.','Some bosses bring allies, and some fights change partway through.','Once a run loops back to the start, the bosses hit harder each time round.']},
+ {t:'UPGRADES',b:['After each boss, pick one of three upgrades.','Click a card, or press 1, 2 or 3, to choose it.','Picking the same upgrade again stacks it, shown as x2, x3 and so on.','Upgrades are sorted into OFFENSE, DEFENSE, UTILITY and CRAZY.','Two upgrades can form a SYNERGY bonus. CURSED upgrades have a clear downside.']},
+ {t:'MULTIPLAYER',b:['Play solo or with friends. Host Online creates a room for your team.','Friends join with the room code using JOIN ROOM on the title screen.','Everyone picks a hero in the lobby. The host runs the fight for the group.','Teamwork: stand next to a downed teammate for 7.5 seconds to revive them.','They return at 1% HP with a short window of invulnerability. If everyone is down, the run ends.']},
+ {t:'ZACH COINS',b:['Zach Coins are the currency for skins and title cards.','You earn them by defeating bosses during a run.','Spend them in the Skin Shop on the title screen, or on TITLE CARDS.','Your balance is saved on this device, so it carries over between runs.']},
+ {t:'SKINS',b:['Skins change how a hero looks. They never change how a hero plays.','Buy skins in the Skin Shop from the title screen with Zach Coins.','Skin prices range from 100 to 444 Zach Coins.','Equip a skin you own for a hero, or switch back to the default look.']},
+ {t:'LEADERBOARDS',b:['BOARDS on the title screen shows your best runs.',"Most damage, longest run, fastest clear, and today's daily challenge.",'Finished runs are saved on this device. See every run in HISTORY.','Online boards are not connected yet, so scores stay on this device for now.']},
+ {t:'ENJOY',b:['That is everything you need to get started.','You can reopen this tutorial any time from SETTINGS, using the TUTORIAL button.','Good luck against the bosses, and have fun with your team.']}];
+// Optional screenshots: put tut1.png to tut10.png next to index.html and they appear on the matching page
+const TUT_IMG=TUT_PAGES.map((_,i)=>{const im=new Image();im.src='tut'+(i+1)+'.png';return im});
 const tutSeen=()=>{try{return localStorage.getItem('zub_tut')==='1'}catch(e){return true}};
 function requireName(then){
  if(!UNAME){
@@ -2986,22 +2992,31 @@ function requireName(then){
   if(!c){note('A username is needed to play');return}
   UNAME=c;try{localStorage.setItem('zub_name',UNAME)}catch(e){}ach('name');
  }
- if(!tutSeen()){tutPage=0;tutThen=then;scr='tutorial';return}
+ if(!tutSeen()){tutPage=0;tutThen=then;tutFrom=null;scr='tutorial';return}
  then();
 }
-function tutFinish(){try{localStorage.setItem('zub_tut','1')}catch(e){}const f=tutThen;tutThen=null;scr='title';if(f)f()}
+let tutFrom=null;
+function tutFinish(){try{localStorage.setItem('zub_tut','1')}catch(e){}const f=tutThen,back=tutFrom;tutThen=null;tutFrom=null;scr=back||'title';if(f)f()}
+// Reopen the tutorial from settings; closing it returns to the screen you were on
+function openTutorial(){closeSettings();tutPage=0;tutThen=null;tutFrom=scr;scr='tutorial'}
 function drawTutorial(now){
- const t=now/1000;drawBackdrop(t);const P=TUT_PAGES[tutPage];
- g.fillStyle='rgba(12,16,31,.96)';rr(120,40,720,460,18);g.fill();g.strokeStyle='#ffd34a';g.lineWidth=3;g.stroke();
- T('HOW TO PLAY  \u2022  '+(tutPage+1)+' / '+TUT_PAGES.length,W/2,66,12,'#8fd8ff','center');
- TS(P.t,W/2,112,32,'#ffd34a');
+ const t=now/1000;drawBackdrop(t);const P=TUT_PAGES[tutPage],N=TUT_PAGES.length;
+ g.fillStyle='rgba(12,16,31,.96)';rr(100,28,760,474,18);g.fill();g.strokeStyle='#ffd34a';g.lineWidth=3;g.stroke();
+ T('HOW TO PLAY  •  '+(tutPage+1)+' / '+N,W/2,52,12,'#8fd8ff','center');
+ TS(P.t,W/2,96,30,'#ffd34a');
  const img=TUT_IMG[tutPage];
- g.fillStyle='rgba(255,255,255,.05)';rr(190,132,580,190,10);g.fill();
- if(img&&img.complete&&img.naturalWidth){const s=Math.min(580/img.naturalWidth,190/img.naturalHeight);const w=img.naturalWidth*s,h=img.naturalHeight*s;g.drawImage(img,480-w/2,227-h/2,w,h)}
- else T('screenshot: tut'+(tutPage+1)+'.png',W/2,232,11,'#667','center');
- P.b.forEach((line,i)=>T(line,W/2,346+i*24,13,'#e6ecff','center'));
+ g.fillStyle='rgba(255,255,255,.05)';rr(190,110,580,130,10);g.fill();
+ if(img&&img.complete&&img.naturalWidth){const s=Math.min(580/img.naturalWidth,130/img.naturalHeight);const w=img.naturalWidth*s,h=img.naturalHeight*s;g.drawImage(img,480-w/2,175-h/2,w,h)}
+ else T('screenshot: tut'+(tutPage+1)+'.png',W/2,176,11,'#667','center');
+ P.b.forEach((line,i)=>T(line,W/2,262+i*24,13,'#e6ecff','center'));
+ // Page dots: click one to jump to that page
+ for(let i=0;i<N;i++){
+  const x=W/2-(N-1)*11+i*22,on=i===tutPage;
+  g.fillStyle=on?'#ffd34a':'#3a4268';g.beginPath();g.arc(x,414,on?6:5,0,PI*2);g.fill();
+  BT.push({x:x-8,y:406,w:16,h:16,fn:()=>{tutPage=i}});
+ }
  btn(300,440,150,36,tutPage>0?'BACK':'SKIP',()=>{if(tutPage>0)tutPage--;else tutFinish()},{c:'#39466b',f:14});
- btn(490,440,170,36,tutPage<TUT_PAGES.length-1?'NEXT':"LET'S GO",()=>{if(tutPage<TUT_PAGES.length-1)tutPage++;else tutFinish()},{c:'#2e7a46',f:15});
+ btn(490,440,170,36,tutPage<N-1?'NEXT':"LET'S GO",()=>{if(tutPage<N-1)tutPage++;else tutFinish()},{c:'#2e7a46',f:15});
 }
 /* ===== TITLE CARDS, RUN HISTORY, LEADERBOARDS, DAILY CHALLENGE ===== */
 const LB_URL='';   // set this to your online leaderboard endpoint once you have one
@@ -3753,7 +3768,7 @@ function drawSettings(dt){
  btn(70,466,170,40,document.fullscreenElement?'EXIT FULLSCREEN':'FULLSCREEN',toggleFS,{c:'#2a4f9a',f:14});
  btn(255,466,150,40,'RESET TAB',resetTab,{c:'#7a4a1a',f:14});
  btn(420,466,190,40,CONF?'CLICK AGAIN!':'RESET ALL',()=>{if(CONF){resetAll();CONF=null}else CONF={t:2.5}},{c:CONF?'#b02a2a':'#7a2a2a',f:14});
- btn(730,466,160,40,'CLOSE',closeSettings,{f:18});
+ btn(615,466,100,40,'TUTORIAL',openTutorial,{f:13,c:'#3a5a8a'});btn(730,466,160,40,'CLOSE',closeSettings,{f:18});
  g.restore()}
 function postUI(now,dt){
  if(scr==='game'&&V&&V.st!=='lobby'&&!setOpen&&!PM.open&&!ADMIN.open)btn(W-52,6,44,24,'SET',openSettings,{c:'#2a2f4a',f:12});
