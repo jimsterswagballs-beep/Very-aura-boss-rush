@@ -686,7 +686,7 @@ function stepAdrBooms(dt){
    E Boom Squad: short windup, then 3 kamikaze minions
    R Hard Hats: 10-damage shields on every non-kamikaze minion
    =================================================================== */
-const JM={charge:2,recover:1,cap:10,hard:16,decay:8,odDur:7,slowDur:2,shield:10,r:17,K:['kami','sword','bow','med'],HP:{kami:6,sword:21,bow:18,med:15},COL:['#b06bff','#8fd0ff','#ffd98a','#7dffa0']};
+const JM={charge:2,recover:1,cap:10,hard:16,decay:8,odDur:7,slowDur:2,shield:10,r:17,K:['kami','sword','bow','med'],HP:{kami:15,sword:53,bow:45,med:38},COL:['#b06bff','#8fd0ff','#ffd98a','#7dffa0']};
 const JM_SPR=['jmKami','jmSword','jmBow','jmMed'];
 const jamMods=o=>o&&o.m?o.m:{dmg:1,pierce:0,multi:0,size:1};
 const jamCount=pid=>(S.jm||[]).filter(m=>m.pid===pid&&!m.dead&&!m.gone).length;
