@@ -730,6 +730,8 @@ function stepJamWorld(dt){
  const mvTo=(m,x,y,sp)=>{const dx=x-m.x,dy=y-m.y,d=Math.hypot(dx,dy)||1;m.x=cl(m.x+dx/d*sp*dt,24,W-24);m.y=cl(m.y+dy/d*sp*dt,110,H-90);m.face=Math.atan2(dy,dx);m.mv=1};
  for(const m of L){
   m.t+=dt;m.hitF=Math.max(0,m.hitF-dt);m.inv=Math.max(0,m.inv-dt);m.ps=Math.max(0,m.ps-dt);m.mv=0;
+  // Hard lifetime: remove every minion 30 seconds after it was spawned.
+  if(m.t>=30){m.gone=1;continue}
   if(m.dead){m.dt+=dt;continue}
   const o=S.pl[m.pid],md=jamMods(o),sz=md.size||1;
   let q=null,qd=1e9;for(const t of TG){const d=dist(m.x,m.y,t.x,t.y);if(d<qd){qd=d;q=t}}
