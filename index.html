@@ -10,7 +10,7 @@ window.addEventListener('error',e=>{let d=document.getElementById('err');if(!d){
 const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=W;cv.height=H;g.imageSmoothingEnabled=false;
 let R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d),sideOfLane=i=>i%2?W-12:12;
 const F={start:'startbutton.png',bbi1:'Bomb_barry_idle1.png',bbi2:'Bomb_barry_idle2.png',bbw1:'Bomb_barry_walk1.png',bbw2:'Bomb_barry_walk2.png',jmi1:'jameson_character_idle1.png',jmi2:'jameson_character_idle2.png',jmw1:'jameson_character_walk1.png',jmw2:'jameson_character_walk2.png',jmKami:'jameson_creation_3_kamikaze.png',jmBow:'jameson_creation_2.png',jmSword:'Jameson_creation.png',jmMed:'jameson_creation_4_medkit.png',jmWSword:'creation_weapon_sword.png',jmWBow:'creation_weapon_bow.png',jmArrow:'creation_weapon_arrow.png',jmWMed:'creation_weapon_medkit.png',adi1:'Adrian character idle1.png',adi2:'Adrian character idle2.png',adw1:'Adrian character walk1.png',adw2:'Adrian character walk2.png',adboom:'Adrian boomerang.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png',pi1:'Patrick character idle1.png',pi2:'Patrick character idle2.png',pw1:'Patrick character walk1.png',pw2:'Patrick character walk2.png',prock:'Patrick rock.png',pyoink:'SpongeBob (yoink).png',cg17a:'coolguy17.png',cg17b:'coolguy17_rematch.png',cg17c:'coolguy17_Second_Last_encounter.png',cgWomanI1:'woman skin Coolguy15 idle1.png',cgWomanI2:'woman skin Coolguy15 idle2.png',cgWomanW1:'woman skin Coolguy15 walk1.png',cgWomanW2:'woman skin Coolguy15 walk2.png',cgBaldI1:'bald skin Coolguy15 idle1.png',cgBaldI2:'bald skin Coolguy15 idle2.png',cgBaldW1:'bald skin Coolguy15 walk1.png',cgBaldW2:'bald skin Coolguy15 walk2.png',cgNotCoolI1:'Not so cool skin Coolguy15 idle1.png',cgNotCoolI2:'Not so cool skin Coolguy15 idle2.png',cgNotCoolW1:'Not so cool skin Coolguy15 walk1.png',cgNotCoolW2:'Not so cool skin Coolguy15 walk2.png',cgBootlegI1:'bootleg skin coolguy15 idle1.png',cgBootlegI2:'bootleg skin coolguy15 idle2.png',cgBootlegW1:'bootleg skin coolguy15 walk1.png',cgBootlegW2:'bootleg skin coolguy15 walk2.png',zRiceI1:'rice skin Zach character idle1.png',zRiceI2:'rice skin Zach character idle2.png',zRiceW1:'rice skin Zach character walk.png',zRiceW2:'rice skin Zach character walk2.png',zEvilI1:'evil skin Zach character idle1.png',zEvilI2:'evil skin Zach character idle2.png',zEvilW1:'evil skin Zach character walk.png',zEvilW2:'evil skin Zach character walk2.png',tDiceI1:'dice skin Terry Plungle Yungle idle 1.png',tDiceI2:'dice skin Terry Plungle Yungle idle 2.png',tDiceW1:'dice skin Terry Plungle Yungle walk1.png',tDiceW2:'dice skin Terry Plungle Yungle walk2.png',jaySolidI1:'solid skin jay idle1.png',jaySolidI2:'solid skin jay idle2.png',jaySolidW1:'solid skin jay walk1.png',jaySolidW2:'solid skin jay walk2.png',darrel:'darrel_boss_8.png',dIpad:'Darrel_attack_Ipad.png',dHappy:'Darrel_attack_Happy_face.png',dLoli:'Darrel_attack_lolipop.png'};
-const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp3',m1:'Cheese Crusade V2 (boss 1).mp3',m2:'The guy(Boss 2).mp3',m3:'SpongeSwap - Hell Or High Water_Phase 2 (boss 3).mp3',m4:'Pyrosomni (boss 4).mp3',surv:'Timebomb Madness OST - Overdue - blocco (boss 4.5).mp3',m5:'SpongeBob SquarePants SuperSponge - Vs. Patrick (boss 5).mp3',m6:'Vs. Randy boss 6.mp3',m7:'Suffocate_In_Dust_II_boss_7.mp3',m8:'Hateful_Doom_secret_boss_8.mp3',c1:'Icicle_Ignition_II_coolguy17.mp3',c2:'BIG_MISTAKE_coolguy17_rematch.mp3',c3:'Pancake_Pandemonium_Coolguy17_second_last_encounter.mp3',c3last:'-_PAN_FRIED_PIZZA_coolguy17_second_last_encounter_last_stand.mp3',m9:'POWERSCALING_Boss_8.mp3'};
+const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp3',m1:'Cheese Crusade V2 (boss 1).mp3',m2:'The guy(Boss 2).mp3',m3:'SpongeSwap - Hell Or High Water_Phase 2 (boss 3).mp3',m4:'Pyrosomni (boss 4).mp3',surv:'Timebomb Madness OST - Overdue - blocco (boss 4.5).mp3',m5:'SpongeBob SquarePants SuperSponge - Vs. Patrick (boss 5).mp3',m6:'Vs. Randy boss 6.mp3',m7:'Suffocate_In_Dust_II_boss_7.mp3',m8:'Hateful_Doom_secret_boss_8.mp3',c1:'Icicle_Ignition_II_coolguy17.mp3',c2:'BIG_MISTAKE_coolguy17_rematch.mp3',c3:'Pancake_Pandemonium_Coolguy17_second_last_encounter.mp3',c3last:'-_PAN_FRIED_PIZZA_coolguy17_second_last_encounter_last_stand.mp3',m9:'POWERSCALING_Boss_8.mp3',m10:'Vs__Patrick_Boss9.mp3'};
 // Ghost replays (solo): the best run's path on each boss, kept in localStorage. Chat: online lobby messages.
 const GH={rec:{},atk:{},ft:0,acc:0,last:-1,total:0};
 let GHOST=null,GHP={bi:-1,i:0,ft:0};
@@ -53,7 +53,8 @@ const BD=[{n:'Xiao Long Bao',title:'The Steamed Tyrant',img:'xlb',hp:2400,sz:150
  {n:'Evil Zach',title:'The Bootleg Zach',img:'ez',hp:6000,sz:158,col:['#f9e84c','#fa3152'],bg:['#241423','#080711'],mus:'m5'},
  {n:'Fella',title:'The Walk-Off Menace',img:'fella',hp:8800,sz:160,col:['#ff364e','#ffdf8b'],bg:['#102c20','#090a14'],mus:'m6'},
  {n:'Will',title:'The Hover Trio',img:'will',hp:3333,sz:150,col:['#9dffb0','#2fb7ff'],bg:['#0e2a33','#070611'],mus:'m7',allies:[{n:'Jackson',img:'jackson',hp:3750,col:['#ff9a3c','#ff3d00']},{n:'Mason',img:'mason',hp:2500,col:['#7dd3ff','#2050ff']}]},
- {n:'Darrel',title:'The Random Kid',img:'darrel',hp:9500,sz:150,col:['#ffe94a','#2fd1ff'],bg:['#1f1436','#0b0716'],mus:'m9'}];
+ {n:'Darrel',title:'The Random Kid',img:'darrel',hp:9500,sz:150,col:['#ffe94a','#2fd1ff'],bg:['#1f1436','#0b0716'],mus:'m9'},
+ {n:'Evil Zach',title:'The Bootleg Zach: Rematch',img:'ez',hp:13333,sz:158,col:['#ffe94a','#ff2a5a'],bg:['#2a0b1c','#07040e'],mus:'m10'}];
 const SC={'Jameson':'#8fd0ff','Coolguy17|1':'#9fe8ff','Coolguy17|2':'#ffe36a','Coolguy17|3':'#ffb347','Adrian':'#7fd3ff','Patrick':'#ffa7d8','Will':'#9dffb0','Jackson':'#ff9a3c','Mason':'#7dd3ff','Xiao Long Bao':'#ffcf5a','UnCoolguy16':'#ff5a5a','Evil Zach':'#f9e84c','Coolguy15':'#8fd8ff','Zach':'#ffe14a','Evil Spong':'#44eaff','Fella':'#ff465f','Jay':'#ffb347','Terry':'#7dff9a','Darrel':'#ffe94a'};
 const PORT={'Jameson':'jmi1','Coolguy17|1':'cg17a','Coolguy17|2':'cg17b','Coolguy17|3':'cg17c','Will':'will','Jackson':'jackson','Mason':'mason','Xiao Long Bao':'xlb','UnCoolguy16':'ucg','Evil Zach':'ez','Coolguy15':'cgi1','Zach':'zi1','Evil Spong':'sp1','Fella':'fella','Jay':'ji1','Terry':'tI1','Patrick':'pi1','Darrel':'darrel'};
 // ===== STORY: THE GRAND STEAMER (light-hearted) =====
@@ -284,7 +285,7 @@ function compose(_unused,event='intro',level=0){
   if(ci===6)add(TRIO_OUTRO);if(ci===7)add(DARREL_OUTRO);
   playerLines('outro');
  }else if(event==='win'){
-  add(ci===7?DARREL_WIN:TRIO_WIN);
+  add(ci===8?ZR_WIN:ci===7?DARREL_WIN:TRIO_WIN);
   playerLines('win');
   add([["Xiao Long Bao",`The final tally: ${count} challenger${count===1?'':'s'}, ${BD.length} bosses, and one extremely confusing dinner.`],["UnCoolguy16","Can we all go home now? I need a nap and a new name."]]);
  }
@@ -1882,7 +1883,7 @@ Object.assign(A,{
 });
 A.blackFlash=function(b,t){
  X('warn');X('charge');b.mode='blackFlash';b.nd=1;
- const a=Math.atan2(t.y-b.y,t.x-b.x),d=dist(b.x,b.y,t.x,t.y);b.bf={phase:'windup',t:0,tx:t.x,ty:t.y,target:t.id,a,dx:Math.cos(a),dy:Math.sin(a),hit:0,ox:b.x,oy:b.y};
+ const a=Math.atan2(t.y-b.y,t.x-b.x),d=dist(b.x,b.y,t.x,t.y);b.bf={phase:'windup',t:0,tx:t.x,ty:t.y,target:t.id,a,dx:Math.cos(a),dy:Math.sin(a),hit:0,ox:b.x,oy:b.y,dbl:b.idx===8?1:0,second:0};
  warn({x:b.x,y:b.y,r:Math.max(95,d*.84),a,dur:.72,k:'l',img:'ez'});fx(['r',b.x,b.y,74,'#050207']);fx(['r',b.x,b.y,96,'#ff1738']);fx(['p',b.x,b.y,22,'#ff1738',310,.45,6,'pixel']);X('bfCharge');
 };
 M.blackFlash=function(b,dt,t){
@@ -1892,6 +1893,7 @@ M.blackFlash=function(b,dt,t){
   if(Math.floor(q.t*28)!==Math.floor((q.t-dt)*28)){const px=b.x+Math.cos(q.a)*rnd(24,74),py=b.y+Math.sin(q.a)*rnd(22,62);fx(['p',px,py,3,R()<.6?'#ff1738':'#050207',rnd(180,280),.2,5,'pixel']);if(R()<.52)fx(['r',b.x,b.y,rnd(28,66),R()<.45?'#fff':'#ff1738'])}
   if(q.t>=.72){q.phase='dash';q.t=0;q.ox=b.x;q.oy=b.y;X('blackFlash');X('bfCrack');fx(['f','#fff']);fx(['s',24]);for(let i=0;i<18;i++){const a=q.a+rnd(-.45,.45);fx(['p',b.x+Math.cos(a)*rnd(10,70),b.y+Math.sin(a)*rnd(10,55),4,i%2?'#fff':'#ff1738',rnd(180,360),.24,6,'pixel'])}}return;
  }
+ if(q.phase==='pause'){if(q.t>=.2){const tg=nearest(b.x,b.y)||t;q.a=Math.atan2(tg.y-b.y,tg.x-b.x);q.dx=Math.cos(q.a);q.dy=Math.sin(q.a);q.phase='dash';q.t=0;X('blackFlash');fx(['r',b.x,b.y,50,'#fff']);fx(['p',b.x,b.y,14,'#ff1738',240,.3,5,'pixel'])}else{fx(['p',b.x+Math.cos(q.a)*rnd(20,50),b.y+Math.sin(q.a)*rnd(20,50),3,'#ff1738',120,.2,4,'pixel'])}b.a=q.a;return}
  if(q.phase==='dash'){
   const oldX=b.x,oldY=b.y;b.x=cl(b.x+q.dx*1900*dt,34,W-34);b.y=cl(b.y+q.dy*1900*dt,100,H-58);
   for(let i=0;i<3;i++)fx(['p',b.x-q.dx*(18+i*11)+rnd(-5,5),b.y-q.dy*(18+i*11)+rnd(-5,5),3,i===0?'#fff':(i===1?'#ff1738':'#050207'),260,.2,6,'pixel']);
@@ -1904,6 +1906,7 @@ M.blackFlash=function(b,dt,t){
    S.st='bfcut';S.pr=[];S.wr=[];S.zn=[];b.mode=null;b.bf=null;b.nd=0;b.cd=2.35;
    fx(['f','#fff']);fx(['s',28]);X('bfImpact');X('blackFlash');for(let i=0;i<78;i++){const an=rnd(0,PI*2),r=rnd(8,132);fx(['p',p.x+Math.cos(an)*r,p.y+Math.sin(an)*r,2,R()<.48?'#fff':(R()<.75?'#ff1738':'#050207'),rnd(190,620),rnd(.18,.72),7,'pixel'])}for(let i=0;i<7;i++)fx(['r',p.x,p.y,22+i*31,i%2?'#fff':'#ff1738']);if(lethal){fx(['f','#ff1738']);SH=Math.max(SH,28)}return;
   }
+  if(q.dbl&&!q.second&&(q.t>=.34||b.x<=35||b.x>=W-35||b.y<=101||b.y>=H-59)){q.second=1;q.phase='pause';q.t=0;X('whoosh');fx(['r',b.x,b.y,70,'#ff1738']);return}
   if(q.t>=.34||b.x<=35||b.x>=W-35||b.y<=101||b.y>=H-59){for(let side=-1;side<=1;side+=2){const an=q.a+side*.34;bp(b.x,b.y,an,410,{img:'eknife',sz:50,r:12,dmg:11,life:2.3,rot:an+PI/2})}fx(['r',b.x,b.y,92,'#050207']);fx(['r',b.x,b.y,72,'#ff1738']);X('bfMiss');X('whoosh');b.mode=null;b.bf=null;b.nd=0;b.cd=1.8}
  }
 };
@@ -2118,9 +2121,10 @@ function stepDarrel(dt){
 
 
 function stepBoss(b,dt,attackSource){if(b.idx===3||b.isAllianceAlly){const o=b.isAllianceAlly?S.bs:S.bs2;if(o&&o.hp<=0)dt*=1.35}b.fl=Math.max(0,(b.fl||0)-dt);b.t=(b.t||0)+dt;if(b.inv||b.hp<=0)return;const t=nearest(b.x,b.y);if(!t)return;
- if(b.idx===4){b.trT=(b.trT||0)-dt;if(b.trT<=0){b.trT=.12;(b.trail=b.trail||[]).push({x:t.x,y:t.y});if(b.trail.length>26)b.trail.shift()}}
+ if(b.idx===8&&!b.helped&&!b.mode&&b.hp<=b.max*.4){b.helped=1;b.mode='rmHelp';b.nd=1;b.hl={s:0,t:0};X('phase');fx(['r',b.x,b.y,120,'#7dff6a']);return}
+ if(isEZ(b)){b.trT=(b.trT||0)-dt;if(b.trT<=0){b.trT=.12;(b.trail=b.trail||[]).push({x:t.x,y:t.y});if(b.trail.length>26)b.trail.shift()}}
  if(b.mode){M[b.mode](b,dt,t);if(b.mode&&!b.nd&&(b.mode!=='charge'||!b.cdash)){const hx=b.isAllianceAlly?730:(b.idx===3?300:480),hy=b.isAllianceAlly?175:150;b.x+=(hx-b.x)*dt*.3;b.y+=(hy-b.y)*dt*.3}return}
- if(b.idx===4){
+ if(isEZ(b)){
   // Player-like evasion: lead incoming shots, orbit at midrange, and dash out of danger.
   b.a=Math.atan2(t.y-b.y,t.x-b.x);b.dodgeCd=Math.max(0,(b.dodgeCd||0)-dt);b.dodgeT=Math.max(0,(b.dodgeT||0)-dt);
   let threat=null,threatD=1e9;for(const q of S.pr){if(q.own!=='p')continue;const fxp=q.x+q.vx*.36,fyp=q.y+q.vy*.36,dd=dist(fxp,fyp,b.x,b.y),nowD=dist(q.x,q.y,b.x,b.y);if(dd<bossHitRadius(b)+q.r+28&&dd<nowD&&dd<threatD){threat=q;threatD=dd}}
@@ -2142,7 +2146,7 @@ function stepBoss(b,dt,attackSource){if(b.idx===3||b.isAllianceAlly){const o=b.i
   else{const an=b.t*.8*side+(side>0?PI:0);tx=480+Math.cos(an)*290;ty=225+Math.sin(an)*105}
   b.x+=(tx-b.x)*dt*1.7;b.y+=(ty-b.y)*dt*1.7;b.cd-=dt;
  }else{const home=480,amp=260;b.x+=(home+Math.sin(b.t*.6)*amp-b.x)*dt*.8;b.y+=(150+Math.sin(b.t*.9)*40-b.y)*dt*.8;b.cd-=dt}
- if(b.cd<=0){let source=attackSource!==undefined?attackSource:(b.idx===3?3:b.idx);const phase=Math.min(2,b.ph||0),pool=ATK[Math.min(BD.length-1,source)][phase].filter(x=>x!==b.last);let k;if(b.idx===4){const r=R(),comboOdds=b.last==='comboStrike'?.25:.56,flashOdds=.23;if(r<comboOdds)k='comboStrike';else if(r<comboOdds+flashOdds&&pool.includes('blackFlash'))k='blackFlash';else{const rest=pool.filter(x=>x!=='comboStrike'&&x!=='blackFlash');k=rest.length?rest[Math.floor(R()*rest.length)]:(pool[Math.floor(R()*pool.length)]||'comboStrike')}}else{k=pool[Math.floor(R()*pool.length)]}b.last=k;A[k](b,t)}}
+ if(b.cd<=0){let source=attackSource!==undefined?attackSource:(b.idx===3?3:b.idx);const phase=Math.min(2,b.ph||0),pool=ATK[Math.min(BD.length-1,source)][phase].filter(x=>x!==b.last);let k;if(isEZ(b)){const r=R(),comboOdds=b.last==='comboStrike'?.25:.56,flashOdds=.23;if(r<comboOdds)k='comboStrike';else if(r<comboOdds+flashOdds&&pool.includes('blackFlash'))k='blackFlash';else{const rest=pool.filter(x=>x!=='comboStrike'&&x!=='blackFlash');k=rest.length?rest[Math.floor(R()*rest.length)]:(pool[Math.floor(R()*pool.length)]||'comboStrike')}}else{k=pool[Math.floor(R()*pool.length)]}b.last=k;A[k](b,t)}}
 // ===== PHASE 4.5 REMAKE: THE ENCORE =====
 // Bao (boss 1) and UnCoolguy16 (boss 2) stand at the top corners and throw their classic attacks plus the boss 4 duo moves in time with the music.
 const SV_BAO={x:150,y:158},SV_UCG={x:810,y:158};
@@ -3761,8 +3765,8 @@ function drawBoss(b,t,id){const o=sm('boss',b.x,b.y),bob=Math.sin(t*2.5)*6,sq=Ma
  if(b.beam!=null){g.save();g.translate(o.x,o.y);g.rotate(b.beam);g.globalCompositeOperation='lighter';g.fillStyle='rgba(255,40,40,.5)';g.fillRect(0,-32,1500,64);g.fillStyle='rgba(255,230,230,.9)';g.fillRect(0,-10,1500,20);g.restore()}
  spr(b.img,o.x,oy,b.sz,Math.sin(t*1.5)*.04+(b.sp||0),1+sq,1-sq,b.inv&&V.st==='fight'?.6:1);
  if(b.fl){g.globalCompositeOperation='lighter';spr(b.img,o.x,oy,b.sz,0,1,1,.7);g.globalCompositeOperation='source-over'}
- if(b.idx===4&&b.cmb){const [ck,ca,cp,csw,cr,ch]=b.cmb;g.save();g.translate(o.x,o.y);if(!csw){g.fillStyle='rgba(255,50,70,'+(.1+.3*cp)+')';g.strokeStyle='rgba(255,90,90,.85)';g.lineWidth=2;g.beginPath();g.moveTo(0,0);g.arc(0,0,cr*(.55+.45*cp),ca-ch,ca+ch);g.closePath();g.fill();g.stroke();g.strokeStyle='rgba(255,240,150,'+(.3+.5*cp)+')';g.beginPath();g.arc(0,0,cr,ca-ch,ca+ch);g.stroke();g.restore()}else{g.restore();if(ck===2)drawZachStab(o.x,o.y,ca,cp);else drawZachSlash(o.x,o.y,ca,cp,ck===1,t)}}
- if(b.idx===4){spr('eknife',o.x+Math.cos(b.a||0)*70,o.y+Math.sin(b.a||0)*70+5,76,(b.a||0)+PI/2,1,1,.95);if(b.dodgeT>0){g.strokeStyle='rgba(249,232,76,.9)';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,b.sz*.62,0,PI*2);g.stroke()}}
+ if(isEZ(b)&&b.cmb){const [ck,ca,cp,csw,cr,ch]=b.cmb;g.save();g.translate(o.x,o.y);if(!csw){g.fillStyle='rgba(255,50,70,'+(.1+.3*cp)+')';g.strokeStyle='rgba(255,90,90,.85)';g.lineWidth=2;g.beginPath();g.moveTo(0,0);g.arc(0,0,cr*(.55+.45*cp),ca-ch,ca+ch);g.closePath();g.fill();g.stroke();g.strokeStyle='rgba(255,240,150,'+(.3+.5*cp)+')';g.beginPath();g.arc(0,0,cr,ca-ch,ca+ch);g.stroke();g.restore()}else{g.restore();if(ck===2)drawZachStab(o.x,o.y,ca,cp);else drawZachSlash(o.x,o.y,ca,cp,ck===1,t)}}
+ if(isEZ(b)){spr('eknife',o.x+Math.cos(b.a||0)*70,o.y+Math.sin(b.a||0)*70+5,76,(b.a||0)+PI/2,1,1,.95);if(b.dodgeT>0){g.strokeStyle='rgba(249,232,76,.9)';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,b.sz*.62,0,PI*2);g.stroke()}}
  if(b.idx===5)drawFellaBoss(b,o,t);
  if(b.gun){spr('egun',o.x+Math.cos(b.a)*70,o.y+Math.sin(b.a)*70,70,b.a,1,Math.cos(b.a)<0?-1:1)}
  if(b.pipe!=null){g.strokeStyle='rgba(255,60,60,.25)';g.lineWidth=40;g.beginPath();g.arc(o.x,o.y,125,b.pipe-.5,b.pipe);g.stroke();spr('pipe',o.x+Math.cos(b.pipe)*115,o.y+Math.sin(b.pipe)*115,190,b.pipe+PI/2)}}
@@ -4067,7 +4071,7 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];if(S&&host&
  g.save();if(SH>0&&ST.shake>0){const q=SH*ST.shake/100;g.translate(rnd(-q,q),rnd(-q,q))}
  if(v.c17){const cm=c17CamOf(v.c17,t);if(cm){g.translate(cm[0],cm[1]);g.scale(cm[2],cm[2]);g.translate(-cm[0],-cm[1])}}
  if(cut&&v.b){const z=1+.28*Math.min(1,cutT/.6);g.translate(v.b.x,v.b.y);g.scale(z,z);g.translate(-v.b.x,-v.b.y)}
- if(v.c17)drawC17Bg(v.c17,t,v);else if(v.secOn||(st==='secretcut'&&v.sc&&v.sc.tf>.8))drawSecretBg(t);else{drawBg(v.bi,t);if(v.bi===5&&st!=='survival')drawFellaArena(t,v);if(v.bi===7&&st!=='survival')drawDarrelArena(t,v)}if(st==='survival')drawSurvBack(t,v);
+ if(v.c17)drawC17Bg(v.c17,t,v);else if(v.secOn||(st==='secretcut'&&v.sc&&v.sc.tf>.8))drawSecretBg(t);else{drawBg(v.bi,t);if(v.bi===8&&st!=='survival')drawZachArena(t,v);if(v.bi===5&&st!=='survival')drawFellaArena(t,v);if(v.bi===7&&st!=='survival')drawDarrelArena(t,v)}if(st==='survival')drawSurvBack(t,v);
  DC.forEach(d=>{g.fillStyle='rgba(0,0,0,'+Math.min(.3,d.l/8*.4)+')';g.beginPath();g.arc(d.x,d.y,d.r,0,PI*2);g.fill()});
  v.wr.forEach(([k,x,y,a,r,p,img,wc,wd])=>{const col=wc||(v.secOn?'255,30,70':v.bi?'255,60,60':'255,200,60');if(k==='c'){g.fillStyle='rgba('+col+','+(.12+.3*p)+')';g.beginPath();g.arc(x,y,r*(.4+.6*p),0,PI*2);g.fill();g.strokeStyle='rgba('+col+',.9)';g.lineWidth=2;g.beginPath();g.arc(x,y,r,0,PI*2);g.stroke();if(img)spr(img,x,y-(1-p)*320,46,p*8,1,1,.4+.6*p)}else if(k==='l'){g.save();g.translate(x,y);g.rotate(a);g.fillStyle='rgba('+col+','+(.1+.35*p)+')';const hw=(wd||64)/2;g.fillRect(0,-hw,r,hw*2);g.strokeStyle='rgba('+col+','+(.35+.4*p)+')';g.lineWidth=2;g.strokeRect(0,-hw,r,hw*2);g.restore()}});
  v.zn.forEach(([x,y,r,f,col,dmg,slowField])=>{if(col==='#ff6a1a'||col==='#8fefff'){drawC17Zone(x,y,r,f,col,t);return}const sauce=!!slowField;glow(x,y,r*(sauce?1.22:1.5),sauce?'rgba(255,28,58,1)':col==='#4df2ff'?'rgba(60,220,255,1)':col==='#bd69ff'?'rgba(185,90,255,1)':'rgba(255,150,40,1)');if(sauce){g.fillStyle='rgba(170,0,28,'+(.25+.15*Math.sin(t*6))+')';g.beginPath();g.ellipse(x,y+5,r,r*.68,Math.sin(t*1.2)*.08,0,PI*2);g.fill();g.fillStyle='rgba(255,35,64,.7)';for(let k=0;k<9;k++){const a=k*PI*2/9+t*.22,rr=r*(.32+.32*Math.sin(t*2+k));g.beginPath();g.arc(x+Math.cos(a)*rr,y+Math.sin(a)*rr*.64,4+(k%3)*2,0,PI*2);g.fill()}g.strokeStyle='rgba(255,130,150,.85)';g.lineWidth=2;g.beginPath();g.ellipse(x,y+5,r*.88,r*.58,0,0,PI*2);g.stroke();spr('sauce',x+Math.sin(t*3)*4,y-4,Math.min(48,r*.8),Math.sin(t*2)*.12,1,1,.82)}else{g.fillStyle=col==='#4df2ff'?'rgba(70,230,255,'+(.18+.19*Math.sin(t*5))+')':col==='#bd69ff'?'rgba(185,90,255,'+(.2+.15*Math.sin(t*5))+')':'rgba(255,140,30,'+(.25+.15*Math.sin(t*5))+')';g.beginPath();g.arc(x,y,r,0,PI*2);g.fill();g.strokeStyle=col||'rgba(255,220,120,.9)';g.lineWidth=3;g.beginPath();g.arc(x,y,r,0,PI*2);g.stroke()}if(R()<.3&&PT.length<700){const an=R()*PI*2,dd=R()*r;PT.push({x:x+Math.cos(an)*dd,y:y+Math.sin(an)*dd,vx:0,vy:-40,l:.6,m:.6,c:sauce?'#ff3048':'#ffd36b',s:5})}});
@@ -5307,5 +5311,152 @@ Object.assign(TRI_FIRE,{
    warn({k:'l',x,y:100,a:PI/2,r:H-100,dur:.9+k*.08,fn:()=>{X('throw');bp(x,-30,PI/2,420,{img:'jf2',sz:46,r:14,dmg:12,life:1.0,spin:7,split:3})}})}}
 });
 TRI_POOL[0].push('spiritRing');TRI_POOL[1].push('twigSnipe');TRI_POOL[2].push('hotDogColumns');
+
+/* ===== BOSS 9: THE BOOTLEG ZACH REMATCH ===== */
+function isEZ(b){return !!b&&(b.idx===4||b.idx===8)}
+function zrSprite(w,h,draw){const c=document.createElement('canvas');c.width=w;c.height=h;const cx=c.getContext('2d');cx.translate(w/2,h/2);draw(cx);return c}
+// Procedural sprites for the new attacks (canvas elements work with spr()).
+IM.ptag=zrSprite(96,96,c=>{c.rotate(-.3);c.beginPath();c.moveTo(-34,-19);c.lineTo(14,-19);c.lineTo(36,0);c.lineTo(14,19);c.lineTo(-34,19);c.closePath();c.shadowColor='#ffe14a';c.shadowBlur=10;c.fillStyle='#ffd23a';c.fill();c.shadowBlur=0;c.lineWidth=3;c.strokeStyle='#6b3b00';c.stroke();c.beginPath();c.arc(-24,0,5,0,PI*2);c.fillStyle='#2a2a30';c.fill();c.font='bold 22px monospace';c.textAlign='center';c.textBaseline='middle';c.fillStyle='#c0102a';c.fillText('$4',5,1)});
+IM.satchel=zrSprite(96,96,c=>{c.beginPath();c.ellipse(0,8,30,24,0,0,PI*2);c.fillStyle='#8a5a2b';c.fill();c.lineWidth=3;c.strokeStyle='#3e2409';c.stroke();c.beginPath();c.moveTo(-26,-6);c.quadraticCurveTo(0,-34,26,-6);c.lineWidth=5;c.strokeStyle='#4a2d12';c.stroke();c.fillStyle='#6a421c';c.fillRect(-15,0,30,15);c.lineWidth=2;c.strokeStyle='#2a1706';c.strokeRect(-15,0,30,15);c.beginPath();c.arc(0,-14,5,0,PI*2);c.fillStyle='#ff3b3b';c.shadowColor='#ff3b3b';c.shadowBlur=12;c.fill();c.shadowBlur=0});
+
+// Satchel: lands, arms (blinks for 1.2s), then blows up into a fire patch and shrapnel.
+function satchelFn(q){
+ if(!q.landed){if(q.life<=0){q.landed=1;q.life=1.2;q.vx=0;q.vy=0;X('charge');fx(['r',q.x,q.y,40,'#ff7a2a'])}return}
+ if(q.life>0){if(Math.floor(q.life*6)%2===0)fx(['p',q.x,q.y-22,2,'#ff3b3b',30,.18,3,'pixel']);return}
+ if(!q.blown){q.blown=1;X('boom');boom(q.x,q.y,60,16,'b','#ff7a2a');S.zn.push({x:q.x,y:q.y,r:72,life:3.6,max:3.6,col:'#ff7a2a',dmg:11});for(let k=0;k<6;k++){const a=k*PI/3+.3;bp(q.x,q.y,a,230,{img:'eknife',sz:42,r:12,dmg:10,life:1.8,rot:a+PI/2})}}
+}
+
+// Drive-thru night arena: scrolling floor, three neon conveyor belts and a glowing sign.
+function drawZachArena(t,v){
+ g.save();
+ g.beginPath();g.rect(0,96,W,H-96);g.clip();
+ const grad=g.createLinearGradient(0,96,0,H);grad.addColorStop(0,'rgba(60,8,30,.55)');grad.addColorStop(1,'rgba(5,3,9,.85)');g.fillStyle=grad;g.fillRect(0,96,W,H-96);
+ const off=(t*70)%48;
+ for(let r=-1;r<14;r++){const y=96+r*48+off;for(let c=0;c<18;c++){g.fillStyle=(c+r)%2?'rgba(255,225,76,.05)':'rgba(255,42,90,.05)';g.fillRect(c*60-((r*17)%60),y,60,48)}}
+ for(const y of [196,312,428]){
+  g.fillStyle='rgba(18,18,24,.9)';g.fillRect(0,y-24,W,48);
+  g.fillStyle='rgba(255,225,76,.8)';g.fillRect(0,y-25,W,2);g.fillRect(0,y+23,W,2);
+  g.fillStyle='rgba(255,225,76,.35)';
+  for(let x=-40+((t*110)%80);x<W+40;x+=80){g.beginPath();g.moveTo(x,y-9);g.lineTo(x+12,y);g.lineTo(x,y+9);g.lineTo(x-6,y);g.closePath();g.fill()}
+ }
+ g.restore();
+ g.save();g.shadowColor='#ff2a5a';g.shadowBlur=16;g.fillStyle='#ffe94a';g.font='bold 15px monospace';g.textAlign='center';g.textBaseline='alphabetic';g.fillText("ZACH'S BOOTLEG BURGERS",W/2,122);g.restore();
+}
+
+Object.assign(A,{
+ // Knife Fan, buffed: 13 knives, and the outer knives curve back in toward the player.
+ rmKnifeFan(b,t){const a=Math.atan2(t.y-b.y,t.x-b.x);warn({x:t.x,y:t.y,r:84,dur:.5});X('charge');
+  for(let k=-6;k<=6;k++){const ak=a+k*.15,curve=Math.abs(k)>=4?-Math.sign(k)*1.25:0;bp(b.x,b.y,ak,440,{img:'eknife',sz:60,r:15,dmg:15,life:3.4,spin:k*.6,rot:ak+PI/2,curve:curve,curveLife:.75})}
+  fx(['p',b.x,b.y,18,'#f9e84c',300,.4,5]);b.cd=2.6},
+
+ // Knife Rain, buffed: more knives, and a final volley of five locked onto the player's spot.
+ rmKnifeRain(b,t){X('warn');const n=8+b.ph*3;
+  for(let k=0;k<n;k++){const x=cl(t.x+rnd(-210,210),60,W-60),y=cl(t.y+rnd(-130,130),130,470);
+   warn({x,y,r:26,dur:.42+k*.11,fn:()=>{X('whoosh');bp(x,y-270,PI/2,540,{img:'eknife',sz:58,r:15,dmg:14,life:2.2,rot:PI/2});fx(['p',x,y,5,'#f9e84c',160,.3,4])}})}
+  const lx=t.x,ly=t.y;warn({x:lx,y:ly,r:52,dur:.42+n*.11+.3,k:'c',fn:()=>{X('whoosh');for(let j=-2;j<=2;j++)bp(cl(lx+j*36,40,W-40),ly-300,PI/2,600,{img:'eknife',sz:64,r:16,dmg:18,life:2.2,rot:PI/2})}});
+  b.cd=3.1},
+
+ // Knife Spiral, buffed: two arms spin in opposite directions.
+ rmKnifeSpiral(b,t){X('charge');const n=12+b.ph*3,base=Math.atan2(t.y-b.y,t.x-b.x);fx(['r',b.x,b.y,80,'#f9e84c']);
+  for(let k=0;k<n;k++){for(const arm of [1,-1]){const an=base+(arm>0?0:PI)+arm*k*.4;warn({x:b.x,y:b.y,r:2,dur:k*.075,fn:()=>{bp(b.x,b.y,an,330,{img:'eknife',sz:52,r:13,dmg:12,life:3.2,rot:an+PI/2,spin:arm*3})}})}}
+  b.cd=3.3},
+
+ // Burger Toss, buffed: the burgers leave sauce puddles that slow the player.
+ rmBurgerToss(b,t){X('warn');const n=5+b.ph;
+  for(let k=0;k<n;k++){const x=cl(t.x+rnd(-170,170),70,890),y=cl(t.y+rnd(-100,100),140,480);
+   warn({x,y,r:60,dur:.9+k*.2,img:'burger',fn:()=>{boom(x,y,60,17,'b','#ff7a3a');for(let j=0;j<6;j++)bp(x,y,j*PI/3+k,200,{img:'burger',sz:40,r:12,dmg:10,life:2.6,spin:6});S.zn.push({x,y,r:46,life:3.6,max:3.6,col:'#ff9a3c',dmg:0,slowField:1})}})}
+  b.cd=3.2},
+
+ // Knife Juggle, buffed: the orbit is faster, and the knives home in on the nearest player.
+ rmKnifeJuggle(b,t){X('warn');const bx=b.x,by=b.y,n=10+b.ph*2;fx(['r',bx,by,95,'#f9e84c']);
+  for(let k=0;k<n;k++){const ox=bx+Math.cos(k*2*PI/n)*64,oy=by+Math.sin(k*2*PI/n)*46;
+   warn({x:ox,y:oy,r:12,dur:.2+k*.08,fn:()=>{const p=nearest(ox,oy)||t,a=Math.atan2(p.y-oy,p.x-ox);X('whoosh');bp(ox,oy,a,540,{img:'eknife',sz:60,r:15,dmg:15,life:3,rot:a+PI/2,home:.9,homeT:.45});fx(['p',ox,oy,6,'#f9e84c',200,.3,4])}})}
+  b.cd=3},
+
+ // Knife Lunge, buffed: a longer dash that leaves a damaging trail (see M.rmLunge).
+ rmKnifeLunge(b,t){b.mode='rmLunge';b.tt=.6;b.nd=1;b.launched=0;warn({x:t.x,y:t.y,r:80,dur:.6});X('charge')},
+
+ // Shadow Slash, buffed: strikes twice.
+ rmShadowSlash(b,t){A.shadowSlash(b,t);warn({x:b.x,y:b.y,r:1,dur:1.5,fn:()=>{if(b.hp>0&&!b.mode)A.shadowSlash(b,nearest(b.x,b.y)||t)}})},
+
+ // Copycat Trail, buffed: copies a longer stretch of the player's path and fires three knives per copy.
+ rmCopycatTrail(b,t){X('warn');const tr=(b.trail||[]).filter((_,i)=>i%2===0).slice(-12);if(tr.length<3){A.rmKnifeFan(b,t);return}
+  tr.forEach((q,i)=>{const x=q.x,y=q.y;warn({x,y,r:44,dur:.5+i*.17,img:'ez',fn:()=>{boom(x,y,48,15,'b','#f9e84c');const p=nearest(x,y)||t,a=Math.atan2(p.y-y,p.x-x);for(let k=-1;k<=1;k++)bp(x,y,a+k*.17,360,{img:'eknife',sz:54,r:14,dmg:12,life:3,rot:a+k*.17+PI/2,home:.5,homeT:.3})}})});
+  b.cd=3.4},
+
+ // NEW: Price Tag Storm. Two rings of spinning price tags, the second one curving the other way.
+ priceTagStorm(b,t){X('warn');fx(['r',b.x,b.y,70,'#ffe14a']);
+  for(let w=0;w<2;w++){warn({x:b.x,y:b.y,r:2,dur:w*.75,fn:()=>{X('whoosh');const base=Math.atan2(t.y-b.y,t.x-b.x)+w*PI/8;
+   for(let k=0;k<8;k++){const a=base+k*PI/4;bp(b.x,b.y,a,270,{img:'ptag',sz:50,r:14,dmg:11,life:3.6,spin:w?-7:7,curve:w?-1.1:1.1,curveLife:.9,home:.7,homeT:.6})}}})}
+  b.cd=3.2},
+
+ // NEW: Drive-Thru Lane. Three conveyor belts of burgers sweep across the arena, with one row left open.
+ driveThruLane(b,t){X('warn');const gap=Math.floor(R()*3),dir=R()<.5?1:-1;
+  [196,312,428].forEach((y,i)=>{if(i===gap)return;const from=dir>0?-40:W+40,a=dir>0?0:PI;
+   warn({k:'l',x:from,y:y,a:a,r:W+80,dur:.7+i*.3,fn:()=>{X('whoosh');for(let j=0;j<9;j++)warn({x:from,y:y,r:3,dur:j*.33,fn:()=>bp(from,y,a,300,{img:'burger',sz:52,r:15,dmg:12,life:4.5,spin:dir*5})})}})});
+  b.cd=4.4},
+
+ // NEW: Satchel Strat. A satchel lands on the player, arms for 1.2s, then explodes into a fire patch.
+ satchelStrat(b,t){X('charge');const a=Math.atan2(t.y-b.y,t.x-b.x),d=Math.max(40,dist(b.x,b.y,t.x,t.y)-40);
+  bp(b.x,b.y,a,(d/.5)/.92,{img:'satchel',sz:54,r:0,dmg:12,life:.5,spin:4,fn:satchelFn});
+  b.cd=3.4},
+
+ // NEW: Knife Chain. A chain snaps onto the player and drags them in (see M.rmChain).
+ knifeChain(b,t){const p=nearest(b.x,b.y)||t;b.mode='rmChain';b.nd=1;b.ch={id:p.id,t:0,dur:2.4,tick:.4};X('charge');
+  warn({k:'l',x:b.x,y:b.y,a:Math.atan2(p.y-b.y,p.x-b.x),r:dist(b.x,b.y,p.x,p.y),dur:.45});fx(['r',b.x,b.y,60,'#dfe6ee'])}
+});
+
+// Knife Lunge (boss 9): dash with a trail of damaging zones, then a ring of knives on landing.
+M.rmLunge=function(b,dt,t){
+ if(b.tt>0){b.tt-=dt;if(b.tt<=0){b.launched=1;b.ca=Math.atan2(t.y-b.y,t.x-b.x);b.cdash=.42;b.ltT=0;X('charge')}return}
+ if(b.cdash>0){b.cdash-=dt;b.x+=Math.cos(b.ca)*1000*dt;b.y+=Math.sin(b.ca)*1000*dt;
+  b.ltT=(b.ltT||0)-dt;if(b.ltT<=0){b.ltT=.1;S.zn.push({x:b.x,y:b.y,r:34,life:2.2,max:2.2,col:'#f9e84c',dmg:9})}
+  fx(['p',b.x,b.y,1,'#f9e84c',45,.35,6]);
+  alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<55*ATK_HIT+PLAYER_HIT_R)hitP(p,22)});
+  if(b.cdash<=0||b.x<50||b.x>W-50||b.y<110||b.y>H-70){b.x=cl(b.x,50,W-50);b.y=cl(b.y,110,H-70);for(let k=0;k<11;k++)bp(b.x,b.y,k*2*PI/11,270,{img:'eknife',sz:62,r:16,dmg:15,life:4,rot:k*2*PI/11+PI/2});b.mode=null;b.nd=0;b.cd=2.1}}
+};
+
+// Knife Chain (boss 9): the chain pulls the player toward the boss, ticking damage, then a knife finishes the drag.
+M.rmChain=function(b,dt,t){const q=b.ch;if(!q){b.mode=null;b.nd=0;b.cd=2;return}
+ q.t+=dt;const p=alive().find(x=>x.id===q.id);
+ if(!p){b.mode=null;b.nd=0;b.ch=null;b.cd=1.6;return}
+ const dx=b.x-p.x,dy=b.y-p.y,d=Math.max(1,Math.hypot(dx,dy));
+ if(d>60){const s=Math.min(d-60,230*dt);p.x+=dx/d*s;p.y+=dy/d*s}
+ p.x=cl(p.x,30,W-30);p.y=cl(p.y,110,H-40);
+ for(let i=1;i<=6;i++){const f=i/7,lx=b.x+(p.x-b.x)*f,ly=b.y+(p.y-b.y)*f;if(i%2===0||Math.floor(q.t*20)%2===0)fx(['p',lx,ly,2,'#dfe6ee',20,.12,3,'pixel'])}
+ q.tick-=dt;if(q.tick<=0){q.tick=.45;hitP(p,7)}
+ if(Math.hypot(b.x-p.x,b.y-p.y)<=72||q.t>=q.dur){
+  hitP(p,20);const a=Math.atan2(p.y-b.y,p.x-b.x);
+  bp(b.x,b.y,a,480,{img:'eknife',sz:60,r:15,dmg:15,life:2.6,rot:a+PI/2});
+  fx(['r',p.x,p.y,50,'#dfe6ee']);X('stab');
+  b.mode=null;b.nd=0;b.ch=null;b.cd=2.4}
+};
+
+// Second Helping (boss 9): at 40% HP he eats a burger, heals, then throws a ring of burgers outward.
+M.rmHelp=function(b,dt,t){const q=b.hl;if(!q){b.mode=null;b.nd=0;b.cd=1.4;return}q.t+=dt;
+ if(q.s===0){
+  if(q.t<1.2){if(Math.floor(q.t*12)!==Math.floor((q.t-dt)*12))fx(['p',b.x+rnd(-44,44),b.y+rnd(-30,40),3,'#7dff6a',60,.4,4,'pixel']);return}
+  b.hp=Math.min(b.max,b.hp+Math.round(b.max*.09));q.s=1;q.t=0;X('phase');fx(['r',b.x,b.y,130,'#7dff6a']);fx(['f','#7dff6a']);fx(['s',8]);return}
+ if(q.t>=.25){X('whoosh');for(let k=0;k<12;k++){const a=k*PI/6;bp(b.x,b.y,a,240,{img:'burger',sz:50,r:15,dmg:12,life:4,spin:4})}b.mode=null;b.nd=0;b.cd=1.4;b.hl=null}
+};
+
+// Boss 9 attack pool: buffed first-encounter moves, the four new moves, and Black Flash (dashes twice on this boss).
+ATK[8]=[
+ ['comboStrike','rmKnifeFan','rmCopycatTrail','rmBurgerToss','rmKnifeJuggle','rmKnifeLunge','blackFlash','rmKnifeRain','priceTagStorm','driveThruLane'],
+ ['comboStrike','rmKnifeFan','rmCopycatTrail','rmBurgerToss','rmKnifeJuggle','rmKnifeLunge','blackFlash','rmKnifeRain','priceTagStorm','driveThruLane','rmKnifeSpiral','rmShadowSlash','satchelStrat','knifeChain'],
+ ['comboStrike','rmKnifeFan','rmCopycatTrail','rmKnifeJuggle','rmKnifeLunge','blackFlash','rmKnifeRain','rmKnifeSpiral','rmShadowSlash','priceTagStorm','driveThruLane','satchelStrat','knifeChain','rmBurgerToss']
+];
+
+// Dialogue for boss 9 (indexed by boss slot, so it sits alongside the existing tables).
+STORY_OPEN[8]=[["Evil Zach","Oh. Look who came back for seconds."],["Evil Zach","New menu. Bootleg Deluxe. Extra sauce, extra attitude."]];
+if(!STORY_PARTY.phase)STORY_PARTY.phase=[];
+STORY_PARTY.intro[8]={solo:[["Evil Zach","Back for round two? Brave. Stupid, but brave."],["Evil Zach","I've been practicing my knife work. Mostly on chicken nuggets."]],duo:[["Evil Zach","Two of you? Cool. Last time you got lucky. This time the drive-thru is open."]],trio:[["Evil Zach","Three of you? Did you all come to watch me win?"]],squad:[["Evil Zach","Four of you? I've got fifty new burgers and zero patience."]]};
+STORY_PARTY.phase[8]=[
+ {solo:[["Evil Zach","Okay, the sauce is off the table. Literally."]],duo:[["Evil Zach","Hey! No fair, you two are ganging up like a cheap knockoff squad!"]],trio:[["Evil Zach","Alright, the menu just got a LOT bigger."]],squad:[["Evil Zach","Fine. FINE. Everything on the menu is a weapon now."]]},
+ {solo:[["Evil Zach","I'm not hungry. I'm HANGRY. Big difference."]],duo:[["Evil Zach","Stop hitting the bootleg! The bootleg has feelings!"]],trio:[["Evil Zach","Drive-thru is closed. Full stop."]],squad:[["Evil Zach","I'll eat you ALL before my shift ends!"]]}];
+STORY_PARTY.outro[8]={solo:[["Evil Zach","Okay, okay. The bootleg respects you. A little."]],duo:[["Evil Zach","Ugh, you two actually did it. Keep the burgers, I'm going home."]],trio:[["Evil Zach","I'm going back to my drive-thru. Don't follow me."]],squad:[["Evil Zach","You beat the bootleg! The REAL Zach is gonna be so mad."]]};
+STORY_CAMEO.outro[8]=[["Zach","Wait, that was my knockoff? Ha. Burgers are on me, guys."]];
+const ZR_WIN=[["Evil Zach","Fine. You win. Honestly, the bootleg burgers tasted like cardboard."],["Evil Zach","Come back when you've got a real menu. And tip your server."]];
+
 /* ===== END NEW ATTACKS ===== */
 </script></body></html>
