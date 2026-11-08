@@ -3442,6 +3442,9 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'drivethru-switch',title:'Drive-Thru: Switch Lanes',date:'Nov 8, 2026',sub:'The Drive-Thru attack no longer lets you stand between the lanes.',items:[
+  ['CHANGED','Each belt is now a full band of burgers instead of a thin line. One open lane is marked in green with a marker at its entry end.'],
+  ['NEW','The open lane SWITCHES to the next belt mid-attack. The new lane glows green and the old one glows yellow about a second before it happens. Phase 1 has one switch, phase 2 two, phase 3 three, and they come faster.']]},
  {id:'zach-round2',title:'Evil Zach Rematch: Round Two',date:'Nov 8, 2026',sub:'Stronger, faster and meaner. The first fight comes back upgraded, and a storm rolls in.',items:[
   ['NEW','COUNTER STANCE: Zach raises his blade inside a silver ring. Shoot him during it and your own shots are reflected back at you, and he answers with a counter burst. Hold your fire and reposition.'],
   ['NEW','DOMAIN EXPANSION: FINAL ORDER. A dome closes over the arena. Stand inside a green window or you are pulled into his domain. Every character gets their own cutscene: a custom order, stamp and quote. If everyone makes it, the order is cancelled and he is stunned.'],
@@ -5813,11 +5816,25 @@ const ZRA={
  priceTags(b,t){zrName(b,'PRICE TAGS!','#ffe14a');X('warn');fx(['r',b.x,b.y,70,'#ffe14a']);const bx=b.x,by=b.y,rings=b.ph>=2?3:2;b.busy=rings*.72+.8;
   for(let w=0;w<rings;w++)zwarn({k:'o',x:bx,y:by,r:110,dur:.5+w*.7,wd:w%2?-1:1,col:ZR_YEL,fn:()=>{X('whoosh');const base=Math.atan2(t.y-by,t.x-bx)+w*PI/8;if(w===0)fx(['z','shock',bx,by,70,'255,225,80']);
    for(let k=0;k<10;k++){const a=base+k*PI/5;zbp(bx,by,a,280,{img:'ptag',sz:50,r:14,dmg:11,life:3.6,spin:w%2?-7:7,curve:w%2?-1.1:1.1,curveLife:.9,home:.7,homeT:.6})}}})},
- // DRIVE-THRU: three belts sweep across with burgers. The open belt has a green marker at its entry.
- driveThru(b){zrName(b,'DRIVE-THRU!');X('warn');const gap=Math.floor(R()*3),dir=R()<.5?1:-1,cnt=10+(b.ph||0)*2;b.busy=3.4;
-  ZR_ROWS.forEach((y,i)=>{const from=dir>0?-40:W+40,a=dir>0?0:PI;
-   if(i===gap){zwarn({k:'c',x:dir>0?50:W-50,y,r:30,dur:1.2,col:ZR_GRN});return}
-   zwarn({k:'l',x:from,y,a,r:W+80,wd:64,dur:.65+i*.28,col:ZR_YEL,fn:()=>{X('whoosh');for(let j=0;j<cnt;j++)drlTimer(j*.3,()=>zbp(from,y,a,310,{img:'burger',sz:52,r:15,dmg:12,life:4.5,spin:dir*5}))}})})},
+ // DRIVE-THRU 2.0, SWITCH LANES: each belt is a full band (as wide as a Heat Lamp band) of burgers streaming across, except ONE open lane,
+ // shown in green with a marker at its entry. Part-way through, the open lane SWITCHES to the next belt: the new open lane turns green and
+ // the old one turns yellow (about to go hot) a moment before it happens. Stand at the green marker, at the entry end of the open lane.
+ // One switch in phase 1, two in phase 2, three in phase 3, and the switches come faster. They only ever move one belt over.
+ driveThru(b){zrName(b,'DRIVE-THRU: SWITCH LANES!');X('warn');const ph=b.ph||0,sw=1+ph,L=[2.1,1.8,1.55][ph],dir=R()<.5?1:-1,from=dir>0?-40:W+40,a=dir>0?0:PI,ex=dir>0?50:W-50,lead=.7,total=lead+(sw+1)*L;
+  const next=g=>g===1?(R()<.5?0:2):1,plan=[Math.floor(R()*3)];for(let i=0;i<sw;i++)plan.push(next(plan[i]));
+  const st={open:plan[0],clear:-1,stop:false};b.busy=total+1.2;
+  // Opening warning: hot belts in yellow, the open one in green.
+  ZR_ROWS.forEach((y,i)=>zwarn({k:'l',x:0,y,a:0,r:W,wd:ZR_RH,dur:lead/1.1,col:i===st.open?ZR_GRN:ZR_YEL}));
+  // Every hot belt streams three staggered rows of burgers, so a belt is a wall rather than a single line.
+  const tick=()=>{if(st.stop)return;ZR_ROWS.forEach((y,i)=>{if(i===st.open||i===st.clear)return;for(let s=0;s<3;s++)drlTimer(s*.11,()=>zbp(from,y+(s-1)*44,a,320,{img:'burger',sz:56,r:16,dmg:12,life:4.8,spin:dir*5}))});drlTimer(.34,tick)};
+  const mark=()=>{if(st.stop)return;zwarn({k:'c',x:ex,y:ZR_ROWS[st.open],r:34,dur:.3/1.1,col:ZR_GRN});drlTimer(.3,mark)};
+  drlTimer(lead,tick);drlTimer(lead,mark);
+  for(let k=1;k<=sw;k++){const ts=lead+k*L,gOld=plan[k-1],gNew=plan[k];
+   // .9s before: the new lane glows green, the old one yellow. .6s before: the new lane stops streaming. Then the open lane moves.
+   drlTimer(ts-.9,()=>{X('warn');zwarn({k:'l',x:0,y:ZR_ROWS[gNew],a:0,r:W,wd:ZR_RH,dur:.9/1.1,col:ZR_GRN});zwarn({k:'l',x:0,y:ZR_ROWS[gOld],a:0,r:W,wd:ZR_RH,dur:.9/1.1,col:ZR_YEL});fx(['d',W/2,150,'SWITCHING...','#ffe94a',0])});
+   drlTimer(ts-.6,()=>{st.clear=gNew});
+   drlTimer(ts,()=>{st.open=gNew;st.clear=-1;X('whoosh');fx(['d',W/2,150,'SWITCH!','#7dff9a',1]);fx(['s',3])})}
+  drlTimer(total,()=>{st.stop=true})},
  // SATCHEL STRAT: a purple line shows the throw and a crosshair the size of the blast marks the landing. Phase 2 throws two, phase 3 three.
  satchel(b,t){zrName(b,'SATCHEL!','#ff7a2a');X('charge');const n=1+(b.ph>=1?1:0)+(b.ph>=2?1:0);b.busy=(n-1)*.4+2.5;
   for(let i=0;i<n;i++){const tg=i?(nearest(b.x,b.y)||t):t,a=Math.atan2(tg.y-b.y,tg.x-b.x),d=Math.max(60,dist(b.x,b.y,tg.x,tg.y)-30)+(i?rnd(-70,70):0),
