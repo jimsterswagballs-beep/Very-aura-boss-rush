@@ -24,7 +24,7 @@ const CH={cg:{n:'Coolguy15',hp:100,spd:230,i:['cgi1','cgi2'],w:['cgw1','cgw2'],a
  terry:{n:'Terry',hp:110,spd:240,i:['tI1','tI2'],w:['tW1','tW2'],ab:['Lucky Coin','Briefcase Bomb','Cash Shield'],dsc:['Flip 5 coins that bounce twice','Case hits 20, then cash burst','Block shots, fire them back'],wp:'Hustler. Hold click for a rapid-fire money gun.'},
  pat:{n:'Patrick',hp:150,spd:215,i:['pi1','pi2'],w:['pw1','pw2'],ab:['Pet Rocks','Sponge Squad','Eureka!'],dsc:['Rocks orbit and block shots. Press again to throw them','SpongeBob throws patties at the boss and heals allies','Burst + stones + BIG BRAIN: instant flops for 7 s'],wp:'Hold to charge a belly flop (full = BIG FLOP). Stand still to get rock-hard.'},
  adr:{n:'Adrian',hp:110,spd:235,i:['adi1','adi2'],w:['adw1','adw2'],ab:['Snap Trap','Decoy Echo','Gum Wall'],dsc:['Snap shut after 0.9s: 60 dmg, bosses take +25% for 4s','Decoy throws boomerangs at the boss for 5s','Sticky wall bounces boss shots back at 1.5x dmg'],wp:'Boomerang M1. Last Stand: rise once per boss for 15 s, faster.'},
- jam:{n:'Jameson Lee Cooper',hp:70,spd:240,i:['jmi1','jmi2'],w:['jmw1','jmw2'],ab:['Overproduction','Boom Squad','Hard Hats'],dsc:['Minion production is twice as fast for 7s, then you are exhausted and slowed for 2s','After a short windup, summon 3 kamikaze minions','Shield every sword, bow and medkit minion for 10 damage'],wp:'Charge 2.2s to summon a random minion: kamikaze, sword, bow or medkit. Every 1200 minion damage opens a Squad Upgrade on your side panel. F switches mode (SWARM, FORTRESS, OVERTIME), each with its own three abilities.'},bomb:{n:'Bomb Barry',hp:10,spd:235,i:['bbi1','bbi2'],w:['bbw1','bbw2'],ab:['Vent','Short Fuse','Detonate'],dsc:['Dump 40% heat into a steam cloud that burns the boss for 2.5s','Gain 20% heat and throw a bomb for 60 dmg','Detonate now: blast scales with heat, then stun and reset to 20%'],wp:'Fuse Lob: click to throw a bomb that explodes after 0.6s. Hits fill HEAT. At 100% he explodes for 2500 dmg and loses 10 HP, which is fatal. He has 10 HP and cannot heal.'}};
+ jam:{n:'Jameson Lee Cooper',hp:64,spd:232,i:['jmi1','jmi2'],w:['jmw1','jmw2'],ab:['Overproduction','Boom Squad','Hard Hats'],dsc:['Minion production is twice as fast for 7s, then you are exhausted and slowed for 2s','After a short windup, summon 3 kamikaze minions','Shield every sword, bow and medkit minion for 10 damage'],wp:'Charge 2.2s to summon a random minion: kamikaze, sword, bow or medkit. Each Squad Upgrade needs 500 more minion damage than the last (1400, 1900, 2400...) on your side panel. F switches mode (SWARM, FORTRESS, OVERTIME), each with its own three abilities.'},bomb:{n:'Bomb Barry',hp:10,spd:235,i:['bbi1','bbi2'],w:['bbw1','bbw2'],ab:['Vent','Short Fuse','Detonate'],dsc:['Dump 40% heat into a steam cloud that burns the boss for 2.5s','Gain 20% heat and throw a bomb for 60 dmg','Detonate now: blast scales with heat, then stun and reset to 20%'],wp:'Fuse Lob: click to throw a bomb that explodes after 0.6s. Hits fill HEAT. At 100% he explodes for 2500 dmg and loses 10 HP, which is fatal. He has 10 HP and cannot heal.'}};
 const SKINS=[
  {id:'cg-woman',name:'Coolgirl15',ch:'cg',price:350,i:['cgWomanI1','cgWomanI2'],w:['cgWomanW1','cgWomanW2']},
  {id:'cg-bald',name:'Bald Coolguy15',ch:'cg',price:150,i:['cgBaldI1','cgBaldI2'],w:['cgBaldW1','cgBaldW2']},
@@ -390,7 +390,7 @@ function drawEvilZachUltimate(now,netU){
 }
 const FIN_QUOTE={cg:'"NOT SO COOL NOW."',zach:'"THE ORIGINAL WINS."',jay:'"SNACK TIME IS OVER."',terry:'"THE HOUSE ALWAYS WINS."',pat:'"BIG BRAIN, SMALL TIME."',adr:'"SNAPPED SHUT."',jam:'"PRODUCTION HALTED."',bomb:'"HEAT CHECK FAILED."'};
 function drawBlackFlashCutscene(c,now){
- if(!c)return;if(c.kind==='domain'){drawDomainCutscene(c,now);return}const t=c.t||0,dur=c.dur||3.25,x=c.x||W/2,y=c.y||H/2,sec=now/1000,beat=Math.floor(t*24),fin=!!c.finisher;
+ if(!c)return;if(c.kind==='domain'){drawDomainCutscene(c,now);return}if(c.kind==='party'){drawPartyCutscene(c,now);return}const t=c.t||0,dur=c.dur||3.25,x=c.x||W/2,y=c.y||H/2,sec=now/1000,beat=Math.floor(t*24),fin=!!c.finisher;
  const attacker=IM[c.aImg]||IM.ez,target=IM[c.tImg]||IM[((CH[c.targetCh]||CH.cg).i)[0]];
  g.save();g.fillStyle='#030208';g.fillRect(0,0,W,H);
  // Manga gutters and asymmetric panels close around the instant of contact.
@@ -439,7 +439,7 @@ function drawBlackFlashCutscene(c,now){
  g.restore();
 }
 function drawBlackFlashAfter(a,now){
- if(!a)return;if(a.kind==='domain'){drawDomainAfter(a,now);return}const u=cl((a.t||0)/(a.dur||1.3),0,1),k=1-u,sec=now/1000,x=a.x||W/2,y=a.y||H/2,fin=!!a.fin;
+ if(!a)return;if(a.kind==='domain'||a.kind==='party'){drawDomainAfter(a,now);return}const u=cl((a.t||0)/(a.dur||1.3),0,1),k=1-u,sec=now/1000,x=a.x||W/2,y=a.y||H/2,fin=!!a.fin;
  g.save();
  // Dark letterbox bands sit over the arena, then slowly retract.
  g.fillStyle='rgba(0,0,0,'+(.55*k*k)+')';g.fillRect(0,72,W,H-144);
@@ -958,23 +958,23 @@ const JM_SPR=['jmKami','jmSword','jmBow','jmMed'];
 const jamMods=o=>o&&o.m?o.m:{dmg:1,pierce:0,multi:0,size:1};
 const jamCount=pid=>(S.jm||[]).filter(m=>m.pid===pid&&!m.dead&&!m.gone).length;
 // ===== JAMESON SQUAD UPGRADES =====
-// Every 1200 damage dealt by his minions opens a side panel with 3 random squad upgrades. Pick one, the rest stay on the offer.
+// Every 1400 damage dealt by his minions opens a side panel with 3 random squad upgrades. Pick one, the rest stay on the offer.
 const JUP0={cap:0,dmg:1,hp:1,sh:0,spd:1,cast:1,heal:1,rez:.5,blast:1,life:30};
 const JAM_UP=[
  {n:'Bigger Squad',d:'+2 max minions',f:u=>{u.cap+=2}},
- {n:'Heavy Hands',d:'Minion damage +25%',f:u=>{u.dmg*=1.25}},
- {n:'Tough Stuff',d:'Minions have +30% HP',f:u=>{u.hp*=1.3}},
- {n:'Shield Drills',d:'Minions spawn with a 12 HP shield',f:u=>{u.sh+=12}},
+ {n:'Heavy Hands',d:'Minion damage +20%',f:u=>{u.dmg*=1.2}},
+ {n:'Tough Stuff',d:'Minions have +25% HP',f:u=>{u.hp*=1.25}},
+ {n:'Shield Drills',d:'Minions spawn with a 10 HP shield',f:u=>{u.sh+=10}},
  {n:'Quick Feet',d:'Minions move 20% faster',f:u=>{u.spd*=1.2}},
- {n:'Fast Factory',d:'Summon casts 20% faster',f:u=>{u.cast*=.8}},
+ {n:'Fast Factory',d:'Summon casts 15% faster',f:u=>{u.cast*=.85}},
  {n:'Field Medics',d:'Medkits heal 60% more',f:u=>{u.heal*=1.6}},
  {n:'Second Life',d:'Medkits revive at 75% HP',f:u=>{u.rez=.75}},
- {n:'Big Boom',d:'Kamikaze blast radius +35%',f:u=>{u.blast*=1.35}},
- {n:'Long Shifts',d:'Minions last 10s longer',f:u=>{u.life+=10}}];
+ {n:'Big Boom',d:'Kamikaze blast radius +30%',f:u=>{u.blast*=1.3}},
+ {n:'Long Shifts',d:'Minions last 8s longer',f:u=>{u.life+=8}}];
 let JSRC=0;
-const jst=p=>{if(!S.jup)S.jup={};return S.jup[p.id]||(S.jup[p.id]={...JUP0,offers:[],jdmg:0,jNext:1200})};
+const jst=p=>{if(!S.jup)S.jup={};return S.jup[p.id]||(S.jup[p.id]={...JUP0,offers:[],jdmg:0,jNext:1400,jGap:1400})};
 const jU=o=>o&&o.ch==='jam'?jst(o):JUP0;
-function jamAdd(p,v){const u=jst(p);u.jdmg+=v;if(u.jdmg>=u.jNext){u.jNext+=1200;jamOffer(p)}}
+function jamAdd(p,v){const u=jst(p);u.jdmg+=v;if(u.jdmg>=u.jNext){u.jGap+=500;u.jNext+=u.jGap;jamOffer(p)}}
 function jamOffer(p){const pool=JAM_UP.map((_,i)=>i),pick=[];while(pick.length<3&&pool.length)pick.push(pool.splice(Math.floor(R()*pool.length),1)[0]);jst(p).offers.push(pick);X('power');fx(['r',p.x,p.y,80,'#b06bff']);fx(['d',p.x,p.y-60,'SQUAD UPGRADE','#d9b8ff',0])}
 function jamPick(p,i){if(!p||p.ch!=='jam')return;const u=jst(p),o=u.offers[0];if(!o||!(i>=0&&i<o.length))return;JAM_UP[o[i]].f(u);u.offers.shift();X('power');fx(['r',p.x,p.y,90,'#b06bff']);fx(['d',p.x,p.y-50,JAM_UP[o[i]].n,'#d9b8ff',0])}
 // Damage from minions goes through here: scales by squad damage and counts toward offers.
@@ -1984,17 +1984,23 @@ Object.assign(A,{
 });
 ATK[5][0].push('foulBall');ATK[5][1].push('foulBall','sauceFastball');ATK[5][2].push('vertPitch','sauceFastball');
 // ===== END v17 FELLA =====
-/* ===== BOSS 8: DARREL, THE BIRTHDAY BOY (v19 REMAKE) =====
-   Darrel is a party that never sits still. He hops between spots, announces every attack by name, and every attack is
-   telegraphed first. Each attack adds SUGAR: when the meter is full he trips into a SUGAR CRASH, lies dizzy on the floor
-   and takes bonus damage (see dmgB). Phase 1 = Party Starter (flops, iPad tag, showers, horn, goo, zoomies).
-   Phase 2 = Cake Time (adds candle rings, twirl, pinata, cake drops, the disco floor). Phase 3 = Wild Party (chain flops,
-   balloons, conga lines and the Birthday Finale). All tuning numbers live in DRL and in the attack bodies below. */
-const DRL={crashMul:1.35,crash:[2.8,2.5,2.2],sugarMax:6,cd:[1.4,1.15,.9],hop:[1.25,1.0,.85]};
-const DARREL_INTRO=[["Darrel","HIIII! You came! Nobody ever comes to my birthday! ...I never told anyone it was my birthday."],["Darrel","Okay, rules! Dodge the stuff, don't touch the stuff. If you see a lollipop, that's a feeling. ...It's also a weapon."]];
-const DARREL_PHASE=[[["Darrel","Ow! My sprinkles! ...Wait, I have MORE sprinkles. CAKE TIME!"]],[["Darrel","I had eleven cupcakes and now I can hear colors. WILD PARTY MODE, GO GO GO!"]]];
-const DARREL_OUTRO=[["Darrel","Nooo, my— *trips over own shoelace* ...that was on purpose. Best. Birthday. EVER!"]];
-const DARREL_WIN=[["Darrel","We did it! Everybody gets cake! Except the cake. The cake is fine. The cake is NOT fine. Run."],["Darrel","Come back next year! Same cake, different me!"]];
+/* ===== BOSS 8: DARREL, THE BIRTHDAY BOY (v20 PARTY GAMES) =====
+   Every move is a party game with its own rule, not just a pattern of bullets:
+   RED LIGHT GREEN LIGHT (freeze: don't move on red, his bullets freeze too), MUSICAL CHAIRS (chase moving safe spots),
+   PASS THE PARCEL (touch a gift to throw the blast back at HIM), BALLOON PUMP (growing balloons drift after you),
+   CUT THE CAKE (safe slices that rotate), BLOW OUT THE CANDLES (wind shoves you into the flames), DARREL SAYS (memorise a
+   colour sequence), THE FLOOR IS LAVA (the safe floor shrinks), PIN THE TAIL (he leads your movement), PINBALL PARTY (bumpers
+   deflect his balls and make cover), JUMP ROPE (a spinning rope around a safe hub) and PARTY GAME MEDLEY (the finale).
+   SURPRISE PARTY is the special one: the lights go out, party poppers charge in the dark, and if one of them hits you a
+   cutscene plays. Dodge them all and the surprise is ruined: he crashes.
+   Each move adds SUGAR. When the meter is full he trips into a SUGAR CRASH and takes bonus damage (see dmgB).
+   Phase 1 = Party Starter, phase 2 = Cake Time (adds Simon, lava, tail, pinball and the surprise), phase 3 = Wild Party (adds
+   jump rope and the finale). Tuning lives in DRL and in the move bodies below. */
+const DRL={crashMul:1.35,crash:[2.8,2.5,2.2],sugarMax:6,cd:[1.4,1.15,.9],hop:[1.25,1.0,.85],surpriseDmg:30,surpriseEvery:[0,42,34],surpriseCd:[0,12,10],parcelDmg:.025};
+const DARREL_INTRO=[["Darrel","PARTY GAMES! I made a whole list. Rule one: no cheating. Rule two: I cheat."],["Darrel","Fair warning: some games hurt. Some games hurt a LOT. And one of them is a surprise. Ssh."]];
+const DARREL_PHASE=[[["Darrel","Okay okay OKAY! New games! Simon says I'm winning."]],[["Darrel","Final round! The floor is lava, the cake is a lie, and I have a rope!"]]];
+const DARREL_OUTRO=[["Darrel","You beat all my games?! Nobody ever beats my games. ...Best. Birthday. EVER!"]];
+const DARREL_WIN=[["Darrel","We played ALL the games! Everybody wins! ...Except me, I lost. That's fine!"],["Darrel","Come back next year! Same games, different rules!"]];
 const DRL_WORDS=['BOING!','HIII!','WHEEE!','TA-DA!','HEHE!','BOOP!','BANANA!','ZOOM!','SURPRISE!','CAKE!'];
 const DRL_COL=['#ffe94a','#ff7ab8','#7dfcff','#ff9a3c','#b98cff','#7dff9a'];
 const drlCol=k=>DRL_COL[k%DRL_COL.length];
@@ -2005,12 +2011,17 @@ function drlName(b,s,c){fx(['d',b.x,b.y-112,s,c||'#ffe94a',0])}
 function drlBurst(b){fx(['d',b.x,b.y-104,DRL_WORDS[Math.floor(R()*DRL_WORDS.length)],'#ffe94a',0])}
 // Timers ride on the warning list, so a phase change or a death wipes them together with every telegraph.
 function drlTimer(d,fn){S.wr.push({t:0,dur:Math.max(.001,d),k:'dn',x:0,y:0,r:0,a:0,fn})}
+// Players' speed and smoothed velocity, measured every frame (Red Light reads the speed, Pin the Tail leads the velocity).
+function drlTrack(dt){alive().forEach(p=>{if(p._tx==null){p._tx=p.x;p._ty=p.y;p.vxs=0;p.vys=0;p.spd=0}const k=Math.max(dt,.001),vx=(p.x-p._tx)/k,vy=(p.y-p._ty)/k;p.vxs+=(vx-p.vxs)*Math.min(1,dt*10);p.vys+=(vy-p.vys)*Math.min(1,dt*10);p.spd=Math.hypot(vx,vy);p._tx=p.x;p._ty=p.y})}
 /* ---- Darrel telegraphs ----
    Every Darrel warning goes through dwarn(). Circles pop in with a bounce and a spinning dashed ring, lines become marching
-   party stripes with an arrowhead, cones show a dashed arc with sparkles, and 'dr' draws a dance-floor tile (a=1 means a SAFE tile).
-   'dn' is an invisible timer. Warning colors are 'R,G,B' strings (warnings); fx colors stay hex (rings and particles). */
-const DRL_RGB=['255,233,74','255,122,184','125,252,255','255,154,60','185,140,255','125,255,154'];
+   party stripes with an arrowhead, cones show a dashed arc with sparkles, 'dr' draws a floor tile (a=1 SAFE, a=2 LAVA, a=3 a big
+   colour quadrant), and 'dm' is a long-lived MARKER (a=0 ring, a=1 growing disc, wd=1 adds a countdown sweep) that moves, grows and is
+   removed with drlKill. 'dn' is an invisible timer. Warning colours are 'R,G,B' strings (warnings); fx colours stay hex. */
+const DRL_RGB=['255,233,74','255,122,184','125,252,255','255,154,60','185,140,255','125,255,154'],DRL_RED='255,70,90';
 function dwarn(o){const k=o.k==='l'?'dl':o.k==='s'?'ds':(o.k||'dc');return warn(Object.assign({col:DRL_RGB[0]},o,{k}))}
+function drlMark(o){dwarn(Object.assign({k:'dm',a:0,col:DRL_RGB[0],dur:60},o));return S.wr[S.wr.length-1]}
+function drlKill(w){if(w){w.fn=null;w.dur=.001;w.t=1}}
 function drlPop(q){const c1=1.70158,c3=c1+1,x=cl(q,0,1);return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)}
 function drawDarrelWarn(k,x,y,a,r,p,img,col,wd){
  const tt=performance.now()/1000,c=col||DRL_RGB[0],e=drlPop(p);
@@ -2040,12 +2051,25 @@ function drawDarrelWarn(k,x,y,a,r,p,img,col,wd){
   if(a===1){
    g.strokeStyle='rgba('+c+','+(.25+.25*Math.sin(tt*8)).toFixed(3)+')';g.lineWidth=2;g.strokeRect(x-hw+5,y-hh+5,hw*2-10,hh*2-10);
    g.fillStyle='rgba('+c+',.07)';g.fillRect(x-hw+5,y-hh+5,hw*2-10,hh*2-10);
+  }else if(a===2){
+   g.fillStyle='rgba('+c+','+(.34+.12*Math.sin(tt*6+x*.03+y*.02)).toFixed(3)+')';g.fillRect(x-hw+2,y-hh+2,hw*2-4,hh*2-4);
+   g.strokeStyle='rgba(255,220,120,.75)';g.lineWidth=2;g.strokeRect(x-hw+3,y-hh+3,hw*2-6,hh*2-6);
+   for(let i=0;i<3;i++){const bx=x-hw+14+((i*37+tt*20)%(hw*2-28)),by=y-hh+10+((i*29+tt*14)%(hh*2-20));g.fillStyle='rgba(255,230,140,.55)';g.beginPath();g.arc(bx,by,3,0,PI*2);g.fill()}
+  }else if(a===3){
+   g.fillStyle='rgba('+c+','+(.16+.24*(.5+.5*Math.sin(tt*10))).toFixed(3)+')';g.fillRect(x-hw+3,y-hh+3,hw*2-6,hh*2-6);g.strokeStyle='rgba('+c+',.95)';g.lineWidth=5;g.strokeRect(x-hw+4,y-hh+4,hw*2-8,hh*2-8);
   }else{
    const fl=p>.82&&Math.sin(tt*60)>0?.35:0;
    g.fillStyle='rgba('+c+','+(.12+.3*p+fl).toFixed(3)+')';g.fillRect(x-hw+2,y-hh+2,hw*2-4,hh*2-4);
    g.strokeStyle='rgba('+c+','+(.5+.4*p).toFixed(3)+')';g.lineWidth=3;g.setLineDash([12,8]);g.lineDashOffset=-tt*90;g.strokeRect(x-hw+4,y-hh+4,hw*2-8,hh*2-8);g.setLineDash([]);
    const q=1-p;g.strokeStyle='rgba(255,255,255,'+(.3+.4*p).toFixed(3)+')';g.lineWidth=2;g.strokeRect(x-hw*q,y-hh*q,hw*2*q,hh*2*q);
   }
+ }else if(k==='dm'){
+  const pulse=.5+.5*Math.sin(tt*8),rr=Math.max(4,r),grow=a===1;
+  const gr=g.createRadialGradient(x,y,rr*.1,x,y,rr);gr.addColorStop(0,'rgba('+c+','+(grow?.3:.1)+')');gr.addColorStop(.9,'rgba('+c+','+(grow?.22:.14)+')');gr.addColorStop(1,'rgba('+c+',0)');
+  g.fillStyle=gr;g.beginPath();g.arc(x,y,rr,0,PI*2);g.fill();
+  g.strokeStyle='rgba('+c+','+(.7+.25*pulse).toFixed(3)+')';g.lineWidth=3;g.beginPath();g.arc(x,y,rr,0,PI*2);g.stroke();
+  g.setLineDash([10,8]);g.lineDashOffset=-tt*70;g.strokeStyle='rgba(255,255,255,.35)';g.lineWidth=2;g.beginPath();g.arc(x,y,rr*.82,0,PI*2);g.stroke();g.setLineDash([]);
+  if(wd===1){g.strokeStyle='rgba(255,255,255,.95)';g.lineWidth=5;g.beginPath();g.arc(x,y,rr+7,-PI/2,-PI/2+PI*2*cl(p,0,1));g.stroke()}
  }else if(k==='ds'){
   const half=wd||.5;
   drawWarnCone(x,y,a,r,half,p,c);
@@ -2054,13 +2078,14 @@ function drawDarrelWarn(k,x,y,a,r,p,img,col,wd){
   for(let i=0;i<5;i++){const an=a-half+(i+.5)*2*half/5,rr=r*(.45+.45*((tt*1.4+i*.2)%1));g.fillStyle='rgba('+c+','+(.7*p).toFixed(3)+')';g.beginPath();g.arc(x+Math.cos(an)*rr,y+Math.sin(an)*rr,2.5,0,PI*2);g.fill()}
  }
  g.restore();
+ if(img&&k==='dm'){const s=a===1?r*2*.92:Math.min(90,r*1.5);spr(img,x,y+Math.sin(tt*5+x)*2,s,0,1,1,1)}
  if(img&&k==='dc'){const s=Math.max(2,Math.min(64,r*1.5)*e),bob=Math.sin(tt*6)*3*p;spr(img,x,y-(1-e)*16+bob,s,Math.sin(tt*4)*.15*p,1,1,Math.min(1,p*3))}
 }
 // Bubbles that set pop:1 burst through popFn. Any other popping bubble (Evil Spong's) bursts into a small ring.
 // This used to call itself forever when popFn was missing, which crashed boss 3.
 function popBurst(q){if(q.popFn){q.popFn(q);return}X('pop');fx(['r',q.x,q.y,46,'#4df2ff']);fx(['p',q.x,q.y,8,'#4df2ff',180,.4,4]);for(let k=0;k<6;k++)bp(q.x,q.y,k*PI/3+(q.rot||0),160,{img:q.img||'bubble3',sz:34,r:11,dmg:9,life:1.4,spin:3})}
 
-// Procedural sprites for the new props (canvases work with spr()). Built once, the first time Darrel steps.
+// Procedural sprites for the props (canvases work with spr()). Built once, the first time Darrel steps or his arena draws.
 function drlSprites(){if(IM.dBalloon)return;
  IM.dBalloon=zrSprite(96,112,c=>{c.strokeStyle='rgba(255,255,255,.7)';c.lineWidth=2;c.beginPath();c.moveTo(0,34);c.quadraticCurveTo(-8,46,0,54);c.stroke();
   c.beginPath();c.ellipse(0,-6,31,38,0,0,PI*2);c.fillStyle='#ff4f8b';c.fill();c.lineWidth=3;c.strokeStyle='#7a1038';c.stroke();
@@ -2073,164 +2098,301 @@ function drlSprites(){if(IM.dBalloon)return;
   c.fillStyle='#ff7ab8';c.fillRect(-44,-18,88,14);c.strokeRect(-44,-18,88,14);
   for(let i=0;i<5;i++){c.beginPath();c.arc(-32+i*16,-4,6,0,PI);c.fillStyle='#ff7ab8';c.fill()}
   c.beginPath();c.arc(0,-28,9,0,PI*2);c.fillStyle='#ff2a4a';c.fill();c.stroke();
-  c.fillStyle='#7dfcff';c.fillRect(-4,-56,8,22);c.beginPath();c.ellipse(0,-62,5,8,0,0,PI*2);c.fillStyle='#ffe94a';c.fill()})}
+  c.fillStyle='#7dfcff';c.fillRect(-4,-56,8,22);c.beginPath();c.ellipse(0,-62,5,8,0,0,PI*2);c.fillStyle='#ffe94a';c.fill()});
+ // A chair for Musical Chairs.
+ IM.dChair=zrSprite(96,96,c=>{c.lineWidth=4;c.strokeStyle='#4a2a10';c.fillStyle='#d9a14a';c.fillRect(-20,-40,40,40);c.strokeRect(-20,-40,40,40);c.fillStyle='#e8b45c';c.fillRect(-26,0,52,14);c.strokeRect(-26,0,52,14);
+  c.fillStyle='#4a2a10';c.fillRect(-24,14,6,30);c.fillRect(18,14,6,30);c.fillStyle='rgba(255,255,255,.35)';c.fillRect(-16,-36,10,28)});
+ // A wrapped present for Pass the Parcel.
+ IM.dGift=zrSprite(96,96,c=>{c.lineWidth=4;c.strokeStyle='#5a1a3a';c.fillStyle='#ff5fa0';c.fillRect(-32,-14,64,46);c.strokeRect(-32,-14,64,46);c.fillStyle='#ff8cbf';c.fillRect(-36,-28,72,16);c.strokeRect(-36,-28,72,16);
+  c.fillStyle='#ffe94a';c.fillRect(-6,-28,12,60);c.beginPath();c.ellipse(-12,-36,12,8,-.4,0,PI*2);c.ellipse(12,-36,12,8,.4,0,PI*2);c.fill();c.stroke()});
+ // A pinball bumper.
+ IM.dBumper=zrSprite(96,96,c=>{c.beginPath();c.arc(0,0,40,0,PI*2);c.fillStyle='#5b2fb0';c.fill();c.lineWidth=5;c.strokeStyle='#d9c2ff';c.stroke();c.beginPath();c.arc(0,0,22,0,PI*2);c.fillStyle='#b98cff';c.fill();c.lineWidth=3;c.strokeStyle='#fff';c.stroke();
+  c.fillStyle='#fff';c.beginPath();c.moveTo(0,-12);c.lineTo(4,-3);c.lineTo(14,-3);c.lineTo(6,3);c.lineTo(9,13);c.lineTo(0,7);c.lineTo(-9,13);c.lineTo(-6,3);c.lineTo(-14,-3);c.lineTo(-4,-3);c.closePath();c.fill()});
+ // A party popper.
+ IM.dPopper=zrSprite(96,96,c=>{c.beginPath();c.moveTo(-30,34);c.lineTo(10,-26);c.lineTo(26,-10);c.closePath();c.fillStyle='#ffd23a';c.fill();c.lineWidth=4;c.strokeStyle='#7a4a00';c.stroke();
+  c.strokeStyle='#ff4f8b';c.lineWidth=5;c.beginPath();c.moveTo(-18,20);c.lineTo(6,0);c.stroke();[['#ff4f8b',26,-34],['#4fd1ff',38,-14],['#7dff9a',14,-42],['#b98cff',40,-30]].forEach(([col,x,y])=>{c.fillStyle=col;c.fillRect(x-4,y-4,8,8)})});
+ // A pushpin for Pin the Tail.
+ IM.dPin=zrSprite(96,96,c=>{c.lineWidth=4;c.strokeStyle='#5a0a10';c.beginPath();c.moveTo(-8,8);c.lineTo(-34,36);c.stroke();c.fillStyle='#ff3b4f';c.beginPath();c.arc(4,-8,20,0,PI*2);c.fill();c.stroke();c.fillStyle='#ff3b4f';c.fillRect(-12,2,28,10);c.strokeRect(-12,2,28,10);c.fillStyle='rgba(255,255,255,.55)';c.beginPath();c.arc(-2,-14,6,0,PI*2);c.fill()})}
 
-/* ---- Dance-floor grid: 8 x 5 tiles. The arena draws the same grid, so the disco attacks line up with it. ---- */
+/* ---- Dance-floor grid: 8 x 5 tiles. The arena draws the same grid, and Lava uses it. ---- */
 const DRL_GX=8,DRL_GY=5,DRL_CW=120,DRL_CH=78,DRL_Y0=150;
 const drlCell=(cx,cy)=>({x:cx*DRL_CW+DRL_CW/2,y:DRL_Y0+cy*DRL_CH+DRL_CH/2});
-// A tile hurts when the player's center is inside it, so what you see is what you get.
-function drlHitRect(x,y,w,h,dmg){alive().forEach(p=>{if(Math.abs(p.x-x)<=w/2&&Math.abs(p.y-y)<=h/2)hitP(p,dmg)})}
-function drlRay(x,y,a,max){let L=max;const dx=Math.cos(a),dy=Math.sin(a);while(L>70){const ex=x+dx*L,ey=y+dy*L;if(ex>=70&&ex<=890&&ey>=150&&ey<=450)break;L-=15}return L}
-// A hop target that is not on top of him and keeps a comfortable distance from the nearest player.
+// A hop target that is not on top of him and keeps a comfortable distance from the nearest player (his wandering between games).
 function drlSpot(near){let best=null,bs=-1e9;for(let i=0;i<8;i++){const c={x:rnd(110,850),y:rnd(175,430)};let s=Math.min(260,dist(c.x,c.y,S.bs.x,S.bs.y))*.3+rnd(0,40);if(near)s-=Math.abs(dist(c.x,c.y,near.x,near.y)-260)*.5;if(s>bs){bs=s;best=c}}return best}
-// Ring of projectiles with one safe gap, shown as a green cone before it fires.
-function drlGapRing(x,y,n,sp,tele){const ga=rnd(0,PI*2);X('windup');
- dwarn({x,y,r:150,dur:tele,col:DRL_RGB[0]});dwarn({x,y,k:'s',a:ga,r:430,wd:.4,dur:tele,col:DRL_RGB[5]});
- drlTimer(tele*1.1,()=>{X('ring');fx(['r',x,y,90,'#ffe94a']);fx(['s',5]);drlSparkle(x,y,14,60);const off=rnd(0,PI);
-  for(let k=0;k<n;k++){const a=off+k*2*PI/n;if(ang2(a,ga)<.4)continue;bp(x,y,a,sp,{img:k%2?'dIpad':'dHappy',sz:k%2?48:44,r:14,dmg:11,life:5,spin:k%2?4:-4})}})}
-// Dance floor: hot tiles light up and flash, green outlines mark the safe ones. kind = checker | cols | rows | plus.
-function drlFloor(kind,flip,dur,tg){
- const pcx=cl(Math.floor(tg.x/DRL_CW),0,DRL_GX-1),pcy=cl(Math.floor((tg.y-DRL_Y0)/DRL_CH),0,DRL_GY-1);X('warn');
- for(let cy=0;cy<DRL_GY;cy++)for(let cx=0;cx<DRL_GX;cx++){
-  const hot=kind==='checker'?((cx+cy+flip)%2===0):kind==='cols'?((cx+flip)%2===0):kind==='rows'?((cy+flip)%2===0):(cx===pcx||cy===pcy),c=drlCell(cx,cy);
-  if(hot)dwarn({k:'dr',x:c.x,y:c.y,r:DRL_CW,wd:DRL_CH,dur,col:DRL_RGB[(cx+cy)%2?1:4],fn:()=>{drlHitRect(c.x,c.y,DRL_CW-8,DRL_CH-8,14);fx(['r',c.x,c.y,34,'#ff7ab8']);if((cx*7+cy*3)%3===0)fx(['p',c.x,c.y,5,drlCol(cx+cy),200,.5,5,'spark'])}});
-  else dwarn({k:'dr',a:1,x:c.x,y:c.y,r:DRL_CW,wd:DRL_CH,dur,col:DRL_RGB[5]})}
- drlTimer(dur*1.1,()=>{X('boom');fx(['s',5])})}
-function drlBalloonPop(q){X('pop');fx(['p',q.x,q.y,12,'#ff7ab8',240,.5,5]);drlPunch(q.x,q.y,40,'#ff7ab8');for(let j=0;j<6;j++)bp(q.x,q.y,j*PI/3+rnd(0,1),170,{img:'dHappy',sz:34,r:10,dmg:7,life:1.8,spin:6})}
-// iPads fly out, hang a moment, then come back to wherever Darrel is standing now.
-function drlBoomerang(q,dt){q.bt+=dt;if(q.bt<.85)return;const bb=S.bs;if(!bb||bb.hp<=0){q.life=0;return}
- const dx=bb.x-q.x,dy=bb.y-q.y,d=Math.hypot(dx,dy);if(d<40){q.life=0;fx(['p',q.x,q.y,6,'#7dfcff',160,.35,4,'spark']);return}
- const sp=Math.min(420,200+(q.bt-.85)*320);q.vx=dx/d*sp;q.vy=dy/d*sp}
+// Red Light: his bullets stop dead (harmless statues, the engine's own freeze flag) while the light is red, then carry on at green.
+function drlFreeze(q,dt){const b=S.bs;if(!b)return;if(b.light===3){if(!q.fz){q.fz=1;q.ox=q.vx;q.oy=q.vy}q.frz=1;q.vx=0;q.vy=0}else if(q.fz){q.fz=0;q.frz=0;q.vx=q.ox;q.vy=q.oy}}
+// Pinball: balls bounce off the walls (the engine's bounce) and off the bumpers, speeding up a little each time.
+function drlBall(q,dt){for(const m of (S.drlBump||[])){const dx=q.x-m.x,dy=q.y-m.y,d=Math.hypot(dx,dy),rr=m.r+q.r*.9;if(d<rr&&d>0){const nx=dx/d,ny=dy/d,dot=q.vx*nx+q.vy*ny;if(dot<0){q.vx-=2*dot*nx;q.vy-=2*dot*ny;const sp=Math.hypot(q.vx,q.vy),ns=Math.min(470,sp*1.08);q.vx*=ns/sp;q.vy*=ns/sp;fx(['p',q.x,q.y,5,'#b98cff',160,.3,4,'spark']);X('pop')}q.x=m.x+nx*rr;q.y=m.y+ny*rr}}}
+// Pin the Tail: where he thinks you will be when the pin lands.
+function drlLeadPos(pin){const p=pin.p;pin.x=cl(p.x+(p.vxs||0)*pin.lead,60,W-60);pin.y=cl(p.y+(p.vys||0)*pin.lead,125,H-70)}
+function drlPinLand(b,pin){const x=pin.w?pin.w.x:pin.x,y=pin.w?pin.w.y:pin.y;X('boom');boom(x,y,52,18,'b','#ff9a3c');fx(['z','shock',x,y,70,'255,154,60']);
+ drlMark({k:'dm',x,y,r:98,wd:1,dur:1.25/1.1,col:DRL_RGB[3],img:'dPin'});
+ drlTimer(1.25,()=>{X('boom');boom(x,y,98,14,'b','#ff9a3c');fx(['z','shock',x,y,110,'255,154,60']);for(let j=0;j<6;j++)bp(x,y,j*PI/3,170,{img:'dLoli',sz:36,r:11,dmg:8,life:1.8,spin:5})})}
 
-// Attack table: sugar added when the attack starts. Heavy attacks add 2, the finale fills the meter.
-const DRL_META={bellyFlop:2,ipadBoomerang:1,curtain:1,partyHorn:1,goo:1,zoomies:1,ringGap:1,twirl:2,pinata:1,cakeDrop:2,discoFloor:2,balloons:1,conga:2,finale:6};
+// Attack table: sugar added when the move starts. Heavy moves add 2, the finale fills the meter.
+const DRL_META={redLight:1,chairs:2,parcel:1,balloonPump:1,cakeCut:2,candleBlow:1,simon:2,lava:2,tailPin:1,pinball:1,jumpRope:2,surprise:2,finale:6};
 const DRL_POOL=[
- ['bellyFlop','ipadBoomerang','curtain','partyHorn','goo','zoomies'],
- ['bellyFlop','ipadBoomerang','curtain','partyHorn','goo','zoomies','ringGap','twirl','pinata','cakeDrop','discoFloor'],
- ['bellyFlop','ipadBoomerang','curtain','partyHorn','goo','zoomies','ringGap','twirl','pinata','cakeDrop','discoFloor','balloons','conga','finale']];
+ ['redLight','chairs','parcel','balloonPump','cakeCut','candleBlow'],
+ ['redLight','chairs','parcel','balloonPump','cakeCut','candleBlow','simon','lava','tailPin','pinball'],
+ ['redLight','chairs','parcel','balloonPump','cakeCut','candleBlow','simon','lava','tailPin','pinball','jumpRope','finale']];
 
+// Colour quadrants for Darrel Says: index = (x<480?0:1)+(y<305?0:2).
+const DRL_Q=[{x:240,y:207,c:'255,70,90',n:'RED'},{x:720,y:207,c:'255,225,76',n:'YELLOW'},{x:240,y:402,c:'90,160,255',n:'BLUE'},{x:720,y:402,c:'125,255,154',n:'GREEN'}];
+const DRL_GIFT={cg:'GIFT: A BRICK. A COOL BRICK.',zach:'GIFT: THE REAL BIRTHDAY. NOT THE BOOTLEG.',jay:'GIFT: INFINITE SNACKS. ALL OF THEM ARE CAKE.',terry:'GIFT: SNAKE EYES. HAPPY BIRTHDAY.',pat:'GIFT: A CALCULATOR. IT SAYS ZERO.',adr:'GIFT: A SNAP-TRAP PARTY FAVOR.',jam:'GIFT: A SURPRISE PARTY. DIRECTED BY DARREL.',bomb:'GIFT: ONE (1) BALLOON. PLEASE DO NOT POP.'};
+
+// Each move below only STARTS a game by creating b.act; the matching DRZ handler runs it every frame until it clears b.act.
 const DRLA={
- // BELLY FLOP: Darrel leaps high and lands on the marked circle. Later phases chain two or three flops.
- bellyFlop(b,t){const n=1+(b.ph>=1?1:0)+(b.ph>=2?1:0),fd=.82-(b.ph||0)*.05;b.busy=n*(fd*1.1+.65)+.25;drlName(b,'BELLY FLOP!');
-  const go=i=>{const tg=nearest(b.x,b.y)||t,to={x:cl(tg.x,110,850),y:cl(tg.y,175,435)};X('charge');
-   dwarn({x:to.x,y:to.y,r:80,dur:fd,col:DRL_RGB[0]});
-   drlHop(b,to,fd*1.1,bb=>{X('boom');boom(bb.x,bb.y,80,15,'b','#ffe94a');fx(['z','shock',bb.x,bb.y,110,'255,233,74']);fx(['s',8]);drlSparkle(bb.x,bb.y,14,60);
-    const m=6+(b.ph||0)*2,off=rnd(0,PI);for(let k=0;k<m;k++)bp(bb.x,bb.y,off+k*2*PI/m,210,{img:'dHappy',sz:44,r:13,dmg:9,life:3.2,spin:k%2?4:-4});
-    if(i+1<n)drlTimer(.5,()=>go(i+1))},.5)};
-  go(0)},
- // IPAD TAG: a fan of iPads goes out and comes back to him, so the dodge is out AND back.
- ipadBoomerang(b,t){const n=3+(b.ph||0),a0=Math.atan2(t.y-b.y,t.x-b.x),sp=.34;drlName(b,'IPAD TAG!','#7dfcff');X('warn');b.busy=2.3;
-  dwarn({x:b.x,y:b.y,k:'s',a:a0,r:460,wd:sp*(n-1)/2+.12,dur:.7,col:DRL_RGB[2],fn:()=>{X('eshoot');drlPunch(b.x,b.y,50,'#7dfcff');
-   for(let k=0;k<n;k++)bp(b.x,b.y,a0+(k-(n-1)/2)*sp,340,{img:'dIpad',sz:58,r:17,dmg:12,life:7,spin:8,bt:0,fn:drlBoomerang})}})},
- // HAPPY SHOWERS: faces fall in lanes with a green safe gap that moves every wave. Sometimes the lanes run sideways.
- curtain(b){drlName(b,'HAPPY SHOWERS!');X('warn');const vert=!(b.ph>=1&&R()<.4),waves=2+(b.ph>=2?1:0),N=vert?10:5;b.busy=waves*.95+1.6;
-  let g0=Math.floor(R()*(vert?N-1:N));
-  const wave=w=>{
-   if(w>0){let g1;do{g1=cl(g0+(R()<.5?-1:1)*(vert?2+Math.floor(R()*3):1+Math.floor(R()*2)),0,vert?N-2:N-1)}while(g1===g0);g0=g1}
-   const gap=g0,fromR=R()<.5;
-   for(let i=0;i<N;i++){const safe=vert?(i===gap||i===gap+1):i===gap;
-    if(vert){const cx=48+i*96;
-     dwarn({k:'l',x:cx,y:100,a:PI/2,r:H-100,wd:92,dur:1,col:safe?DRL_RGB[5]:DRL_RGB[1],fn:safe?null:()=>{for(const o of [-22,22])bp(cx+o,96,PI/2,320,{img:'dHappy',sz:56,r:19,dmg:11,life:2.6,spin:o>0?4:-4})}})}
-    else{const cy=DRL_Y0+DRL_CH/2+i*DRL_CH;
-     dwarn({k:'l',x:fromR?W:0,y:cy,a:fromR?PI:0,r:W,wd:74,dur:1,col:safe?DRL_RGB[5]:DRL_RGB[1],fn:safe?null:()=>{for(const o of [-18,18])bp(fromR?W+20:-20,cy+o,fromR?PI:0,330,{img:'dHappy',sz:52,r:17,dmg:11,life:3.4,spin:o>0?4:-4})}})}}
-   if(w+1<waves)drlTimer(.95,()=>wave(w+1))};
-  wave(0)},
- // GOO GOO: sticky puddles around you. The last one keeps growing.
- goo(b,t){drlName(b,'GOO GOO!','#ff7ab8');X('bubble');const n=3+(b.ph||0);b.busy=1.4+n*.2;
-  for(let k=0;k<n;k++){const x=cl(t.x+rnd(-150,150),90,870),y=cl(t.y+rnd(-110,110),160,450),big=k===n-1;
-   dwarn({x,y,r:big?58:46,dur:.85+k*.2,img:'dLoli',col:DRL_RGB[1],fn:()=>{S.zn.push(big?{x,y,r:30,life:5.5,max:5.5,col:'#ff7ab8',dmg:7,grow:1,growTo:96,growT:0}:{x,y,r:46,life:4.2,max:4.2,col:'#ff7ab8',dmg:7});X('bubble');fx(['r',x,y,50,'#ff7ab8']);drlSparkle(x,y,8,36)}})}},
- // PARTY HORN: a cone shows where the confetti goes, then two or three volleys.
- partyHorn(b,t){drlName(b,'PARTY HORN!','#7dfcff');X('warn');const a=Math.atan2(t.y-b.y,t.x-b.x),vol=b.ph>=2?3:2;b.busy=.9+vol*.5+.6;
-  dwarn({x:b.x,y:b.y,k:'s',a,r:560,wd:.5,dur:.75,col:DRL_RGB[2],fn:()=>{
-   const shoot=off=>{X('eshoot');fx(['s',4]);drlSparkle(b.x,b.y,12,40);const n=7+(b.ph||0)*2;
-    for(let k=0;k<n;k++)bp(b.x,b.y,a+(k-(n-1)/2)*(1/(n-1)),330+((k+off)%2)*60,{img:k%2?'dLoli':'dHappy',sz:42,r:12,dmg:10,life:3,spin:k%2?7:-5})};
-   shoot(0);drlTimer(.45,()=>shoot(1));if(vol>2)drlTimer(.9,()=>shoot(0))}})},
- // ZOOMIES: a lane shows the route, then he dashes along it (contact hurts) and leaves goo behind. Later phases chain dashes.
- zoomies(b,t){drlName(b,'ZOOMIES!','#7dfcff');const n=1+(b.ph>=1?1:0)+(b.ph>=2?1:0);b.busy=n*1.95+.2;
-  const run=i=>{const tg=nearest(b.x,b.y)||t,a=Math.atan2(tg.y-b.y,tg.x-b.x),len=drlRay(b.x,b.y,a,540);X('warn');
-   dwarn({x:b.x,y:b.y,k:'l',a,r:len,wd:104,dur:.6,col:DRL_RGB[2],fn:()=>drlDash(b,a,len,640,()=>{if(i+1<n)drlTimer(.25,()=>run(i+1))})})};
-  run(0)},
- // CANDLE RING: a ring of faces and iPads with ONE gap. The gap is the green cone.
- ringGap(b){drlName(b,'CANDLE RING!','#ffe94a');const w=b.ph>=2?2:1,ox=b.x,oy=b.y;b.busy=w*1.45+1.1;
-  drlGapRing(ox,oy,22,205,.85);if(w>1)drlTimer(1.2,()=>drlGapRing(ox,oy,24,235,.8))},
- // TWIRL: he spins and spirals lollipops outward; the spiral reverses halfway.
- twirl(b){drlName(b,'TWIRL!','#ff7ab8');X('windup');const arms=b.ph>=2?3:2,steps=22,gap=.1;b.busy=.8+steps*gap+.8;
-  dwarn({x:b.x,y:b.y,r:96,dur:.7,col:DRL_RGB[1],fn:()=>{const ox=b.x,oy=b.y;b.spinT=steps*gap+.15;
-   for(let s=0;s<steps;s++)drlTimer(s*gap,()=>{const base=s<12?s*.4:12*.4-(s-12)*.4;
-    for(let k=0;k<arms;k++)bp(ox,oy,base+k*2*PI/arms,235,{img:'dLoli',sz:46,r:13,dmg:10,life:4.2,spin:7});
-    if(s%3===0){X('swing');fx(['p',ox,oy,3,drlCol(s),150,.3,4,'spark'])}})}})},
- // PINATA: a pinata swings in over a marked spot, then bursts into rings of candy.
- pinata(b,t){drlName(b,'PINATA!','#ffd23a');X('warn');const x=cl(t.x+rnd(-80,80),130,830),y=cl(t.y+rnd(-60,60),185,430),rings=b.ph>=2?3:2;b.busy=2.9;
-  dwarn({x,y,r:112,dur:1.7,img:'dPinata',col:DRL_RGB[3],fn:()=>{X('boom');boom(x,y,66,14,'b','#ffd23a');fx(['f','#ffd23a']);fx(['s',6]);drlSparkle(x,y,26,100);
-   for(let w=0;w<rings;w++)drlTimer(w*.38,()=>{X('pop');const m=12+w*2,off=w*.2;for(let k=0;k<m;k++)bp(x,y,off+k*2*PI/m,190+w*45,{img:k%2?'dIpad':'dLoli',sz:k%2?42:40,r:12,dmg:10,life:3.4,spin:k%2?5:-6})})}})},
- // CAKE DROP: a giant cake lands on the marked spot, leaves frosting on the floor and pops candles outward.
- cakeDrop(b,t){drlName(b,'CAKE DROP!','#ff7ab8');X('warn');const n=b.ph>=2?2:1;b.busy=1.5+n*.6;
-  for(let k=0;k<n;k++){const tg=k?(nearest(b.x,b.y)||t):t,x=cl(tg.x+(k?rnd(-120,120):0),110,850),y=cl(tg.y+(k?rnd(-90,90):0),175,435);
-   dwarn({x,y,r:96,dur:1.05+k*.6,img:'dCake',col:DRL_RGB[1],fn:()=>{X('boom');boom(x,y,96,17,'b','#ff7ab8');fx(['z','splat',x,y,96,'255,122,184']);fx(['s',8]);drlSparkle(x,y,18,80);
-    S.zn.push({x,y,r:64,life:4.5,max:4.5,col:'#ff7ab8',dmg:6});
-    for(let j=0;j<6;j++)bp(x,y,j*PI/3+.5,150,{img:'dLoli',sz:38,r:11,dmg:9,life:2.6,spin:6})}})}},
- // DISCO FLOOR: floor tiles light up. Hot tiles hurt, green outlines are safe. Two or three patterns in a row.
- discoFloor(b,t){drlName(b,'DISCO FLOOR!','#b98cff');const rounds=b.ph>=2?3:2,gap=b.ph>=2?1.0:1.2,kinds=['checker','cols','rows','plus'];let last='';b.busy=rounds*(gap*1.1+.35)+.7;
-  const run=i=>{let kind;do{kind=kinds[Math.floor(R()*kinds.length)]}while(kind===last);last=kind;drlFloor(kind,Math.floor(R()*2),gap,nearest(b.x,b.y)||t);if(i+1<rounds)drlTimer(gap*1.1+.35,()=>run(i+1))};
-  run(0)},
- // BALLOON PARTY: balloons drift after you. Touch one, or let it live, and it pops into faces.
- balloons(b,t){drlName(b,'BALLOON PARTY!','#ff7ab8');X('bubble');const n=3+(b.ph>=2?1:0),a0=Math.atan2(t.y-b.y,t.x-b.x);b.busy=1.7;fx(['r',b.x,b.y,70,'#ff7ab8']);
-  for(let k=0;k<n;k++)bp(b.x,b.y,a0+(k-(n-1)/2)*.75,125,{img:'dBalloon',sz:70,r:20,dmg:11,life:5.6,rot:0,spin:0,home:1.3,homeT:3.4,pop:1,popFn:drlBalloonPop})},
- // CONGA LINE: snakes of faces weave across the arena from alternating sides. Each snake has a marked band.
- conga(b){drlName(b,'CONGA LINE!','#ff9a3c');X('warn');const rows=b.ph>=2?[{y0:170,r:1},{y0:470,r:0},{y0:310,r:1}]:[{y0:170,r:1},{y0:470,r:0}];b.busy=3+rows.length*.55;
-  rows.forEach((o,i)=>drlTimer(i*.55,()=>{const dirR=!!o.r,a0=dirR?0:PI,cy=o.y0+(dirR?56:-56);X('warn');
-   dwarn({k:'l',x:dirR?0:W,y:cy,a:a0,r:W,wd:156,dur:.9,col:DRL_RGB[3],fn:()=>{X('whoosh');
-    for(let k=0;k<10;k++)drlTimer(k*.13,()=>bp(dirR?-30:W+30,o.y0,a0,250,{img:'dHappy',sz:48,r:15,dmg:10,life:5,spin:3,wave:{a0,amp:.9,f:4,sp:250}}))}})}))},
- // BIRTHDAY FINALE: he hops to the middle, then candle rings, a dance floor and a double ring. Afterwards he crashes.
- finale(b,t){drlName(b,'BIRTHDAY FINALE!','#ffe94a');X('charge');b.busy=7.4;b.finCd=30;const cx=W/2,cy=250;
-  drlHop(b,{x:cx,y:cy},.8,null,.4);
-  drlTimer(.9,()=>drlGapRing(cx,cy,22,200,.8));
-  drlTimer(2.9,()=>drlFloor('checker',Math.floor(R()*2),1.0,nearest(cx,cy)||t));
-  drlTimer(5.0,()=>{drlGapRing(cx,cy,24,190,.9);drlTimer(.55,()=>drlGapRing(cx,cy,24,235,.9))})}
+ // RED LIGHT, GREEN LIGHT: green, he sprays slow faces. Yellow, get set. RED: every bullet freezes in place and anyone who MOVES gets busted. Green, they all carry on.
+ redLight(b,t,o){drlName(b,'RED LIGHT, GREEN LIGHT!','#ff6a7a');X('warn');const short=!!(o&&o.short);b.act={k:'redLight',s:0,t:0,n:0,rounds:short?2:2+(b.ph>=1?1:0)+(b.ph>=2?1:0),G:1.5,R:short?1.0:1.15,busted:{},init:0}},
+ // MUSICAL CHAIRS: chairs orbit while the music plays. When it stops, one chair is taken away and everyone must be sitting on one, or get blasted.
+ chairs(b,t,o){drlName(b,'MUSICAL CHAIRS!','#ffe94a');X('warn');const short=!!(o&&o.short);b.act={k:'chairs',s:0,t:0,round:0,rounds:short?2:3,cx:W/2,cy:315,short,list:[]}},
+ // PASS THE PARCEL: you are handed a parcel with a fuse. Touch a gift before it runs out and the blast goes back to Darrel. Hold it and it blows up on you.
+ parcel(b,t){drlName(b,'PASS THE PARCEL!','#ff7ab8');X('warn');const ps=alive(),T=3.7-(b.ph||0)*.2,tg=[],n=ps.length+2+(b.ph>=1?1:0);let tries=0;
+  while(tg.length<n&&tries<300){tries++;const x=rnd(100,860),y=rnd(160,460);if(ps.some(p=>dist(p.x,p.y,x,y)<170))continue;if(dist(b.x,b.y,x,y)<110)continue;if(tg.some(q=>dist(q.x,q.y,x,y)<170))continue;tg.push({x,y})}
+  b.act={k:'parcel',t:0,T,tg:tg.map(q=>({x:q.x,y:q.y,used:0,w:drlMark({k:'dm',x:q.x,y:q.y,r:46,img:'dGift',col:DRL_RGB[5]})})),par:ps.map(p=>({p,done:0,w:drlMark({k:'dm',x:p.x,y:p.y,r:64,wd:1,dur:T/1.1,col:DRL_RGB[1]})}))}},
+ // BALLOON PUMP: balloons start small and inflate while drifting toward you. Touching one hurts and shoves you away, and a full balloon pops into a wide shockwave.
+ balloonPump(b,t){drlName(b,'BALLOON PUMP!','#ff7ab8');X('warn');const n=3+(b.ph||0),sp=[];let tries=0;
+  while(sp.length<n&&tries<300){tries++;const x=cl(t.x+rnd(-300,300),90,870),y=cl(t.y+rnd(-170,170),150,470);if(dist(x,y,t.x,t.y)<110)continue;if(sp.some(q=>dist(q.x,q.y,x,y)<170))continue;sp.push({x,y})}
+  b.act={k:'pump',t:0,D:2.6-(b.ph||0)*.15,bal:sp.map((q,i)=>({x:q.x,y:q.y,t:-i*.35,r:24,dead:0,w:null,rw:null,tk:0}))}},
+ // CUT THE CAKE: the arena is cut into slices and every other slice is hot. The cut changes (more slices, new angle, new parity) two or three times.
+ cakeCut(b,t,o){drlName(b,'CUT THE CAKE!','#ff7ab8');X('warn');const short=!!(o&&o.short);b.act={k:'cake',s:0,t:0,i:0,cuts:short?2:(b.ph>=1?3:2),ns:[6,8,12],tele:[.95,.85,.8],cx:W/2,cy:315,off:0,par:0,N:6}},
+ // BLOW OUT THE CANDLES: a wall of candle flames lights up on one side, then a steady wind shoves you toward it, with gusts. Run into the wind.
+ candleBlow(b){drlName(b,'BLOW OUT THE CANDLES!','#7dfcff');X('windup');b.act={k:'candle',s:0,t:0,dir:R()<.5?1:-1,dur:2.9+(b.ph||0)*.3,init:0}},
+ // DARREL SAYS: he shows a sequence of colour quadrants, then runs it with no hints. Each step, every quadrant except the called one blasts.
+ simon(b){drlName(b,'DARREL SAYS!','#7dfcff');X('warn');const len=b.ph>=2?4:3,seq=[];for(let i=0;i<len;i++){let q;do{q=Math.floor(R()*4)}while(i&&q===seq[i-1]);seq.push(q)}
+  b.act={k:'simon',s:0,t:0,len,seq,shown:[],tel:[],fire:[],IV:b.ph>=2?.9:1.0}},
+ // THE FLOOR IS LAVA: floor tiles flash and then turn to lava for good. The safe floor keeps shrinking until the game ends.
+ lava(b){drlName(b,'THE FLOOR IS LAVA!','#ff9a3c');X('warn');b.act={k:'lava',t:0,total:b.ph>=2?22:18,cells:[],spawnT:.2,done:0}},
+ // PIN THE TAIL: he LEADS your movement. Each crosshair sits where you will be when the pin lands, and a stuck pin blows up a second time.
+ tailPin(b){drlName(b,'PIN THE TAIL!','#ff9a3c');X('warn');b.act={k:'tail',t:0,n:3+(b.ph||0),i:0,next:.2,pins:[]}},
+ // PINBALL PARTY: three bumpers appear and he launches balls that ricochet off the walls and the bumpers. The bumpers also make cover.
+ pinball(b,t){drlName(b,'PINBALL PARTY!','#b98cff');X('warn');const bm=[];let tries=0;while(bm.length<3&&tries<300){tries++;const x=rnd(170,790),y=rnd(190,440);if(dist(x,y,b.x,b.y)<120)continue;if(bm.some(q=>dist(q.x,q.y,x,y)<210))continue;bm.push({x,y,r:44})}
+  S.drlBump=bm;b.act={k:'pinball',t:0,n:3+(b.ph||0),launched:0,marks:bm.map(m=>drlMark({k:'dm',x:m.x,y:m.y,r:m.r,img:'dBumper',col:DRL_RGB[4]}))}},
+ // JUMP ROPE: he walks to the middle and a rope starts spinning around a safe hub, faster and faster, reversing now and then. Shuffle: pins drop into the hub.
+ jumpRope(b){drlName(b,'JUMP ROPE!','#7dff9a');X('warn');b.act={k:'rope',s:0,t:0,cx:W/2,cy:320,hub:118,len:430,dur:b.ph>=2?6.2:5.4,th:rnd(0,PI*2),dirv:R()<.5?1:-1,rev:b.ph>=2?[.36,.7]:[.55],pinT:1.4,hit:{}}},
+ // SURPRISE PARTY: the lights go out and party poppers charge in the dark. If one of them hits you, a cutscene plays. Dodge every one and the surprise is ruined.
+ surprise(b){drlName(b,'SURPRISE PARTY!','#ff7ab8');X('charge');b.act={k:'surprise',s:0,t:0,cannons:[]}},
+ // PARTY GAME MEDLEY (finale): three of the games back to back, shorter, and then he crashes.
+ finale(b){drlName(b,'PARTY GAME MEDLEY!','#ffe94a');X('charge');fx(['f','#ffe94a']);b.queue=['chairs','redLight','cakeCut'];b.busy=.6}
 };
+
+// ---- Per-frame handlers for the games (act = b.act). Each clears b.act and sets b.busy when its game is over. ----
+const DRZ={
+ redLight(b,dt,a,t){a.t+=dt;
+  if(a.s===0){ // GREEN: a freezable spiral of faces
+   if(!a.init){a.init=1;b.light=1;X('whoosh');fx(['d',b.x,b.y-118,'GREEN LIGHT!','#7dff9a',1]);a.emit=0;a.spin=rnd(0,PI*2)}
+   a.emit-=dt;if(a.emit<=0){a.emit=.28;a.spin+=.43;const n=10+(b.ph||0)*2;for(let k=0;k<n;k++){const an=a.spin+k*2*PI/n;bp(b.x,b.y,an,175,{img:'dHappy',sz:40,r:12,dmg:9,life:7,spin:k%2?4:-4,fn:drlFreeze})}}
+   if(a.t>=a.G){a.s=1;a.t=0;b.light=2;X('warn');fx(['d',b.x,b.y-118,'YELLOW... GET SET','#ffe94a',0])}
+  }else if(a.s===1){ // YELLOW: pick your gap, you are about to be frozen in it
+   if(a.t>=.55){a.s=2;a.t=0;b.light=3;a.busted={};X('boom');fx(['d',b.x,b.y-118,'RED LIGHT! FREEZE!','#ff6a7a',1]);fx(['s',5]);fx(['f','#ff3b4f'])}
+  }else{ // RED: bullets are frozen and moving gets you busted
+   if(a.t>.2)alive().forEach(p=>{if(p.hide>0||a.busted[p.id])return;if(p.spd>55){a.busted[p.id]=1;hitP(p,20);fx(['d',p.x,p.y-52,'BUSTED!','#ff6a7a',1])}});
+   if(a.t>=a.R){a.n++;if(a.n>=a.rounds){b.light=0;b.act=null;b.busy=1.0;fx(['d',b.x,b.y-118,'GREEN LIGHT!','#7dff9a',0])}else{a.s=0;a.t=0;a.init=0}}}},
+ chairs(b,dt,a,t){a.t+=dt;const na=Math.max(1,alive().length);
+  if(a.s===0){const n=a.round===0?na+2:a.round===1?na+1:na;a.n=Math.max(na,n);a.dir=a.round%2?-1:1;a.om=[.95,1.3,1.75][Math.min(2,a.round)]*(b.ph>=2?1.12:1);a.ang=rnd(0,PI*2);a.musicT=(a.short?2.1:2.7)-.25*a.round;a.list=[];
+   for(let i=0;i<a.n;i++)a.list.push({x:a.cx,y:a.cy,w:drlMark({k:'dm',x:a.cx,y:a.cy,r:58,img:'dChair',col:DRL_RGB[0]}),cd:null});
+   a.s=1;a.t=0;X('whoosh');fx(['d',a.cx,a.cy-130,'MUSIC!','#ffe94a',1]);return}
+  if(a.s===1){a.ang+=a.dir*a.om*dt;a.list.forEach((c,i)=>{const an=a.ang+i*2*PI/a.n;c.x=a.cx+Math.cos(an)*320;c.y=a.cy+Math.sin(an)*150;c.w.x=c.x;c.w.y=c.y});
+   if(Math.floor(a.t*6)!==Math.floor((a.t-dt)*6))fx(['p',a.cx+rnd(-400,400),a.cy+rnd(-170,170),1,drlCol(Math.floor(a.t*6)),60,.5,6,'spark']);
+   if(a.t>=a.musicT){a.s=2;a.t=0;X('boom');fx(['d',a.cx,a.cy-130,'MUSIC STOPS!','#ff6a7a',1]);fx(['s',4]);
+    if(a.list.length>na){const c=a.list.splice(Math.floor(R()*a.list.length),1)[0];drlKill(c.w);fx(['r',c.x,c.y,60,'#ff6a7a']);fx(['d',c.x,c.y-50,'CHAIR REMOVED!','#ff6a7a',0])}
+    a.list.forEach(c=>{c.cd=drlMark({k:'dm',x:c.x,y:c.y,r:64,wd:1,dur:.8/1.1,col:DRL_RGB[5]})})}
+   return}
+  if(a.t>=.85){a.list.forEach(c=>{drlKill(c.w);drlKill(c.cd)});
+   alive().forEach(p=>{if(p.hide>0)return;if(!a.list.some(c=>dist(p.x,p.y,c.x,c.y)<64)){hitP(p,24);fx(['d',p.x,p.y-52,'TOO SLOW!','#ff6a7a',0])}});
+   X('boom');fx(['z','shock',a.cx,a.cy,420,'255,106,122']);fx(['s',8]);drlSparkle(a.cx,a.cy,24,300);
+   a.round++;if(a.round>=a.rounds){b.act=null;b.busy=.9}else{a.s=0;a.t=0}}},
+ parcel(b,dt,a,t){a.t+=dt;
+  a.par.forEach(q=>{if(q.done)return;const p=q.p;if(p.dead){q.done=1;drlKill(q.w);return}q.w.x=p.x;q.w.y=p.y;
+   for(const g2 of a.tg){if(g2.used)continue;if(dist(p.x,p.y,g2.x,g2.y)<46+8){g2.used=1;q.done=1;drlKill(g2.w);drlKill(q.w);X('hit');
+     for(let i=1;i<=8;i++){const f=i/9;fx(['p',p.x+(b.x-p.x)*f,p.y+(b.y-p.y)*f,2,'#7dff9a',40,.3,5,'spark'])}
+     fx(['d',p.x,p.y-52,'PASSED!','#7dff9a',1]);dmgB(Math.round(b.max*DRL.parcelDmg),b.x,b.y-40,'#7dff9a',1,p);b.fl=.3;fx(['r',b.x,b.y,90,'#7dff9a']);drlSparkle(b.x,b.y,10,50);break}}});
+  if(a.t>=a.T){a.par.forEach(q=>{if(q.done)return;q.done=1;drlKill(q.w);const p=q.p;if(p.dead)return;X('boom');boom(p.x,p.y,78,24,'b','#ff7ab8');fx(['z','splat',p.x,p.y,78,'255,122,184']);fx(['d',p.x,p.y-52,'IT BLEW UP!','#ff7ab8',1]);for(let j=0;j<8;j++)bp(p.x,p.y,j*PI/4,190,{img:'dHappy',sz:36,r:11,dmg:8,life:2,spin:5})})}
+  if(a.par.every(q=>q.done)){a.tg.forEach(g2=>drlKill(g2.w));b.act=null;b.busy=.9}},
+ pump(b,dt,a,t){a.t+=dt;
+  a.bal.forEach(q=>{if(q.dead)return;q.t+=dt;if(q.t<0)return;
+   if(!q.w){q.w=drlMark({k:'dm',a:1,x:q.x,y:q.y,r:24,img:'dBalloon',col:DRL_RGB[1]});q.rw=drlMark({k:'dm',a:0,x:q.x,y:q.y,r:145,col:DRL_RGB[1]});X('bubble')}
+   const u=cl(q.t/a.D,0,1),e=u*u*(3-2*u);q.r=24+88*e;
+   const p=nearest(q.x,q.y);if(p){const d=Math.max(1,dist(q.x,q.y,p.x,p.y));q.x+=(p.x-q.x)/d*55*dt;q.y+=(p.y-q.y)/d*55*dt}q.x=cl(q.x,60,W-60);q.y=cl(q.y,130,H-60);
+   q.w.x=q.rw.x=q.x;q.w.y=q.rw.y=q.y;q.w.r=q.r;
+   alive().forEach(p2=>{if(p2.hide>0)return;if(dist(q.x,q.y,p2.x,p2.y)<q.r*.88+13){q.tk-=dt;if(q.tk<=0){q.tk=.35;hitP(p2,7)}const dx=p2.x-q.x,dy=p2.y-q.y,dd=Math.max(1,Math.hypot(dx,dy));p2.x=cl(p2.x+dx/dd*140*dt,30,W-30);p2.y=cl(p2.y+dy/dd*140*dt,110,H-40)}});
+   if(q.t>=a.D){q.dead=1;drlKill(q.w);drlKill(q.rw);X('boom');boom(q.x,q.y,150,20,'b','#ff7ab8');fx(['z','shock',q.x,q.y,170,'255,122,184']);fx(['s',6]);drlSparkle(q.x,q.y,18,100);for(let j=0;j<8;j++)bp(q.x,q.y,j*PI/4+rnd(0,.4),190,{img:'dHappy',sz:36,r:11,dmg:8,life:2.4,spin:5})}});
+  if(a.bal.every(q=>q.dead)){b.act=null;b.busy=.8}},
+ cake(b,dt,a,t){a.t+=dt;
+  if(a.s===0){const N=a.ns[Math.min(a.i,2)],tele=a.tele[Math.min(a.i,2)];a.N=N;a.off=rnd(0,2*PI);a.par=Math.floor(R()*2);a.tl=tele*1.1;X('warn');
+   for(let s=0;s<N;s++){const ca=a.off+(s+.5)*2*PI/N,hot=s%2===a.par;dwarn({k:'s',x:a.cx,y:a.cy,a:ca,r:640,wd:PI/N-.01,dur:tele,col:hot?DRL_RGB[1]:DRL_RGB[5]})}
+   a.s=1;a.t=0;return}
+  if(a.s===1){if(a.t>=a.tl){const step=2*PI/a.N;X('stab');
+    alive().forEach(p=>{if(p.hide>0)return;const ang=Math.atan2(p.y-a.cy,p.x-a.cx),idx=Math.floor((((ang-a.off)%(2*PI))+2*PI)%(2*PI)/step);if(idx%2===a.par){hitP(p,20);fx(['d',p.x,p.y-52,'CUT!','#ff7ab8',0])}});
+    for(let s=0;s<a.N;s++)if(s%2===a.par){const ca=a.off+(s+.5)*step;fx(['z','slash',a.cx,a.cy,ca,520,'255,200,220'])}
+    fx(['s',6]);drlSparkle(a.cx,a.cy,16,260);a.i++;if(a.i>=a.cuts){b.act=null;b.busy=.9}else{a.s=2;a.t=0}}return}
+  if(a.t>=.25){a.s=0;a.t=0}},
+ candle(b,dt,a,t){a.t+=dt;
+  if(a.s===0){if(!a.init){a.init=1;const ex=a.dir>0?W-34:34;for(const y of [150,230,310,390,470])S.zn.push({x:ex,y,r:66,life:a.dur+1.3,max:a.dur+1.3,col:'#ff9a3c',dmg:9});fx(['d',W/2,150,a.dir>0?'WIND >>>':'<<< WIND','#7dfcff',1]);X('windup')}
+   if(a.t>=.9){a.s=1;a.t=0;b.wind={dir:a.dir};X('whirl')}return}
+  const ph=Math.min(2,b.ph||0),cyc=a.t%1.1,ramp=cl(a.t/.5,0,1),gust=cyc>.75?1.9:1,base=[125,145,165][ph];
+  if(cyc>.72&&cyc-dt<=.72){fx(['d',W/2,150,'GUST!','#cfeeff',0]);X('whoosh')}
+  const sp=base*ramp*gust;alive().forEach(p=>{if(p.hide>0)return;p.x=cl(p.x+a.dir*sp*dt,30,W-30)});
+  a.sparkT=(a.sparkT||0)-dt;if(a.sparkT<=0){a.sparkT=.38-ph*.04;bp(a.dir>0?-30:W+30,rnd(135,485),a.dir>0?0:PI,300,{img:'dLoli',sz:42,r:12,dmg:9,life:4,spin:6})}
+  if(a.t>=a.dur){b.wind=null;b.act=null;b.busy=.8}},
+ simon(b,dt,a,t){a.t+=dt;
+  if(a.s===0){const st=Math.floor(a.t/.75);
+   if(st<a.len&&!a.shown[st]){a.shown[st]=1;const q=DRL_Q[a.seq[st]];dwarn({k:'dr',a:3,x:q.x,y:q.y,r:480,wd:195,dur:.6,col:q.c});fx(['d',q.x,q.y,q.n+'!','#ffffff',1]);X('pop')}
+   if(a.t>=a.len*.75+.55){a.s=1;a.t=0;fx(['d',W/2,150,'NOW DO IT!','#ffe94a',1]);X('warn')}return}
+  const IV=a.IV;
+  for(let j=0;j<a.len;j++){
+   if(!a.tel[j]&&a.t>=j*IV+IV-.5){a.tel[j]=1;DRL_Q.forEach((q,i)=>{if(i!==a.seq[j])dwarn({k:'dr',x:q.x,y:q.y,r:480,wd:195,dur:.45,col:DRL_RED})})}
+   if(!a.fire[j]&&a.t>=j*IV+IV){a.fire[j]=1;X('boom');fx(['s',5]);fx(['d',W/2,150,(j+1)+' / '+a.len,'#ffffff',0]);
+    alive().forEach(p=>{if(p.hide>0)return;const qi=(p.x<480?0:1)+(p.y<305?0:2);if(qi!==a.seq[j]){hitP(p,20);fx(['d',p.x,p.y-52,'WRONG!','#ff6a7a',1])}});
+    DRL_Q.forEach((q,i)=>{if(i!==a.seq[j])fx(['z','shock',q.x,q.y,120,q.c])})}}
+  if(a.fire[a.len-1]&&a.t>=a.len*IV+.4){b.act=null;b.busy=.8}},
+ lava(b,dt,a,t){a.t+=dt;a.spawnT-=dt;
+  while(a.cells.length<a.total&&a.spawnT<=0){a.spawnT+=.27;const cand=[];for(let cy=0;cy<DRL_GY;cy++)for(let cx=0;cx<DRL_GX;cx++)if(!a.cells.some(c=>c.cx===cx&&c.cy===cy))cand.push({cx,cy});
+   const adj=cand.filter(c=>a.cells.some(d=>Math.abs(d.cx-c.cx)+Math.abs(d.cy-c.cy)===1)),pool=adj.length&&R()<.7?adj:cand,pick=pool[Math.floor(R()*pool.length)],cell={cx:pick.cx,cy:pick.cy,hot:0,w:null},c=drlCell(pick.cx,pick.cy);a.cells.push(cell);X('warn');
+   dwarn({k:'dr',x:c.x,y:c.y,r:DRL_CW,wd:DRL_CH,dur:.9,col:DRL_RGB[3],fn:()=>{cell.hot=1;cell.w=drlMark({k:'dr',a:2,x:c.x,y:c.y,r:DRL_CW,wd:DRL_CH,dur:30,col:'255,90,30'});fx(['p',c.x,c.y,6,'#ff7a2a',160,.5,5,'pixel'])}})}
+  alive().forEach(p=>{if(p.hide>0)return;p.lvT=(p.lvT||0)-dt;if(p.lvT>0)return;
+   if(a.cells.some(c=>c.hot&&Math.abs(p.x-(c.cx*DRL_CW+DRL_CW/2))<=DRL_CW/2&&Math.abs(p.y-(DRL_Y0+c.cy*DRL_CH+DRL_CH/2))<=DRL_CH/2)){p.lvT=.42;hitP(p,9);fx(['d',p.x,p.y-52,'HOT!','#ff9a3c',0])}});
+  if(a.cells.length>=a.total){a.done+=dt;if(a.done>=.9+1.4){a.cells.forEach(c=>drlKill(c.w));b.act=null;b.busy=.8}}},
+ tail(b,dt,a,t){a.t+=dt;
+  if(a.i<a.n&&a.t>=a.next){a.i++;a.next=a.t+.55;const p=nearest(b.x,b.y)||t,pin={p,lead:.9,x:0,y:0,w:null};drlLeadPos(pin);X('warn');
+   dwarn({x:pin.x,y:pin.y,r:54,dur:.9,col:DRL_RGB[3],img:'dPin',fn:()=>drlPinLand(b,pin)});pin.w=S.wr[S.wr.length-1];a.pins.push(pin)}
+  a.pins.forEach(pin=>{if(pin.w&&pin.w.t<pin.w.dur*.66&&pin.p&&!pin.p.dead){drlLeadPos(pin);pin.w.x=pin.x;pin.w.y=pin.y}});
+  if(a.i>=a.n&&a.t>=a.next+2.6){b.act=null;b.busy=.5}},
+ pinball(b,dt,a,t){a.t+=dt;
+  if(!a.launched&&a.t>=.9){a.launched=1;X('eshoot');fx(['r',b.x,b.y,90,'#b98cff']);const base=Math.atan2(t.y-b.y,t.x-b.x);for(let k=0;k<a.n;k++){const an=base+(k-(a.n-1)/2)*.5+rnd(-.1,.1);bp(b.x,b.y,an,300,{img:'dHappy',sz:56,r:17,dmg:14,life:6.4,spin:6,bounce:99,fn:drlBall})}}
+  if(a.t>=7.2){a.marks.forEach(w=>drlKill(w));S.drlBump=[];b.act=null;b.busy=.6}},
+ rope(b,dt,a,t){a.t+=dt;
+  if(a.s===0){const dx=a.cx-b.x,dy=a.cy-b.y,d=Math.hypot(dx,dy);
+   if(d>14&&a.t<1.2){const s=Math.min(d,700*dt);b.x+=dx/d*s;b.y+=dy/d*s;fx(['p',b.x,b.y,1,'#7dff9a',60,.3,6])}
+   else{a.s=1;a.t=0;b.x=a.cx;b.y=a.cy;X('whirl');a.hubW=drlMark({k:'dm',x:a.cx,y:a.cy,r:a.hub,col:DRL_RGB[5]});a.arms=[0,1].map(()=>{dwarn({k:'l',x:a.cx,y:a.cy,a:0,r:a.len,wd:60,dur:30,col:DRL_RGB[1]});return S.wr[S.wr.length-1]});fx(['d',a.cx,a.cy-150,'STAY IN THE HUB!','#7dff9a',1])}
+   return}
+  const tt=a.t,base=1.0+.75*cl(tt/a.dur,0,1);let sign=a.dirv,fac=1;
+  a.rev.forEach(f=>{const rt=f*a.dur;if(tt>=rt)sign=-sign;fac=Math.min(fac,Math.abs(tt-rt)/.3)});
+  fac=cl(fac,.04,1);a.rev.forEach(f=>{const rt=f*a.dur;if(tt<rt&&tt>=rt-.6&&!a['r'+f]){a['r'+f]=1;fx(['d',a.cx,a.cy-150,'REVERSE!','#ffe94a',1])}});
+  a.th+=sign*base*fac*dt;
+  a.arms.forEach((w,k)=>{const an=a.th+k*PI;w.x=a.cx+Math.cos(an)*a.hub;w.y=a.cy+Math.sin(an)*a.hub;w.a=an;w.r=a.len;w.t=0});
+  alive().forEach(p=>{if(p.hide>0)return;const dx=p.x-a.cx,dy=p.y-a.cy,r=Math.hypot(dx,dy);if(r<a.hub-2)return;const pa=Math.atan2(dy,dx);
+   for(let k=0;k<2;k++){const dl=ang2(pa,a.th+k*PI);if(dl<PI/2&&r*Math.sin(dl)<26*ATK_HIT+PLAYER_HIT_R*.6&&r*Math.cos(dl)>a.hub-10){hitP(p,16);fx(['d',p.x,p.y-52,'TRIPPED!','#ff7ab8',0]);break}}});
+  a.pinT-=dt;if(a.pinT<=0){a.pinT=1.5;const hubP=alive().filter(p=>dist(p.x,p.y,a.cx,a.cy)<a.hub);if(hubP.length){const p=hubP[Math.floor(R()*hubP.length)],px=p.x,py=p.y;X('warn');dwarn({x:px,y:py,r:52,dur:.8,col:DRL_RGB[3],img:'dPin',fn:()=>{X('boom');boom(px,py,50,14,'b','#ff9a3c');fx(['z','shock',px,py,64,'255,154,60'])}})}}
+  if(a.t>=a.dur){drlKill(a.hubW);a.arms.forEach(w=>drlKill(w));b.act=null;b.busy=.9}},
+ surprise(b,dt,a,t){a.t+=dt;
+  if(a.s===0){b.dark=Math.min(1,a.t/.5);
+   if(a.t>=.5){a.s=1;a.t=0;X('bfCharge');fx(['d',b.x,b.y-118,'SSH... EVERYBODY HIDE!','#ff7ab8',1]);const ps=alive(),n=4+(b.ph||0),cn=[];let tries=0;
+    cn.push({x:cl(t.x+rnd(-30,30),90,870),y:cl(t.y+rnd(-30,30),150,470)});
+    while(cn.length<n&&tries<400){tries++;const base=ps[Math.floor(R()*ps.length)]||t,x=cl(base.x+rnd(-300,300),90,870),y=cl(base.y+rnd(-170,170),150,470);if(cn.some(q=>dist(q.x,q.y,x,y)<150))continue;cn.push({x,y})}
+    a.cannons=cn.map(q=>{dwarn({x:q.x,y:q.y,r:100,dur:1.7,col:DRL_RGB[1],img:'dPopper'});return{x:q.x,y:q.y}})}
+   return}
+  if(a.t>=1.7*1.1){b.dark=0;X('boom');fx(['f','#ffffff']);fx(['s',9]);
+   a.cannons.forEach(c=>{fx(['z','shock',c.x,c.y,110,'255,122,184']);drlSparkle(c.x,c.y,22,90)});
+   const hitBy=p=>a.cannons.some(c=>dist(p.x,p.y,c.x,c.y)<100*ATK_HIT+PLAYER_HIT_R),caught=alive().filter(p=>!p.hide&&p.inv<=0&&hitBy(p));
+   if(caught.length){caught.slice(1).forEach(p=>hitP(p,24));b.act=null;b.busy=.6;drlPartyCut(b,caught[0]);return}
+   // Nobody was caught: the surprise is ruined and he crashes on the spot.
+   fx(['d',b.x,b.y-118,'SURPRISE RUINED!','#7dff9a',1]);b.act=null;drlCrash(b)}}
+};
+
+/* ---- The Surprise Party cutscene: same plumbing as Black Flash and the Final Order (S.bfCut), with a party cutscene of its own. ---- */
+function drlPartyCut(b,p){
+ const hpBefore=p.hp;S.st='bfcut';hitP(p,DRL.surpriseDmg,true);const lethal=!!p.dead,dealt=p.ch==='bomb'?0:Math.max(0,Math.round(hpBefore-Math.max(0,p.hp)));
+ const ch=p.ch||'cg',sk=p.skin&&skinById(p.skin)&&skinById(p.skin).ch===ch?skinById(p.skin):null,cc=CH[ch]||CH.cg;
+ p.inv=Math.max(p.inv,.9);
+ S.bfCut={kind:'party',t:0,dur:lethal?5.3:4.5,x:p.x,y:p.y,bx:b.x,by:b.y,who:p.id,a:0,finisher:lethal?1:0,targetName:p.name||cc.n,targetCh:ch,damage:dealt,dealt,beats:0,tImg:(sk?sk.i:cc.i)[0],aImg:b.img||'darrel',
+  attName:(BD[b.idx]&&BD[b.idx].n)||'DARREL',tName:cc.n,quote:'"BEST. SURPRISE. EVER!"',sub:'',col:'#ff7ab8',stamp:'',total:'',lines:null,gl:DRL_GIFT[ch]||'GIFT: A SLICE OF CAKE. IN YOUR FACE.'};
+ S.pr=[];S.wr=[];S.zn=[];b.mode=null;b.act=null;b.queue=null;b.dark=0;b.light=0;b.wind=null;b.cd=2;
+ fx(['f','#fff']);fx(['s',20]);X('bfImpact');for(let i=0;i<60;i++){const an=rnd(0,PI*2),r=rnd(8,120);fx(['p',p.x+Math.cos(an)*r,p.y+Math.sin(an)*r,2,drlCol(i),rnd(190,560),rnd(.18,.7),7,'pixel'])}
+ if(lethal){fx(['f','#ff1738']);SH=Math.max(SH,26)}}
+// Timeline: black (0 to .45), the lights snap on and confetti flies (.45), SURPRISE! (.5 to 2.2), Darrel throws a cake that lands on the
+// character wearing a party hat (1.3 to 1.75), HAPPY BIRTHDAY with their name (2.4), their gift (3.0) and Darrel's line (3.6).
+function drawPartyCutscene(c,now){
+ const t=c.t||0,dur=c.dur||4.5,sec=now/1000,fin=!!c.finisher,nm=String(c.tName||c.targetName||'GUEST').toUpperCase(),ok=im=>im&&im.complete&&im.naturalWidth;
+ const target=IM[c.tImg]||IM[((CH[c.targetCh]||CH.cg).i)[0]],atk=IM[c.aImg]||IM.darrel,pc=['#ffe94a','#ff7ab8','#7dfcff','#ff9a3c','#b98cff','#7dff9a'],
+  shk=t>1.75&&t<2.3?Math.sin(sec*60)*7*(1-(t-1.75)/.55):0,fade=1-cl((t-(dur-.4))/.4,0,1);
+ g.save();g.fillStyle='#030208';g.fillRect(0,0,W,H);
+ if(t<.45){g.fillStyle='rgba(255,255,255,.05)';g.font='bold 14px monospace';g.textAlign='center';g.textBaseline='middle';g.fillText('...',W/2,H/2)}
+ else{
+  // The hall, lit up.
+  let gr=g.createRadialGradient(W/2,H/2,40,W/2,H/2,560);gr.addColorStop(0,'rgba(110,40,120,.9)');gr.addColorStop(1,'rgba(20,6,40,1)');g.fillStyle=gr;g.fillRect(0,0,W,H);
+  g.fillStyle='rgba(255,255,255,.04)';for(let i=0;i<8;i++)g.fillRect(i*120,64,60,H-128);
+  for(let i=0;i<9;i++){g.strokeStyle=pc[i%6];g.globalAlpha=.8;g.lineWidth=3;g.beginPath();g.moveTo(40+i*110,64);g.quadraticCurveTo(60+i*110+Math.sin(sec*2+i)*10,100,40+i*110+Math.sin(sec*2.4+i)*8,150);g.stroke()}g.globalAlpha=1;
+  // The guests, cheering along the bottom (hats and heads, rising in at .6).
+  const gu=cl((t-.6)/.4,0,1);for(let i=0;i<10;i++){const x=40+i*92+(i%2)*14,y=H-70+(1-gu)*90-Math.abs(Math.sin(sec*5+i))*8;g.fillStyle='#120a1e';g.beginPath();g.arc(x,y,17,0,PI*2);g.fill();g.fillRect(x-20,y+14,40,60);g.fillStyle=pc[i%6];g.beginPath();g.moveTo(x-12,y-10);g.lineTo(x+12,y-10);g.lineTo(x,y-44);g.closePath();g.fill();g.beginPath();g.arc(x,y-46,4,0,PI*2);g.fill()}
+  // Confetti, thicker after the cake lands.
+  const cn=t>1.75?150:80;for(let i=0;i<cn;i++){g.save();g.translate((i*71+sec*40*(1+i%3*.3))%W,((i*53+sec*(120+i%5*40))%(H+40))-20);g.rotate(sec*3+i);g.fillStyle=pc[i%6];g.fillRect(-3,-5,6,10);g.restore()}
+  // The two fighters.
+  const pa=cl((t-.7)/.3,0,1)*fade;
+  if(pa>0){g.save();g.globalAlpha=pa;
+   if(ok(atk)){g.save();g.translate(250+shk*.3,300);g.rotate(-.06);g.scale(-1,1);g.drawImage(atk,-75,-125,150,250);g.restore()}
+   if(ok(target)){g.save();g.translate(650+shk,300);g.rotate(.05);g.drawImage(target,-75,-125,150,250);
+    // party hat
+    g.fillStyle='#ff7ab8';g.beginPath();g.moveTo(-26,-118);g.lineTo(26,-118);g.lineTo(0,-188);g.closePath();g.fill();g.strokeStyle='#fff';g.lineWidth=3;g.stroke();g.fillStyle='#ffe94a';g.beginPath();g.arc(0,-190,8,0,PI*2);g.fill();
+    // cake in the face, after it lands
+    if(t>1.75){const sp=cl((t-1.75)/.12,0,1);g.globalAlpha=pa*sp;g.fillStyle='#fff6e8';[[-30,-40,34,22],[22,-52,30,20],[-8,-14,38,24],[30,-8,26,18],[-34,-4,24,16]].forEach(([x,y,rx,ry])=>{g.beginPath();g.ellipse(x,y,rx,ry,0,0,PI*2);g.fill()});
+     g.fillStyle='#ff7ab8';g.beginPath();g.ellipse(0,-30,16,10,0,0,PI*2);g.fill();g.fillStyle='#ff2a4a';g.beginPath();g.arc(-4,-34,7,0,PI*2);g.fill();g.fillStyle='#fff6e8';for(let k=0;k<5;k++)g.fillRect(-40+k*18,2,8,14+((k*7)%12))}
+    g.restore()}
+   g.globalAlpha=pa*.92;[[250,String(c.attName||'DARREL').toUpperCase(),'#ff7ab8'],[650,nm,'#ffe94a']].forEach(([cx,txt,cc2])=>{g.fillStyle='rgba(5,2,8,.92)';g.fillRect(cx-80,426,160,22);g.fillStyle=cc2;g.fillRect(cx-80,426,4,22);g.fillStyle='#fff';g.font='bold 12px monospace';g.textAlign='center';g.textBaseline='middle';g.fillText(txt.length>17?txt.slice(0,16)+'.':txt,cx,437)});g.restore()}
+  // The flying cake (Darrel throws it).
+  if(t>1.3&&t<1.8&&IM.dCake){const u=cl((t-1.3)/.45,0,1);spr('dCake',310+(640-310)*u,300-Math.sin(u*PI)*110-10,96,u*9,1,1,1)}
+  // SURPRISE! banner.
+  const ba=cl((t-.5)/.15,0,1)*(1-cl((t-2.1)/.3,0,1))*fade;
+  if(ba>0){g.save();g.globalAlpha=ba;g.textAlign='center';g.textBaseline='middle';g.font='900 78px Impact, monospace';const word='SURPRISE!!!',cw=44;let x=W/2-word.length*cw/2+cw/2;
+   for(let i=0;i<word.length;i++){const bob=Math.sin(sec*9+i*.6)*7,sc=1+.15*Math.sin(sec*12+i);g.save();g.translate(x+i*cw,118+bob);g.scale(sc,sc);g.lineWidth=10;g.strokeStyle='#000';g.strokeText(word[i],0,0);g.fillStyle=pc[i%6];g.fillText(word[i],0,0);g.restore()}g.restore()}
+  // The damage number.
+  if(t>1.75&&(c.dealt>0||fin)){const pu=cl((t-1.75)/.18,0,1);g.save();g.globalAlpha=fade;g.translate(840,250);g.scale(.5+.7*pu,.5+.7*pu);g.textAlign='center';g.textBaseline='middle';g.font='900 56px Impact, monospace';g.lineWidth=10;g.strokeStyle='#000';const pop=fin?'K.O.':'-'+c.dealt;g.strokeText(pop,0,0);g.fillStyle='#ff1c43';g.fillText(pop,0,0);g.restore()}
+  // HAPPY BIRTHDAY, NAME!
+  if(t>2.4){const ha=cl((t-2.4)/.2,0,1)*fade,txt='HAPPY BIRTHDAY, '+nm+'!';g.save();g.globalAlpha=ha;g.textAlign='center';g.textBaseline='middle';g.font='900 32px Impact, monospace';g.lineWidth=7;g.strokeStyle='#000';let w2=g.measureText(txt).width,x=W/2-w2/2;
+   for(let i=0;i<txt.length;i++){const cw2=g.measureText(txt[i]).width;g.strokeText(txt[i],x+cw2/2,404+Math.sin(sec*8+i*.5)*3);g.fillStyle=pc[i%6];g.fillText(txt[i],x+cw2/2,404+Math.sin(sec*8+i*.5)*3);x+=cw2}g.restore()}
+  // The gift, typed out, and Darrel's line.
+  if(t>3.0&&c.gl){const gt=String(c.gl).slice(0,Math.max(0,Math.floor((t-3.0)*50)));g.save();g.globalAlpha=fade;g.textAlign='center';g.textBaseline='middle';g.font='bold 14px monospace';const tw=g.measureText(c.gl).width;g.fillStyle='rgba(4,3,10,.78)';g.fillRect(W/2-tw/2-14,452,tw+28,22);g.fillStyle='#ff7ab8';g.fillRect(W/2-tw/2-14,452,3,22);g.fillStyle='#ffe7ec';g.fillText(gt,W/2,463);g.restore()}
+  if(t>3.6){const q=String(c.quote||'"BEST. SURPRISE. EVER!"'),qa=cl((t-3.6)/.2,0,1)*fade;g.save();g.globalAlpha=qa;g.font='bold 14px monospace';const qw=g.measureText(q).width+28;
+   g.fillStyle='#fff';rr(250-qw/2,96,qw,34,10);g.fill();g.beginPath();g.moveTo(236,129);g.lineTo(256,129);g.lineTo(246,150);g.closePath();g.fill();
+   g.fillStyle='#3a1040';g.textAlign='center';g.textBaseline='middle';g.fillText(q,250,113);g.restore()}
+ }
+ // Letterbox bars, the lights-on flash and the closing fade.
+ g.fillStyle='#000';g.fillRect(0,0,W,64);g.fillRect(0,H-64,W,64);g.fillStyle='#ff7ab8';g.fillRect(0,64,W,2);g.fillRect(0,H-66,W,2);
+ if(t>.45&&t<1.0){g.fillStyle='rgba(255,255,255,'+(.95*(1-(t-.45)/.55))+')';g.fillRect(0,0,W,H)}
+ const out=cl((t-(dur-.3))/.3,0,1);if(out>0){g.fillStyle='rgba(0,0,0,'+out+')';g.fillRect(0,0,W,H)}
+ g.restore()}
 
 /* ---- Movement ---- */
 function drlHop(b,to,dur,onLand,arc){b.hop={x0:b.x,y0:b.y,x1:to.x,y1:to.y,t:0,dur:Math.max(.2,dur),arc:arc==null?.22:arc,onLand:onLand||null};fx(['p',b.x,b.y,8,'#fff3a0',140,.3,4]);X('whoosh')}
 function drlHopStep(b,dt){const h=b.hop;h.t+=dt;const p=Math.min(1,h.t/h.dur),e=p*p*(3-2*p);
  b.x=h.x0+(h.x1-h.x0)*e;b.y=h.y0+(h.y1-h.y0)*e;b.air=Math.sin(p*PI)*h.arc;b.tl=Math.sin(p*PI*2)*.14;
  if(p>=1){b.hop=null;b.air=0;b.tl=0;b.x=h.x1;b.y=h.y1;fx(['p',b.x,b.y,10,'#ffe94a',180,.4,4]);fx(['r',b.x,b.y,34,'#ffe94a']);if(h.onLand)h.onLand(b)}}
-function drlDash(b,a,len,speed,after){b.zoom={vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,t:0,dur:len/speed,zt:0,after:after||null};X('dash');fx(['r',b.x,b.y,50,'#7dfcff'])}
-function drlZoomStep(b,dt){const z=b.zoom;z.t+=dt;b.x=cl(b.x+z.vx*dt,70,890);b.y=cl(b.y+z.vy*dt,150,450);b.tl=Math.sin(z.t*40)*.2;
- if(R()<.6)fx(['p',b.x,b.y,2,'#7dfcff',70,.3,3,'spark']);
- alive().forEach(p=>{if(dist(b.x,b.y,p.x,p.y)<44*ATK_HIT+PLAYER_HIT_R)hitP(p,13)});
- z.zt-=dt;if(z.zt<=0){z.zt=.22;S.zn.push({x:b.x,y:b.y,r:30,life:2.4,max:2.4,col:'#ff7ab8',dmg:6})}
- if(z.t>=z.dur){b.zoom=null;b.tl=0;fx(['p',b.x,b.y,12,'#ffe94a',200,.4,4]);if(z.after)z.after(b)}}
 // Sugar crash: he lies on the floor, dizzy. dmgB gives +35% damage to bosses with crash > 0.
-function drlCrash(b){b.sugar=0;b.crash=DRL.crash[Math.min(2,b.ph||0)];b.busy=0;b.hop=null;b.zoom=null;X('boom');fx(['s',6]);fx(['r',b.x,b.y,90,'#ff7ab8']);drlSparkle(b.x,b.y,16,60);
+function drlCrash(b){b.sugar=0;b.crash=DRL.crash[Math.min(2,b.ph||0)];b.busy=0;b.hop=null;b.act=null;b.dark=0;b.light=0;b.wind=null;X('boom');fx(['s',6]);fx(['r',b.x,b.y,90,'#ff7ab8']);drlSparkle(b.x,b.y,16,60);
  fx(['d',b.x,b.y-122,'SUGAR CRASH!','#ff7ab8',1]);fx(['d',b.x,b.y-96,'+'+Math.round((DRL.crashMul-1)*100)+'% DAMAGE','#ffe94a',0])}
 function drlPick(b){const ph=Math.min(2,b.ph||0),all=DRL_POOL[ph];
- // The finale runs on its own timer: when it is ready it goes next.
+ // The surprise and the finale run on their own timers: when one is ready it goes next.
+ if(ph>=1&&(b.surpCd||0)<=0)return 'surprise';
  if(all.includes('finale')&&(b.finCd||0)<=0)return 'finale';
  let pool=all.filter(k=>k!=='finale'&&k!==b.last&&k!==b.last2);if(!pool.length)pool=all.filter(k=>k!=='finale'&&k!==b.last);
  return pool[Math.floor(R()*pool.length)]}
 
 function stepDarrel(dt){
  const b=S.bs;if(!b||b.inv||b.hp<=0)return;const t=nearest(b.x,b.y);if(!t)return;
- drlSprites();
+ drlSprites();drlTrack(dt);
  b.t=(b.t||0)+dt;b.fl=Math.max(0,(b.fl||0)-dt);const ph=Math.min(2,b.ph||0);
- // A new phase cancels any hop, dash, spin, crash or channel in progress.
- if(b.phaseSeen!==b.ph){b.phaseSeen=b.ph;b.hop=null;b.zoom=null;b.busy=0;b.crash=0;b.spinT=0;b.air=0;b.tl=0;b.sugar=0;b.cd=1.1;b.hopCd=.5;b.finCd=ph>=2?7:30;b.last='';b.last2=''}
- b.finCd=Math.max(0,(b.finCd||0)-dt);
+ // A new phase cancels any hop, game, queue, spin, crash or lights-out in progress.
+ if(b.phaseSeen!==b.ph){b.phaseSeen=b.ph;b.hop=null;b.act=null;b.queue=null;b.busy=0;b.crash=0;b.spinT=0;b.air=0;b.tl=0;b.sugar=0;b.cd=1.1;b.hopCd=.5;b.finCd=ph>=2?9:60;b.surpCd=DRL.surpriseCd[ph];b.light=0;b.dark=0;b.wind=null;S.drlBump=null;b.last='';b.last2=''}
+ b.finCd=Math.max(0,(b.finCd||0)-dt);b.surpCd=Math.max(0,(b.surpCd||0)-dt);
+ if(b.dark>0&&!(b.act&&b.act.k==='surprise'))b.dark=Math.max(0,b.dark-dt*2);
  if(b.crash>0){b.crash-=dt;b.air=0;b.tl=1.25+Math.sin(b.t*7)*.05;
   b.starT=(b.starT||0)-dt;if(b.starT<=0){b.starT=.14;const a=b.t*5;fx(['p',b.x+Math.cos(a)*50,b.y-70+Math.sin(a)*14,1,drlCol(Math.floor(b.t*9)),60,.5,5,'spark'])}
   if(b.crash<=0){b.tl=0;b.cd=.9;fx(['r',b.x,b.y,70,'#ffe94a']);drlName(b,"OKAY I'M BACK!");X('whoosh')}
   return}
  if(b.spinT>0){b.spinT-=dt;b.tl=b.t*16;if(b.spinT<=0)b.tl=0}
  if(b.hop)drlHopStep(b,dt);
- if(b.zoom)drlZoomStep(b,dt);
+ if(b.act){DRZ[b.act.k](b,dt,b.act,t);return}
  if(b.busy>0)b.busy-=dt;
- if(b.busy>0||b.hop||b.zoom)return;
+ if(b.busy>0||b.hop)return;
+ // The finale queues three games; they run one after another.
+ if(b.queue&&b.queue.length){const k=b.queue.shift();DRLA[k](b,t,{short:1});return}
  if((b.sugar||0)>=DRL.sugarMax){drlCrash(b);return}
  b.cd-=dt;
- // Wander: a hop every second or so, but not right before an attack starts.
+ // Wander: a hop every second or so, but not right before a game starts.
  b.hopCd=(b.hopCd==null?.5:b.hopCd)-dt;
  if(b.hopCd<=0&&b.cd>.55){b.hopCd=DRL.hop[ph]+rnd(0,.35);if(R()<.2)drlBurst(b);drlHop(b,drlSpot(t),rnd(.4,.52),null)}
- if(b.cd<=0){const k=drlPick(b);b.last2=b.last;b.last=k;b.sugar=(b.sugar||0)+DRL_META[k];b.cd=DRL.cd[ph];b.hopCd=.8;DRLA[k](b,t)}
+ if(b.cd<=0){const k=drlPick(b);b.last2=b.last;b.last=k;b.sugar=(b.sugar||0)+DRL_META[k];b.cd=DRL.cd[ph];b.hopCd=.8;
+  if(k==='surprise')b.surpCd=DRL.surpriseEvery[ph];if(k==='finale')b.finCd=60;DRLA[k](b,t)}
 }
 // ===== END BOSS 8: DARREL =====
 
@@ -3151,9 +3313,9 @@ function drawTriBars(list){
 }
 // ===== END BOSS 7 =====
 
-function snap(){const b=S.bs,D=S.dlg;return{st:S.st,c17:S.c17?snapC17():null,secOn:S.secOn?1:0,sec:S.sec?snapSec():null,secT:S.secT||0,pix:S.pixT==null?-1:+S.pixT.toFixed(2),sc:S.sc?{t:+S.sc.t.toFixed(2),ms:+S.sc.ms.toFixed(3),wf:+S.sc.wf.toFixed(3),jf:+S.sc.jf.toFixed(3),who:S.sc.who|0,tf:+S.sc.tf.toFixed(3),iw:S.sc.impW|0,ij:S.sc.impJ|0}:null,secBanner:S.secBanner?S.secBanner.txt:'',s7:S.s7&&snapS7(),in7:S.in7?+S.in7.t.toFixed(2):-1,tri:S.tri&&S.tri.map(q=>({name:q.name,img:q.img,x:q.x|0,y:q.y|0,hp:Math.ceil(q.hp),max:q.max,fl:q.fl>0?1:0,stun:q.stun>0?1:0,a:+(q.a||0).toFixed(2),r:q.r})),bi:bidx(),loop:lp(),paused:S.paused,ezUlt:S.ezUlt?{stage:S.ezUlt.stage,t:S.ezUlt.t,beamT:S.ezUlt.beamT,flashT:S.ezUlt.flashT}:null,bfAfter:S.bfAfter?{t:S.bfAfter.t,dur:S.bfAfter.dur,x:S.bfAfter.x,y:S.bfAfter.y,a:S.bfAfter.a,fin:S.bfAfter.fin,kind:S.bfAfter.kind||''}:null,bfCut:S.bfCut?{t:S.bfCut.t,dur:S.bfCut.dur,x:S.bfCut.x,y:S.bfCut.y,bx:S.bfCut.bx,by:S.bfCut.by,a:S.bfCut.a,finisher:S.bfCut.finisher||0,targetName:S.bfCut.targetName||'CHALLENGER',targetCh:S.bfCut.targetCh||'cg',damage:S.bfCut.damage||44,dealt:S.bfCut.dealt||0,tImg:S.bfCut.tImg,aImg:S.bfCut.aImg,attName:S.bfCut.attName,tName:S.bfCut.tName,quote:S.bfCut.quote,sub:S.bfCut.sub,kind:S.bfCut.kind||'',col:S.bfCut.col||'',stamp:S.bfCut.stamp||'',total:S.bfCut.total||'',lines:S.bfCut.lines||null,skinMsg:S.bfCut.skinMsg||''}:null,runT:S.t,survT:S.survT,survMax:S.survMax,survName:S.survName,survWave:S.survWave,bs2:S.bs2&&{img:S.bs2.img,x:S.bs2.x,y:S.bs2.y,hp:S.bs2.hp,max:S.bs2.max,idx:1,sz:S.bs2.sz||150,fl:S.bs2.fl>0?1:0,a:S.bs2.a||0,gun:S.bs2.gun?1:0,pipe:S.bs2.pipeOn?S.bs2.pa:null,beam:S.bs2.beam==null?null:S.bs2.beam,mode:S.bs2.mode||'',sp:S.bs2.rolling?S.bs2.t*14:0},zn:S.zn.map(z=>[z.x|0,z.y|0,z.r,+(z.life/z.max).toFixed(2),z.col||'',z.dmg||10,z.slowField?1:0]),pk:S.pk.map(k=>[k.x|0,k.y|0]),tc:(S.tc||[]).map(c=>[c.x|0,c.y|0,+Math.sin(c.rot).toFixed(2),+c.t.toFixed(2)]),pslam:(S.pslam||[]).map(s=>[s.x|0,s.y|0,s.r,+s.t.toFixed(2),s.life,s.cracks||[],s.eur?1:0]),prk:(S.prk||[]).map(r=>[r.x|0,r.y|0,+r.life.toFixed(2),r.pid]),psb:(S.psb||[]).map(s=>[s.x|0,s.y|0,+s.life.toFixed(2),s.pid,s.size,+s.since.toFixed(2)]),pthr:(S.pthr||[]).map(t=>[t.x|0,t.y|0,+t.rot.toFixed(2)]),pqk:(S.pqk||[]).map(z=>[z.x|0,z.y|0,z.r|0,+z.life.toFixed(2),z.max]),pfood:(S.pfood||[]).map(f=>[f.x|0,f.y|0,f.img,+(f.rot%(2*PI)).toFixed(2),f.size|0]),jf:(S.jf||[]).filter(f=>f.delay<=0).map(f=>[f.x|0,f.y|0,Math.round(f.z||0),f.img,+(f.rot||0).toFixed(2),f.landed?1:0,+(f.life||0).toFixed(1)]),set:S.set,vt:S.vt,ups:S.ups,opts:S.opts,votes:S.votes,vcd:S.vcd==null?null:+S.vcd.toFixed(2),rev:S.rev?{id:S.rev.id,t:+S.rev.t.toFixed(2),n:S.rev.n}:null,ufx:(S.ufx||[]).map(e=>[e.k,e.x|0,e.y|0,+e.t.toFixed(2),e.dur,e.seed]),adrB:(S.adrB||[]).map(b=>[b.x|0,b.y|0,+b.rot.toFixed(2)]),adrT:(S.adrT||[]).map(q=>[q.x|0,q.y|0,+q.t.toFixed(2)]),adrW:(S.adrW||[]).map(w=>[w.x1|0,w.y1|0,w.x2|0,w.y2|0,+w.t.toFixed(2)]),adrX:+(S.adrX||0).toFixed(2),bl:(S.bl||[]).filter(L=>!L.done).map(L=>[L.x|0,L.y|0,L.tx|0,L.ty|0,+Math.min(1,L.t/L.dur).toFixed(2),L.r|0]),jm:(S.jm||[]).map(m=>[m.id,JM.K.indexOf(m.k),m.x|0,m.y|0,Math.ceil(m.hp),m.max,m.dead?1:0,+(m.dead?m.dt/JM.decay:0).toFixed(2),Math.ceil(m.sh),+m.face.toFixed(2),m.st|0,+(m.prog||0).toFixed(2),m.hitF>0?1:0,m.tx|0,m.ty|0,m.pid,m.mv?1:0,m.mcsPh?(m.mcsPh==='wind'?1:2):0]),jx:(S.jx||[]).map(e=>[e.x|0,e.y|0,+e.t.toFixed(2),e.r|0]),room,n:nPl(),
+function snap(){const b=S.bs,D=S.dlg;return{st:S.st,c17:S.c17?snapC17():null,secOn:S.secOn?1:0,sec:S.sec?snapSec():null,secT:S.secT||0,pix:S.pixT==null?-1:+S.pixT.toFixed(2),sc:S.sc?{t:+S.sc.t.toFixed(2),ms:+S.sc.ms.toFixed(3),wf:+S.sc.wf.toFixed(3),jf:+S.sc.jf.toFixed(3),who:S.sc.who|0,tf:+S.sc.tf.toFixed(3),iw:S.sc.impW|0,ij:S.sc.impJ|0}:null,secBanner:S.secBanner?S.secBanner.txt:'',s7:S.s7&&snapS7(),in7:S.in7?+S.in7.t.toFixed(2):-1,tri:S.tri&&S.tri.map(q=>({name:q.name,img:q.img,x:q.x|0,y:q.y|0,hp:Math.ceil(q.hp),max:q.max,fl:q.fl>0?1:0,stun:q.stun>0?1:0,a:+(q.a||0).toFixed(2),r:q.r})),bi:bidx(),loop:lp(),paused:S.paused,ezUlt:S.ezUlt?{stage:S.ezUlt.stage,t:S.ezUlt.t,beamT:S.ezUlt.beamT,flashT:S.ezUlt.flashT}:null,bfAfter:S.bfAfter?{t:S.bfAfter.t,dur:S.bfAfter.dur,x:S.bfAfter.x,y:S.bfAfter.y,a:S.bfAfter.a,fin:S.bfAfter.fin,kind:S.bfAfter.kind||''}:null,bfCut:S.bfCut?{t:S.bfCut.t,dur:S.bfCut.dur,x:S.bfCut.x,y:S.bfCut.y,bx:S.bfCut.bx,by:S.bfCut.by,a:S.bfCut.a,finisher:S.bfCut.finisher||0,targetName:S.bfCut.targetName||'CHALLENGER',targetCh:S.bfCut.targetCh||'cg',damage:S.bfCut.damage||44,dealt:S.bfCut.dealt||0,tImg:S.bfCut.tImg,aImg:S.bfCut.aImg,attName:S.bfCut.attName,tName:S.bfCut.tName,quote:S.bfCut.quote,sub:S.bfCut.sub,kind:S.bfCut.kind||'',col:S.bfCut.col||'',stamp:S.bfCut.stamp||'',total:S.bfCut.total||'',lines:S.bfCut.lines||null,gl:S.bfCut.gl||'',skinMsg:S.bfCut.skinMsg||''}:null,runT:S.t,survT:S.survT,survMax:S.survMax,survName:S.survName,survWave:S.survWave,bs2:S.bs2&&{img:S.bs2.img,x:S.bs2.x,y:S.bs2.y,hp:S.bs2.hp,max:S.bs2.max,idx:1,sz:S.bs2.sz||150,fl:S.bs2.fl>0?1:0,a:S.bs2.a||0,gun:S.bs2.gun?1:0,pipe:S.bs2.pipeOn?S.bs2.pa:null,beam:S.bs2.beam==null?null:S.bs2.beam,mode:S.bs2.mode||'',sp:S.bs2.rolling?S.bs2.t*14:0},zn:S.zn.map(z=>[z.x|0,z.y|0,z.r,+(z.life/z.max).toFixed(2),z.col||'',z.dmg||10,z.slowField?1:0]),pk:S.pk.map(k=>[k.x|0,k.y|0]),tc:(S.tc||[]).map(c=>[c.x|0,c.y|0,+Math.sin(c.rot).toFixed(2),+c.t.toFixed(2)]),pslam:(S.pslam||[]).map(s=>[s.x|0,s.y|0,s.r,+s.t.toFixed(2),s.life,s.cracks||[],s.eur?1:0]),prk:(S.prk||[]).map(r=>[r.x|0,r.y|0,+r.life.toFixed(2),r.pid]),psb:(S.psb||[]).map(s=>[s.x|0,s.y|0,+s.life.toFixed(2),s.pid,s.size,+s.since.toFixed(2)]),pthr:(S.pthr||[]).map(t=>[t.x|0,t.y|0,+t.rot.toFixed(2)]),pqk:(S.pqk||[]).map(z=>[z.x|0,z.y|0,z.r|0,+z.life.toFixed(2),z.max]),pfood:(S.pfood||[]).map(f=>[f.x|0,f.y|0,f.img,+(f.rot%(2*PI)).toFixed(2),f.size|0]),jf:(S.jf||[]).filter(f=>f.delay<=0).map(f=>[f.x|0,f.y|0,Math.round(f.z||0),f.img,+(f.rot||0).toFixed(2),f.landed?1:0,+(f.life||0).toFixed(1)]),set:S.set,vt:S.vt,ups:S.ups,opts:S.opts,votes:S.votes,vcd:S.vcd==null?null:+S.vcd.toFixed(2),rev:S.rev?{id:S.rev.id,t:+S.rev.t.toFixed(2),n:S.rev.n}:null,ufx:(S.ufx||[]).map(e=>[e.k,e.x|0,e.y|0,+e.t.toFixed(2),e.dur,e.seed]),adrB:(S.adrB||[]).map(b=>[b.x|0,b.y|0,+b.rot.toFixed(2)]),adrT:(S.adrT||[]).map(q=>[q.x|0,q.y|0,+q.t.toFixed(2)]),adrW:(S.adrW||[]).map(w=>[w.x1|0,w.y1|0,w.x2|0,w.y2|0,+w.t.toFixed(2)]),adrX:+(S.adrX||0).toFixed(2),bl:(S.bl||[]).filter(L=>!L.done).map(L=>[L.x|0,L.y|0,L.tx|0,L.ty|0,+Math.min(1,L.t/L.dur).toFixed(2),L.r|0]),jm:(S.jm||[]).map(m=>[m.id,JM.K.indexOf(m.k),m.x|0,m.y|0,Math.ceil(m.hp),m.max,m.dead?1:0,+(m.dead?m.dt/JM.decay:0).toFixed(2),Math.ceil(m.sh),+m.face.toFixed(2),m.st|0,+(m.prog||0).toFixed(2),m.hitF>0?1:0,m.tx|0,m.ty|0,m.pid,m.mv?1:0,m.mcsPh?(m.mcsPh==='wind'?1:2):0]),jx:(S.jx||[]).map(e=>[e.x|0,e.y|0,+e.t.toFixed(2),e.r|0]),room,n:nPl(),
  pl:Object.values(S.pl).map(p=>({id:p.id,ch:p.ch,jmode:p.jmode|0,jcap:(S.jup&&S.jup[p.id])?S.jup[p.id].cap:0,jof:(S.jup&&S.jup[p.id]&&S.jup[p.id].offers[0])||null,tt:p.id==='host'?teq():(p.tt||''),rvp:(S.t-(p.rvAt||-9)<.25)?+((p.rvT||0)/7.5).toFixed(2):0,fz:Math.round(p.fuse||0),fw:+(p.fuseWind||0).toFixed(2),fb:+(p.blastT||0).toFixed(2),fr:Math.round(p.blastR||0),fk:p.fuseKind==='manual'?1:0,c17s:[p.burnT>0?(p.burnN||1):0,p.iceT>0?1:0,p.stunT>0?1:0],ls:+(p.ls||0).toFixed(1),dc:p.dec?[p.dec.x|0,p.dec.y|0,+p.dec.t.toFixed(2),+Math.max(0,p.dec.life).toFixed(2)]:null,x:p.x|0,y:p.y|0,hp:Math.ceil(p.hp),max:p.max,ang:+p.ang.toFixed(2),walk:p.walk,stab:p.stab,sd:p.sd,dead:p.dead,sh:p.sh,name:p.name,skin:p.skin||'',cd:p.cd,cdm:p.cdm,wh:p.whirl>0?1:0,kick:p.kick,dash:p.dash||0,inv:p.inv>0?1:0,buf:p.buf>0?1:0,sauce:p.sauceSlow>0?1:0,orb:p.m?p.m.orbit:0,oa:p.oa||0,dd:p.dd,tk:p.tk,jc:+(p.jch>0?1-p.jch/(p.jtot||1):0).toFixed(2),jn:p.jn|0,jo:p.jod>0?1:0,js:p.jslow>0?1:0,jwd:p.jwind>0?1:0,m1Anim:p.m1Anim||0,m1T:p.m1T||0,m1Dur:p.m1Dur||.3,m1Angle:p.m1Angle==null?p.ang:p.m1Angle,m1Hit:p.m1Hit&&p.m1Hit.t>0?{x:p.m1Hit.x,y:p.m1Hit.y,a:p.m1Hit.a,r:p.m1Hit.r,half:p.m1Hit.half,kind:p.m1Hit.kind,t:p.m1Hit.t}:null,cs:p.cs>0?1:0,jh:p.hide>0?1:0,jw:p.windup>0?+(1-p.windup/.75).toFixed(2):-1,jb:p.boom?[p.boom.px|0,p.boom.py|0,+(p.boom.rot||0).toFixed(2),+p.boom.t.toFixed(2)]:null,pst:p.ch==='pat'?[p.stance?1:0,+(p.chg||0).toFixed(2),p.rockOut?1:0,(p.m?p.m.size:1),p.leap?+cl(1-p.dash/p.leap.T,0,1).toFixed(2):-1,+(p.slam||0).toFixed(2),+(p.think||0).toFixed(2),+(p.eur||0).toFixed(2),(S.psb||[]).some(q=>q.pid===p.id)?1:0]:null})),
- b:b&&{img:b.img,name:b.d.n,x:b.x|0,y:b.y|0,hp:b.hp,max:b.max,ph:b.ph,fl:b.fl>0?1:0,inv:b.inv,sz:b.sz,a:b.a||0,gun:b.gun?1:0,pipe:b.pipeOn?b.pa:null,beam:b.beam==null?null:b.beam,air:b.air||0,tl:b.tl||0,cr:b.crash>0?1:0,sg:b.sugar|0,zg:b.dg|0,zc:b.closed>0?1:0,zo:b.orderTxt||'',zi:b.oi==null?-1:b.oi,zm:b.mealName||'',zk:b.counter>0?1:0,zu:b.domU?+b.domU.toFixed(2):0,sp:b.rolling?b.t*14:0,mode:b.mode||'',cdash:b.cdash||0,idx:bidx(),hp2:b.hp2||0,max2:b.max2||0,fc:b.fc?{i:b.fc.i,t:b.fc.t,a:b.fc.a}:null,fr:b.fr?{phase:b.fr.phase,t:b.fr.t,a:b.fr.a,dx:b.fr.dx,dy:b.fr.dy}:null,fs:b.fs?{phase:b.fs.phase,t:b.fs.t,x:b.fs.x,y:b.fs.y}:null,gs:b.gs?{phase:b.gs.phase,t:b.gs.t,safeLane:b.gs.safeLane}:null,hr:b.hr?{phase:b.hr.phase,t:b.hr.t,x:b.hr.x,y:b.hr.y}:null,cmb:b.cmb?[b.cmb.k,+b.cmb.a.toFixed(2),+b.cmb.p.toFixed(2),b.cmb.s==='swing'?1:0,b.cmb.r,b.cmb.h]:null},
+ b:b&&{img:b.img,name:b.d.n,x:b.x|0,y:b.y|0,hp:b.hp,max:b.max,ph:b.ph,fl:b.fl>0?1:0,inv:b.inv,sz:b.sz,a:b.a||0,gun:b.gun?1:0,pipe:b.pipeOn?b.pa:null,beam:b.beam==null?null:b.beam,air:b.air||0,tl:b.tl||0,cr:b.crash>0?1:0,sg:b.sugar|0,zg:b.dg|0,zc:b.closed>0?1:0,zo:b.orderTxt||'',zi:b.oi==null?-1:b.oi,zm:b.mealName||'',zk:b.counter>0?1:0,zu:b.domU?+b.domU.toFixed(2):0,rl:b.light|0,dk:b.dark?+b.dark.toFixed(2):0,wi:b.wind?b.wind.dir:0,sp:b.rolling?b.t*14:0,mode:b.mode||'',cdash:b.cdash||0,idx:bidx(),hp2:b.hp2||0,max2:b.max2||0,fc:b.fc?{i:b.fc.i,t:b.fc.t,a:b.fc.a}:null,fr:b.fr?{phase:b.fr.phase,t:b.fr.t,a:b.fr.a,dx:b.fr.dx,dy:b.fr.dy}:null,fs:b.fs?{phase:b.fs.phase,t:b.fs.t,x:b.fs.x,y:b.fs.y}:null,gs:b.gs?{phase:b.gs.phase,t:b.gs.t,safeLane:b.gs.safeLane}:null,hr:b.hr?{phase:b.hr.phase,t:b.hr.t,x:b.hr.x,y:b.hr.y}:null,cmb:b.cmb?[b.cmb.k,+b.cmb.a.toFixed(2),+b.cmb.p.toFixed(2),b.cmb.s==='swing'?1:0,b.cmb.r,b.cmb.h]:null},
  pr:S.pr.map(q=>[q.id,q.img,q.x|0,q.y|0,+q.rot.toFixed(2),q.sz,q.own,q.r,q.dark?1:0,q.shape|0,q.pk?1:0]),
  wr:S.wr.map(w=>[w.k,w.x|0,w.y|0,+w.a.toFixed(2),w.r,+(w.t/w.dur).toFixed(2),w.img||'',w.col||'',w.wd||0]),
  dlg:D&&{who:D.L[D.i][0],text:D.L[D.i][1],t:D.t,i:D.i,intro:(D.next==='fight'||D.next==='c17fight'),noSkip:D.noSkip?1:0}}}
@@ -3442,6 +3604,17 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'jam-nerf',title:'Jameson Lee Cooper: Balance Pass',date:'Nov 8, 2026',sub:'A slight nerf to Jameson. He is still a swarm, just a little less overwhelming.',items:[
+  ['CHANGED','Base HP 70 to 64, and a little slower (speed 240 to 232).'],
+  ['CHANGED','Squad upgrades: Heavy Hands +25% to +20% minion damage, Tough Stuff +30% to +25% minion HP, Shield Drills 12 to 10 HP shields, Fast Factory 20% to 15% faster summons, Big Boom +35% to +30% blast radius, Long Shifts +10s to +8s.'],
+  ['CHANGED','Squad upgrades now open every 1400 minion damage for the first one, then each next upgrade needs 500 more damage than the last (1400, 1900, 2400...).']]},
+ {id:'darrel-games',title:'Darrel Remake 2: Party Games',date:'Nov 8, 2026',sub:'Every Darrel move was replaced. Each one is a party game with its own rule.',items:[
+  ['NEW','RED LIGHT, GREEN LIGHT: on red every bullet freezes and anyone who moves gets busted. MUSICAL CHAIRS: chairs orbit, one is taken away each round, and you must be sitting on one when the music stops.'],
+  ['NEW','PASS THE PARCEL: touch a gift before your fuse runs out and the blast goes back at Darrel for damage. BALLOON PUMP: balloons inflate while drifting after you. CUT THE CAKE: every other slice is hot, and the cut changes.'],
+  ['NEW','BLOW OUT THE CANDLES: wind shoves you into a wall of flames, so run into it. DARREL SAYS: memorise a colour sequence, then do it with no hints. THE FLOOR IS LAVA: tiles turn to lava for good.'],
+  ['NEW','PIN THE TAIL: he leads your movement. PINBALL PARTY: balls ricochet off bumpers, which also make cover. JUMP ROPE: stay in the hub while the rope spins and reverses. PARTY GAME MEDLEY: three games in a row, then he crashes.'],
+  ['NEW','SURPRISE PARTY: the lights go out and party poppers charge in the dark. If one hits you, a cutscene plays with your character, their name and their own gift. Dodge them all and the surprise is ruined, so he crashes.'],
+  ['CHANGED','The sugar meter and crash work as before: each game adds sugar, a full meter means a crash and +35% damage. A traffic light and wind streaks now show on the arena.']]},
  {id:'drivethru-switch',title:'Drive-Thru: Switch Lanes',date:'Nov 8, 2026',sub:'The Drive-Thru attack no longer lets you stand between the lanes.',items:[
   ['CHANGED','Each belt is now a full band of burgers instead of a thin line. One open lane is marked in green with a marker at its entry end.'],
   ['NEW','The open lane SWITCHES to the next belt mid-attack. The new lane glows green and the old one glows yellow about a second before it happens. Phase 1 has one switch, phase 2 two, phase 3 three, and they come faster.']]},
@@ -4143,7 +4316,8 @@ function drawDarrelArena(t,v){
  // Disco party hall (v3): a beat-synced 8x5 dance floor that matches the disco attacks, a mirror ball, sweeping spotlights,
  // bunting, speakers and a sugar meter. When Darrel crashes the lights drop and a single spotlight finds him.
  const pc=['#ffe94a','#ff7ab8','#7dfcff','#ff9a3c','#b98cff','#7dff9a'],b=v&&v.b,ph=Math.min(2,(b&&b.ph)||0),crash=!!(b&&(b.cr||b.crash>0)),
-  sg=Math.min(DRL.sugarMax,Math.max(0,(b&&(b.sg!=null?b.sg:b.sugar))||0)),beat=t*(2.1+ph*.3),pul=Math.pow(Math.max(0,Math.sin(beat*PI*2)),3),lit=crash?.38:1;
+  sg=Math.min(DRL.sugarMax,Math.max(0,(b&&(b.sg!=null?b.sg:b.sugar))||0)),beat=t*(2.1+ph*.3),pul=Math.pow(Math.max(0,Math.sin(beat*PI*2)),3),lit=crash?.38:1,
+  rl=(b&&(b.rl!=null?b.rl:b.light))||0,dk=(b&&(b.dk!=null?b.dk:b.dark))||0,wi=(b&&(b.wi!=null?b.wi:(b.wind?b.wind.dir:0)))||0;
  // Base: deep purple hall, back wall, stage curtains.
  let gr=g.createLinearGradient(0,72,0,H);gr.addColorStop(0,'#1b0b33');gr.addColorStop(.3,'#140a2a');gr.addColorStop(1,'#09051a');g.fillStyle=gr;g.fillRect(0,72,W,H-72);
  g.fillStyle='#24104a';g.fillRect(0,72,W,76);g.fillStyle='#31186a';g.fillRect(0,140,W,8);
@@ -4156,6 +4330,9 @@ function drawDarrelArena(t,v){
  g.globalAlpha=1;g.strokeStyle='rgba(185,140,255,'+((.22+.12*pul)*lit).toFixed(3)+')';g.lineWidth=2;g.beginPath();
  for(let i=0;i<=DRL_GX;i++){g.moveTo(i*DRL_CW,DRL_Y0);g.lineTo(i*DRL_CW,H)}for(let i=0;i<=DRL_GY;i++){g.moveTo(0,DRL_Y0+i*DRL_CH);g.lineTo(W,DRL_Y0+i*DRL_CH)}g.stroke();
  g.restore();
+ // Games: the light colour tints the floor (red light, green light) and wind streaks blow across it.
+ if(rl){g.fillStyle=rl===3?'rgba(255,40,60,'+(.1+.04*Math.sin(t*14)).toFixed(3)+')':rl===2?'rgba(255,200,40,.07)':'rgba(60,255,120,.05)';g.fillRect(0,148,W,H-148)}
+ if(wi){g.strokeStyle='rgba(220,240,255,.22)';g.lineWidth=1.5;g.beginPath();for(let i=0;i<38;i++){const y=150+(i*53)%380,x=(((t*700*wi)+i*131)%(W+200)+W+200)%(W+200)-100;g.moveTo(x,y);g.lineTo(x+wi*70,y)}g.stroke()}
  // Lights: sweeping spotlights and mirror-ball glints, or one lonely spotlight on Darrel while he is crashed.
  g.save();g.globalCompositeOperation='lighter';
  if(crash){if(b){gr=g.createRadialGradient(b.x,b.y,10,b.x,b.y,170);gr.addColorStop(0,'rgba(255,240,200,.35)');gr.addColorStop(1,'rgba(255,240,200,0)');g.fillStyle=gr;g.fillRect(b.x-170,b.y-170,340,340)}}
@@ -4190,6 +4367,9 @@ function drawDarrelArena(t,v){
  for(let k=0;k<4;k++){const cx=448+k*22;g.strokeStyle='#ffe94a';g.lineWidth=2;g.beginPath();g.moveTo(cx,456);g.lineTo(cx,444);g.stroke();g.fillStyle='#ff9a3c';g.beginPath();g.moveTo(cx,444);g.lineTo(cx+2+Math.sin(t*6+k)*1.5,438);g.lineTo(cx-2,438);g.closePath();g.fill()}
  // Confetti drifting down.
  for(let i=0;i<30;i++){const x=(i*71+t*26)%W,y=((i*53+t*58)%(H-170))+150;g.fillStyle=pc[i%6];g.save();g.translate(x,y);g.rotate(t*2.4+i);g.globalAlpha=.8;g.fillRect(-3,-5,6,10);g.restore()}
+ // Surprise Party: the lights go out (telegraphs stay bright because they draw after this). The traffic light shows during Red Light.
+ if(dk>0){g.fillStyle='rgba(3,1,14,'+(.78*dk).toFixed(3)+')';g.fillRect(0,72,W,H-72)}
+ if(rl){[['255,60,70',3],['255,210,60',2],['80,255,120',1]].forEach(([c2,k2],i2)=>{const on=rl===k2;g.fillStyle=on?'rgb('+c2+')':'rgba('+c2+',.15)';g.beginPath();g.arc(318+i2*26,118,9,0,PI*2);g.fill();if(on){g.save();g.globalCompositeOperation='lighter';g.fillStyle='rgba('+c2+',.35)';g.beginPath();g.arc(318+i2*26,118,17,0,PI*2);g.fill();g.restore()}})}
  // Wall readouts: the sugar meter on the left (or the crash notice), phase and HP on the right.
  const lab=['PARTY STARTER','CAKE TIME','WILD PARTY'][ph],pct=b&&b.max?Math.max(0,Math.ceil(100*b.hp/b.max)):100;
  if(crash){const fl=Math.sin(t*12)>0;g.font='bold 13px monospace';g.fillStyle=fl?'#ff7ab8':'#ffe94a';g.textAlign='center';g.textBaseline='middle';g.fillText('SUGAR CRASH!  +'+Math.round((DRL.crashMul-1)*100)+'% DAMAGE',210,118)}
@@ -4291,7 +4471,7 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];if(S&&host&
  if(cut&&v.b){const z=1+.28*Math.min(1,cutT/.6);g.translate(v.b.x,v.b.y);g.scale(z,z);g.translate(-v.b.x,-v.b.y)}
  if(v.c17)drawC17Bg(v.c17,t,v);else if(v.secOn||(st==='secretcut'&&v.sc&&v.sc.tf>.8))drawSecretBg(t);else{drawBg(v.bi===8?4:v.bi,t);if(v.bi===8&&st!=='survival')drawZachArena(t,v);if(v.bi===5&&st!=='survival')drawFellaArena(t,v);if(v.bi===7&&st!=='survival')drawDarrelArena(t,v)}if(st==='survival')drawSurvBack(t,v);
  DC.forEach(d=>{g.fillStyle='rgba(0,0,0,'+Math.min(.3,d.l/8*.4)+')';g.beginPath();g.arc(d.x,d.y,d.r,0,PI*2);g.fill()});
- v.wr.forEach(([k,x,y,a,r,p,img,wc,wd])=>{const col=wc||(v.secOn?'255,30,70':v.bi?'255,60,60':'255,200,60');if(k==='c'){drawWarnConverge(x,y,r,p,col);g.fillStyle='rgba('+col+','+(.12+.3*p)+')';g.beginPath();g.arc(x,y,r*(.4+.6*p),0,PI*2);g.fill();g.strokeStyle='rgba('+col+',.9)';g.lineWidth=2;g.beginPath();g.arc(x,y,r,0,PI*2);g.stroke();if(img)spr(img,x,y-(1-p)*320,46,p*8,1,1,.4+.6*p)}else if(k==='l'){g.save();g.translate(x,y);g.rotate(a);g.fillStyle='rgba('+col+','+(.1+.35*p)+')';const hw=(wd||64)/2;g.fillRect(0,-hw,r,hw*2);g.strokeStyle='rgba('+col+','+(.35+.4*p)+')';g.lineWidth=2;g.strokeRect(0,-hw,r,hw*2);g.restore()}else if(k==='s'){drawWarnCone(x,y,a,r,wd||.5,p,col)}else if(k==='o'){drawWarnPulse(x,y,r,p,col)}else if(k==='dc'||k==='dl'||k==='ds'||k==='dr'||k==='dn'){drawDarrelWarn(k,x,y,a,r,p,img,col,wd)}else if(k==='zc'||k==='zl'||k==='zs'||k==='zo'){drawZachWarn(k,x,y,a,r,p,img,col,wd)}else if(k==='x'){drawWarnMark(x,y,r,p,col)}});
+ v.wr.forEach(([k,x,y,a,r,p,img,wc,wd])=>{const col=wc||(v.secOn?'255,30,70':v.bi?'255,60,60':'255,200,60');if(k==='c'){drawWarnConverge(x,y,r,p,col);g.fillStyle='rgba('+col+','+(.12+.3*p)+')';g.beginPath();g.arc(x,y,r*(.4+.6*p),0,PI*2);g.fill();g.strokeStyle='rgba('+col+',.9)';g.lineWidth=2;g.beginPath();g.arc(x,y,r,0,PI*2);g.stroke();if(img)spr(img,x,y-(1-p)*320,46,p*8,1,1,.4+.6*p)}else if(k==='l'){g.save();g.translate(x,y);g.rotate(a);g.fillStyle='rgba('+col+','+(.1+.35*p)+')';const hw=(wd||64)/2;g.fillRect(0,-hw,r,hw*2);g.strokeStyle='rgba('+col+','+(.35+.4*p)+')';g.lineWidth=2;g.strokeRect(0,-hw,r,hw*2);g.restore()}else if(k==='s'){drawWarnCone(x,y,a,r,wd||.5,p,col)}else if(k==='o'){drawWarnPulse(x,y,r,p,col)}else if(k==='dc'||k==='dl'||k==='ds'||k==='dr'||k==='dn'||k==='dm'){drawDarrelWarn(k,x,y,a,r,p,img,col,wd)}else if(k==='zc'||k==='zl'||k==='zs'||k==='zo'){drawZachWarn(k,x,y,a,r,p,img,col,wd)}else if(k==='x'){drawWarnMark(x,y,r,p,col)}});
  v.zn.forEach(([x,y,r,f,col,dmg,slowField])=>{if(col==='#ff6a1a'||col==='#8fefff'){drawC17Zone(x,y,r,f,col,t);return}const sauce=!!slowField;glow(x,y,r*(sauce?1.22:1.5),sauce?'rgba(255,28,58,1)':col==='#4df2ff'?'rgba(60,220,255,1)':col==='#bd69ff'?'rgba(185,90,255,1)':'rgba(255,150,40,1)');if(sauce){g.fillStyle='rgba(170,0,28,'+(.25+.15*Math.sin(t*6))+')';g.beginPath();g.ellipse(x,y+5,r,r*.68,Math.sin(t*1.2)*.08,0,PI*2);g.fill();g.fillStyle='rgba(255,35,64,.7)';for(let k=0;k<9;k++){const a=k*PI*2/9+t*.22,rr=r*(.32+.32*Math.sin(t*2+k));g.beginPath();g.arc(x+Math.cos(a)*rr,y+Math.sin(a)*rr*.64,4+(k%3)*2,0,PI*2);g.fill()}g.strokeStyle='rgba(255,130,150,.85)';g.lineWidth=2;g.beginPath();g.ellipse(x,y+5,r*.88,r*.58,0,0,PI*2);g.stroke();spr('sauce',x+Math.sin(t*3)*4,y-4,Math.min(48,r*.8),Math.sin(t*2)*.12,1,1,.82)}else{g.fillStyle=col==='#4df2ff'?'rgba(70,230,255,'+(.18+.19*Math.sin(t*5))+')':col==='#bd69ff'?'rgba(185,90,255,'+(.2+.15*Math.sin(t*5))+')':'rgba(255,140,30,'+(.25+.15*Math.sin(t*5))+')';g.beginPath();g.arc(x,y,r,0,PI*2);g.fill();g.strokeStyle=col||'rgba(255,220,120,.9)';g.lineWidth=3;g.beginPath();g.arc(x,y,r,0,PI*2);g.stroke()}if(R()<.3&&PT.length<700){const an=R()*PI*2,dd=R()*r;PT.push({x:x+Math.cos(an)*dd,y:y+Math.sin(an)*dd,vx:0,vy:-40,l:.6,m:.6,c:sauce?'#ff3048':'#ffd36b',s:5})}});
  v.pk.forEach(([x,y])=>{glow(x,y,46,'rgba(120,255,120,1)');spr('burger',x,y+Math.sin(t*4)*5,48)});
  if(st!=='up'&&st!=='survival'&&v.b&&!v.secOn&&st!=='secretcut'&&!v.c17){if(ST.ambient)drawAmbient(t,BD[v.bi].col);if(ST.aura)drawAura(BD[v.bi].col,t,v.b.x,v.b.y,v.b.sz||150);drawBoss(v.b,t);if(v.bi===2){g.save();g.globalAlpha=.14;for(let i=0;i<14;i++){const a=t*.45+i*2*PI/14,rad=112+Math.sin(t*2+i)*20;g.strokeStyle=i%2?'#4df2ff':'#bb6cff';g.lineWidth=2;g.beginPath();g.arc(v.b.x+Math.cos(a)*rad,v.b.y+Math.sin(a)*rad*.58,8+(i%3)*3,0,PI*2);g.stroke()}g.restore();for(let i=0;i<6;i++){const bx=((i*163+t*22)%(W+80))-40,by=(i*89+Math.sin(t*1.7+i)*24+((t*25+i*67)%H));glow(bx,by,18,'rgba(65,240,255,.65)');spr('bubble3',bx,by,20+4*Math.sin(t*2+i))}}if(v.bi===3&&v.b.hp<=0)TS('DEFEATED',v.b.x,v.b.y+90,14,'#ff9aa8')}
