@@ -7,7 +7,7 @@
 <script>
 'use strict';
 // One-time data reset: bump DATA_VER to wipe every saved value (progress, coins, skins, settings) on each device the next time the game loads.
-try{const DATA_VER='2026-11-10-reset';if(localStorage.getItem('zub_dataver')!==DATA_VER){const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf('zub_')===0)ks.push(k)}ks.forEach(k=>localStorage.removeItem(k));localStorage.setItem('zub_dataver',DATA_VER)}}catch(e){}
+try{const DATA_VER='2026-11-10-reset-2';if(localStorage.getItem('zub_dataver')!==DATA_VER){const ks=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.indexOf('zub_')===0)ks.push(k)}ks.forEach(k=>localStorage.removeItem(k));localStorage.setItem('zub_dataver',DATA_VER)}}catch(e){}
 window.addEventListener('error',e=>{let d=document.getElementById('err');if(!d){d=document.createElement('pre');d.id='err';d.style.cssText='position:fixed;left:0;top:0;right:0;margin:0;padding:8px;background:#600;color:#fff;font:12px monospace;z-index:9;white-space:pre-wrap';document.body.appendChild(d)}d.textContent='Game error: '+e.message+' (line '+e.lineno+')\n'+d.textContent});
 const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=W;cv.height=H;g.imageSmoothingEnabled=false;
 let R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d),sideOfLane=i=>i%2?W-12:12;
@@ -25,7 +25,7 @@ const CH={cg:{n:'Coolguy15',hp:100,spd:230,i:['cgi1','cgi2'],w:['cgw1','cgw2'],a
  jay:{n:'Jay',hp:80,spd:245,i:['ji1','ji3'],w:['jw1','jw2'],ab:['Food Barrage','Pan Boomerang','Box Hide'],dsc:['Scatter 11 snacks','Pan hits boss 4 times','Hide 3s, attacks pass'],wp:'Swing the pan up close, or toss snacks from range.'},
  terry:{n:'Terry',hp:110,spd:240,i:['tI1','tI2'],w:['tW1','tW2'],ab:['Lucky Coin','Briefcase Bomb','Cash Shield'],dsc:['Flip 5 coins that bounce twice','Case hits 20, then cash burst','Block shots, fire them back'],wp:'Hustler. Hold click for a rapid-fire money gun.'},
  pat:{n:'Patrick',hp:150,spd:215,i:['pi1','pi2'],w:['pw1','pw2'],ab:['Pet Rocks','Sponge Squad','Eureka!'],dsc:['Rocks orbit and block shots. Press again to throw them','SpongeBob throws patties at the boss and heals allies','Burst + stones + BIG BRAIN: instant flops for 7 s'],wp:'Hold to charge a belly flop (full = BIG FLOP). Stand still to get rock-hard.'},
- adr:{n:'Adrian',hp:120,spd:235,i:['adi1','adi2'],w:['adw1','adw2'],ab:['Grapple','Chain Tether','Cyclone'],dsc:['Hook the boss and zip in for a slam. Miss and you zip across the arena instead','Chain to the boss for 5s: it takes +20% from everyone and your whip heals you. Pull too far and it snaps','Spin the chain for 1.2s: hits all around you and cuts down boss shots'],wp:'Chain Whip M1: hit with the TIP for a CRACK (x1.6). Momentum builds as you move and land hits for up to +40% damage and +20% speed, and OVERDRIVE at 100%. Standing still and getting hit drain it.'},
+ adr:{n:'Adrian',hp:120,spd:235,i:['adi1','adi2'],w:['adw1','adw2'],ab:['Grapple','Chain Tether','Rev Up'],dsc:['Hook the boss and zip in for a slam. Miss and you zip across the arena instead','Chain to the boss for 5s: it takes +20% from everyone and your whip heals you. Pull too far and it snaps','Dash with i-frames, clear nearby boss shots and gain 45% momentum'],wp:'Stick M1: a weaker swing, hit with the TIP for a CRACK (x1.5). Momentum only builds from landing hits (up to +25% damage), starts draining 1.5s after your last hit, and halves when you are hit. OVERDRIVE at 100%.'},
  jam:{n:'Jameson Lee Cooper',hp:64,spd:232,i:['jmi1','jmi2'],w:['jmw1','jmw2'],ab:['Overproduction','Boom Squad','Hard Hats'],dsc:['Minion production is twice as fast for 7s, then you are exhausted and slowed for 2s','After a short windup, summon 3 kamikaze minions','Shield every sword, bow and medkit minion for 10 damage'],wp:'Charge 2.2s to summon a random minion: kamikaze, sword, bow or medkit. Squad Upgrades open on your side panel: the first at 1400 minion damage, then each next one needs 500 more (1900, 2400...). F switches mode (SWARM, FORTRESS, OVERTIME), each with its own three abilities.'},bomb:{n:'Bomb Barry',hp:10,spd:235,i:['bbi1','bbi2'],w:['bbw1','bbw2'],ab:['Vent','Short Fuse','Detonate'],dsc:['Dump 40% heat into a steam cloud that burns the boss for 2.5s','Gain 20% heat and throw a bomb for 60 dmg','Detonate now: blast scales with heat, then stun and reset to 20%'],wp:'Fuse Lob: click to throw a bomb that explodes after 0.6s. Hits fill HEAT. At 100% he explodes for 2500 dmg and loses 10 HP, which is fatal. He has 10 HP and cannot heal.'}};
 const SKINS=[
  {id:'cg-woman',name:'Coolgirl15',ch:'cg',price:0,i:['cgWomanI1','cgWomanI2'],w:['cgWomanW1','cgWomanW2']},
@@ -38,14 +38,18 @@ const SKINS=[
  {id:'jay-solid',name:'Solid Jay',ch:'jay',price:180,i:['jaySolidI1','jaySolidI2'],w:['jaySolidW1','jaySolidW2']}
 ];
 SKINS.sort((a,b)=>a.price-b.price||a.name.localeCompare(b.name)); // cheapest first everywhere (shop + character select)
+const FREE_CHARS=['cg','zach'],CHAR_PRICE={jay:100,terry:125,pat:150,adr:175,jam:200,bomb:225};
 const SKIN_PROFILE_KEY='zub_skin_profile';
-function loadSkinProfile(){let d={};try{d=JSON.parse(localStorage.getItem(SKIN_PROFILE_KEY)||'{}')||{}}catch(e){}const freeIds=SKINS.filter(s=>s.price===0).map(s=>s.id),owned=[...new Set([...freeIds,...(Array.isArray(d.owned)?d.owned:[]).filter(id=>SKINS.some(s=>s.id===id))])];const equipped={};for(const ch of Object.keys(CH)){const id=d.equipped&&d.equipped[ch];if(id&&owned.includes(id)&&SKINS.some(s=>s.id===id&&s.ch===ch))equipped[ch]=id}return{coins:Math.max(0,Math.floor(Number(d.coins)||0)),owned,equipped}}
+function loadSkinProfile(){let d={};try{d=JSON.parse(localStorage.getItem(SKIN_PROFILE_KEY)||'{}')||{}}catch(e){}const freeIds=SKINS.filter(s=>s.price===0).map(s=>s.id),owned=[...new Set([...freeIds,...(Array.isArray(d.owned)?d.owned:[]).filter(id=>SKINS.some(s=>s.id===id))])];const equipped={};for(const ch of Object.keys(CH)){const id=d.equipped&&d.equipped[ch];if(id&&owned.includes(id)&&SKINS.some(s=>s.id===id&&s.ch===ch))equipped[ch]=id}const chars=[...new Set([...FREE_CHARS,...(Array.isArray(d.chars)?d.chars:[]).filter(c=>CH[c])])];return{coins:Math.max(0,Math.floor(Number(d.coins)||0)),owned,equipped,chars}}
 let PROFILE=loadSkinProfile(),skinPickOpen=false,skinSyncChar='',COIN_TOAST=[];
 function saveSkinProfile(){try{localStorage.setItem(SKIN_PROFILE_KEY,JSON.stringify(PROFILE))}catch(e){}}
 const skinById=id=>SKINS.find(s=>s.id===id)||null;
 const equippedSkinFor=ch=>{const id=PROFILE.equipped[ch];return id&&PROFILE.owned.includes(id)&&skinById(id)?.ch===ch?id:''};
 const validSkinFor=(id,ch)=>!!(id&&skinById(id)&&skinById(id).ch===ch);
 function buySkin(id){const sk=skinById(id);if(!sk||PROFILE.owned.includes(id))return;if(PROFILE.coins<sk.price){note('Need '+(sk.price-PROFILE.coins)+' more Zach Coins');return}PROFILE.coins-=sk.price;PROFILE.owned.push(id);saveSkinProfile();note('Purchased '+sk.name+'!')}
+const charOwned=ch=>FREE_CHARS.includes(ch)||PROFILE.chars.includes(ch);
+function buyChar(ch){if(charOwned(ch))return true;const p=CHAR_PRICE[ch];if(PROFILE.coins<p){note('Need '+(p-PROFILE.coins)+' more Zach Coins');return false}PROFILE.coins-=p;PROFILE.chars.push(ch);saveSkinProfile();note('Unlocked '+CH[ch].n+'!');return true}
+const skipCost=n=>25*Math.max(0,n|0);
 function awardZachCoins(amount){const n=Math.max(0,Math.floor(Number(amount)||0));if(!n)return;PROFILE.coins+=n;STAT.coins=(STAT.coins||0)+n;saveSkinProfile();COIN_TOAST.push({a:n,t:0});if(COIN_TOAST.length>4)COIN_TOAST.shift()}
 const CD={bomb:[7,9,18],cg:[6,12,5],zach:[9,8,5],jay:[20,10,7],terry:[9,12,10],pat:[8,12,16],adr:[6,11,10],jam:[16,13,15,2]};
 const BD=[{n:'Xiao Long Bao',title:'The Steamed Tyrant',img:'xlb',hp:2400,sz:150,col:['#ffe08a','#ff8a1f'],bg:['#4a2a12','#1a0f08'],mus:'m1'},
@@ -137,7 +141,7 @@ function pick3(){const a=[...Array(UP.length).keys()],f=a.filter(i=>!S.ups.inclu
 function contin(){if(host&&S.st==='win'){S.st='up';S.opts=pick3();S.votes={};S.vt=20;S.vcd=null;S.rev=null}}
 function resetPl(p,i){p.boom=null;p.lsUsed=0;p.ls=0;p.dec=null;p.hide=0;p.windup=0;p.sauceSlow=0;p.dd=0;p.tk=0;p.x=300+i*120;p.y=430;p.dead=0;p.inv=0;p.cd=[0,0,0];p.sh=0;p.revived=0;p.rage=0;p.buf=0;p.m1Step=0;p.m1Anim=0;p.m1T=0;p.m1Hit=null;p.max=0;p.hp=0;p.hpCap=null;p.fuse=0;p.fuseWind=0;p.fuseKind=null;p.fuseQ=0;p.stunT=0;p.blastT=0;p.jmode=0;p.jo=0;p.js=0;applyMods(p);p.hp=p.max}
 function resetRunState(){S.retreat=null;S.cut=null;S.streak=0;S.kr=null;S.lastHit=null;S.hurtBoss=0;S.histDone=0;GH.rec={};GH.atk={};GH.ft=0;GH.acc=0;GH.last=-1;GH.total=0;S.jup={};S.secOn=0;S.sec=null;S.secSeen=0;S.secT=0;S.pixT=null;S.sc=null;S.secBanner=null;S.s7=[];S.dlg=null;S.pr=[];S.wr=[];S.zn=[];S.tri=null;S.in7=null}
-function startRun(){S.jm=[];S.jx=[];resetRunState();Object.values(S.pl).forEach(p=>{p.jch=0;p.jwind=0;p.jod=0;p.jslow=0});STAT.runs++;statAch();saveStat();setRush(S.set.rush|0);S.c17=null;S.c17steal=null;S.ups=[];S.bi=cl(S.set.start,0,BD.length-1);S.t=0;S.paused=0;S.ezUlt=null;if(MA[curMus])MA[curMus].pause();if(MA.ezUlt)MA.ezUlt.pause();curMus=null;musTry=0;Object.values(S.pl).forEach((p,i)=>resetPl(p,i));spawnBoss()}
+function startRun(free){const cost=free?0:skipCost(cl(S.set.start,0,BD.length-1));if(cost>0){if(PROFILE.coins<cost){note('Need '+(cost-PROFILE.coins)+' more Zach Coins to skip to boss '+(S.set.start+1));return false}PROFILE.coins-=cost;saveSkinProfile();note('Paid '+cost+' Zach Coins to skip')}S.jm=[];S.jx=[];resetRunState();Object.values(S.pl).forEach(p=>{p.jch=0;p.jwind=0;p.jod=0;p.jslow=0});STAT.runs++;statAch();saveStat();setRush(S.set.rush|0);S.c17=null;S.c17steal=null;S.ups=[];S.bi=cl(S.set.start,0,BD.length-1);S.t=0;S.paused=0;S.ezUlt=null;if(MA[curMus])MA[curMus].pause();if(MA.ezUlt)MA.ezUlt.pause();curMus=null;musTry=0;Object.values(S.pl).forEach((p,i)=>resetPl(p,i));spawnBoss()}
 function spawnBoss(){S.hurtBoss=0;clearThreats(1);S.ezUlt=null;S.tri=null;S.in7=null;S.c17=null;const d=BD[bidx()],n=nPl(),mult=[.75,1,1.5][S.set.diff]*(1+.8*(n-1))*(1+.6*lp()),hp=d.hp*mult,hp2=(d.hp2||0)*mult;
  S.bs={idx:bidx(),d,img:d.img,x:(bidx()===3?300:480),y:140,hp,max:hp,ph:0,hp2,max2:hp2,cd:2.5,mode:null,fl:0,inv:1,sz:d.sz,a:0,t:0,last:'',air:0,nd:0};S.bs2=bidx()===3?{idx:1,d:BD[1],img:'ucg',x:700,y:180,hp:hp2,max:hp2,t:0,cd:1.8,ph:0,sz:150,mode:null,nd:0,isAllianceAlly:1,last:'',a:0,fl:0}:null;S.survT=0;S.survElapsed=0;S.survAttackCd=2;S.survWave=0;S.survName='';S.pr=[];S.wr=[];S.slowm=1;S.zn=[];S.pk=[];S.pkT=12;S.bdT=0;S.jf=[];S.tc=[];
  Object.values(S.pl).forEach((p,i)=>{p.x=300+i*120;p.y=430;p.revived=0;p.lsUsed=0;p.ls=0;p.dec=null});if(BD[bidx()].c17)c17Spawn(BD[bidx()].c17,hp);else if(bidx()===6)startTrio(mult);else say(compose(null,'intro'),'fight')}
@@ -849,19 +853,19 @@ function drawBoltFx(x,y,age,seed){
    MOMENTUM (passive, 0 to 100): builds while you move and as you land hits, decays when you stand still, and drops when you are hit.
      More momentum means more damage (up to +40%) and speed (up to +20%). At 100 you enter OVERDRIVE for 5s: +25% damage, +10% speed,
      and every whip cracks twice. When it ends you keep 35%. */
-const ADR={whipDmg:22,whipCd:.42,reach:170,half:.72,crack:1.6,crackFrom:.58,hookRange:520,hookMiss:420,hookSpd:1500,slamDmg:40,slamR:118,
+const ADR={whipDmg:14,whipCd:.42,reach:160,half:.72,crack:1.5,crackFrom:.58,hookRange:520,hookMiss:420,hookSpd:1500,slamDmg:40,slamR:118,
  tetherRange:480,tetherSnap:560,tetherDur:5,expMult:1.2,snapDmg:28,tetherEnd:18,tetherHeal:3,cycDur:1.2,cycR:132,cycDmg:11,cycTick:.15,
- moGain:11,moDecay:16,moHit:5,moCrack:9,moSlam:12,moHurt:30,odDur:5,odAfter:35};
-const adrMul=p=>1+(p.mo||0)/250+(p.adrOd>0?.25:0);
-const adrSpd=p=>p.ch==='adr'?(1+(p.mo||0)/500+(p.adrOd>0?.1:0))*(p.cyc>0?.7:1):1;
-function adrGain(p,v){if(p.adrOd>0||p.dead)return;p.mo=Math.min(100,(p.mo||0)+v);if(p.mo>=100)adrOverdrive(p)}
+ moGain:0,moDecay:14,moHold:1.5,moHit:4,moCrack:7,moSlam:8,moHurt:30,odDur:3,odAfter:15,revR:130};
+const adrMul=p=>1+(p.mo||0)/400+(p.adrOd>0?.15:0);
+const adrSpd=p=>p.ch==='adr'?(1+(p.mo||0)/1000+(p.adrOd>0?.05:0))*(p.cyc>0?.7:1):1;
+function adrGain(p,v){if(p.adrOd>0||p.dead)return;p.mt=0;p.mo=Math.min(100,(p.mo||0)+v);if(p.mo>=100)adrOverdrive(p)}
 function adrOverdrive(p){p.adrOd=ADR.odDur;p.mo=100;X('revive');fx(['f','#ff9ad5']);fx(['r',p.x,p.y,170,'#ff9ad5']);fx(['r',p.x,p.y,110,'#ffd6f2']);fx(['p',p.x,p.y,40,'#ffd6f2',360,.7,5,'spark']);fx(['d',p.x,p.y-80,'OVERDRIVE!','#ff9ad5',1])}
 // One damage call for everything Adrian does. melee adds the Double Tap and Pierce bonuses that slashes get.
 function adrHit(p,base,q,melee){const m=p.m;hitB(p,base*(melee?(1+.6*m.multi)*(1+.25*(m.pierce||0)):1)*m.dmg*adrMul(p),q.x,q.y,'k',q.id)}
 function adrAttack(p,rate){
  if(p.cyc>0||p.adrZip)return; // no whipping while spinning the chain or mid-grapple
  const m=p.m,od=p.adrOd>0,reach=ADR.reach*(1+(p.mo||0)*.002)*(1+(m.size-1)*.5);
- p.atk=ADR.whipCd/(rate*(od?1.3:1));
+ p.atk=ADR.whipCd/(rate*(od?1.15:1));
  p.m1Anim=1;p.m1T=p.m1Dur=.24;p.m1Angle=p.ang;
  // The sector shows the sweep and cuts down boss shots. Every target is pre-marked as hit, so the damage is done by the tip logic below.
  p.m1Hit={kind:'whip',x:p.x,y:p.y,a:p.ang,r:reach,half:ADR.half,t:.2,hit:['main','ally','ally2']};
@@ -880,7 +884,7 @@ function adrWhipHit(p,w){
 }
 function adrAbility(p,k){
  const m=p.m;p.cd[k]=p.cdm[k]=CD.adr[k]*m.cdr*(k===2?m.cdr3:1);if(m.snack)p.hp=Math.min(p.max,p.hp+m.snack);
- if(k===0)adrGrapple(p);else if(k===1)adrTether(p);else adrCyclone(p);
+ if(k===0)adrGrapple(p);else if(k===1)adrTether(p);else adrRevUp(p);
 }
 function adrGrapple(p){
  const a=p.ang,ca=Math.cos(a),sa=Math.sin(a);let best=null,bt=1e9;
@@ -897,18 +901,18 @@ function adrTether(p){
  if(!best||bd>ADR.tetherRange){p.cd[1]=.4;fx(['d',p.x,p.y-64,'TOO FAR','#ff9ad5',0]);return}
  p.tether={id:best.id,t:0,x:best.x,y:best.y};X('whoosh');fx(['r',best.x,best.y,best.r+14,'#ff9ad5']);fx(['d',best.x,best.y-best.r-20,'TETHERED +'+Math.round((ADR.expMult-1)*100)+'%','#ff9ad5',0]);
 }
-function adrCyclone(p){p.cyc=ADR.cycDur;p.cycT=0;X('whirl');fx(['r',p.x,p.y,ADR.cycR,'#ffd6f2'])}
+function adrRevUp(p){const i=p.in||{kx:0,ky:0},l=Math.hypot(i.kx,i.ky),ca=Math.cos(p.ang),sa=Math.sin(p.ang),dx=l?i.kx/l:ca,dy=l?i.ky/l:sa;p.dash=.2;p.dvx=dx*820;p.dvy=dy*820;p.inv=Math.max(p.inv,.45);adrGain(p,45);X('dash');fx(['r',p.x,p.y,ADR.revR,'#ffd6f2']);S.pr.forEach(q=>{if(q.own==='b'&&q.life>0&&dist(p.x,p.y,q.x,q.y)<ADR.revR)q.life=0})}
 // Per-player step (called from stepPl): momentum, the whip's hit timing, the grapple's landing, the tether and the cyclone.
 function adrStepPl(p,dt){
  if(S.st!=='fight')return;
  // Momentum: builds while moving, bleeds when idle, and a hit knocks a chunk off.
  if(p.adrOd>0){p.adrOd-=dt;p.mo=100;if(p.adrOd<=0){p.adrOd=0;p.mo=ADR.odAfter;fx(['d',p.x,p.y-70,'OVERDRIVE OVER','#ffd6f2',0])}}
- else if(p.walk||p.dash>0){p.idle=0;p.mo=Math.min(100,(p.mo||0)+ADR.moGain*dt);if(p.mo>=100)adrOverdrive(p)}
- else{p.idle=(p.idle||0)+dt;if(p.idle>.5)p.mo=Math.max(0,(p.mo||0)-ADR.moDecay*dt)}
- if(p.adrHp==null)p.adrHp=p.hp;if(p.hp<p.adrHp-.01&&!(p.adrOd>0))p.mo=Math.max(0,(p.mo||0)-ADR.moHurt);p.adrHp=p.hp;
+ else if((p.mt=(p.mt||0)+dt)>ADR.moHold){p.mo=Math.max(0,(p.mo||0)-ADR.moDecay*dt)}
+ 
+ if(p.adrHp==null)p.adrHp=p.hp;if(p.hp<p.adrHp-.01&&!(p.adrOd>0))p.mo=Math.floor((p.mo||0)*.5);p.adrHp=p.hp;
  // Whip: the tip logic fires partway through the swing (twice in overdrive).
  const w=p.adrW;
- if(w){w.t+=dt;const times=w.od?[.09,.19]:[.09];while(w.fired<times.length&&w.t>=times[w.fired]){w.fired++;adrWhipHit(p,w)}if(w.t>=.3)p.adrW=null}
+ if(w){w.t+=dt;const times=[.09];while(w.fired<times.length&&w.t>=times[w.fired]){w.fired++;adrWhipHit(p,w)}if(w.t>=.3)p.adrW=null}
  // Grapple: the hook chain lingers for a moment, and when the zip ends on a boss, slam it.
  if(p.hook){p.hook.t+=dt;if(p.hook.t>.45)p.hook=null}
  if(p.adrZip&&p.dash<=0){p.adrZip=0;
@@ -1246,6 +1250,7 @@ function drawAdrPlayerFx(p,o,t){
   g.strokeStyle='#ffffff';g.lineWidth=2;g.beginPath();g.arc(h.x,h.y,r,a0+(a1-a0)*.35,a1);g.stroke();
   const tx=h.x+Math.cos(a1)*r,ty=h.y+Math.sin(a1)*r;g.globalCompositeOperation='lighter';g.fillStyle='rgba(255,241,160,.9)';g.beginPath();g.arc(tx,ty,7+4*k,0,PI*2);g.fill();g.restore()}
 }
+function drawAdrStick(p,o,t){const h=p.m1Hit,ca=Math.cos(p.ang),sa=Math.sin(p.ang);if(h&&h.kind==='whip'){const k=cl(1-h.t/.2,0,1),a0=h.a-h.half,a1=a0+2*h.half*k,r=h.r*.62;spr('adboom',h.x+Math.cos(a1)*r,h.y+Math.sin(a1)*r,88,a1+PI/2,1,1,1)}else spr('adboom',o.x+ca*30,o.y+sa*30+8,64,p.ang+PI/2+Math.sin(t*3)*.1,1,1,.98)}
 // Momentum meter above the ability bar (your own hero only).
 function drawAdrHud(m){
  const ad=m.ad;if(!ad)return;const mo=ad[0],od=ad[1],x=W/2-110,y=H-70,f=cl(mo/100,0,1);
@@ -2967,7 +2972,7 @@ function closeFGC(){FGC.open=0;syncPause()}
 function pwType(k){if(k&&k.length===1&&/[a-z0-9]/.test(k)){pwBuf=(pwBuf+k).slice(-24);if(pwBuf.endsWith('guydude')){pwBuf='';if(!FGC.open)openFGC()}}}
 function fgcGiveUp(i){if(!S){note('Start a run first');return}S.ups.push(i);Object.values(S.pl).forEach(p=>{applyMods(p);p.hp=Math.min(p.hp,p.max)});note('Gave everyone: '+UP[i].n);X('upgrade')}
 function fgcKillBoss(){if(!S||S.st!=='fight'||!S.bs){note('Start a fight first');return}if(S.secOn||S.c17||S.bs.idx>=6){note('Not available on this boss');return}S.bs.hp=0;bossDead();note('Boss defeated')}
-function fgcStartBoss(){if(!S){note('Start a run first');return}S.set.start=FGC.boss;closeFGC();startRun();note('Starting boss '+(FGC.boss+1))}
+function fgcStartBoss(){if(!S){note('Start a run first');return}S.set.start=FGC.boss;closeFGC();startRun(1);note('Starting boss '+(FGC.boss+1))}
 function drawPM(dt){
  g.fillStyle='rgba(4,4,10,.72)';g.fillRect(0,0,W,H);
  const x=130,y=50,w=700,h=440;g.fillStyle='rgba(16,20,36,.97)';rr(x,y,w,h,14);g.fill();g.strokeStyle='#ffd34a';g.lineWidth=3;g.stroke();
@@ -2982,7 +2987,7 @@ function drawPM(dt){
  if(uniq.length>per*2)T('+'+(uniq.length-per*2)+' more',rx,y+120+per*22,12,'#889','left');
  const inRun=host&&S&&V&&V.st!=='lobby';
  const items=[['RESUME',closePM,'#2f7d4a'],['SETTINGS',openSettings,'#2a4f9a']];
- if(inRun)items.push(['RESTART RUN',()=>{closePM();if(S)startRun()},'#7a4a20']);
+ if(inRun)items.push(['RESTART RUN',()=>{closePM();if(S)startRun(1)},'#7a4a20']);
  if(inRun)items.push(['BACK TO LOBBY',()=>{closePM();toLobby()},'#4a3a7a']);
  items.push(['TITLE SCREEN',()=>{closePM();leaveToTitle()},'#6a2a2a']);
  items.forEach(([l,fn,c],i)=>btn(x+60,y+80+i*56,240,44,l,fn,{c,f:18}));
@@ -3521,7 +3526,7 @@ function drawChat(dt){
  if(chatLobby())drawChatLobby();else drawChatGame()}
 const send=m=>{if(conn&&conn.open)conn.send(m)};
 function syncLocalSkin(){if(host||!conn||!conn.open||!V||!me)return;const p=(V.pl||[]).find(q=>q.id===me);if(!p||skinSyncChar===p.ch)return;skinSyncChar=p.ch;send({t:'skin',c:p.ch,s:equippedSkinFor(p.ch)})}
-function pick(c){const sk=equippedSkinFor(c);if(host){if(S&&S.pl[me]){S.pl[me].ch=c;S.pl[me].skin=sk}}else{skinSyncChar=c;send({t:'pick',c,s:sk})}}
+function pick(c){if(!charOwned(c)){if(!confirm('Unlock '+CH[c].n+' for '+CHAR_PRICE[c]+' Zach Coins?\nYou have '+PROFILE.coins+'.'))return;if(!buyChar(c))return}const sk=equippedSkinFor(c);if(host){if(S&&S.pl[me]){S.pl[me].ch=c;S.pl[me].skin=sk}}else{skinSyncChar=c;send({t:'pick',c,s:sk})}}
 function equipLobbySkin(id){const p=host?(S&&S.pl&&S.pl[me]):(V&&V.pl&&V.pl.find(q=>q.id===me));if(!p)return;const ch=p.ch;if(id&&!PROFILE.owned.includes(id))return;if(id&&!validSkinFor(id,ch))return;PROFILE.equipped[ch]=id||'';saveSkinProfile();if(host){if(S&&S.pl[me])S.pl[me].skin=id||''}else send({t:'skin',c:ch,s:id||''});skinPickOpen=false;note(id?'Equipped '+skinById(id).name:'Default skin equipped')}
 function openSkinPicker(){skinPickOpen=true} 
 function vote(i){if(!V||V.st!=='up'||V.vcd!=null||V.rev)return;if(host)S.votes[me]=i;else send({t:'vote',i})}
@@ -3600,6 +3605,11 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'unlocks-adrian',title:'Unlocks, Skip Costs and Adrian',date:'Nov 10, 2026',sub:'Heroes cost Zach Coins, skipping bosses costs Zach Coins, and Adrian was reworked.',items:[
+  ['CHANGED','Only CoolGuy15 and Zach start unlocked. Unlock Jay (100), Terry (125), Pat (150), Adrian (175), Jam (200) and Bomb (225) with Zach Coins.'],
+  ['CHANGED','Starting on a later boss costs 25 Zach Coins per boss skipped (boss 2 = 25, boss 3 = 50, ...).'],
+  ['CHANGED','Adrian: M1 is now a weaker stick swing using the stick sprite, and momentum only builds from landing hits, drains after 1.5s and halves when hit.'],
+  ['NEW','Adrian: Cyclone is replaced by Rev Up, a dash with i-frames that clears nearby boss shots and gives 45% momentum.']]},
  {id:'lobby-title-pass',title:'Lobby, Title Screen and Skins',date:'Nov 10, 2026',sub:'A cleaner lobby and title screen, a data reset, and new skin rules.',items:[
   ['CHANGED','All saved data (progress, Zach Coins, skins, settings, stats) was reset one time on every device.'],
   ['CHANGED','Coolguy15 and Zach skins are now free to equip. Every other skin must be bought with Zach Coins.'],
@@ -3965,6 +3975,7 @@ function drawLobby(){const v=V,t=performance.now()/1000;drawBackdrop(t);const mi
   const nm=c.n.length>11?c.n.split(' ')[0]:c.n;
   T(nm,x+56,y+23,fitSz(nm,cw-66,13,8),sel?'#ffd34a':'#fff','left');T('HP '+c.hp+'  SPD '+c.spd,x+56,y+41,9,'#9fdcff','left');
   v.pl.filter(p=>p.ch===k).slice(0,4).forEach((p,j)=>{const px=x+cw-11-j*14,py=y+9;g.fillStyle=p.id===me?'#ffd34a':'#8fd8ff';g.beginPath();g.arc(px,py,5.5,0,PI*2);g.fill();T((p.name||'?')[0].toUpperCase(),px,py+.5,8,'#101420','center')});
+  if(!charOwned(k)){g.fillStyle='rgba(6,8,18,.72)';rr(x,y,cw,ch,12);g.fill();T('LOCKED',x+cw/2,y+22,12,'#ccd4e8','center');T('◆ '+CHAR_PRICE[k]+' ZC',x+cw/2,y+41,11,PROFILE.coins>=CHAR_PRICE[k]?'#ffd34a':'#ff7a7a','center')}
   BT.push({x,y,w:cw,h:ch,fn:()=>pick(k)})});
  // Hero card for the selected hero: weapon and all three abilities
  const sel=mine?mine.ch:'cg',c=CH[sel],msk=skinById(mine&&mine.skin||''),dx=20,dy=238,dw=620,dh=207;
@@ -3986,7 +3997,7 @@ function drawLobby(){const v=V,t=performance.now()/1000;drawBackdrop(t);const mi
  g.fillStyle='rgba(143,216,255,.18)';g.fillRect(672,270,250,1);
  T('ROOM SETTINGS',672,288,11,'#8fd8ff','left');if(!host)T('HOST ONLY',924,288,9,'#8a96b4','right');
  const dn=['Easy','Normal','Hard'],cyc=(k,max,min)=>{if(!host)return;S.set[k]=S.set[k]>=max?min:S.set[k]+1},hc=host?'#35466a':'#2a2d3a';
- const sbn=(BD[v.set.start]||BD[0]).n,sbl='Start boss: '+(v.set.start+1)+'. '+sbn;
+ const sbn=(BD[v.set.start]||BD[0]).n,sbl='Start boss: '+(v.set.start+1)+'. '+sbn+(v.set.start?'  ('+skipCost(v.set.start)+' ZC)':'');
  btn(670,300,254,26,'Difficulty: '+dn[v.set.diff],()=>cyc('diff',2,0),{c:hc,f:12});
  btn(670,330,254,26,sbl,()=>cyc('start',BD.length-1,0),{c:hc,f:fitSz(sbl,238,12,8)});
  btn(670,360,254,26,'Max players: '+v.set.max,()=>cyc('max',4,2),{c:hc,f:12});
@@ -4163,7 +4174,7 @@ function drawPlayer(p,t){WSK=p.skin||'';const c=CH[p.ch],o=sm(p.id,p.x,p.y),walk
   else if(p.ch==='zach'&&m1Stage===2)drawZachSlash(o.x,o.y,m1Angle,m1Prog,true,t);
   else if(p.ch==='zach'&&m1Stage===3)drawZachStab(bodyX,bodyY,m1Angle,m1Prog);
   else if(p.stab>0){const ph=1-p.stab/.2,d=34+Math.sin(ph*PI)*62;spr(wk('knife'),o.x+ca*d,o.y+sa*d,58,p.ang+PI/2);g.strokeStyle='rgba(255,255,255,'+(1-ph)*.9+')';g.lineWidth=8;g.beginPath();g.arc(o.x,o.y,86,p.ang-.9*p.sd+ph*1.8*p.sd,p.ang-.9*p.sd+ph*1.8*p.sd+.5*p.sd,p.sd<0);g.stroke()}
-  else if(p.ch!=='pat'&&p.ch!=='adr'&&p.ch!=='jam')spr(wk('knife'),o.x+ca*34+Math.sin(t*3)*2,o.y+sa*34+8,52,p.ang+PI/2+Math.sin(t*3)*.1);
+  else if(p.ch==='adr')drawAdrStick(p,o,t);else if(p.ch!=='pat'&&p.ch!=='jam')spr(wk('knife'),o.x+ca*34+Math.sin(t*3)*2,o.y+sa*34+8,52,p.ang+PI/2+Math.sin(t*3)*.1);
   if(p.cs){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(125,255,154,'+(.55+.35*Math.sin(t*16))+')';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,44,0,PI*2);g.stroke();g.restore()}
   if(p.sh){g.strokeStyle='rgba(100,200,255,.7)';g.lineWidth=3;g.beginPath();g.arc(o.x,o.y,42,0,PI*2);g.stroke()}if(p.ch==='jam')drawJamPlayerFx(p,o,t);if(p.ch==='adr')drawAdrPlayerFx(p,o,t);if(p.ch==='bomb')drawBombFx(p,o,t);if(p.rvp>0)drawRevive(p,o);
   for(let j=0;j<p.orb;j++){const a=p.oa+j*2*PI/p.orb;spr('brick',o.x+Math.cos(a)*70,o.y+Math.sin(a)*70,32,a*2)}}
@@ -4232,7 +4243,7 @@ function drawHud(v,dt){const mine=v.pl.find(p=>p.id===me);(v.bl||[]).forEach(dra
 function drawEnd(v,win){g.fillStyle='rgba(0,0,0,.78)';g.fillRect(0,0,W,H);TS(win?'VICTORY!':'DEFEATED',W/2,110,72,win?'#ffd34a':'#f55');
  const m=Math.floor(v.runT/60),sc=Math.floor(v.runT%60);T('Time '+m+':'+(sc<10?'0':'')+sc+'    Upgrades '+v.ups.length+(v.loop?'    Loop '+(v.loop+1):''),W/2,175,18,'#ddd','center');
  v.pl.forEach((p,i)=>T(p.name+' ('+CH[p.ch].n+')   Damage dealt: '+p.dd+'   Damage taken: '+p.tk,W/2,215+i*26,16,p.id===me?'#ffd34a':'#ccd','center'));
- if(host){if(win)btn(W/2-250,350,240,56,'Continue (Loop '+(v.loop+2)+')',contin,{c:'#b8452a',f:18});else btn(W/2-250,350,240,56,'Retry',()=>{toLobby();startRun()},{c:'#b8452a',f:18});btn(W/2+10,350,240,56,'Back to lobby',toLobby)}else T('Waiting for host...',W/2,380,16,'#aab','center')}
+ if(host){if(win)btn(W/2-250,350,240,56,'Continue (Loop '+(v.loop+2)+')',contin,{c:'#b8452a',f:18});else btn(W/2-250,350,240,56,'Retry',()=>{toLobby();startRun(1)},{c:'#b8452a',f:18});btn(W/2+10,350,240,56,'Back to lobby',toLobby)}else T('Waiting for host...',W/2,380,16,'#aab','center')}
 let AC=null,MG=null,NB=null,mute=false,lastS={},musTry=0,AN=null,ANBUF=null;const MA_GRAPH=new Map();let SURV_RMS=0,SURV_BASS=0;
 function initAudio(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();MG=AC.createGain();MUSG=AC.createGain();SFXG=AC.createGain();const lim=AC.createDynamicsCompressor();lim.threshold.value=-3;lim.knee.value=6;lim.ratio.value=12;lim.attack.value=.003;lim.release.value=.15;MUSG.connect(MG);SFXG.connect(MG);MG.connect(lim);lim.connect(AC.destination);applyAudio()}catch(e){}}if(AC&&AC.state==='suspended')AC.resume()}
 function wireMusicAnalyser(k,a){if(!AC||!MG)return;let graph=MA_GRAPH.get(k);if(!graph){try{const source=AC.createMediaElementSource(a),an=AC.createAnalyser();an.fftSize=256;an.smoothingTimeConstant=.78;source.connect(an);an.connect(MUSG||MG);graph={source,an,buf:new Uint8Array(an.frequencyBinCount)};MA_GRAPH.set(k,graph)}catch(e){graph=MA_GRAPH.get(k)||null}}if(graph){AN=graph.an;ANBUF=graph.buf}}
