@@ -13,11 +13,11 @@ const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width
 let R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d),sideOfLane=i=>i%2?W-12:12;
 const F={start:'startbutton.png',bbi1:'Bomb_barry_idle1.png',bbi2:'Bomb_barry_idle2.png',bbw1:'Bomb_barry_walk1.png',bbw2:'Bomb_barry_walk2.png',jmi1:'jameson_character_idle1.png',jmi2:'jameson_character_idle2.png',jmw1:'jameson_character_walk1.png',jmw2:'jameson_character_walk2.png',jmKami:'jameson_creation_3_kamikaze.png',jmBow:'jameson_creation_2.png',jmSword:'Jameson_creation.png',jmMed:'jameson_creation_4_medkit.png',jmWSword:'creation_weapon_sword.png',jmWBow:'creation_weapon_bow.png',jmArrow:'creation_weapon_arrow.png',jmWMed:'creation_weapon_medkit.png',adi1:'Adrian character idle1.png',adi2:'Adrian character idle2.png',adw1:'Adrian character walk1.png',adw2:'Adrian character walk2.png',adboom:'Adrian boomerang.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png',pi1:'Patrick character idle1.png',pi2:'Patrick character idle2.png',pw1:'Patrick character walk1.png',pw2:'Patrick character walk2.png',prock:'Patrick rock.png',pyoink:'SpongeBob (yoink).png',cg17a:'coolguy17.png',cg17b:'coolguy17_rematch.png',cg17c:'coolguy17_Second_Last_encounter.png',cgWomanI1:'woman skin Coolguy15 idle1.png',cgWomanI2:'woman skin Coolguy15 idle2.png',cgWomanW1:'woman skin Coolguy15 walk1.png',cgWomanW2:'woman skin Coolguy15 walk2.png',cgBaldI1:'bald skin Coolguy15 idle1.png',cgBaldI2:'bald skin Coolguy15 idle2.png',cgBaldW1:'bald skin Coolguy15 walk1.png',cgBaldW2:'bald skin Coolguy15 walk2.png',cgNotCoolI1:'Not so cool skin Coolguy15 idle1.png',cgNotCoolI2:'Not so cool skin Coolguy15 idle2.png',cgNotCoolW1:'Not so cool skin Coolguy15 walk1.png',cgNotCoolW2:'Not so cool skin Coolguy15 walk2.png',cgBootlegI1:'bootleg skin coolguy15 idle1.png',cgBootlegI2:'bootleg skin coolguy15 idle2.png',cgBootlegW1:'bootleg skin coolguy15 walk1.png',cgBootlegW2:'bootleg skin coolguy15 walk2.png',zRiceI1:'rice skin Zach character idle1.png',zRiceI2:'rice skin Zach character idle2.png',zRiceW1:'rice skin Zach character walk.png',zRiceW2:'rice skin Zach character walk2.png',zEvilI1:'evil skin Zach character idle1.png',zEvilI2:'evil skin Zach character idle2.png',zEvilW1:'evil skin Zach character walk.png',zEvilW2:'evil skin Zach character walk2.png',tDiceI1:'dice skin Terry Plungle Yungle idle 1.png',tDiceI2:'dice skin Terry Plungle Yungle idle 2.png',tDiceW1:'dice skin Terry Plungle Yungle walk1.png',tDiceW2:'dice skin Terry Plungle Yungle walk2.png',jaySolidI1:'solid skin jay idle1.png',jaySolidI2:'solid skin jay idle2.png',jaySolidW1:'solid skin jay walk1.png',jaySolidW2:'solid skin jay walk2.png',darrel:'darrel_boss_8.png',dIpad:'Darrel_attack_Ipad.png',dHappy:'Darrel_attack_Happy_face.png',dLoli:'Darrel_attack_lolipop.png'};
 const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp3',m1:'Cheese Crusade V2 (boss 1).mp3',m2:'The guy(Boss 2).mp3',m3:'SpongeSwap - Hell Or High Water_Phase 2 (boss 3).mp3',m4:'Pyrosomni (boss 4).mp3',surv:'Timebomb Madness OST - Overdue - blocco (boss 4.5).mp3',m5:'SpongeBob SquarePants SuperSponge - Vs. Patrick (boss 5).mp3',m6:'Vs. Randy boss 6.mp3',m7:'Suffocate_In_Dust_II_boss_7.mp3',m8:'Hateful_Doom_secret_boss_8.mp3',c1:'Icicle_Ignition_II_coolguy17.mp3',c2:'BIG_MISTAKE_coolguy17_rematch.mp3',c3:'Pancake_Pandemonium_Coolguy17_second_last_encounter.mp3',c3last:'-_PAN_FRIED_PIZZA_coolguy17_second_last_encounter_last_stand.mp3',m9:'POWERSCALING_Boss_8.mp3',m10:'COVER_Vs_Patrick_Boss_9.mp3'};
-// Ghost replays (solo): the best run's path on each boss, kept in localStorage. Chat: online lobby messages.
-const GH={rec:{},atk:{},ft:0,acc:0,last:-1,total:0};
-let GHOST=null,GHP={bi:-1,i:0,ft:0};
-try{GHOST=JSON.parse(localStorage.getItem('zub_ghost')||'null')}catch(e){GHOST=null}
-GHOST=ghostNorm(GHOST);
+// Ghost races (solo): your fastest clear of every boss (per hero and difficulty) is kept and replayed as a ghost player AND a ghost boss.
+const GKEY='zub_ghost3',GH={cur:null,gf:null};let GHP={};
+let GDB={v:3,runs:[]},GON=true;
+try{const d=JSON.parse(localStorage.getItem(GKEY)||'null');if(d&&Array.isArray(d.runs))GDB={v:3,runs:d.runs.filter(e=>e&&Array.isArray(e.p)&&Array.isArray(e.b)&&e.t>0)};GON=localStorage.getItem('zub_ghoston')!=='0';localStorage.removeItem('zub_ghost')}catch(e){}
+const gFmt=ms=>{const sc=Math.max(0,ms)/1000,m=Math.floor(sc/60);return m+':'+(sc-m*60).toFixed(1).padStart(4,'0')};
 const CHAT={log:[],seq:0,typing:0,open:0,unread:0,newBelow:0,scroll:0,sx:0,hist:[],hi:-1,rl:{},muted:{}};
 /* ---------- DATA ---------- */
 const CH={cg:{n:'Coolguy15',hp:100,spd:230,i:['cgi1','cgi2'],w:['cgw1','cgw2'],ab:['Brick Toss','Overclock','Roll'],dsc:['Hurl a huge piercing brick','4s of double fire rate','Invulnerable dash'],wp:'Gun: aim with mouse, hold click to shoot'},
@@ -140,9 +140,9 @@ const bidx=()=>S.bi%BD.length,lp=()=>Math.floor(S.bi/BD.length);
 function pick3(){const a=[...Array(UP.length).keys()],f=a.filter(i=>!S.ups.includes(i)).sort(()=>R()-.5);return f.concat(a.filter(i=>S.ups.includes(i)).sort(()=>R()-.5)).slice(0,3)}
 function contin(){if(host&&S.st==='win'){S.st='up';S.opts=pick3();S.votes={};S.vt=20;S.vcd=null;S.rev=null}}
 function resetPl(p,i){p.boom=null;p.lsUsed=0;p.ls=0;p.dec=null;p.hide=0;p.windup=0;p.sauceSlow=0;p.dd=0;p.tk=0;p.x=300+i*120;p.y=430;p.dead=0;p.inv=0;p.cd=[0,0,0];p.sh=0;p.revived=0;p.rage=0;p.buf=0;p.m1Step=0;p.m1Anim=0;p.m1T=0;p.m1Hit=null;p.max=0;p.hp=0;p.hpCap=null;p.fuse=0;p.fuseWind=0;p.fuseKind=null;p.fuseQ=0;p.stunT=0;p.blastT=0;p.jmode=0;p.jo=0;p.js=0;applyMods(p);p.hp=p.max}
-function resetRunState(){S.retreat=null;S.cut=null;S.streak=0;S.kr=null;S.lastHit=null;S.hurtBoss=0;S.histDone=0;GH.rec={};GH.atk={};GH.ft=0;GH.acc=0;GH.last=-1;GH.total=0;S.jup={};S.secOn=0;S.sec=null;S.secSeen=0;S.secT=0;S.pixT=null;S.sc=null;S.secBanner=null;S.s7=[];S.dlg=null;S.pr=[];S.wr=[];S.zn=[];S.tri=null;S.in7=null}
+function resetRunState(){S.retreat=null;S.cut=null;S.streak=0;S.kr=null;S.lastHit=null;S.hurtBoss=0;S.histDone=0;GH.cur=null;GHP={};S.jup={};S.secOn=0;S.sec=null;S.secSeen=0;S.secT=0;S.pixT=null;S.sc=null;S.secBanner=null;S.s7=[];S.dlg=null;S.pr=[];S.wr=[];S.zn=[];S.tri=null;S.in7=null}
 function startRun(free){const cost=free?0:skipCost(cl(S.set.start,0,BD.length-1));if(cost>0){if(PROFILE.coins<cost){note('Need '+(cost-PROFILE.coins)+' more Zach Coins to skip to boss '+(S.set.start+1));return false}PROFILE.coins-=cost;saveSkinProfile();note('Paid '+cost+' Zach Coins to skip')}S.jm=[];S.jx=[];resetRunState();Object.values(S.pl).forEach(p=>{p.jch=0;p.jwind=0;p.jod=0;p.jslow=0});STAT.runs++;statAch();saveStat();setRush(S.set.rush|0);S.c17=null;S.c17steal=null;S.ups=[];S.bi=cl(S.set.start,0,BD.length-1);S.t=0;S.paused=0;S.ezUlt=null;if(MA[curMus])MA[curMus].pause();if(MA.ezUlt)MA.ezUlt.pause();curMus=null;musTry=0;Object.values(S.pl).forEach((p,i)=>resetPl(p,i));spawnBoss()}
-function spawnBoss(){S.hurtBoss=0;clearThreats(1);S.ezUlt=null;S.tri=null;S.in7=null;S.c17=null;const d=BD[bidx()],n=nPl(),mult=[.75,1,1.5][S.set.diff]*(1+.8*(n-1))*(1+.6*lp()),hp=d.hp*mult,hp2=(d.hp2||0)*mult;
+function spawnBoss(){ghostBegin();S.hurtBoss=0;clearThreats(1);S.ezUlt=null;S.tri=null;S.in7=null;S.c17=null;const d=BD[bidx()],n=nPl(),mult=[.75,1,1.5][S.set.diff]*(1+.8*(n-1))*(1+.6*lp()),hp=d.hp*mult,hp2=(d.hp2||0)*mult;
  S.bs={idx:bidx(),d,img:d.img,x:(bidx()===3?300:480),y:140,hp,max:hp,ph:0,hp2,max2:hp2,cd:2.5,mode:null,fl:0,inv:1,sz:d.sz,a:0,t:0,last:'',air:0,nd:0};S.bs2=bidx()===3?{idx:1,d:BD[1],img:'ucg',x:700,y:180,hp:hp2,max:hp2,t:0,cd:1.8,ph:0,sz:150,mode:null,nd:0,isAllianceAlly:1,last:'',a:0,fl:0}:null;S.survT=0;S.survElapsed=0;S.survAttackCd=2;S.survWave=0;S.survName='';S.pr=[];S.wr=[];S.slowm=1;S.zn=[];S.pk=[];S.pkT=12;S.bdT=0;S.jf=[];S.tc=[];
  Object.values(S.pl).forEach((p,i)=>{p.x=300+i*120;p.y=430;p.revived=0;p.lsUsed=0;p.ls=0;p.dec=null});if(BD[bidx()].c17)c17Spawn(BD[bidx()].c17,hp);else if(bidx()===6)startTrio(mult);else say(compose(null,'intro'),'fight')}
 // ===== STORY (v35: full dialogue reference applied) =====
@@ -307,7 +307,7 @@ function endDlg(){const n=S.dlg.next;S.dlg=null;const b=S.bs;if(String(n).starts
  else if(n==='lose'){S.st='over';X('lose')}
  else if(n==='end'){S.st='win';ach('clear');winAch();X('win')}}
 function startCut(){const b=S.bs;S.pr=[];S.wr=[];b.mode=null;if(S.bs2){S.bs2.mode=null;S.bs2.nd=0}b.nd=0;b.inv=1;b.gun=0;b.pipeOn=0;b.beam=null;b.cmb=null;b.air=0;b.rolling=0;b.nd=0;S.zn=[];fx(['f','#fff']);fx(['s',14]);X('phase');say(compose(null,'phase',b.ph+1),'phase','cut')}
-function bossDead(){const b=S.bs;const coinReward=Math.round((100+bidx()*75+lp()*50)*([.9,1,1.25][S.set.diff]||1)*0.25*0.75*(1+.25*S.ups.filter(u=>UP[u].tc).length));fx(['coin',coinReward]);ach('b'+bidx());if(nPl()===1)ach('solo');if(lp()>=1)ach('loop');if(lp()>=2)ach('loop3');STAT.bosses++;if(nPl()>1&&alive().length===1)ach('clutch');statAch();saveStat();if(Object.values(S.pl).some(p=>(p.dd||0)>=3000))ach('dealer');if(!Object.values(S.pl).some(p=>p.tk>0))ach('flawless');if(!S.hurtBoss){S.streak=(S.streak||0)+1;fx(['f','#ffd34a']);fx(['r',480,270,420,'#ffd34a']);fx(['s',8]);X('phase');note('FLAWLESS'+(S.streak>1?' x'+S.streak:'')+'!')}else S.streak=0;if(nPl()>1)ach('team');S.pr=[];S.wr=[];b.mode=null;b.inv=1;b.gun=0;b.pipeOn=0;b.beam=null;b.cmb=null;b.air=0;b.rolling=0;b.nd=0;S.zn=[];S.jf=[];S.tc=[];fx(['f','#fff']);fx(['s',18]);X('bossdie');S.bdT=2;fx(['p',b.x,b.y,70,b.d.col[0],420,1.2,6]);const lh=S.lastHit||{x:b.x,y:b.y,ax:b.x,ay:b.y,nm:''};S.kr={t:0,dur:3,x:lh.x,y:lh.y,ax:lh.ax,ay:lh.ay,nm:lh.nm,name:b.d.n,col:b.d.col[0]};say(compose(null,'outro'),'post')}
+function bossDead(){ghostFinish();const b=S.bs;const coinReward=Math.round((100+bidx()*75+lp()*50)*([.9,1,1.25][S.set.diff]||1)*0.25*0.75*(1+.25*S.ups.filter(u=>UP[u].tc).length));fx(['coin',coinReward]);ach('b'+bidx());if(nPl()===1)ach('solo');if(lp()>=1)ach('loop');if(lp()>=2)ach('loop3');STAT.bosses++;if(nPl()>1&&alive().length===1)ach('clutch');statAch();saveStat();if(Object.values(S.pl).some(p=>(p.dd||0)>=3000))ach('dealer');if(!Object.values(S.pl).some(p=>p.tk>0))ach('flawless');if(!S.hurtBoss){S.streak=(S.streak||0)+1;fx(['f','#ffd34a']);fx(['r',480,270,420,'#ffd34a']);fx(['s',8]);X('phase');note('FLAWLESS'+(S.streak>1?' x'+S.streak:'')+'!')}else S.streak=0;if(nPl()>1)ach('team');S.pr=[];S.wr=[];b.mode=null;b.inv=1;b.gun=0;b.pipeOn=0;b.beam=null;b.cmb=null;b.air=0;b.rolling=0;b.nd=0;S.zn=[];S.jf=[];S.tc=[];fx(['f','#fff']);fx(['s',18]);X('bossdie');S.bdT=2;fx(['p',b.x,b.y,70,b.d.col[0],420,1.2,6]);const lh=S.lastHit||{x:b.x,y:b.y,ax:b.x,ay:b.y,nm:''};S.kr={t:0,dur:3,x:lh.x,y:lh.y,ax:lh.ax,ay:lh.ay,nm:lh.nm,name:b.d.n,col:b.d.col[0]};say(compose(null,'outro'),'post')}
 
 function startEvilZachUltimate(){
  const b=S.bs;if(!b||b.idx!==4||S.ezUlt)return;
@@ -478,28 +478,55 @@ function stepRetreat(dt){const r=S.retreat,b=S.bs;r.t+=dt;const u=cl(r.t/r.dur,0
  S.pr=[];S.wr=[];S.zn=[];
  if(r.t>=r.dur){S.retreat=null;S.st='up';S.opts=pick3();S.votes={};S.vt=20}}
 
-// ===== GHOST REPLAYS (solo only) =====
-// Samples the player's position 10 times a second during each boss fight.
+// ===== GHOST RACES v3 (solo only) =====
+// Each boss fight records your path (10 Hz), the boss's path and HP, your attacks and the moments you got hit.
+// Beating a boss keeps the run if it is your fastest for that boss + hero + difficulty. The next time you fight that boss the saved run
+// races you: a ghost of you, a ghost boss, a ghost path preview, a marker on the boss bar and a live time delta.
+function ghostBossFrac(){const b=S&&S.bs;if(!b||S.c17||!(b.max>0))return null;let h=Math.max(0,b.hp),m=b.max;const b2=S.bs2;if(b.idx===3&&b2&&b2.max>0){h+=Math.max(0,b2.hp);m+=b2.max}return cl(h/m,0,1)}
+const ghostLive=()=>{const c=GH.cur;return !!(c&&host&&S&&nPl()===1&&S.st==='fight'&&S.bs&&c.bi===S.bi&&!S.paused)};
+function ghostPick(bi,ch,diff){let best=null,sc=-1;for(const e of GDB.runs){if(e.bi!==bi)continue;const q=(e.ch===ch?2:0)+(e.diff===diff?1:0);if(q>sc||(q===sc&&e.t<best.t)){sc=q;best=e}}return best}
+function ghostBest(bi,diff){let best=null;for(const e of GDB.runs)if(e.bi===bi&&e.diff===diff&&(!best||e.t<best.t))best=e;return best}
+// Called every time a boss spawns: starts a fresh recording and picks the ghost to race.
+function ghostBegin(){GHP={};GHV.length=0;GH.gf=null;const p=S&&S.pl&&S.pl[me];GH.cur={bi:S.bi,ft:0,acc:0,p:[],b:[],a:[],h:[],done:0,ref:p?ghostPick(S.bi,p.ch,S.set.diff):null}}
 function ghostRec(dt){
- if(!host||!S||nPl()!==1||S.st!=='fight'||!S.bs)return;
- const bi=bidx();
- ghostSync(bi);
- GH.ft+=dt;GH.total+=dt;GH.acc+=dt;if(GH.acc<.05)return;GH.acc-=.05;
- const p=S.pl[me];if(!p||p.dead)return;
- GH.rec[bi].push([Math.round(GH.ft*1000),Math.round(p.x),Math.round(p.y),Math.round((p.ang||0)*100)]);
+ if(!ghostLive())return;const c=GH.cur;
+ c.ft+=dt;c.acc+=dt;if(c.acc<.1)return;c.acc-=.1;
+ const ms=Math.round(c.ft*1000),p=S.pl[me];
+ if(p&&!p.dead)c.p.push(ms,Math.round(p.x),Math.round(p.y),Math.round((p.ang||0)*100));
+ const f=ghostBossFrac();if(f!=null&&!S.secOn)c.b.push(ms,Math.round(S.bs.x),Math.round(S.bs.y),Math.round(f*1000));
 }
-// At the end of a run, keep it as the ghost if it got further, or the same distance faster.
-function ghostSave(){
- if(!host||!S||nPl()!==1||!Object.keys(GH.rec).length)return;
- if(GHOST&&(GHOST.reached>S.bi||(GHOST.reached===S.bi&&GHOST.total<=GH.total)))return;
- const p=S.pl[me];
- GHOST={v:2,reached:S.bi,total:GH.total,ch:p?p.ch:'cg',skin:(p&&p.skin)||'',rec:GH.rec,atk:GH.atk};
- try{localStorage.setItem('zub_ghost',JSON.stringify(GHOST))}catch(e){}
+function ghostAtk(p,kind){if(!ghostLive()||!p||p.id!==me||p.dead)return;const c=GH.cur;c.a.push([Math.round(c.ft*1000),p.ch,kind,Math.round(p.x),Math.round(p.y),Math.round((p.ang||0)*100)])}
+function ghostHit(p){if(!ghostLive()||!p||p.id!==me)return;GH.cur.h.push(Math.round(GH.cur.ft*1000))}
+function ghostStore(){for(let k=0;k<10;k++){try{localStorage.setItem(GKEY,JSON.stringify(GDB));return}catch(e){if(GDB.runs.length<2)return;let oi=0;GDB.runs.forEach((r,i)=>{if((r.when||0)<(GDB.runs[oi].when||0))oi=i});GDB.runs.splice(oi,1)}}}
+// Boss defeated: keep this run if it is the fastest for the boss + hero + difficulty.
+function ghostFinish(){
+ const c=GH.cur;if(!c||c.done||!host||!S||nPl()!==1||c.bi!==S.bi)return;c.done=1;
+ const p=S.pl[me],t=Math.round(c.ft*1000);if(!p||t<3000)return;
+ const same=e=>e.bi===c.bi&&e.ch===p.ch&&e.diff===S.set.diff,old=GDB.runs.find(same);
+ let msg;
+ if(old&&old.t<=t){msg='Time '+gFmt(t)+'   (PB '+gFmt(old.t)+', +'+((t-old.t)/1000).toFixed(1)+'s)'}
+ else{
+  GDB.runs=GDB.runs.filter(e=>!same(e));
+  GDB.runs.push({bi:c.bi,ch:p.ch,skin:p.skin||'',diff:S.set.diff,t,when:Date.now(),hits:c.h.length,p:c.p,b:c.b,a:c.a,h:c.h});
+  while(GDB.runs.length>40){let oi=0;GDB.runs.forEach((r,i)=>{if((r.when||0)<(GDB.runs[oi].when||0))oi=i});GDB.runs.splice(oi,1)}
+  ghostStore();
+  msg=old?'NEW PB! '+gFmt(t)+'   (-'+((old.t-t)/1000).toFixed(1)+'s)':'GHOST SAVED  '+gFmt(t);
+  fx(['d',480,215,old?'NEW PB':'GHOST SAVED','#ffd34a',0]);
+ }
+ note(msg);
 }
-// Ghost attacks: each attack or ability the recorded player used is saved with its time, and replayed as a faded visual (no damage).
-function ghostNorm(G){if(!G||G.v===2)return G;const s=100;G.rec=G.rec||{};for(const k in G.rec)G.rec[k]=(G.rec[k]||[]).map(q=>[q[0]*s,q[1],q[2],q[3]]);G.atk=G.atk||{};for(const k in G.atk)G.atk[k]=(G.atk[k]||[]).map(q=>[q[0]*s,...q.slice(1)]);G.v=2;return G}
-function ghostSync(bi){if(bi!==GH.last){GH.last=bi;GH.ft=0;GH.acc=0;GH.rec[bi]=[];GH.atk=GH.atk||{};GH.atk[bi]=[]}}
-function ghostAtk(p,kind){if(!host||!S||nPl()!==1||S.st!=='fight'||!S.bs||!p||p.id!==me||p.dead)return;const bi=bidx();ghostSync(bi);GH.atk=GH.atk||{};(GH.atk[bi]=GH.atk[bi]||[]).push([Math.round(GH.ft*1000),p.ch,kind,Math.round(p.x),Math.round(p.y),Math.round((p.ang||0)*100)])}
+function ghostSave(){}
+// Interpolated sample of a flat [ms,x,y,v,...] track. key 'i' = player (v is an angle*100), 'j' = boss (v is HP per mille).
+function gSample(arr,key,ft){
+ const n=(arr.length/4)|0;if(!n)return null;
+ let i=GHP[key]|0;if(i>=n)i=n-1;if(arr[i*4]>ft)i=0;
+ while(i<n-1&&arr[(i+1)*4]<=ft)i++;GHP[key]=i;
+ const o=i*4;let x=arr[o+1],y=arr[o+2],v=arr[o+3];
+ if(i<n-1&&ft>arr[o]){const o2=o+4,gap=arr[o2]-arr[o];if(gap>0&&gap<=450){const f=cl((ft-arr[o])/gap,0,1);x+=(arr[o2+1]-x)*f;y+=(arr[o2+2]-y)*f;let dv=arr[o2+3]-v;if(key==='i')dv-=Math.round(dv/628.3)*628.3;v+=dv*f}}
+ return{x,y,v,i,n,last:arr[(n-1)*4]};
+}
+// When did the ghost boss first reach this HP (per mille)? Used for the live time delta.
+function ghostTimeAt(arr,h){const n=(arr.length/4)|0;for(let i=0;i<n;i++){const o=i*4;if(arr[o+3]<=h){if(!i)return arr[o];const q=o-4,a=arr[q+3],b=arr[o+3],f=a===b?1:(a-h)/(a-b);return arr[q]+(arr[o]-arr[q])*f}}return null}
 const GHV=[];
 const GH_FX={cg:{a:{k:'proj',img:'bul',sp:720,life:1.1,sz:40},k0:{k:'proj',img:'brick',sp:430,life:1.6,sz:92,spin:12},k1:{k:'ring',r:80,life:.5,col:'#ffd34a'},k2:{k:'dash',sp:900,life:.22,col:'#8fd8ff'}},
  zach:{a:{k:'arc',r:110,half:.7,life:.34,col:'#ffd04a'},k0:{k:'proj',img:'burger',sp:520,life:1.2,sz:60,spin:8},k1:{k:'ring',r:110,life:.8,col:'#ffe14a'},k2:{k:'dash',sp:1400,life:.18,col:'#ffffff'}}};
@@ -516,6 +543,7 @@ function drawGhostFx(dt){
  }
  g.restore();
 }
+GH_FX.adr={a:{k:'arc',r:105,half:.72,life:.22,col:'#ffd6f2'},k0:{k:'dash',sp:1100,life:.16,col:'#ffd6f2'},k1:{k:'ring',r:90,life:.5,col:'#ff9ad5'},k2:{k:'dash',sp:900,life:.2,col:'#ffd6f2'}};
 // Boss-kill replay overlay: letterbox bars, the final hit's line from attacker to impact, and an expanding ring.
 // Boss-kill replay: a slow-motion zoom on the final blow, with a flash, letterbox bars, a title card and a glowing streak from the attacker.
 let KC=null,KX=null;
@@ -555,31 +583,57 @@ function drawBossCut(){const c=S&&S.cut;if(!c||S.st!=='survcut'||!CUTC)return;co
 // Pink tinted bullet sprite for Coolgirl15 (built once from the normal bullet).
 function pinkBul(){if(IM.bulPink)return'bulPink';const s=IM.bul;if(!s||!s.complete||!s.naturalWidth)return'bul';const c=document.createElement('canvas');c.width=s.naturalWidth;c.height=s.naturalHeight;const x=c.getContext('2d');x.drawImage(s,0,0);x.globalCompositeOperation='source-atop';x.fillStyle='rgba(255,120,215,.9)';x.fillRect(0,0,c.width,c.height);IM.bulPink=c;return'bulPink'}
 function drawGhost(dt){
- if(!GHOST||!host||!S||nPl()!==1||S.st!=='fight'||!S.bs||!CH[GHOST.ch]){GHV.length=0;return}
- const bi=bidx(),arr=(GHOST.rec&&GHOST.rec[bi])||[],atks=(GHOST.atk&&GHOST.atk[bi])||[];
- const ft=Math.round(GH.ft*1000);
- if(GHP.bi!==bi||GHP.ft>ft){GHP={bi,i:0,ft:0,ai:0};GHV.length=0}
- let ai=GHP.ai||0;while(ai<atks.length&&atks[ai][0]<=ft)ghostFxSpawn(atks[ai++],GHOST.skin);GHP.ai=ai;
- if(arr.length){
-  let i=GHP.i;while(i<arr.length-1&&arr[i+1][0]<=ft)i++;GHP.i=i;
-  const a=arr[i],b=arr[Math.min(arr.length-1,i+1)];
-  const gap=b[0]-a[0],linked=gap>0&&gap<=400;   // no interpolation across a death gap
-  const f=linked?cl((ft-a[0])/gap,0,1):0;
-  const x=a[1]+(linked?(b[1]-a[1])*f:0),y=a[2]+(linked?(b[2]-a[2])*f:0);
-  const moving=linked&&Math.hypot(b[1]-a[1],b[2]-a[2])>1.5;
-  const ch=CH[GHOST.ch],sk=skinById(GHOST.skin||''),own=!!sk&&sk.ch===GHOST.ch;
-  const fr=moving?(own?sk.w:ch.w):(own?sk.i:ch.i),im=fr[Math.floor(GH.ft*6)%fr.length];
-  const flip=Math.cos((a[3]||0)/100)<0?-1:1;
-  const last=arr[arr.length-1][0],fi=cl(ft/400,0,1),fo=ft<=last?1:cl(1-(ft-last)/400,0,1);
-  const alpha=.34*fi*fo;
-  if(alpha>0){spr(im,x,y,64,0,flip,1,alpha);T('GHOST',x,y-44,10,'rgba(200,230,255,'+(.6*fi*fo).toFixed(2)+')','center');
-  const an=(a[3]||0)/100,ca=Math.cos(an),sa=Math.sin(an),gfy=ca<0?-1:1,ga=alpha*.9;
-  if(GHOST.ch==='cg')spr(skinWpn('gun',GHOST.skin),x+ca*30,y+8+sa*30,50,an,1,gfy,ga);
-  else if(GHOST.ch==='zach')spr(skinWpn('knife',GHOST.skin),x+ca*34,y+sa*34+8,52,an+PI/2,1,1,ga);
-  else if(GHOST.ch==='terry')spr('tgun',x+ca*30,y+8+sa*30,44,an,1,gfy,ga)}
+ const c=GH.cur,rf=c&&c.ref;
+ if(!GON||!rf||!host||!S||nPl()!==1||S.st!=='fight'||!S.bs||c.bi!==S.bi||!CH[rf.ch]){GHV.length=0;GH.gf=null;return}
+ const ft=Math.round(c.ft*1000),end=rf.t,t=performance.now()/1000;
+ const fo=ft<=end?1:cl(1-(ft-end)/700,0,1),fi=cl(ft/400,0,1);
+ // ghost attacks (visual only)
+ let ai=GHP.ai|0;const atks=rf.a||[];while(ai<atks.length&&atks[ai][0]<=ft)ghostFxSpawn(atks[ai++],rf.skin);GHP.ai=ai;
+ // ghost boss: it follows the boss's recorded path and is gone once the ghost run killed it
+ const d=BD[S.bi%BD.length],bs=gSample(rf.b,'j',ft);GH.gf=bs?bs.v/1000:null;
+ if(bs&&fo>0){
+  const al=.26*fo*fi,bob=Math.sin(t*2.5)*6,r=bossHitRadius({sz:d.sz});
+  g.save();glow(bs.x,bs.y+bob,d.sz*.8,'rgba(150,210,255,1)');g.restore();
+  spr(d.img,bs.x,bs.y+bob,d.sz,0,1,1,al);
+  g.save();g.globalAlpha=.55*fo;g.strokeStyle='#bfe6ff';g.lineWidth=2;g.setLineDash([7,6]);g.lineDashOffset=-t*30;g.beginPath();g.arc(bs.x,bs.y,r,0,PI*2);g.stroke();g.setLineDash([]);
+  const bw=76,bx=bs.x-bw/2,by=bs.y+d.sz*.5+8;g.fillStyle='rgba(8,11,27,.6)';g.fillRect(bx-1,by-1,bw+2,7);g.fillStyle='rgba(150,215,255,.8)';g.fillRect(bx,by,bw*cl(bs.v/1000,0,1),5);g.restore();
+  T('GHOST BOSS',bs.x,bs.y-d.sz*.5-8,10,'rgba(190,230,255,'+(.7*fo).toFixed(2)+')','center');
+ }else if(rf.b.length&&ft>end&&ft<end+1400){const q=rf.b.length-4,x=rf.b[q+1],y=rf.b[q+2],a2=1-cl((ft-end)/1400,0,1);T('GHOST BOSS DEFEATED',x,y,12,'rgba(190,230,255,'+(.8*a2).toFixed(2)+')','center')}
+ // ghost player
+ const pl=gSample(rf.p,'i',ft);
+ if(pl&&fo>0){
+  const ang=(pl.v||0)/100,ca=Math.cos(ang),sa=Math.sin(ang);
+  // path preview: where the ghost goes in the next second and a half
+  const arr=rf.p,n=pl.n;g.save();g.globalAlpha=.28*fo;g.strokeStyle='#bfe6ff';g.lineWidth=2;g.setLineDash([3,6]);g.beginPath();g.moveTo(pl.x,pl.y);
+  for(let i=pl.i+1;i<n&&arr[i*4]<=ft+1500;i++){if(arr[i*4]-arr[(i-1)*4]>450)break;g.lineTo(arr[i*4+1],arr[i*4+2])}g.stroke();g.setLineDash([]);g.restore();
+  const nxt=arr[Math.min(n-1,pl.i+1)*4+1],moving=Math.abs(nxt-pl.x)>1.2||Math.abs(arr[Math.min(n-1,pl.i+1)*4+2]-pl.y)>1.2;
+  const ch=CH[rf.ch],sk=skinById(rf.skin||''),own=!!sk&&sk.ch===rf.ch,fr=moving?(own?sk.w:ch.w):(own?sk.i:ch.i),im=fr[Math.floor(c.ft*6)%fr.length];
+  const alpha=.36*fi*fo,flip=ca<0?-1:1,gfy=ca<0?-1:1,ga=alpha*.9;
+  let hitAge=1e9;const hs=rf.h||[];for(let k=hs.length-1;k>=0;k--){if(hs[k]<=ft){hitAge=ft-hs[k];break}}
+  spr(im,pl.x,pl.y,64,0,flip,1,alpha);
+  if(rf.ch==='cg')spr(skinWpn('gun',rf.skin),pl.x+ca*30,pl.y+8+sa*30,50,ang,1,gfy,ga);
+  else if(rf.ch==='zach')spr(skinWpn('knife',rf.skin),pl.x+ca*34,pl.y+sa*34+8,52,ang+PI/2,1,1,ga);
+  else if(rf.ch==='terry')spr('tgun',pl.x+ca*30,pl.y+8+sa*30,44,ang,1,gfy,ga);
+  else if(rf.ch==='adr')spr('adboom',pl.x+ca*30,pl.y+sa*30+8,64,ang+PI/2,1,1,ga);
+  if(hitAge<350){g.save();g.globalAlpha=(1-hitAge/350)*.8*fo;g.strokeStyle='#ff5a5a';g.lineWidth=3;g.beginPath();g.arc(pl.x,pl.y,30+hitAge/12,0,PI*2);g.stroke();g.restore();T('-HIT',pl.x,pl.y-52-hitAge/20,10,'rgba(255,120,120,'+(1-hitAge/350).toFixed(2)+')','center')}
+  T('GHOST',pl.x,pl.y-44,10,'rgba(200,230,255,'+(.6*fi*fo).toFixed(2)+')','center');
  }
- GHP.ft=ft;
  drawGhostFx(dt||0);
+}
+// Live comparison under the boss bar: the ghost's time, how far ahead or behind you are at the same boss HP, and a marker on the bar.
+function drawGhostHud(){
+ const c=GH.cur,rf=c&&c.ref;
+ if(!GON||!rf||!host||!S||nPl()!==1||S.st!=='fight'||!S.bs||c.bi!==S.bi)return;
+ const ft=Math.round(c.ft*1000),f=ghostBossFrac(),bar=!S.secOn&&!S.c17&&rf.b.length;
+ let dl=null;if(bar&&f!=null&&f<.995){const tg=ghostTimeAt(rf.b,Math.round(f*1000));dl=ft-(tg==null?rf.t:tg)}
+ g.save();
+ if(bar&&GH.gf!=null&&ft<=rf.t){const x=140+680*cl(GH.gf,0,1);g.fillStyle='rgba(8,11,27,.7)';g.fillRect(x-2,30,5,38);g.fillStyle='#bfe6ff';g.fillRect(x-1,31,3,36);g.beginPath();g.moveTo(x-6,28);g.lineTo(x+6,28);g.lineTo(x,36);g.closePath();g.fill()}
+ const col=dl==null?'#bfe6ff':(dl<=0?'#7dff9a':'#ff8a8a'),who=rf.ch!==(S.pl[me]&&S.pl[me].ch)?' ('+CH[rf.ch].n+')':'';
+ const txt='GHOST'+who+'  '+gFmt(rf.t)+'   |   '+gFmt(ft)+(dl==null?'':'   '+(dl<=0?'-':'+')+(Math.abs(dl)/1000).toFixed(1)+'s');
+ g.font='bold 11px sans-serif';const w=Math.max(230,g.measureText(txt).width+28);
+ g.fillStyle='rgba(8,11,27,.74)';rr(W/2-w/2,68,w,22,11);g.fill();g.strokeStyle='rgba(191,230,255,.45)';g.lineWidth=1;g.stroke();
+ T(txt,W/2,79.5,11,col,'center');
+ g.restore();
 }
 function applyUpgradeAndNext(){S.rev=null;S.vcd=null;S.ups.push(S.pick);
  Object.values(S.pl).forEach(p=>{const was=p.dead;p.dead=0;p.hpCap=null;applyMods(p);p.hp=was?p.max*.5:Math.min(p.max,p.hp+p.max*.4)});Object.values(S.pl).forEach(p=>{p.upN=(p.upN||0)+1;if(p.upN>=5)ach('hoard')});S.bi++;X('upgrade');ach('upgrade');if(S.bi%BD.length===4&&lp()===0){startBossCut()}else spawnBoss()}
@@ -590,7 +644,7 @@ function dmgB(v,x,y,col,crit,p,target='main'){const b=S.bs;if(!b||b.inv)return;i
   const f=(b.hp+b.hp2)/(b.max+b.max2),th=b.ph===0?.66:.33;if(b.ph<2&&f<=th&&!b.inv)startCut();return}if(b.hp<=0)return;b.hp-=v;b.fl=.12;fx(['d',x,y,v,col,crit]);X(crit?'crit':'hit');if(p)p.dd+=v;if(p&&p.m&&p.m.ls)p.hp=Math.min(p.max,p.hp+v*p.m.ls);
  const th=b.max*(1-(b.ph+1)/3);if(b.ph<2&&b.hp<=th){b.hp=th;startCut()}else if(b.ph>=2&&c17Steal(b)){return}else if(b.hp<=0&&b.ph>=2){b.hp=0;if(b.idx===4&&!S.ezUlt){startEvilZachUltimate();return}bossDead()}}
 function hitB(p,base,x,y,kind,target='main'){const d=pd(p,base);if(JSRC&&p&&p.ch==='jam')jamAdd(p,d.v);dmgB(d.v,x,y,d.c?'#ffe14a':'#fff',d.c,p,target);fx(['p',x,y,6,p&&p.skin==='cg-woman'?'#ff7ad9':'#fff',170,.4,4]);if(p.m.expl&&(kind==='b'||(kind==='k'&&(p.exA||0)<=S.t))){if(kind==='k')p.exA=S.t+.3;boom(x,y,60,d.v*(kind==='b'?.4:.3),'p','#ffb347')}}
-function hitP(p,dmg,exact=false){if(p.dead||p.inv>0||p.hide>0||FGC.god)return;if(p.sh){p.sh=0;p.inv=.8;X('shield');fx(['r',p.x,p.y,50,'#6cf']);return}if(p.stance)dmg*=.62;dmg=exact?Math.round(dmg):Math.round(dmg*.88*[.75,1,1.4][S.set.diff]*(1+.15*lp())*(S.secOn?1.3:1));if(p.m.taken)dmg=Math.max(1,Math.round(dmg*p.m.taken));if(p.m.armor)dmg=Math.max(1,Math.round(dmg*(1-Math.min(.6,p.m.armor))));S.hurtBoss=1;if(p.ch==='bomb'){p.tk+=dmg;bombHit(p,dmg);return}p.hp-=dmg;p.tk+=dmg;X('hurt');if(p.hp>0&&p.hp/p.max<.1)ach('lowhp');if(p.tk>=150)ach('tank');p.inv=.7+(p.m.iframe||0);p.rage=p.m.rush?5:0;if(p.m.payback){const tg=bossTargets()[0];if(tg)hitB(p,60,tg.x,tg.y,'k',tg.id)}fx(['d',p.x,p.y-30,'-'+dmg,'#ff5050',0]);fx(['p',p.x,p.y,10,'#f55',200,.5,4]);fx(['s',6]);
+function hitP(p,dmg,exact=false){if(p.dead||p.inv>0||p.hide>0||FGC.god)return;if(p.sh){p.sh=0;p.inv=.8;X('shield');fx(['r',p.x,p.y,50,'#6cf']);return}if(p.stance)dmg*=.62;dmg=exact?Math.round(dmg):Math.round(dmg*.88*[.75,1,1.4][S.set.diff]*(1+.15*lp())*(S.secOn?1.3:1));if(p.m.taken)dmg=Math.max(1,Math.round(dmg*p.m.taken));if(p.m.armor)dmg=Math.max(1,Math.round(dmg*(1-Math.min(.6,p.m.armor))));S.hurtBoss=1;ghostHit(p);if(p.ch==='bomb'){p.tk+=dmg;bombHit(p,dmg);return}p.hp-=dmg;p.tk+=dmg;X('hurt');if(p.hp>0&&p.hp/p.max<.1)ach('lowhp');if(p.tk>=150)ach('tank');p.inv=.7+(p.m.iframe||0);p.rage=p.m.rush?5:0;if(p.m.payback){const tg=bossTargets()[0];if(tg)hitB(p,60,tg.x,tg.y,'k',tg.id)}fx(['d',p.x,p.y-30,'-'+dmg,'#ff5050',0]);fx(['p',p.x,p.y,10,'#f55',200,.5,4]);fx(['s',6]);
  if(p.hp<=0){if(p.m.revive&&!p.revived){p.revived=1;p.hp=p.max*.25;p.inv=1;X('revive');ach('revive');fx(['r',p.x,p.y,90,'#ff0'])}else{p.dead=1;p.hp=0;p.ls=0;p.dec=null;fx(['p',p.x,p.y,24,'#fff',300,.8,5]);X('die');ach('fallen');S.downs=(S.downs||0)+1;if(!alive().length)endOrRevenge()}}}
 function boom(x,y,r,dmg,own,col){X('boom');fx(['r',x,y,r,col||'#fff']);fx(['p',x,y,16,col||'#fff',260,.5,5]);fx(['s',own==='b'?5:3]);
  if(own==='b'){alive().forEach(p=>{if(dist(x,y,p.x,p.y)<r*ATK_HIT+PLAYER_HIT_R)hitP(p,dmg)});jamBoomHit(x,y,r*ATK_HIT,dmg)}else{const target=bossTargetAt(x,y,r);if(target)dmgB(dmg,x,y,col||'#ffa',0,null,target.id)}}
@@ -2398,6 +2452,40 @@ function stepDarrel(dt){
 // ===== END BOSS 8: DARREL =====
 
 
+// ===== BOSS ROAMING =====
+// Bosses without a scripted pattern used to sway along the top. Now each one picks waypoints (away from you, a real hop from the last stop,
+// often on the far side of the arena), eases into and out of every move, backs off if you crowd it, speeds up each phase and plants its
+// feet just before an attack so the telegraph reads. Each boss has its own personality.
+const MVP={0:{sp:165,ac:2.6,w:[1.3,2.5],y:[122,205],yp:30,keep:210,fl:.55},   // Bao: heavy waddle
+ 1:{sp:235,ac:5.2,w:[.8,1.7],y:[120,225],yp:36,keep:240,fl:.85},               // UnCoolguy16: quick strafes to the far side
+ 2:{sp:125,ac:1.5,w:[2.1,3.4],y:[122,255],yp:34,keep:180,fl:.25},              // Spong: floaty drift
+ 7:{sp:255,ac:5.5,w:[.45,1.25],y:[120,265],yp:26,keep:200,fl:.6},              // Darrel: erratic sprints
+ d:{sp:150,ac:2.5,w:[1.5,2.6],y:[125,215],yp:28,keep:200,fl:.4}};
+function bossRoam(b,dt,t){
+ const P=MVP[b.idx]||MVP.d,ph=Math.min(2,b.ph||0),m=b.mv||(b.mv={vx:0,vy:0,wx:b.x,wy:b.y,wt:0,lw:b.x,arr:0});
+ m.wt-=dt;
+ if(!m.arr&&Math.hypot(m.wx-b.x,m.wy-b.y)<28){m.arr=1;m.wt=Math.min(m.wt,rnd(.15,.5))}   // linger a moment on arrival
+ if(m.wt<=0){
+  let best=null,bs=-1e9;
+  for(let k=0;k<7;k++){
+   const x=rnd(80,W-80),y=rnd(P.y[0],P.y[1]+P.yp*ph),dp=dist(x,y,t.x,t.y),dl=Math.abs(x-m.lw);
+   let sc=Math.min(dp,P.keep+160)*.6+Math.min(dl,320)*.5+Math.abs(x-t.x)*P.fl*.35+rnd(0,60);
+   if(dp<P.keep)sc-=400;
+   if(sc>bs){bs=sc;best={x,y}}}
+  m.lw=m.wx;m.wx=best.x;m.wy=best.y;m.arr=0;m.wt=rnd(P.w[0],P.w[1])*(1-.12*ph)+.4;
+ }
+ const dx=m.wx-b.x,dy=m.wy-b.y,d=Math.max(1,Math.hypot(dx,dy));
+ let sp=P.sp*(1+.16*ph)*(b.hp<b.max*.25?1.12:1);
+ if(b.cd<.5)sp*=.4+b.cd*1.2;
+ const want=Math.min(sp,d*3.2),k=Math.min(1,P.ac*dt);
+ m.vx+=(dx/d*want-m.vx)*k;m.vy+=(dy/d*want-m.vy)*k;
+ const pd=Math.max(1,dist(b.x,b.y,t.x,t.y)),rr_=P.keep*.8;
+ if(pd<rr_){const push=(1-pd/rr_)*sp*3*dt;m.vx+=(b.x-t.x)/pd*push;m.vy+=(b.y-t.y)/pd*push}
+ const vv=Math.hypot(m.vx,m.vy),vm=sp*1.45;if(vv>vm){m.vx*=vm/vv;m.vy*=vm/vv}
+ b.x=cl(b.x+m.vx*dt,70,W-70);b.y=cl(b.y+m.vy*dt,112,300);
+}
+const BLN={};
+function bossLean(id,x,y){const s=BLN[id]||(BLN[id]={x,y,vx:0,vy:0}),dt=Math.max(.001,FDT),k=Math.min(1,dt*8);s.vx+=((x-s.x)/dt-s.vx)*k;s.vy+=((y-s.y)/dt-s.vy)*k;s.x=x;s.y=y;return s}
 function stepBoss(b,dt,attackSource){if(b.idx===3||b.isAllianceAlly){const o=b.isAllianceAlly?S.bs:S.bs2;if(o&&o.hp<=0)dt*=1.35}b.fl=Math.max(0,(b.fl||0)-dt);b.t=(b.t||0)+dt;if(b.inv||b.hp<=0)return;const t=nearest(b.x,b.y);if(!t)return;
  if(b.idx===8&&!b.helped&&!b.mode&&b.hp<=b.max*.4){b.helped=1;b.mode='rmHelp';b.nd=1;b.hl={s:0,t:0};X('phase');fx(['r',b.x,b.y,120,'#7dff6a']);return}
  if(isEZ(b)){b.trT=(b.trT||0)-dt;if(b.trT<=0){b.trT=.12;(b.trail=b.trail||[]).push({x:t.x,y:t.y});if(b.trail.length>26)b.trail.shift()}}
@@ -2423,7 +2511,7 @@ function stepBoss(b,dt,attackSource){if(b.idx===3||b.isAllianceAlly){const o=b.i
   else if(ph===1){tx=480+side*Math.cos(b.t*.55)*270;ty=175+Math.sin(b.t*1.3)*55}
   else{const an=b.t*.8*side+(side>0?PI:0);tx=480+Math.cos(an)*290;ty=225+Math.sin(an)*105}
   b.x+=(tx-b.x)*dt*1.7;b.y+=(ty-b.y)*dt*1.7;b.cd-=dt;
- }else{const home=480,amp=260;b.x+=(home+Math.sin(b.t*.6)*amp-b.x)*dt*.8;b.y+=(150+Math.sin(b.t*.9)*40-b.y)*dt*.8;b.cd-=dt}
+ }else{bossRoam(b,dt,t);b.cd-=dt}
  if(b.cd<=0){let source=attackSource!==undefined?attackSource:(b.idx===3?3:b.idx);const phase=Math.min(2,b.ph||0),pool=ATK[Math.min(BD.length-1,source)][phase].filter(x=>x!==b.last);let k;if(isEZ(b)){const r=R(),comboOdds=b.last==='comboStrike'?.25:.56,flashOdds=.23;if(r<comboOdds)k='comboStrike';else if(r<comboOdds+flashOdds&&pool.includes('blackFlash'))k='blackFlash';else{const rest=pool.filter(x=>x!=='comboStrike'&&x!=='blackFlash');k=rest.length?rest[Math.floor(R()*rest.length)]:(pool[Math.floor(R()*pool.length)]||'comboStrike')}}else{k=pool[Math.floor(R()*pool.length)]}b.last=k;A[k](b,t)}}
 // ===== PHASE 4.5 REMAKE: THE ENCORE =====
 // Bao (boss 1) and UnCoolguy16 (boss 2) stand at the top corners and throw their classic attacks plus the boss 4 duo moves in time with the music.
@@ -3605,6 +3693,11 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'ghost-races',title:'Ghost Races and Boss Movement',date:'Nov 11, 2026',sub:'Ghosts were remade, and bosses move much better.',items:[
+  ['NEW','Ghost races were remade. Your fastest clear of each boss (per hero and difficulty) is saved and races you as a ghost of you AND a ghost boss, with a path preview, hit flashes and a marker on the boss bar.'],
+  ['NEW','A live comparison under the boss bar shows the ghost time and how far ahead or behind you are at the same boss HP. A new PB is announced when you win.'],
+  ['NEW','The lobby shows your ghost PB for the chosen start boss and has a GHOST on/off toggle. Old ghost data is no longer used.'],
+  ['CHANGED','Bosses now roam: they pick waypoints away from you, ease into moves, back off if crowded, speed up each phase and plant their feet before attacking. Bao, UnCoolguy16, Spong and Darrel each move differently, and bosses lean into their movement.']]},
  {id:'unlocks-adrian',title:'Unlocks, Skip Costs and Adrian',date:'Nov 10, 2026',sub:'Heroes cost Zach Coins, skipping bosses costs Zach Coins, and Adrian was reworked.',items:[
   ['CHANGED','Only CoolGuy15 and Zach start unlocked. Unlock Jay (100), Terry (125), Pat (150), Adrian (175), Jam (200) and Bomb (225) with Zach Coins.'],
   ['CHANGED','Starting on a later boss costs 25 Zach Coins per boss skipped (boss 2 = 25, boss 3 = 50, ...).'],
@@ -4004,6 +4097,7 @@ function drawLobby(){const v=V,t=performance.now()/1000;drawBackdrop(t);const mi
  const rs=v.set.rush|0,setRushMode=n=>()=>{if(host&&S&&S.st==='lobby'){S.set.rush=n;setRush(n)}};
  btn(670,390,125,26,'REGULAR RUSH',setRushMode(0),{c:rs?'#2a3350':'#75402e',f:10});btn(799,390,125,26,"COOLGUY17'S RUSH",setRushMode(1),{c:rs?'#8a2b5a':'#2a3350',f:10});
  const mult=([.75,1,1.5][v.set.diff]*(1+.8*(v.n-1))).toFixed(2);T('BOSS HP  x'+mult+'  \u2022  '+v.n+' PLAYER'+(v.n===1?'':'S'),672,436,10,'#9f9','left');
+ {const pb=ghostBest(v.set.start|0,v.set.diff);T(pb?'GHOST PB  '+gFmt(pb.t)+' \u2022 '+(CH[pb.ch]?CH[pb.ch].n:''):'No ghost for this boss yet',672,448,9,'#bfe6ff','left');btn(838,442,86,13,'GHOST: '+(GON?'ON':'OFF'),()=>{GON=!GON;try{localStorage.setItem('zub_ghoston',GON?'1':'0')}catch(e){}},{c:GON?'#2a5a7a':'#3a3f55',f:8})}
  btn(670,456,100,44,'LEAVE',leaveToTitle,{c:'#6a2a2a',f:14});
  if(host){glow(852,478,80,'rgba(255,80,40,1)');btn(780,456,144,44,'START GAME',()=>{if(S.st==='lobby')startRun()},{c:'#b8452a',f:15})}else T('WAITING FOR HOST',852,478,10,'#aab','center');
  // Player slots
@@ -4185,11 +4279,11 @@ function skinFx(p,o,t,hy){const sk=p.skin||'';
  if(sk==='cg-bald'&&!p.dead){const q=t%3;if(q<.4){const u=Math.sin(q/.4*PI),r=12*u;g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,255,255,'+u.toFixed(2)+')';g.lineWidth=2;g.beginPath();g.moveTo(o.x+6-r,hy);g.lineTo(o.x+6+r,hy);g.moveTo(o.x+6,hy-r);g.lineTo(o.x+6,hy+r);g.stroke();g.restore()}}
  if(sk==='cg-notcool'&&!p.dead&&p.hp>0&&p.hp/p.max<.35&&R()<.12)PT.push({x:o.x+rnd(-16,16),y:o.y-22,vx:rnd(-6,6),vy:rnd(35,60),l:.7,m:.7,c:'#9fe8ff',s:4});
  if(sk==='zach-rice'&&!p.dead&&!p.walk&&R()<.12)PT.push({x:o.x+rnd(-14,14),y:o.y-30,vx:rnd(-8,8),vy:rnd(-35,-55),l:1.1,m:1.1,c:'#e6f1ff',s:rnd(5,9)})}
-function drawBoss(b,t,id){const o=sm('boss',b.x,b.y),bob=Math.sin(t*2.5)*6,sq=Math.sin(t*3)*.04;g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(o.x,o.y+b.sz*.45,b.sz*.4,12,0,0,PI*2);g.fill();
+function drawBoss(b,t,id){const o=sm('boss',b.x,b.y),bl=bossLean(id||'m',o.x,o.y),lean=cl(bl.vx/1100,-.2,.2),stre=Math.min(.07,Math.hypot(bl.vx,bl.vy)/5000),bob=Math.sin(t*2.5)*6,sq=Math.sin(t*3)*.04+stre*.5;g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(o.x,o.y+b.sz*.45,b.sz*.4,12,0,0,PI*2);g.fill();
  const oy=o.y+bob-(b.air||0)*260;glow(o.x,oy,b.sz*1.1,GCR[b.idx]);
  if(R()<.4&&PT.length<700){const an=R()*PI*2;PT.push({x:o.x+Math.cos(an)*b.sz*.5,y:oy+Math.sin(an)*b.sz*.5,vx:Math.cos(an)*30,vy:-30,l:.8,m:.8,c:BD[b.idx].col[0],s:4})}
  if(b.beam!=null){g.save();g.translate(o.x,o.y);g.rotate(b.beam);g.globalCompositeOperation='lighter';g.fillStyle='rgba(255,40,40,.5)';g.fillRect(0,-32,1500,64);g.fillStyle='rgba(255,230,230,.9)';g.fillRect(0,-10,1500,20);g.restore()}
- spr(b.img,o.x,oy,b.sz,Math.sin(t*1.5)*.04+(b.sp||0)+(b.tl||0),1+sq,1-sq,b.inv&&V.st==='fight'?.6:1);
+ spr(b.img,o.x,oy,b.sz,Math.sin(t*1.5)*.04+(b.sp||0)+(b.tl||0)+lean,1+sq,1-sq,b.inv&&V.st==='fight'?.6:1);
  if(b.fl){g.globalCompositeOperation='lighter';spr(b.img,o.x,oy,b.sz,0,1,1,.7);g.globalCompositeOperation='source-over'}
  if(isEZ(b)&&b.cmb){const [ck,ca,cp,csw,cr,ch]=b.cmb;g.save();g.translate(o.x,o.y);if(!csw){g.fillStyle='rgba(255,50,70,'+(.1+.3*cp)+')';g.strokeStyle='rgba(255,90,90,.85)';g.lineWidth=2;g.beginPath();g.moveTo(0,0);g.arc(0,0,cr*(.55+.45*cp),ca-ch,ca+ch);g.closePath();g.fill();g.stroke();g.strokeStyle='rgba(255,240,150,'+(.3+.5*cp)+')';g.beginPath();g.arc(0,0,cr,ca-ch,ca+ch);g.stroke();if(b.idx===8){g.setLineDash([12,9]);g.lineDashOffset=-t*140;g.strokeStyle='rgba(255,225,76,'+(.45+.4*cp)+')';g.lineWidth=3;g.beginPath();g.arc(0,0,cr*1.08,ca-ch,ca+ch);g.stroke();g.setLineDash([])}g.restore()}else{g.restore();if(ck===2)drawZachStab(o.x,o.y,ca,cp);else drawZachSlash(o.x,o.y,ca,cp,ck===1,t)}}
  if(isEZ(b))drawEZHalo(o.x,oy,b.sz,t);else drawBossHalo(o.x,oy,b.sz,t,(BD[b.idx]&&BD[b.idx].col)||['#ffe94a','#ff2a5a']);if(isEZ(b)){spr('eknife',o.x+Math.cos(b.a||0)*70,o.y+Math.sin(b.a||0)*70+5,76,(b.a||0)+PI/2,1,1,.95);if(b.dodgeT>0){g.strokeStyle='rgba(249,232,76,.9)';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,b.sz*.62,0,PI*2);g.stroke()}}
@@ -4543,7 +4637,7 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];if(S&&host&
  g.restore();
  if(FL>0&&ST.flash>0){g.fillStyle=FLc;g.globalAlpha=FL*.7*ST.flash/100;g.fillRect(0,0,W,H);g.globalAlpha=1}
  {const mn=v.pl.find(p=>p.id===me);if(mn){if(mn.hp<lastHp)HURT=1;lastHp=mn.hp;const low=ST.lowHp&&mn.hp/mn.max<.3&&!mn.dead?.5+.5*Math.sin(t*6):0,a=Math.max(ST.hurtFx?HURT:0,low*.6);if(a>0){const gr=g.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.85);gr.addColorStop(0,'rgba(255,0,0,0)');gr.addColorStop(1,'rgba(255,0,0,'+(a*.55)+')');g.fillStyle=gr;g.fillRect(0,0,W,H)}}HURT=Math.max(0,HURT-dt*2)}
- drawKillReplay();drawBossCut();if(v.b&&st!=='up'&&st!=='survival'&&st!=='intro7'&&!v.secOn&&!v.c17)drawBossBar(v.b,dt);if(v.tri&&st==='fight'&&!v.secOn)drawTriBars(v.tri);if(v.c17&&st!=='lobby'){drawC17Dark(v.c17);drawC17Bar(v.c17,st,t)}if(v.c17&&st==='c17boom')drawC17Boom(v.c17);
+ drawKillReplay();drawBossCut();if(v.b&&st!=='up'&&st!=='survival'&&st!=='intro7'&&!v.secOn&&!v.c17)drawBossBar(v.b,dt);if(v.tri&&st==='fight'&&!v.secOn)drawTriBars(v.tri);drawGhostHud();if(v.c17&&st!=='lobby'){drawC17Dark(v.c17);drawC17Bar(v.c17,st,t)}if(v.c17&&st==='c17boom')drawC17Boom(v.c17);
  if(v.sec&&st==='fight'){drawSecBar(v);drawSecTimer(v,t)}
  if(v.bs2&&st!=='up'&&st!=='survival'){const q=v.bs2,x=140,y=83,w=680,h=13,r=q.max?cl(q.hp/q.max,0,1):0;g.fillStyle='#250912';g.fillRect(x,y,w,h);g.fillStyle='#ff465d';g.fillRect(x,y,w*r,h);g.strokeStyle='#ff9ba8';g.lineWidth=2;g.strokeRect(x,y,w,h);T('UNCOOLGUY16  '+Math.ceil(q.hp)+' / '+Math.ceil(q.max),x,y+25,11,'#ff9ba8','left')}
  if(st==='fight'&&v.ufx&&v.ufx.length)drawUfx(v,t);
@@ -4999,7 +5093,7 @@ function c17PhaseUp(c){c.ph++;c.phT=1.1;c17Inv(c,1);c17Clear(c);c.lock=1.2;c.cd=
  if(c.id===2)c.darkT=Math.min(c.darkT,2);if(c.id===1)c.fogClock=Math.max(c.fogClock,16)}
 
 // Song over with Coolguy17 still standing: explosion cut scene, then back to the lobby.
-function c17Boom(){const c=S.c17;if(!c)return;c17Clear(c);S.st='c17boom';c.boomT=0;c.boomEv=0;c17Inv(c,1);c.gone=0;c.cut=null;S.dlg=null;X('c17boom');fx(['f','#ffffff']);fx(['s',24])}
+function c17Boom(){const c=S.c17;if(!c)return;ghostFinish();c17Clear(c);S.st='c17boom';c.boomT=0;c.boomEv=0;c17Inv(c,1);c.gone=0;c.cut=null;S.dlg=null;X('c17boom');fx(['f','#ffffff']);fx(['s',24])}
 function c17BoomStep(dt){const c=S.c17;if(!c){toLobby();return}
  c.boomT+=dt;c.boomEv-=dt;
  if(c.boomEv<=0){c.boomEv=.1+R()*.16;const a=rnd(0,PI*2),d=rnd(0,300),x=cl(c.x+Math.cos(a)*d,40,W-40),y=cl(c.y+Math.sin(a)*d,40,H-40);c17fx(['r',x,y,rnd(40,120),R()<.5?'#ffb347':'#fff2c0']);fx(['p',x,y,30,R()<.5?'#ffb347':'#ff4d00',rnd(260,540),.9,5]);fx(['s',10]);X('c17boom')}
