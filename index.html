@@ -10,7 +10,8 @@ var PEER_CFG={config:{iceServers:[
 {urls:'stun:openrelay.metered.ca:80'},
 {urls:'turn:openrelay.metered.ca:80',username:'openrelayproject',credential:'openrelayproject'},
 {urls:'turn:openrelay.metered.ca:443',username:'openrelayproject',credential:'openrelayproject'},
-{urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'}
+{urls:'turn:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'},
+{urls:'turns:openrelay.metered.ca:443?transport=tcp',username:'openrelayproject',credential:'openrelayproject'}
 ]}};
 </script>
 <script>
@@ -20,7 +21,7 @@ try{const DATA_VER='2026-11-10-reset-2';if(localStorage.getItem('zub_dataver')!=
 window.addEventListener('error',e=>{let d=document.getElementById('err');if(!d){d=document.createElement('pre');d.id='err';d.style.cssText='position:fixed;left:0;top:0;right:0;margin:0;padding:8px;background:#600;color:#fff;font:12px monospace;z-index:9;white-space:pre-wrap';document.body.appendChild(d)}d.textContent='Game error: '+e.message+' (line '+e.lineno+')\n'+d.textContent});
 const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=W;cv.height=H;g.imageSmoothingEnabled=false;
 let R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d),sideOfLane=i=>i%2?W-12:12;
-const F={start:'startbutton.png',bbi1:'Bomb_barry_idle1.png',bbi2:'Bomb_barry_idle2.png',bbw1:'Bomb_barry_walk1.png',bbw2:'Bomb_barry_walk2.png',jmi1:'jameson_character_idle1.png',jmi2:'jameson_character_idle2.png',jmw1:'jameson_character_walk1.png',jmw2:'jameson_character_walk2.png',jmKami:'jameson_creation_3_kamikaze.png',jmBow:'jameson_creation_2.png',jmSword:'Jameson_creation.png',jmMed:'jameson_creation_4_medkit.png',jmWSword:'creation_weapon_sword.png',jmWBow:'creation_weapon_bow.png',jmArrow:'creation_weapon_arrow.png',jmWMed:'creation_weapon_medkit.png',adi1:'Adrian character idle1.png',adi2:'Adrian character idle2.png',adw1:'Adrian character walk1.png',adw2:'Adrian character walk2.png',adboom:'Adrian boomerang.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png',pi1:'Patrick character idle1.png',pi2:'Patrick character idle2.png',pw1:'Patrick character walk1.png',pw2:'Patrick character walk2.png',prock:'Patrick rock.png',pyoink:'SpongeBob (yoink).png',cg17a:'coolguy17.png',cg17b:'coolguy17_rematch.png',cg17c:'coolguy17_Second_Last_encounter.png',cgWomanI1:'woman skin Coolguy15 idle1.png',cgWomanI2:'woman skin Coolguy15 idle2.png',cgWomanW1:'woman skin Coolguy15 walk1.png',cgWomanW2:'woman skin Coolguy15 walk2.png',cgBaldI1:'bald skin Coolguy15 idle1.png',cgBaldI2:'bald skin Coolguy15 idle2.png',cgBaldW1:'bald skin Coolguy15 walk1.png',cgBaldW2:'bald skin Coolguy15 walk2.png',cgNotCoolI1:'Not so cool skin Coolguy15 idle1.png',cgNotCoolI2:'Not so cool skin Coolguy15 idle2.png',cgNotCoolW1:'Not so cool skin Coolguy15 walk1.png',cgNotCoolW2:'Not so cool skin Coolguy15 walk2.png',cgBootlegI1:'bootleg skin coolguy15 idle1.png',cgBootlegI2:'bootleg skin coolguy15 idle2.png',cgBootlegW1:'bootleg skin coolguy15 walk1.png',cgBootlegW2:'bootleg skin coolguy15 walk2.png',zRiceI1:'rice skin Zach character idle1.png',zRiceI2:'rice skin Zach character idle2.png',zRiceW1:'rice skin Zach character walk.png',zRiceW2:'rice skin Zach character walk2.png',zEvilI1:'evil skin Zach character idle1.png',zEvilI2:'evil skin Zach character idle2.png',zEvilW1:'evil skin Zach character walk.png',zEvilW2:'evil skin Zach character walk2.png',tDiceI1:'dice skin Terry Plungle Yungle idle 1.png',tDiceI2:'dice skin Terry Plungle Yungle idle 2.png',tDiceW1:'dice skin Terry Plungle Yungle walk1.png',tDiceW2:'dice skin Terry Plungle Yungle walk2.png',jaySolidI1:'solid skin jay idle1.png',jaySolidI2:'solid skin jay idle2.png',jaySolidW1:'solid skin jay walk1.png',jaySolidW2:'solid skin jay walk2.png',darrel:'darrel_boss_8.png',dIpad:'Darrel_attack_Ipad.png',dHappy:'Darrel_attack_Happy_face.png',dLoli:'Darrel_attack_lolipop.png'};
+const F={start:'startbutton.png',bbi1:'Bomb_barry_idle1.png',bbi2:'Bomb_barry_idle2.png',bbw1:'Bomb_barry_walk1.png',bbw2:'Bomb_barry_walk2.png',jmi1:'jameson_character_idle1.png',jmi2:'jameson_character_idle2.png',jmw1:'jameson_character_walk1.png',jmw2:'jameson_character_walk2.png',jmKami:'jameson_creation_3_kamikaze.png',jmBow:'jameson_creation_2.png',jmSword:'Jameson_creation.png',jmMed:'jameson_creation_4_medkit.png',jmWSword:'creation_weapon_sword.png',jmWBow:'creation_weapon_bow.png',jmArrow:'creation_weapon_arrow.png',jmWMed:'creation_weapon_medkit.png',adi1:'Adrian character idle1.png',adi2:'Adrian character idle2.png',adw1:'Adrian character walk1.png',adw2:'Adrian character walk2.png',adboom:'Adrian boomerang.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png',pi1:'Patrick character idle1.png',pi2:'Patrick character idle2.png',pw1:'Patrick character walk1.png',pw2:'Patrick character walk2.png',prock:'Patrick rock.png',pyoink:'SpongeBob (yoink).png',cg17a:'coolguy17.png',cg17b:'coolguy17_rematch.png',cg17c:'coolguy17_Second_Last_encounter.png',cgWomanI1:'woman skin Coolguy15 idle1.png',cgWomanI2:'woman skin Coolguy15 idle2.png',cgWomanW1:'woman skin Coolguy15 walk1.png',cgWomanW2:'woman skin Coolguy15 walk2.png',cgBaldI1:'bald skin Coolguy15 idle1.png',cgBaldI2:'bald skin Coolguy15 idle2.png',cgBaldW1:'bald skin Coolguy15 walk1.png',cgBaldW2:'bald skin Coolguy15 walk2.png',cgNotCoolI1:'Not so cool skin Coolguy15 idle1.png',cgNotCoolI2:'Not so cool skin Coolguy15 idle2.png',cgNotCoolW1:'Not so cool skin Coolguy15 walk1.png',cgNotCoolW2:'Not so cool skin Coolguy15 walk2.png',cgBootlegI1:'bootleg skin coolguy15 idle1.png',cgBootlegI2:'bootleg skin coolguy15 idle2.png',cgBootlegW1:'bootleg skin coolguy15 walk1.png',cgBootlegW2:'bootleg skin coolguy15 walk2.png',zRiceI1:'rice skin Zach character idle1.png',zRiceI2:'rice skin Zach character idle2.png',zRiceW1:'rice skin Zach character walk.png',zRiceW2:'rice skin Zach character walk2.png',zEvilI1:'evil skin Zach character idle1.png',zEvilI2:'evil skin Zach character idle2.png',zEvilW1:'evil skin Zach character walk.png',zEvilW2:'evil skin Zach character walk2.png',tDiceI1:'dice skin Terry Plungle Yungle idle 1.png',tDiceI2:'dice skin Terry Plungle Yungle idle 2.png',tDiceW1:'dice skin Terry Plungle Yungle walk1.png',tDiceW2:'dice skin Terry Plungle Yungle walk2.png',jaySolidI1:'solid skin jay idle1.png',jaySolidI2:'solid skin jay idle2.png',jaySolidW1:'solid skin jay walk1.png',jaySolidW2:'solid skin jay walk2.png',darrel:'darrel_boss_8.png',dIpad:'Darrel_attack_Ipad.png',dHappy:'Darrel_attack_Happy_face.png',dLoli:'Darrel_attack_lolipop.png',parkCartman:'park_cartman.png',parkKyle:'park_kyle.png',parkStan:'park_stan.png',parkKenny:'park_kenny.png',shafiq:'shafiq.png'};
 const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp3',m1:'Cheese Crusade V2 (boss 1).mp3',m2:'The guy(Boss 2).mp3',m3:'SpongeSwap - Hell Or High Water_Phase 2 (boss 3).mp3',m4:'Pyrosomni (boss 4).mp3',surv:'Timebomb Madness OST - Overdue - blocco (boss 4.5).mp3',m5:'SpongeBob SquarePants SuperSponge - Vs. Patrick (boss 5).mp3',m6:'Vs. Randy boss 6.mp3',m7:'Suffocate_In_Dust_II_boss_7.mp3',m8:'Hateful_Doom_secret_boss_8.mp3',c1:'Icicle_Ignition_II_coolguy17.mp3',c2:'BIG_MISTAKE_coolguy17_rematch.mp3',c3:'Pancake_Pandemonium_Coolguy17_second_last_encounter.mp3',c3last:'-_PAN_FRIED_PIZZA_coolguy17_second_last_encounter_last_stand.mp3',m9:'POWERSCALING_Boss_8.mp3',m10:'COVER_Vs_Patrick_Boss_9.mp3'};
 // Ghost races (solo): your fastest clear of every boss (per hero and difficulty) is kept and replayed as a ghost player AND a ghost boss.
 const GKEY='zub_ghost3',GH={cur:null,gf:null};let GHP={};
@@ -44,7 +45,9 @@ const SKINS=[
  {id:'zach-rice',name:'Rice Zach',ch:'zach',price:0,i:['zRiceI1','zRiceI2'],w:['zRiceW1','zRiceW2']},
  {id:'zach-evil',name:'Evil Zach',ch:'zach',price:0,i:['zEvilI1','zEvilI2'],w:['zEvilW1','zEvilW2']},
  {id:'terry-dice',name:'Dice',ch:'terry',price:444,i:['tDiceI1','tDiceI2'],w:['tDiceW1','tDiceW2']},
- {id:'jay-solid',name:'Solid Jay',ch:'jay',price:180,i:['jaySolidI1','jaySolidI2'],w:['jaySolidW1','jaySolidW2']}
+ {id:'jay-solid',name:'Solid Jay',ch:'jay',price:180,i:['jaySolidI1','jaySolidI2'],w:['jaySolidW1','jaySolidW2']},
+ {id:'jam-park',name:'The Park',ch:'jam',price:120,i:['parkCartman','parkCartman'],w:['parkCartman','parkCartman']},
+ {id:'bomb-shafiq',name:'Shafiq',ch:'bomb',price:500,i:['shafiq','shafiq'],w:['shafiq','shafiq']}
 ];
 SKINS.sort((a,b)=>a.price-b.price||a.name.localeCompare(b.name)); // cheapest first everywhere (shop + character select)
 const FREE_CHARS=['cg','zach'],CHAR_PRICE={jay:100,terry:125,pat:150,adr:175,jam:200,bomb:225};
@@ -663,7 +666,7 @@ const warn=o=>S.wr.push(Object.assign({t:0,dur:1,k:'c',r:50,a:0},o,{dur:(o&&o.du
 function nearest(x,y){let b=null,bd=1e9;alive().forEach(p=>{const d=dist(x,y,p.x,p.y);if(d<bd){bd=d;b=p}});return b}
 function ang2(a,b){const d=Math.abs(a-b)%(2*PI);return d>PI?2*PI-d:d}
 // Skin weapon swaps (sprite only; damage and hitboxes are unchanged).
-const SKIN_WPN={'cg-notcool':{gun:'egun',bul:'ebul'},'zach-rice':{knife:'chop',burger:'dump'}};
+const SKIN_WPN={'cg-notcool':{gun:'egun',bul:'ebul'},'zach-rice':{knife:'chop',burger:'dump'},'bomb-shafiq':{bbi1:'shafiq'}};
 const skinWpn=(k,skin)=>{const m=SKIN_WPN[skin||''];return (m&&m[k])||k};
 let WSK='';const wk=k=>skinWpn(k,WSK);
 function attack(p){ghostAtk(p,'a');const m=p.m,rate=(p.buf>0?2:1)*m.rate*(p.od>0?1.3:1);if(p.ch==='bomb'){bombAttack(p,rate);return}if(p.ch==='jam'){jamAttack(p,rate);return}if(p.ch==='adr'){adrAttack(p,rate);return}if(p.ch==='jay'){jayAttack(p,rate);return}if(p.ch==='terry'){terryAttack(p,rate);return}
@@ -766,7 +769,7 @@ function bombAbility(p,k){
   p.fuse=Math.max(0,(p.fuse||0)-40);p.steamT=2.5;p.steamTk=0;X('power');fx(['r',p.x,p.y,110,'#dfe6ff']);
  }else if(k===1){ // Short Fuse: +20 heat and throw a bomb
   bombGain(p,20);
-  bp(p.x+ca*40,p.y+sa*40,p.ang,430,{own:'p',r:20*m.size,dmg:Math.round(90*heatDmg(p)),img:'bbi1',sz:48*m.size,life:1.4,spin:8,pid:p.id,kind:'k'});X('throw');
+  bp(p.x+ca*40,p.y+sa*40,p.ang,430,{own:'p',r:20*m.size,dmg:Math.round(90*heatDmg(p)),img:skinWpn('bbi1',p.skin),sz:48*m.size,life:1.4,spin:8,pid:p.id,kind:'k'});X('throw');
  }else{ // Detonate: explode now, scaled by heat
   if(!p.fuseWind)fuseStartWindup(p,'manual');
  }
@@ -1021,6 +1024,8 @@ function stepAdrWorld(dt){
    =================================================================== */
 const JM={charge:2.2,recover:1,cap:8,hard:16,decay:8,odDur:7,slowDur:2,shield:10,r:17,K:['kami','sword','bow','med'],HP:{kami:15,sword:53,bow:45,med:38},COL:['#b06bff','#8fd0ff','#ffd98a','#7dffa0']};
 const JM_SPR=['jmKami','jmSword','jmBow','jmMed'];
+const JM_SKIN_SPR={'jam-park':['parkKenny','parkKyle','parkStan','jmMed']};
+const jamSpr=(skin,k)=>(JM_SKIN_SPR[skin||'']||JM_SPR)[k];
 const jamMods=o=>o&&o.m?o.m:{dmg:1,pierce:0,multi:0,size:1};
 const jamCount=pid=>(S.jm||[]).filter(m=>m.pid===pid&&!m.dead&&!m.gone).length;
 // ===== JAMESON SQUAD UPGRADES =====
@@ -1248,7 +1253,7 @@ function stepJamWorld(dt){
 /* ---------- drawing ---------- */
 function drawJamWorld(v,t){
  (v.jm||[]).slice().sort((a,b)=>a[3]-b[3]).forEach(a=>{
-  const [id,k,x,y,hp,max,dead,dec,sh,face,st,prog,hf,tx,ty,pid,mv,mc]=a,o=sm('jm'+id,x,y),fl=Math.cos(face)<0?-1:1,key=JM_SPR[k];
+  const [id,k,x,y,hp,max,dead,dec,sh,face,st,prog,hf,tx,ty,pid,mv,mc]=a,o=sm('jm'+id,x,y),fl=Math.cos(face)<0?-1:1,key=jamSpr(((V&&V.pl)||[]).find(q=>q.id===pid)?.skin,k);
   if(dead){g.save();g.globalAlpha=dec>.75&&Math.floor(t*10)%2?.25:.6;g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(o.x,o.y+12,22,6,0,0,PI*2);g.fill();spr(key,o.x,o.y+8,46,1.45*fl,fl,.75,.55);g.restore();
    g.strokeStyle='rgba(125,255,160,.75)';g.lineWidth=3;g.beginPath();g.arc(o.x,o.y,25,-PI/2,-PI/2+PI*2*(1-dec));g.stroke();return}
   const bob=mv?-Math.abs(Math.sin(t*12+id))*5:Math.sin(t*3+id)*-2,by=o.y+bob;if(mc){g.save();g.globalAlpha=.55+.4*Math.sin(t*14);g.strokeStyle=mc===1?'#ffd34a':'#ff5a1a';g.lineWidth=4;g.beginPath();g.arc(o.x,by,34+(mc===2?4*Math.sin(t*20):0),0,PI*2);g.stroke();if(mc===2){g.fillStyle='rgba(255,200,60,.25)';g.fill()}g.restore()}
@@ -1273,7 +1278,7 @@ function drawJamWorld(v,t){
 }
 function drawJamPlayerFx(p,o,t){
  if(p.jc>0){const col=p.jo?'#ffb347':'#ffe38a';g.strokeStyle='rgba(0,0,0,.45)';g.lineWidth=7;g.beginPath();g.arc(o.x,o.y,38,0,PI*2);g.stroke();g.strokeStyle=col;g.lineWidth=5;g.beginPath();g.arc(o.x,o.y,38,-PI/2,-PI/2+PI*2*p.jc);g.stroke();
-  g.save();g.globalAlpha=.3+.7*p.jc;spr(JM_SPR[p.jn|0],o.x,o.y-88+Math.sin(t*8)*3,32);g.restore()}
+  g.save();g.globalAlpha=.3+.7*p.jc;spr(jamSpr(p.skin,p.jn|0),o.x,o.y-88+Math.sin(t*8)*3,32);g.restore()}
  if(p.jwd){g.strokeStyle='rgba(175,95,255,'+(.6+.35*Math.sin(t*20))+')';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,46+Math.sin(t*20)*4,0,PI*2);g.stroke();for(let j=0;j<3;j++){const a=t*9+j*PI*2/3;g.fillStyle='#120418';g.beginPath();g.arc(o.x+Math.cos(a)*40,o.y+Math.sin(a)*40,7,0,PI*2);g.fill()}}
  if(p.jo){g.save();g.strokeStyle='rgba(255,179,71,.85)';g.lineWidth=3;g.setLineDash([9,8]);g.lineDashOffset=-t*60;g.beginPath();g.arc(o.x,o.y,50,0,PI*2);g.stroke();g.restore()}
  if(p.js){for(let j=0;j<3;j++){const a=t*3+j*PI*2/3;T('\u2605',o.x+Math.cos(a)*20,o.y-58+Math.sin(a)*6,12,'#cfd6e6','center')}for(let j=0;j<3;j++){const f=(t*1.5+j*.33)%1;g.fillStyle='rgba(150,205,255,'+(1-f)+')';g.beginPath();g.ellipse(o.x+(j-1)*20,o.y-36+f*24,3,5,0,0,PI*2);g.fill()}
@@ -3477,16 +3482,293 @@ function snap(){const b=S.bs,D=S.dlg;return{st:S.st,c17:S.c17?snapC17():null,sec
  wr:S.wr.map(w=>[w.k,w.x|0,w.y|0,+w.a.toFixed(2),w.r,+(w.t/w.dur).toFixed(2),w.img||'',w.col||'',w.wd||0]),
  dlg:D&&{who:D.L[D.i][0],text:D.L[D.i][1],t:D.t,i:D.i,intro:(D.next==='fight'||D.next==='c17fight'),noSkip:D.noSkip?1:0}}}
 function startHost(){R=Math.random;if(typeof Peer==='undefined'){alert('Online play needs the PeerJS library, which could not load (offline or blocked).');return}chatReset();host=true;me='host';S=newS();addPl('host');room=null;scr='game';
- const mk=(tries)=>{const code=String(Math.floor(100000+Math.random()*900000));peer=new Peer('bossrush-'+code,PEER_CFG);peer.on('open',()=>{room=code});
+ const mk=(tries)=>{const code=String(Math.floor(100000+Math.random()*900000));peer=new Peer('bossrush-'+code,jPeerCfg(false));peer.on('open',()=>{room=code});
   peer.on('error',e=>{if(e&&e.type==='unavailable-id'&&tries<8){try{peer.destroy()}catch(x){}mk(tries+1)}else console.warn(e)});hookHost()};
  const hookHost=()=>{
  peer.on('connection',c=>{c.on('open',()=>{if(S.st!=='lobby'||nPl()>=S.set.max){c.send({t:'full'});setTimeout(()=>c.close(),400);return}conns[c.peer]=c;addPl(c.peer);c.send({t:'chathist',h:chatHistOut()});ach('online');if(nPl()>=3)ach('crowd')});
   c.on('data',d=>{const p=S.pl[c.peer];if(!p)return;if(d.t==='in'){const a=p.in.a;p.in=d.i;p.in.a=p.in.a.map((v,k)=>v||a[k])}else if(d.t==='pick'&&S.st==='lobby'&&CH[d.c]){p.ch=d.c;p.skin=validSkinFor(d.s,d.c)?d.s:''}else if(d.t==='skin'&&S.st==='lobby'&&d.c===p.ch)p.skin=validSkinFor(d.s,d.c)?d.s:'';else if(d.t==='name'){const nm=cleanName(d.n);p.tt=String(d.tt||'').slice(0,20);if(nm){let f=nm,k=2;while(Object.values(S.pl).some(o=>o!==p&&o.name===f))f=nm.slice(0,12)+' '+k++;p.name=f}if(!p.cj){p.cj=1;chatSys(p.name+' joined')}}else if(d.t==='chat')chatHostPost(c.peer,d.m,d.k);else if(d.t==='ping')c.send({t:'pong',s:d.s});else if(d.t==='jpick'){jamPick(p,d.i|0)}else if(d.t==='vote'&&S.st==='up'&&d.i>=0&&d.i<3&&S.vcd==null&&!S.rev)S.votes[c.peer]=d.i});
   c.on('close',()=>{const lp=S.pl[c.peer];delete conns[c.peer];delete S.pl[c.peer];delete CHAT.rl[c.peer];if(lp&&lp.cj)chatSys(lp.name+' left');if(S.st==='fight'&&!alive().length&&nPl())S.st='over'})})};
  mk(0)}
-function joinRoom(id){if(typeof Peer==='undefined'){alert('Online play needs the PeerJS library, which could not load (offline or blocked).');scr='title';return}chatReset();host=false;scr='game';V=null;joinMsg='Connecting to room...';id=/^\d{6}$/.test(String(id).trim())?'bossrush-'+String(id).trim():id;peer=new Peer(undefined,PEER_CFG);me=null;
- peer.on('open',pid=>{me=pid;skinSyncChar='';conn=peer.connect(id,{reliable:true});conn.on('open',()=>{conn.send({t:'name',n:UNAME,tt:teq()});conn.send({t:'ping',s:performance.now()})});conn.on('data',d=>{if(d.t==='pong'){PING=Math.round(performance.now()-d.s)}else if(d.t==='full'){alert('Room is full or already in a run.');location.href=location.pathname}else if(d.t==='s'){V=d.s;procEv(d.s.ev||[]);syncLocalSkin()}else if(d.t==='chat'){chatRecv(d.e)}else if(d.t==='chathist'){chatHistIn(d.h)}else if(d.t==='sj'){const s=JSON.parse(d.j);V=s;procEv(s.ev||[]);syncLocalSkin()}});conn.on('close',()=>{joinMsg='Disconnected from host.';V=null});conn.on('error',()=>joinMsg='Connection error.')});
- peer.on('error',e=>{joinMsg=e&&e.type==='peer-unavailable'?'No room with that code.':'Could not reach that room.'})}
+/* ===== ONLINE JOIN SCREEN: progress, attract-mode backdrop, tips, and a diagnosis when joining fails ===== */
+const JSIG=(new URLSearchParams(location.search).get('signal')||'').trim().replace(/[^a-z0-9.-]/gi,'');
+function jPeerCfg(relayOnly){const c={config:{iceServers:PEER_CFG.config.iceServers.slice()}};if(relayOnly)c.config.iceTransportPolicy='relay';if(JSIG){c.host=JSIG;c.port=443;c.path='/';c.secure=true}return c}
+const JN={sess:0,raw:'',code:'',attempt:0,label:'',target:0,shown:0,fail:null,checks:{},log:[],t0:0,probe:null,signalOk:false,iceOk:false,hostOk:false,tip:0,tipT:0};
+const JTIPS=[
+ 'Terry: hold click for a rapid-fire money gun.',
+ 'Patrick: hold to charge a belly flop. A full charge is a BIG FLOP.',
+ 'Jameson: charge for 2.2s to summon a random minion: kamikaze, sword, bow or medkit.',
+ 'Bomb Barry: a full heat explosion does 2500 damage, but it costs him 10 HP, which is fatal.',
+ 'Zach: a thrown burger heals 15% HP. Knife Whirl hits everything nearby.',
+ 'Adrian: hit with the TIP of the whip for a CRACK (x1.5 damage).',
+ 'Press Enter or / to chat with your party. Press Esc to pause.',
+ 'Everyone picks a hero in the lobby. The host runs the fight for the group.',
+ 'Solo runs leave a ghost of your fastest clear to race against.'
+];
+const JWHY={
+ lib:{h:'Networking library did not load',b:'The multiplayer library comes from a public CDN (jsDelivr, then unpkg). This network is blocking or failing those requests.'},
+ signal:{h:'Cannot reach the matchmaking server',b:'The connection to the PeerJS signaling server was refused or timed out. Firewalls, proxies and content filters often block it.'},
+ room:{h:'No room with that code',b:'Nobody is hosting a room with that code right now. Check the 6 digits, or ask the host to make a new room.'},
+ ice:{h:'Matchmaking worked, but the link to the host failed',b:'A direct or relayed connection could not be set up. This usually means UDP traffic or the relay (TURN) servers are blocked.'},
+ host:{h:'Connected, but the host went quiet',b:'The link opened but the host never sent game state. They may have left, or the room is closing.'},
+ closed:{h:'Disconnected from the host',b:'The connection dropped during the run.'},
+ full:{h:'Room is full or already in a run',b:'Rooms have a player limit, and you cannot join once a fight has started.'},
+ browser:{h:'This browser cannot do online play',b:'WebRTC is not available here. Try a current version of Chrome, Edge, Firefox or Safari.'},
+ unknown:{h:'Something unexpected went wrong',b:'The networking layer reported an error the game does not recognize.'}
+};
+const JROWS=[['lib','Networking library'],['signal','Matchmaking server'],['ice','Link to host'],['host','Game state from host']];
+function jLog(m){JN.log.push('+'+((performance.now()-JN.t0)/1000).toFixed(1)+'s  '+m);if(JN.log.length>40)JN.log.shift()}
+function jGo(p,label){JN.target=Math.max(JN.target,p);if(label)JN.label=label}
+function jCheck(k,ok){JN.checks[k]=ok;jLog(k+': '+(ok?'ok':'failed'))}
+function jFail(kind,detail){
+ if(JN.fail)return;
+ JN.fail={kind,detail:detail||''};
+ jLog('FAILED: '+kind+(detail?' ('+detail+')':''));
+ const stage={lib:'lib',signal:'signal',browser:'signal',ice:'ice',room:'ice',host:'host',closed:'host'}[kind];
+ if(stage&&JN.checks[stage]===undefined)JN.checks[stage]=false;
+ V=null;joinMsg='';
+ const c=conn,p=peer;conn=null;peer=null;
+ try{if(c)c.close()}catch(e){}
+ try{if(p)p.destroy()}catch(e){}
+}
+function jProbe(){
+ const p={done:false,host:0,srflx:0,relay:0,relayTcp:0,err:''};JN.probe=p;
+ let pc=null;const fin=()=>{if(p.done)return;p.done=true;try{if(pc)pc.close()}catch(e){}};
+ try{
+  pc=new RTCPeerConnection(jPeerCfg(false).config);
+  pc.createDataChannel('probe');
+  pc.onicecandidate=e=>{if(!e.candidate){fin();return}const c=e.candidate,ty=c.type||'';if(ty==='host'||ty==='srflx'||ty==='relay')p[ty]++;if(ty==='relay'&&c.protocol&&c.protocol!=='udp')p.relayTcp++};
+  pc.createOffer().then(o=>pc.setLocalDescription(o)).catch(er=>{p.err=(er&&er.name)||'error';fin()});
+  setTimeout(fin,7000);
+ }catch(er){p.err=(er&&er.name)||'unsupported';fin()}
+}
+function jProbeTxt(){
+ const p=JN.probe;
+ if(!p)return 'not run';
+ if(p.err)return 'could not run ('+p.err+')';
+ if(!p.done)return 'still running';
+ return 'local '+p.host+', public '+p.srflx+', relay '+p.relay+(p.relayTcp?' (TCP/TLS '+p.relayTcp+')':'');
+}
+function jHint(){
+ const p=JN.probe;
+ if(!p||!p.done||p.err)return '';
+ if(!p.srflx&&!p.relay)return 'No public or relay addresses could be found. UDP looks blocked, so direct links cannot form.';
+ if(!p.relay)return 'Public addresses were found, but no TURN relay responded. Links that need relaying will fail here.';
+ return '';
+}
+function jReport(){
+ const ck=k=>JN.checks[k]===true?'ok':JN.checks[k]===false?'failed':'not reached';
+ return ['Boss Rush join report',
+  'Room: '+JN.code,
+  'Attempt: '+(JN.attempt+1)+(JN.attempt?' (relay-only)':''),
+  'Result: '+(JN.fail?JN.fail.kind+(JN.fail.detail?' ('+JN.fail.detail+')':''):'connected'),
+  'Library: '+ck('lib'),'Matchmaking: '+ck('signal'),'Host link: '+ck('ice'),'Game state: '+ck('host'),
+  'Network probe: '+jProbeTxt(),
+  'Signaling: '+(JSIG||'default PeerJS cloud'),
+  'Browser: '+navigator.userAgent,
+  '','Log:'].concat(JN.log).join('\n');
+}
+function jCopy(){const txt=jReport();if(navigator.clipboard)navigator.clipboard.writeText(txt).catch(()=>prompt('Copy report:',txt));else prompt('Copy report:',txt)}
+function jCancel(){JN.sess++;JN.fail=null;leaveToTitle()}
+
+function joinRoom(id,attempt){
+ attempt=attempt|0;
+ const sess=++JN.sess;
+ const raw=String(id==null?'':id).trim();
+ const code=/^\d{6}$/.test(raw)?'bossrush-'+raw:raw;
+ Object.assign(JN,{raw:id,attempt,code:raw.replace(/^bossrush-/,''),label:'Starting',target:4,shown:0,fail:null,checks:{},log:[],t0:performance.now(),signalOk:false,iceOk:false,hostOk:false});
+ chatReset();host=false;scr='game';V=null;joinMsg='';me=null;
+ jLog('Attempt '+(attempt+1)+(attempt?' (relay-only)':''));
+ jProbe();
+ if(typeof Peer==='undefined'){jCheck('lib',false);jFail('lib');return}
+ jCheck('lib',true);
+ jGo(12,'Reaching matchmaking server');
+ try{peer=new Peer(undefined,jPeerCfg(attempt>0))}catch(e){jFail('browser',e&&e.message);return}
+ const sigTimer=setTimeout(()=>{if(sess===JN.sess&&!JN.fail&&!JN.signalOk)jFail('signal','timeout')},12000);
+ peer.on('open',pid=>{
+  if(sess!==JN.sess||JN.fail)return;
+  clearTimeout(sigTimer);JN.signalOk=true;jCheck('signal',true);
+  me=pid;jGo(35,'Opening a link to the host');
+  const c=peer.connect(code,{reliable:true});conn=c;
+  const iceTimer=setTimeout(()=>{if(sess===JN.sess&&!JN.fail&&!JN.iceOk)jFail('ice','timeout')},20000);
+  c.on('open',()=>{
+   if(sess!==JN.sess||JN.fail)return;
+   clearTimeout(iceTimer);JN.iceOk=true;jCheck('ice',true);
+   jGo(60,'Waiting for the host');
+   setTimeout(()=>{if(sess===JN.sess&&!JN.fail&&!JN.hostOk)jFail('host','timeout')},12000);
+   c.send({t:'name',n:UNAME,tt:teq()});c.send({t:'ping',s:performance.now()});
+  });
+  c.on('data',d=>{
+   if(sess!==JN.sess||JN.fail)return;
+   if(d.t==='pong'){PING=Math.round(performance.now()-d.s)}
+   else if(d.t==='full'){jFail('full')}
+   else if(d.t==='s'||d.t==='sj'){
+    if(!JN.hostOk){JN.hostOk=true;jCheck('host',true);jGo(100,'Joined')}
+    if(d.t==='s'){V=d.s;procEv(d.s.ev||[])}
+    else{const s=JSON.parse(d.j);V=s;procEv(s.ev||[])}
+    syncLocalSkin();
+   }
+   else if(d.t==='chat'){chatRecv(d.e)}
+   else if(d.t==='chathist'){jGo(80,'Syncing chat');chatHistIn(d.h)}
+  });
+  c.on('close',()=>{if(sess!==JN.sess||JN.fail)return;jFail(JN.hostOk?'closed':JN.iceOk?'host':'ice')});
+  c.on('error',()=>{if(sess!==JN.sess||JN.fail)return;jFail(JN.iceOk?'closed':'ice')});
+ });
+ peer.on('error',e=>{
+  if(sess!==JN.sess||JN.fail)return;
+  const t=(e&&e.type)||'';
+  if(t==='peer-unavailable')jFail('room');
+  else if(t==='browser-incompatible')jFail('browser');
+  else if(t==='webrtc')jFail('ice',(e&&e.message)||'');
+  else if(!JN.signalOk&&/network|server|socket|ssl|disconnect|id/.test(t))jFail('signal',t);
+  else if(!V)jFail('unknown',t);
+  else jLog('peer error: '+t);
+ });
+}
+
+/* ----- Attract-mode backdrop: a simulated fight the joiner watches while waiting ----- */
+const JA={b:[],p:[],fx:[],tb:0,th:0,cyc:0,bossHp:1,heroHp:1,shake:0};
+function jSpark(x,y,c){for(let i=0;i<9;i++){const a=Math.random()*PI*2,v=60+Math.random()*180;JA.fx.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:.4+Math.random()*.3,c})}}
+function jAttract(t,dt){
+ const d=Math.min(.05,dt||0);
+ JA.cyc+=d;
+ if(JA.cyc>16){JA.cyc=0;JA.bossHp=1;JA.heroHp=1;JA.b=[];JA.p=[];JA.tb=0;JA.th=0}
+ const hx=640+Math.sin(t*.75)*90,hy=H*.64+Math.sin(t*2.1)*8;
+ const bx=820+Math.sin(t*.42)*35,by=H*.37+Math.cos(t*.61)*30;
+ JA.tb+=d;JA.th+=d;
+ if(JA.th>.3){JA.th=0;const a=Math.atan2(by-hy,bx-hx);JA.p.push({x:hx+Math.cos(a)*28,y:hy+Math.sin(a)*28,a,life:1.1})}
+ if(JA.tb>1.7){JA.tb=0;const base=Math.atan2(hy-by,hx-bx);for(let i=-2;i<=2;i++)JA.b.push({x:bx,y:by,a:base+i*.2,life:3.5})}
+ JA.p.forEach(p=>{p.x+=Math.cos(p.a)*520*d;p.y+=Math.sin(p.a)*520*d;p.life-=d});
+ JA.b.forEach(p=>{p.x+=Math.cos(p.a)*230*d;p.y+=Math.sin(p.a)*230*d;p.life-=d});
+ JA.p=JA.p.filter(p=>{
+  if(p.life<=0||p.x>W+20||p.x<-20||p.y<-20||p.y>H+20)return false;
+  if(Math.hypot(p.x-bx,p.y-by)<62){JA.bossHp=Math.max(0,JA.bossHp-.035);jSpark(p.x,p.y,'255,211,74');return false}
+  return true});
+ JA.b=JA.b.filter(p=>{
+  if(p.life<=0||p.x<-20||p.x>W+20||p.y<-20||p.y>H+20)return false;
+  if(Math.hypot(p.x-hx,p.y-hy)<24){JA.heroHp=Math.max(0,JA.heroHp-.08);JA.shake=.25;jSpark(p.x,p.y,'255,90,122');return false}
+  return true});
+ JA.heroHp=Math.min(1,JA.heroHp+d*.03);
+ JA.fx.forEach(f=>{f.x+=f.vx*d;f.y+=f.vy*d;f.vx*=.92;f.vy*=.92;f.life-=d});
+ JA.fx=JA.fx.filter(f=>f.life>0);
+ if(JA.shake>0)JA.shake=Math.max(0,JA.shake-d*1.5);
+
+ const hz=H*.55;
+ g.save();
+ if(JA.shake>0){const s=JA.shake*8;g.translate((Math.random()-.5)*s,(Math.random()-.5)*s)}
+ const bgG=g.createLinearGradient(0,0,0,H);bgG.addColorStop(0,'#1c1240');bgG.addColorStop(.55,'#0d0b20');bgG.addColorStop(1,'#04050a');
+ g.fillStyle=bgG;g.fillRect(-20,-20,W+40,H+40);
+ const hzG=g.createRadialGradient(700,hz,10,700,hz,430);hzG.addColorStop(0,'rgba(255,60,110,.25)');hzG.addColorStop(1,'rgba(255,60,110,0)');
+ g.fillStyle=hzG;g.fillRect(0,0,W,H);
+ g.strokeStyle='rgba(120,150,255,.16)';g.lineWidth=1;
+ const off=(t*.5)%1;
+ for(let k=0;k<12;k++){const y=hz+Math.pow((k+off)/12,2)*(H-hz);g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}
+ for(let j=-12;j<=12;j++){g.beginPath();g.moveTo(700,hz);g.lineTo(700+j*130,H);g.stroke()}
+
+ // shadows
+ g.fillStyle='rgba(0,0,0,.4)';
+ g.beginPath();g.ellipse(bx,by+64,60,10,0,0,PI*2);g.fill();
+ // boss
+ const pulse=1+.04*Math.sin(t*5);
+ const bglow=g.createRadialGradient(bx,by,10,bx,by,110);bglow.addColorStop(0,'rgba(255,60,90,.35)');bglow.addColorStop(1,'rgba(255,60,90,0)');
+ g.fillStyle=bglow;g.beginPath();g.arc(bx,by,110,0,PI*2);g.fill();
+ const bb=g.createRadialGradient(bx-16,by-18,6,bx,by,58*pulse);bb.addColorStop(0,'#ff8fa6');bb.addColorStop(.6,'#c2375a');bb.addColorStop(1,'#5a0f26');
+ g.fillStyle=bb;g.beginPath();g.arc(bx,by,58*pulse,0,PI*2);g.fill();
+ const ea=Math.atan2(hy-by,hx-bx);
+ [-18,18].forEach(ox=>{const ex=bx+ox,ey=by-10;g.fillStyle='#fff';g.beginPath();g.ellipse(ex,ey,11,13,0,0,PI*2);g.fill();g.fillStyle='#1a0510';g.beginPath();g.arc(ex+Math.cos(ea)*5,ey+Math.sin(ea)*5,5,0,PI*2);g.fill()});
+ g.strokeStyle='#2a0612';g.lineWidth=4;g.beginPath();g.arc(bx,by+18,16,.15*PI,.85*PI);g.stroke();
+ // hero
+ const bob=Math.abs(Math.sin(t*9))*4;
+ g.fillStyle='rgba(0,0,0,.4)';g.beginPath();g.ellipse(hx,hy+26,22,6,0,0,PI*2);g.fill();
+ const hglow=g.createRadialGradient(hx,hy-bob,4,hx,hy-bob,34);hglow.addColorStop(0,'rgba(120,220,255,.5)');hglow.addColorStop(1,'rgba(120,220,255,0)');
+ g.fillStyle=hglow;g.beginPath();g.arc(hx,hy-bob,34,0,PI*2);g.fill();
+ g.fillStyle='#4fb6ff';g.beginPath();g.arc(hx,hy-bob,20,0,PI*2);g.fill();
+ g.fillStyle='#e8f6ff';g.beginPath();g.arc(hx+4,hy-bob-6,7,0,PI*2);g.fill();
+ const ga=Math.atan2(by-hy,bx-hx);
+ g.strokeStyle='#dfe8ff';g.lineWidth=5;g.lineCap='round';g.beginPath();g.moveTo(hx+Math.cos(ga)*14,hy-bob+Math.sin(ga)*14);g.lineTo(hx+Math.cos(ga)*30,hy-bob+Math.sin(ga)*30);g.stroke();
+ g.lineCap='butt';
+ // projectiles
+ JA.p.forEach(p=>{g.fillStyle='rgba(255,211,74,.9)';g.beginPath();g.arc(p.x,p.y,5,0,PI*2);g.fill()});
+ JA.b.forEach(p=>{const gg=g.createRadialGradient(p.x,p.y,1,p.x,p.y,12);gg.addColorStop(0,'#fff');gg.addColorStop(.3,'#ff5a7a');gg.addColorStop(1,'rgba(255,40,80,0)');g.fillStyle=gg;g.beginPath();g.arc(p.x,p.y,12,0,PI*2);g.fill()});
+ // sparks
+ JA.fx.forEach(f=>{g.globalAlpha=Math.max(0,Math.min(1,f.life*2));g.fillStyle='rgb('+f.c+')';g.fillRect(f.x,f.y,3,3)});
+ g.globalAlpha=1;
+ // health bars
+ g.fillStyle='rgba(255,255,255,.1)';g.fillRect(500,22,400,10);
+ g.fillStyle='#e0455f';g.fillRect(500,22,400*JA.bossHp,10);
+ T('BOSS',500,14,11,'#ffb3c1','left');
+ g.fillStyle='rgba(255,255,255,.1)';g.fillRect(hx-30,hy-bob-44,60,6);
+ g.fillStyle='#5ff0c8';g.fillRect(hx-30,hy-bob-44,60*JA.heroHp,6);
+ g.restore();
+}
+
+/* ----- Join screen: loading state and diagnosis state ----- */
+function jWrap(s,cx,y,maxW,sz,col,lh){
+ g.font='bold '+sz+'px monospace';g.fillStyle=col;g.textAlign='center';g.textBaseline='middle';
+ const lines=[];let line='';
+ String(s).split(' ').forEach(w=>{const test=line?line+' '+w:w;if(line&&g.measureText(test).width>maxW){lines.push(line);line=w}else line=test});
+ if(line)lines.push(line);
+ lines.forEach((l,i)=>g.fillText(l,cx,y+i*lh));
+ return y+lines.length*lh;
+}
+function jRow(k,l,px,y){
+ const ok=JN.checks[k];
+ const tag=ok===true?'[ OK ]':ok===false?'[FAIL]':'[ .. ]';
+ T(tag,px+30,y,12,ok===true?'#7fe39a':ok===false?'#ff7a7a':'#6b7796','left');
+ T(l,px+100,y,12,ok===true?'#e6edff':'#9aa6c4','left');
+ return y+22;
+}
+function jDrawLoading(px,py,pw,ph,t){
+ const cx=px+pw/2;
+ T('JOINING ROOM',cx,py+34,20,'#8fd8ff','center');
+ T('ROOM '+JN.code+(JN.attempt?' | ATTEMPT '+(JN.attempt+1)+' (RELAY-ONLY)':''),cx,py+60,11,'#7d8aa8','center');
+ const sx=px+34,sy=py+106;
+ g.strokeStyle='rgba(143,216,255,.2)';g.lineWidth=4;g.beginPath();g.arc(sx,sy,10,0,PI*2);g.stroke();
+ g.strokeStyle='#8fd8ff';g.beginPath();g.arc(sx,sy,10,t*6,t*6+1.6);g.stroke();
+ T(JN.label||'Working...',px+56,sy,14,'#fff','left');
+ const bx=px+30,by=py+132,bw=pw-60,bh=16;
+ g.fillStyle='rgba(255,255,255,.08)';rr(bx,by,bw,bh,8);g.fill();
+ const fw=Math.max(0,Math.min(1,JN.shown/100))*bw;
+ if(fw>bh){const gr=g.createLinearGradient(bx,0,bx+bw,0);gr.addColorStop(0,'#2a6cff');gr.addColorStop(1,'#5ff0c8');g.fillStyle=gr;rr(bx,by,fw,bh,8);g.fill()}
+ T(Math.round(JN.shown)+'%',cx,by+bh+16,12,'#c8d6f0','center');
+ let y=py+200;
+ JROWS.forEach(([k,l])=>{y=jRow(k,l,px,y)});
+ T('Network probe: '+jProbeTxt(),cx,py+ph-100,10,'#7d8aa8','center');
+ btn(cx-70,py+ph-58,140,34,'CANCEL',jCancel,{c:'#5a2b35',f:13});
+}
+function jDrawFail(px,py,pw,ph){
+ const cx=px+pw/2,why=JWHY[JN.fail.kind]||JWHY.unknown;
+ T("COULDN'T JOIN ROOM",cx,py+34,20,'#ff8a8a','center');
+ T('ROOM '+JN.code+(JN.attempt?' | ATTEMPT '+(JN.attempt+1):''),cx,py+60,11,'#7d8aa8','center');
+ T(why.h,cx,py+94,15,'#ffd27a','center');
+ let body=why.b;
+ if(JN.fail.kind==='signal'&&!JSIG)body+=' Hosting your own signaling server? Add ?signal=your-host to the link.';
+ let y=jWrap(body,cx,py+118,pw-60,11,'#c8d0e6',15);
+ const hint=jHint();
+ if(hint)y=jWrap(hint,cx,y+6,pw-60,11,'#9fd0ff',15);
+ y=Math.max(y+14,py+232);
+ JROWS.forEach(([k,l])=>{y=jRow(k,l,px,y)});
+ T('Network probe: '+jProbeTxt(),cx,py+ph-100,10,'#7d8aa8','center');
+ const by=py+ph-58;
+ btn(px+30,by,120,34,'TRY AGAIN',()=>joinRoom(JN.raw,JN.attempt+1),{c:'#2a6cff',f:13});
+ btn(px+160,by,130,34,'COPY REPORT',jCopy,{c:'#2a4f9a',f:12});
+ btn(px+300,by,100,34,'BACK',jCancel,{c:'#3a3f55',f:13});
+}
+function drawJoin(now,dt){
+ const t=now/1000,d=dt||0;
+ JN.shown+=(JN.target-JN.shown)*Math.min(1,d*3);
+ JN.tipT+=d;if(JN.tipT>5){JN.tipT=0;JN.tip=(JN.tip+1)%JTIPS.length}
+ jAttract(t,d);
+ const px=36,py=50,pw=430,ph=395;
+ g.save();g.shadowColor='rgba(60,140,255,.3)';g.shadowBlur=24;g.fillStyle='rgba(10,13,26,.9)';rr(px,py,pw,ph,16);g.fill();g.restore();
+ g.strokeStyle='rgba(120,180,255,.35)';g.lineWidth=2;rr(px,py,pw,ph,16);g.stroke();
+ if(JN.fail)jDrawFail(px,py,pw,ph);else jDrawLoading(px,py,pw,ph,t);
+ g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,H-70,W,70);
+ T('TIP',W/2,H-60,11,'#7fd8ff','center');
+ jWrap(JTIPS[JN.tip],W/2,H-42,860,14,'#e6edff',17);
+ for(let i=0;i<JTIPS.length;i++){g.fillStyle=i===JN.tip?'#8fd8ff':'rgba(255,255,255,.2)';g.beginPath();g.arc(W/2+(i-(JTIPS.length-1)/2)*12,H-14,3,0,PI*2);g.fill()}
+}
+
+
 // ===== CHAT (online lobby + in-game) =====
 // The host is the only authority. Clients send {t:'chat',m,k}; the host cleans the text, rate-limits it, stamps the real
 // sender id and name, then relays {t:'chat',e} to everyone. Text is typed into a hidden <input> (so paste, selection and
@@ -4685,7 +4967,7 @@ function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];if(S&&host&
  if(scr==='boards'){drawBoards(now);return}
  if(scr==='shop'){WM='title';music('title');drawShop(now);return}
  if(scr==='ach'){WM='title';music('title');drawAch(now);return}
- if(!V){g.fillStyle='#10141f';g.fillRect(0,0,W,H);T(joinMsg||'Loading...',W/2,H/2,22,'#fff','center');return}
+ if(!V){drawJoin(now,dt);return}
  const v=V,st=v.st;if(v.set&&(v.set.rush|0)!==c17Mode)setRush(v.set.rush|0);
  if(st==='lobby'){WM='title';music('title');drawLobby();if(skinPickOpen)drawSkinPicker(now);return}
  const cut=st==='cut';cutT=cut?cutT+dt:0;
