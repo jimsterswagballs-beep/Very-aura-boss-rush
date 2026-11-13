@@ -4105,6 +4105,12 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'park-shafiq-join',title:'The Park, Shafiq and a Better Join Screen',date:'Nov 13, 2026',sub:'Two new skins, a live join screen and clearer online join diagnostics.',items:[
+  ['NEW','The Park skin for Jameson Lee Cooper (Legendary, 500 Zach Coins): Cartman is Jameson, Kyle is the sword minion, Stan is the bow minion and Kenny is the kamikaze minion.'],
+  ['NEW','Shafiq skin for Bomb Barry (Common, 120 Zach Coins). Shafiq is used for every Bomb Barry pose, and his thrown bomb.'],
+  ['NEW','The join screen is now a live fight: the real boss arenas, bosses, heroes and attack art, with a boss preview, a progress bar and rotating tips.'],
+  ['NEW','If joining fails, a diagnosis shows which step failed (library, matchmaking, link to host or game state), a network probe, a TRY AGAIN button and COPY REPORT to send to someone helping you.'],
+  ['CHANGED','Online joins add a TLS relay fallback (port 443), retry in relay-only mode, and support ?signal=your-host to use your own matchmaking server.']]},
  {id:'fella-remake',title:'Fella Remake',date:'Nov 11, 2026',sub:'Boss 6 now has outs and a tagged-out damage window.',items:[
   ['NEW','Fella gets winded after his slide, slam and homer if you dodge them: TAGGED OUT, he takes +40% damage. Each one is an out on the scoreboard, and THREE OUTS leaves him exposed for much longer.'],
   ['NEW','Run the Bases: the diamond bases blow up in sequence. Pickoff: a fast throw down a lane at every player.']]},
