@@ -21,7 +21,7 @@ try{const DATA_VER='2026-11-10-reset-2';if(localStorage.getItem('zub_dataver')!=
 window.addEventListener('error',e=>{let d=document.getElementById('err');if(!d){d=document.createElement('pre');d.id='err';d.style.cssText='position:fixed;left:0;top:0;right:0;margin:0;padding:8px;background:#600;color:#fff;font:12px monospace;z-index:9;white-space:pre-wrap';document.body.appendChild(d)}d.textContent='Game error: '+e.message+' (line '+e.lineno+')\n'+d.textContent});
 const W=960,H=540,cv=document.getElementById('c'),g=cv.getContext('2d');cv.width=W;cv.height=H;g.imageSmoothingEnabled=false;
 let R=Math.random,PI=Math.PI,rnd=(a,b)=>a+R()*(b-a),cl=(v,a,b)=>Math.max(a,Math.min(b,v)),dist=(a,b,c,d)=>Math.hypot(a-c,b-d),sideOfLane=i=>i%2?W-12:12;
-const F={start:'startbutton.png',bbi1:'Bomb_barry_idle1.png',bbi2:'Bomb_barry_idle2.png',bbw1:'Bomb_barry_walk1.png',bbw2:'Bomb_barry_walk2.png',jmi1:'jameson_character_idle1.png',jmi2:'jameson_character_idle2.png',jmw1:'jameson_character_walk1.png',jmw2:'jameson_character_walk2.png',jmKami:'jameson_creation_3_kamikaze.png',jmBow:'jameson_creation_2.png',jmSword:'Jameson_creation.png',jmMed:'jameson_creation_4_medkit.png',jmWSword:'creation_weapon_sword.png',jmWBow:'creation_weapon_bow.png',jmArrow:'creation_weapon_arrow.png',jmWMed:'creation_weapon_medkit.png',adi1:'Adrian character idle1.png',adi2:'Adrian character idle2.png',adw1:'Adrian character walk1.png',adw2:'Adrian character walk2.png',adboom:'Adrian boomerang.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png',pi1:'Patrick character idle1.png',pi2:'Patrick character idle2.png',pw1:'Patrick character walk1.png',pw2:'Patrick character walk2.png',prock:'Patrick rock.png',pyoink:'SpongeBob (yoink).png',cg17a:'coolguy17.png',cg17b:'coolguy17_rematch.png',cg17c:'coolguy17_Second_Last_encounter.png',cgWomanI1:'woman skin Coolguy15 idle1.png',cgWomanI2:'woman skin Coolguy15 idle2.png',cgWomanW1:'woman skin Coolguy15 walk1.png',cgWomanW2:'woman skin Coolguy15 walk2.png',cgBaldI1:'bald skin Coolguy15 idle1.png',cgBaldI2:'bald skin Coolguy15 idle2.png',cgBaldW1:'bald skin Coolguy15 walk1.png',cgBaldW2:'bald skin Coolguy15 walk2.png',cgNotCoolI1:'Not so cool skin Coolguy15 idle1.png',cgNotCoolI2:'Not so cool skin Coolguy15 idle2.png',cgNotCoolW1:'Not so cool skin Coolguy15 walk1.png',cgNotCoolW2:'Not so cool skin Coolguy15 walk2.png',cgBootlegI1:'bootleg skin coolguy15 idle1.png',cgBootlegI2:'bootleg skin coolguy15 idle2.png',cgBootlegW1:'bootleg skin coolguy15 walk1.png',cgBootlegW2:'bootleg skin coolguy15 walk2.png',zRiceI1:'rice skin Zach character idle1.png',zRiceI2:'rice skin Zach character idle2.png',zRiceW1:'rice skin Zach character walk.png',zRiceW2:'rice skin Zach character walk2.png',zEvilI1:'evil skin Zach character idle1.png',zEvilI2:'evil skin Zach character idle2.png',zEvilW1:'evil skin Zach character walk.png',zEvilW2:'evil skin Zach character walk2.png',tDiceI1:'dice skin Terry Plungle Yungle idle 1.png',tDiceI2:'dice skin Terry Plungle Yungle idle 2.png',tDiceW1:'dice skin Terry Plungle Yungle walk1.png',tDiceW2:'dice skin Terry Plungle Yungle walk2.png',jaySolidI1:'solid skin jay idle1.png',jaySolidI2:'solid skin jay idle2.png',jaySolidW1:'solid skin jay walk1.png',jaySolidW2:'solid skin jay walk2.png',darrel:'darrel_boss_8.png',dIpad:'Darrel_attack_Ipad.png',dHappy:'Darrel_attack_Happy_face.png',dLoli:'Darrel_attack_lolipop.png',parkCartman:'park_cartman.png',parkKyle:'park_kyle.png',parkStan:'park_stan.png',parkKenny:'park_kenny.png',shafiq:'shafiq.png'};
+const F={start:'startbutton.png',bbi1:'Bomb_barry_idle1.png',bbi2:'Bomb_barry_idle2.png',bbw1:'Bomb_barry_walk1.png',bbw2:'Bomb_barry_walk2.png',jmi1:'jameson_character_idle1.png',jmi2:'jameson_character_idle2.png',jmw1:'jameson_character_walk1.png',jmw2:'jameson_character_walk2.png',jmKami:'jameson_creation_3_kamikaze.png',jmBow:'jameson_creation_2.png',jmSword:'Jameson_creation.png',jmMed:'jameson_creation_4_medkit.png',jmWSword:'creation_weapon_sword.png',jmWBow:'creation_weapon_bow.png',jmArrow:'creation_weapon_arrow.png',jmWMed:'creation_weapon_medkit.png',adi1:'Adrian character idle1.png',adi2:'Adrian character idle2.png',adw1:'Adrian character walk1.png',adw2:'Adrian character walk2.png',adboom:'Adrian boomerang.png',dm1:'Mason Dark 1 (secret boss 8).png',dm2:'Mason Dark 2 (secret boss 8).png',b7ghost:'Ghost (boss 7).png',b7twig:'Twig (boss 7).png',b7bug:'Bug (boss 7).png',b7ruler:'Ruler (boss 7).png',will:'Will (boss 7).png',jackson:'Jackson (boss 7).png',mason:'Mason (boss 7).png',cgi1:'Coolguy15 idle1.png',cgi2:'Coolguy15 idle2.png',cgw1:'Coolguy15 walk1.png',cgw2:'Coolguy15 walk2.png',gun:'gun.png',bul:'Bullet.png',brick:'Brick.png',zi1:'Zach character idle1.png',zi2:'Zach character idle2.png',zw1:'Zach character walk.png',zw2:'Zach character walk2.png',burger:'burger.png',knife:'knife.png',xlb:'xiao long bao (first boss).png',ucg:'UnCoolguy16 (boss 2).png',dump:'dumpling attack (boss 1).png',chop:'chopstick attack (boss 1).png',egun:'Evil gun (boss 2).png',ebul:'Evil bullet (boss 2).png',pipe:'Metal Pipe (boss 2).png',sp1:'Evil Spong (boss 3 phase 1).png',sp2:'Evil Spong (boss 3 phase 2).png',sp3:'Evil Spong (boss 3 phase 3).png',laser3:'Laser(boss 3).png',jelly:'Jellyfish (boss 3).png',spat:'Spactula (boss 3).png',bubble3:'Bubble (boss 3).png',ez:'Evil zach (boss 5).png',eknife:'evil knife.png',cactus:'Cactus (boss 2).png',ezUlt:'evil zach (ultimate attack).png',fella:'Fella (boss 6).png',minion:'Minion(boss 6).png',sauce:'tomato sauce(boss 6).png',bat:'Baseball bat(boss 6).png',ji1:'Jay character idle1.png',ji2:'Jay character idle2.png',ji3:'Jay character idle3.png',jw2:'Jay character walk2.png',jmelon:'person1melon.png',tI1:'Terry character idle1.png',tI2:'Terry character idle2.png',tW1:'Terry character walk1.png',tW2:'Terry character walk2.png',tgun:'Terry gun.png',tmoney:'Terry money.png',tcoin:'Terry coin.png',tcase:'Terry briefcase.png',jw1:'Jay character walk1.png',jpan:'Jay pan.png',jbox:'Jay box.png',jf1:'Jay food orange.png',jf2:'Jay food sausage.png',jf3:'Jay food pizza.png',jf4:'Jay food egg.png',jf5:'Jay food extra.png',pi1:'Patrick character idle1.png',pi2:'Patrick character idle2.png',pw1:'Patrick character walk1.png',pw2:'Patrick character walk2.png',prock:'Patrick rock.png',pyoink:'SpongeBob (yoink).png',cg17a:'coolguy17.png',cg17b:'coolguy17_rematch.png',cg17c:'coolguy17_Second_Last_encounter.png',cgWomanI1:'woman skin Coolguy15 idle1.png',cgWomanI2:'woman skin Coolguy15 idle2.png',cgWomanW1:'woman skin Coolguy15 walk1.png',cgWomanW2:'woman skin Coolguy15 walk2.png',cgBaldI1:'bald skin Coolguy15 idle1.png',cgBaldI2:'bald skin Coolguy15 idle2.png',cgBaldW1:'bald skin Coolguy15 walk1.png',cgBaldW2:'bald skin Coolguy15 walk2.png',cgNotCoolI1:'Not so cool skin Coolguy15 idle1.png',cgNotCoolI2:'Not so cool skin Coolguy15 idle2.png',cgNotCoolW1:'Not so cool skin Coolguy15 walk1.png',cgNotCoolW2:'Not so cool skin Coolguy15 walk2.png',cgBootlegI1:'bootleg skin coolguy15 idle1.png',cgBootlegI2:'bootleg skin coolguy15 idle2.png',cgBootlegW1:'bootleg skin coolguy15 walk1.png',cgBootlegW2:'bootleg skin coolguy15 walk2.png',zRiceI1:'rice skin Zach character idle1.png',zRiceI2:'rice skin Zach character idle2.png',zRiceW1:'rice skin Zach character walk.png',zRiceW2:'rice skin Zach character walk2.png',zEvilI1:'evil skin Zach character idle1.png',zEvilI2:'evil skin Zach character idle2.png',zEvilW1:'evil skin Zach character walk.png',zEvilW2:'evil skin Zach character walk2.png',tDiceI1:'dice skin Terry Plungle Yungle idle 1.png',tDiceI2:'dice skin Terry Plungle Yungle idle 2.png',tDiceW1:'dice skin Terry Plungle Yungle walk1.png',tDiceW2:'dice skin Terry Plungle Yungle walk2.png',jaySolidI1:'solid skin jay idle1.png',jaySolidI2:'solid skin jay idle2.png',jaySolidW1:'solid skin jay walk1.png',jaySolidW2:'solid skin jay walk2.png',darrel:'darrel_boss_8.png',dIpad:'Darrel_attack_Ipad.png',dHappy:'Darrel_attack_Happy_face.png',dLoli:'Darrel_attack_lolipop.png',parkCartman:'park_cartman.png',parkKyle:'park_kyle.png',parkStan:'park_stan.png',parkKenny:'park_kenny.png',shafiq:'shafiq.png',parkButters:'park_butters.png'};
 const MUS={title:'Monk Cartman Throat Singing Extended Version (title screen).mp3',m1:'Cheese Crusade V2 (boss 1).mp3',m2:'The guy(Boss 2).mp3',m3:'SpongeSwap - Hell Or High Water_Phase 2 (boss 3).mp3',m4:'Pyrosomni (boss 4).mp3',surv:'Timebomb Madness OST - Overdue - blocco (boss 4.5).mp3',m5:'SpongeBob SquarePants SuperSponge - Vs. Patrick (boss 5).mp3',m6:'Vs. Randy boss 6.mp3',m7:'Suffocate_In_Dust_II_boss_7.mp3',m8:'Hateful_Doom_secret_boss_8.mp3',c1:'Icicle_Ignition_II_coolguy17.mp3',c2:'BIG_MISTAKE_coolguy17_rematch.mp3',c3:'Pancake_Pandemonium_Coolguy17_second_last_encounter.mp3',c3last:'-_PAN_FRIED_PIZZA_coolguy17_second_last_encounter_last_stand.mp3',m9:'POWERSCALING_Boss_8.mp3',m10:'COVER_Vs_Patrick_Boss_9.mp3'};
 // Ghost races (solo): your fastest clear of every boss (per hero and difficulty) is kept and replayed as a ghost player AND a ghost boss.
 const GKEY='zub_ghost3',GH={cur:null,gf:null};let GHP={};
@@ -46,7 +46,7 @@ const SKINS=[
  {id:'zach-evil',name:'Evil Zach',ch:'zach',price:0,i:['zEvilI1','zEvilI2'],w:['zEvilW1','zEvilW2']},
  {id:'terry-dice',name:'Dice',ch:'terry',price:444,i:['tDiceI1','tDiceI2'],w:['tDiceW1','tDiceW2']},
  {id:'jay-solid',name:'Solid Jay',ch:'jay',price:180,i:['jaySolidI1','jaySolidI2'],w:['jaySolidW1','jaySolidW2']},
- {id:'jam-park',name:'The Park',ch:'jam',price:500,i:['parkCartman','parkCartman'],w:['parkCartman','parkCartman']},
+ {id:'jam-park',name:'The Park',ch:'jam',price:500,sc:.75,i:['parkCartman','parkCartman'],w:['parkCartman','parkCartman']},
  {id:'bomb-shafiq',name:'Shafiq',ch:'bomb',price:120,i:['shafiq','shafiq'],w:['shafiq','shafiq']}
 ];
 SKINS.sort((a,b)=>a.price-b.price||a.name.localeCompare(b.name)); // cheapest first everywhere (shop + character select)
@@ -1024,7 +1024,7 @@ function stepAdrWorld(dt){
    =================================================================== */
 const JM={charge:2.2,recover:1,cap:8,hard:16,decay:8,odDur:7,slowDur:2,shield:10,r:17,K:['kami','sword','bow','med'],HP:{kami:15,sword:53,bow:45,med:38},COL:['#b06bff','#8fd0ff','#ffd98a','#7dffa0']};
 const JM_SPR=['jmKami','jmSword','jmBow','jmMed'];
-const JM_SKIN_SPR={'jam-park':['parkKenny','parkKyle','parkStan','jmMed']};
+const JM_SKIN_SPR={'jam-park':['parkKenny','parkKyle','parkStan','parkButters']};
 const jamSpr=(skin,k)=>(JM_SKIN_SPR[skin||'']||JM_SPR)[k];
 const jamMods=o=>o&&o.m?o.m:{dmg:1,pierce:0,multi:0,size:1};
 const jamCount=pid=>(S.jm||[]).filter(m=>m.pid===pid&&!m.dead&&!m.gone).length;
@@ -3179,8 +3179,13 @@ function drawFGC(dt){
  fgcButton(lx+10,rt+56,lw-20,26,'Clear upgrades',()=>{if(S){S.ups=[];Object.values(S.pl).forEach(p=>{applyMods(p);p.hp=Math.min(p.hp,p.max)});note('Upgrades cleared')}},{c:'#5a3a2a',hi:'#7a4e38',en:!!S,f:12});
  fgcButton(lx+10,rt+90,lw-20,26,'Kill boss',fgcKillBoss,{c:'#7a1f1f',hi:'#9a2a2a',en:!!(S&&S.st==='fight'&&S.bs),f:12});
  const kt=rt+144;
- fgcCard(lx,kt,lw,66,'KEYS');
- T('Esc  close this panel',lx+14,kt+40,11,'#aab3c4','left');
+ fgcCard(lx,kt,lw,120,'ZACH COINS');
+ T(String(PROFILE.coins|0),lx+14,kt+42,22,'#ffffff','left');
+ const bw2=(lw-30)/2;
+ fgcButton(lx+10,kt+58,bw2,26,'+100',()=>admGive(100),{c:'#2a6b3a',hi:'#378a4b',f:12});
+ fgcButton(lx+20+bw2,kt+58,bw2,26,'+1000',()=>admGive(1000),{c:'#2a6b3a',hi:'#378a4b',f:12});
+ fgcButton(lx+10,kt+88,bw2,26,'+10000',()=>admGive(10000),{c:'#2a6b3a',hi:'#378a4b',f:12});
+ fgcButton(lx+20+bw2,kt+88,bw2,26,'SET 0',()=>admSet(0),{c:'#6b2a2a',hi:'#8a3a3a',f:12});
  // Right column: boss selector, then upgrades with a hover description.
  fgcCard(rx,top,rw,70,'START BOSS');
  const nb=BD.length,cur=BD[FGC.boss];
@@ -4105,6 +4110,18 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'title-v2',title:'Title Screen Redesign',date:'Nov 13, 2026',sub:'A new title screen, a legacy option, Butters, and ghost resets.',items:[
+  ['NEW','The title screen has a boss trailer behind it: the boss arenas cycle, with a faint boss silhouette and mouse parallax.'],
+  ['NEW','The BOSS RUSH logo has a shine that sweeps across it, a slight wobble, and a hidden surprise if you click it five times.'],
+  ['NEW','Hero of the Day: a featured hero that changes each day. Click it to open that hero in the skin shop.'],
+  ['NEW','Last run card: shows your most recent run with a REPLAY link that starts a solo run at that boss.'],
+  ['NEW','Personal bests ticker along the bottom of the title screen, showing your fastest time for each boss.'],
+  ['NEW','Buttons lift when hovered and play a sound. You can also move between buttons with the arrow keys and press Enter.'],
+  ['NEW','Seasonal title screens: pumpkins in October, and snow in December and January.'],
+  ['NEW','A short intro plays the first time you open the game. Click or press any key to skip it.'],
+  ['NEW','Settings > Effects > Legacy Title Screen brings back the original title screen layout.'],
+  ['NEW','Settings > Effects > Saved Data > Reset Ghost Races deletes every saved ghost race. Your coins, skins and stats are kept.'],
+  ['CHANGED','The Park: Butters is now the medkit minion, and Jameson in The Park is 25% smaller.']]},
  {id:'park-shafiq-join',title:'The Park, Shafiq and a Better Join Screen',date:'Nov 13, 2026',sub:'Two new skins, a live join screen and clearer online join diagnostics.',items:[
   ['NEW','The Park skin for Jameson Lee Cooper (Legendary, 500 Zach Coins): Cartman is Jameson, Kyle is the sword minion, Stan is the bow minion and Kenny is the kamikaze minion.'],
   ['NEW','Shafiq skin for Bomb Barry (Common, 120 Zach Coins). Shafiq is used for every Bomb Barry pose, and his thrown bomb.'],
@@ -4206,7 +4223,179 @@ function drawUpdates(now){const t=now/1000;drawBackdrop(t);TS('UPDATE LOG',W/2,4
  btn(380,506,200,28,'BACK',()=>{scr='title'},{c:'#3a3f66',f:13})}
 
 const TITLE_TIPS=['Stand next to a downed teammate for 7.5 seconds to revive them.','Coolguy15 and Zach skins are free. Earn Zach Coins by beating bosses to buy the rest.','Press ESC at any time to open the pause menu and settings.','Hit a boss with the tip of the chain as Adrian for a CRACK.','Play the Daily Challenge: everyone gets the same seed each day.','Upgrades can stack. Two matching upgrades can form a synergy.','Check HISTORY for your finished runs and BOARDS for your best ones.'];
-function drawTitle(now){const t=now/1000;drawBackdrop(t);
+/* ----- Title screen v2. Settings > Effects > Legacy Title Screen brings back the original layout. ----- */
+const TINTRO_KEY='zub_intro_v2',TINTRO_LEN=3.2,TRAILER_BI=[0,1,2,3,4,5,6];
+const TV2={hover:-1,hn:-1,focus:0,btns:[],clicks:0,flash:0,intro:0,seen:false,last:0,tick:0};
+try{TV2.seen=localStorage.getItem(TINTRO_KEY)==='1'}catch(e){}
+// Button with hover lift, hover and click sounds, and a keyboard focus ring.
+function tbtn(x,y,w,h,l,fn,o){
+ o=o||{};const id=TV2.btns.length;TV2.btns.push({fn});
+ const hv=mx>=x&&mx<=x+w&&my>=y&&my<=y+h;
+ if(hv){TV2.hn=id;TV2.focus=id}
+ BT.push({x,y,w,h,fn:()=>{sfx('click');fn()}});
+ const foc=TV2.focus===id,lift=hv?-2:0;
+ g.save();if(hv||foc){g.shadowColor=o.c||'#ffffff';g.shadowBlur=hv?18:8}
+ g.fillStyle=o.c||'#256b36';rr(x,y+lift,w,h,10);g.fill();g.restore();
+ g.strokeStyle=foc?'#ffd34a':(hv?'#ffffff':'#bbbbbb');g.lineWidth=foc?3:2;rr(x,y+lift,w,h,10);g.stroke();
+ T(l,x+w/2,y+h/2+lift,o.f||14,'#ffffff','center');
+}
+// Logo: a bright shine sweeps across the letters only (drawn inside a moving clip band).
+function tLogo(t,ox,oy){
+ g.save();g.translate(304+ox,64+oy);
+ g.rotate(Math.sin(t*.6)*.008+(TV2.flash>0?Math.sin(TV2.flash*9)*.18:0));
+ g.shadowColor='#ffb347';g.shadowBlur=22+6*Math.sin(t*2);TS('BOSS RUSH',0,0,66,'#ffd34a');g.shadowBlur=0;
+ const bx=-430+((t*160)%900);
+ g.save();g.beginPath();g.rect(bx,-70,80,140);g.clip();TS('BOSS RUSH',0,0,66,'#ffffff');g.restore();
+ T('THE GRAND STEAMER',0,50,19,'#9fe8ff','center');
+ g.restore();
+ // hidden: five clicks on the logo
+ BT.push({x:150,y:18,w:310,h:82,fn:()=>{TV2.clicks++;if(TV2.clicks>=5){TV2.clicks=0;TV2.flash=2.2;sfx('upgrade');note('THE STEAMER APPROVES')}else sfx('blip')}});
+}
+// Background: a looping trailer through the boss arenas, a faint boss silhouette, and a vignette.
+function tTrailer(now,t,ox,oy){
+ const bi=TRAILER_BI[Math.floor(now/10000)%TRAILER_BI.length],B=BD[bi];
+ drawBg(bi,t);
+ spr(B.img,690+ox*1.6,300+oy*1.2+Math.sin(t*.8)*8,380,Math.sin(t*.4)*.04,1,1,.2);
+ const vg=g.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,H*.95);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.7)');
+ g.fillStyle=vg;g.fillRect(0,0,W,H);
+ return B;
+}
+// Seasonal: pumpkins in October, snow in December and January.
+function tSeason(t){
+ const mo=new Date().getMonth();
+ if(mo===9){g.fillStyle='rgba(255,120,30,.06)';g.fillRect(0,0,W,H);
+  for(let i=0;i<16;i++){const x=(i*97+t*(14+i%4*6))%W,y=(i*61+t*(18+i%3*7))%H;g.fillStyle='rgba(255,140,40,.35)';g.beginPath();g.ellipse(x,y,10,8,0,0,PI*2);g.fill();g.fillStyle='rgba(60,30,10,.5)';g.fillRect(x-1,y-11,2,4)}}
+ else if(mo===11||mo===0){
+  for(let i=0;i<60;i++){const x=(i*131+Math.sin(t+i)*20+t*(6+i%5*3))%W,y=(i*47+t*(22+i%6*5))%H;g.fillStyle='rgba(235,245,255,'+(.35+.3*(i%3?1:0))+')';g.beginPath();g.arc(x,y,1+i%3*.6,0,PI*2);g.fill()}}
+}
+// Featured hero of the day. Clicking opens the skin shop for that hero.
+function tFeatured(now){
+ const roster=Object.keys(CH),ch=roster[Math.floor(Date.now()/86400000)%roster.length],c=CH[ch];
+ g.fillStyle='rgba(12,16,31,.95)';rr(430,166,148,88,12);g.fill();
+ g.strokeStyle='rgba(255,211,74,.35)';g.lineWidth=1.5;rr(430,166,148,88,12);g.stroke();
+ T('HERO OF THE DAY',440,178,8,'#9ba9c8','left');
+ T(c.n,440,196,13,'#fff','left');
+ spr(portraitKey(ch,now),506,226,48,0,1,1);
+ BT.push({x:430,y:166,w:148,h:88,fn:()=>{sfx('click');shopTab=SKINS.some(s=>s.ch===ch)?ch:'all';shopPage=0;scr='shop'}});
+}
+// Last run from the ghost save, with a replay link. Returns null when there are no runs.
+function tLastRun(){let best=null;for(const e of GDB.runs)if(!best||(e.when||0)>(best.when||0))best=e;return best}
+function tBestsText(){
+ const m={};GDB.runs.forEach(e=>{if(!m[e.bi]||e.t<m[e.bi].t)m[e.bi]=e});
+ const parts=Object.keys(m).map(k=>BD[k].n.toUpperCase()+' '+gFmt(m[k].t));
+ return parts.length?parts.join('   \u2022   '):'No personal bests yet. Beat a boss to save a ghost.';
+}
+// Keyboard: arrows move the focus ring, Enter presses it, the first press skips the intro.
+function titleKey(e){
+ if(!TV2.seen&&TV2.intro>0){TV2.intro=TINTRO_LEN;e.preventDefault();return true}
+ const n=TV2.btns.length;if(!n)return false;const c=e.code;
+ if(c==='ArrowDown'||c==='ArrowRight'){TV2.focus=(TV2.focus+1)%n;e.preventDefault();return true}
+ if(c==='ArrowUp'||c==='ArrowLeft'){TV2.focus=(TV2.focus+n-1)%n;e.preventDefault();return true}
+ if(c==='Enter'||c==='NumpadEnter'){const b=TV2.btns[Math.min(TV2.focus,n-1)];if(b){sfx('click');b.fn()}e.preventDefault();return true}
+ return false;
+}
+function drawTitleNew(now){
+ const t=now/1000,dt=TV2.last?Math.min(.05,(now-TV2.last)/1000):0;TV2.last=now;
+ TV2.btns=[];TV2.hn=-1;
+ const ox=(mx-W/2)/W*-14,oy=(my-H/2)/H*-10;
+ tTrailer(now,t,ox,oy);
+ tSeason(t);
+ for(let i=0;i<48;i++){const x=(i*173+t*(8+i%4*3)+ox*.5)%W,y=(i*83+Math.sin(t+i)*12+oy*.5)%H;g.globalAlpha=.12+.18*Math.abs(Math.sin(t*1.4+i));g.fillStyle=i%3?'#ffbd61':'#8feaff';g.beginPath();g.arc(x,y,1+i%3,0,PI*2);g.fill()}
+ g.globalAlpha=1;
+ // first launch: a short intro, skipped by any click or key
+ if(!TV2.seen){
+  TV2.intro+=dt;
+  if(TV2.intro>=TINTRO_LEN){TV2.seen=true;try{localStorage.setItem(TINTRO_KEY,'1')}catch(e){}}
+  else{
+   const k=TV2.intro/TINTRO_LEN,a=k<.25?k/.25:k>.8?(1-k)/.2:1;
+   g.fillStyle='rgba(4,4,10,'+(.9*a)+')';g.fillRect(0,0,W,H);
+   g.globalAlpha=a;TS('BOSS RUSH',W/2,H/2-12,64,'#ffd34a');T('THE GRAND STEAMER',W/2,H/2+40,18,'#9fe8ff','center');g.globalAlpha=1;
+   T('click or press any key to skip',W/2,H-30,10,'#7d8aa8','center');
+   BT.push({x:0,y:0,w:W,h:H,fn:()=>{TV2.intro=TINTRO_LEN}});
+   return;
+  }
+ }
+ if(!spot.key||now-spot.at>8000)rollSpot(now);
+ tLogo(t,-ox*.6,-oy*.6);
+ glow(74,92,70,'rgba(255,190,70,1)');spr('xlb',74,92+Math.sin(t*1.6)*4,92);
+ glow(534,92,70,'rgba(255,80,110,1)');spr('ez',534,92+Math.sin(t*1.6+2)*4,92,0,-1,1);
+ g.fillStyle='rgba(255,211,74,.5)';g.fillRect(204,128,200,2);
+ T('BEAT THE BOSSES  \u2022  BUILD YOUR LOADOUT  \u2022  SURVIVE THE ENCORE',304,142,10,'#cbd2e8','center');
+
+ /* play card */
+ const ph=mx>=24&&mx<=420&&my>=158&&my<=234;
+ g.save();g.shadowColor='rgba(255,190,70,'+(ph?.55:.2)+')';g.shadowBlur=ph?28:14;panel(24,158,396,104,ph?'#fff0a0':'#d8a438',20);g.restore();
+ glow(96,210,ph?80:62,'rgba(255,190,70,1)');spr('start',96,208,ph?96:86);
+ T('PLAY',160,196,34,'#fff','left');T('SOLO / LOCAL',160,226,15,'#ffd34a','left');
+ BT.push({x:24,y:158,w:396,h:76,fn:()=>{sfx('click');requireName(startSolo)}});
+ const lr=tLastRun();
+ if(lr){
+  const hv=mx>=160&&mx<=420&&my>=236&&my<=252;
+  T('Last: '+CH[lr.ch].n+' vs '+BD[lr.bi].n+' '+gFmt(lr.t)+'   [REPLAY]',160,246,10,hv?'#ffffff':'#aab6d0','left','');
+  BT.push({x:160,y:236,w:260,h:16,fn:()=>{sfx('click');requireName(()=>{startSolo();S.set.start=lr.bi;startRun(1)})}});
+ } else T('Pick a hero. Beat the bosses.',160,246,10,'#aab6d0','left','');
+ tFeatured(now);
+
+ /* stats */
+ panel(24,276,560,240,'rgba(255,211,74,.4)',20);
+ const sl=statList(),sp=sl.find(s=>s.key===spot.key)||sl[0];
+ T('YOUR STATS',46,298,13,'#ffd34a','left');T('Saved on this device',160,299,9,'#687896','left','');
+ tbtn(452,284,112,28,'SHUFFLE',()=>rollSpot(now),{c:'#3a3f66',f:11});
+ const sx=40,sy=318,sw=282,sh=184,fa=cl((now-spot.at)/350,0,1);
+ g.fillStyle='rgba(18,24,48,.95)';rr(sx,sy,sw,sh,14);g.fill();g.save();g.globalAlpha=.7;g.strokeStyle=sp.col;g.lineWidth=1.5;rr(sx,sy,sw,sh,14);g.stroke();g.restore();
+ g.globalAlpha=fa;
+ T(sp.label,sx+16,sy+20,10,sp.col,'left');
+ const pcx=sx+66,pcy=sy+98;
+ if(sp.ch){glow(pcx,pcy,64,sp.col);g.fillStyle='rgba(0,0,0,.4)';g.beginPath();g.ellipse(pcx,pcy+46,34,7,0,0,PI*2);g.fill();spr(portraitKey(sp.ch,now),pcx,pcy+Math.sin(t*2)*3,sp.dim?96:104,0,1,1,sp.dim?.35:1)}
+ else{glow(pcx,pcy,60,sp.col);g.strokeStyle=sp.col;g.lineWidth=3;g.beginPath();g.arc(pcx,pcy,40,0,PI*2);g.stroke();g.fillStyle='rgba(255,255,255,.05)';g.fill();T(sp.tag,pcx,pcy,sp.tag.length>4?12:16,sp.col,'center')}
+ T(sp.val,sx+122,sy+82,fitSz(sp.val,148,32,12),'#fff','left');
+ g.fillStyle='#aab6d0';wrap(sp.sub,sx+122,sy+104,148,14,10);
+ g.globalAlpha=1;T('CLICK TO SHUFFLE',sx+sw/2,sy+sh-12,9,'#687896','center');
+ BT.push({x:sx,y:sy,w:sw,h:sh,fn:()=>rollSpot(now)});
+ [['PLAYTIME',fmtT(STAT.time),'#8fd8ff'],['DAMAGE DEALT',fmtN(STAT.dmg),'#ff8a6b'],['DAMAGE TAKEN',fmtN(STAT.taken),'#ff6b8a'],['DAMAGE HEALED',fmtN(STAT.healed),'#7dffa0'],['BOSSES DEFEATED',fmtN(STAT.bosses),'#ffd34a'],['WIN RATE',winRate(),'#c9a5ff']].forEach(([l,v,c],i)=>{
+   const x=336+(i%2)*120,y=318+Math.floor(i/2)*64;g.fillStyle='rgba(18,24,48,.95)';rr(x,y,112,56,10);g.fill();g.fillStyle=c;rr(x,y+8,3,40,2);g.fill();
+   T(l,x+12,y+15,8,'#9ba9c8','left');T(v,x+12,y+37,fitSz(v,92,18,10),c,'left')});
+
+ /* personal bests ticker */
+ TV2.tick+=dt*50;
+ const tk='PERSONAL BESTS  \u2022  '+tBestsText();
+ g.save();g.beginPath();g.rect(24,517,556,14);g.clip();
+ g.font='bold 10px monospace';const tw=g.measureText(tk+'        ').width;
+ T(tk+'        '+tk,24-(TV2.tick%tw),524,10,'#ffd34a','left');
+ g.restore();
+
+ /* navigation */
+ panel(604,24,334,492,'rgba(143,216,255,.4)',22);
+ const nx=622,nw=298,hd=(l,y)=>{T(l,nx+2,y,10,'#8fd8ff','left');g.fillStyle='rgba(143,216,255,.18)';g.fillRect(nx+g.measureText(l).width+12,y,nw-g.measureText(l).width-12,1)};
+ g.fillStyle='rgba(12,16,31,.95)';rr(nx,40,nw,54,12);g.fill();g.strokeStyle='rgba(255,211,74,.35)';g.lineWidth=1.5;rr(nx,40,nw,54,12);g.stroke();
+ {const fv=favChar();spr(portraitKey(fv?fv.ch:'cg',now),nx+28,67+Math.sin(t*2)*1.5,42)}
+ T(UNAME||'Guest',nx+54,58,fitSz(UNAME||'Guest',120,15,10),'#fff','left');
+ T(teq()?titleName(teq()):'No title equipped',nx+54,77,10,'#ffb347','left');
+ T('ZACH COINS',nx+nw-12,56,8,'#9ba9c8','right');T(PROFILE.coins.toLocaleString(),nx+nw-12,76,fitSz(PROFILE.coins.toLocaleString(),90,18,10),'#ffd34a','right');
+ hd('PLAY',110);
+ tbtn(nx,122,145,36,'HOST ONLINE',()=>requireName(startHost),{c:'#28569e',f:15});tbtn(nx+153,122,145,36,'JOIN ROOM',()=>requireName(joinPrompt),{c:'#237b70',f:15});
+ tbtn(nx,164,nw,34,'DAILY CHALLENGE',()=>requireName(startDaily),{c:'#2e7a46',f:14});
+ hd('CUSTOMISE',214);
+ tbtn(nx,226,94,34,'SKIN SHOP',()=>{shopPage=0;scr='shop'},{c:'#96621b',f:11});tbtn(nx+102,226,94,34,'TITLE CARDS',()=>{scr='titles'},{c:'#57447e',f:10});tbtn(nx+204,226,94,34,'USERNAME',setName,{c:'#303858',f:11});
+ {const aff=SKINS.filter(s=>!PROFILE.owned.includes(s.id)&&PROFILE.coins>=s.price).length;if(aff){g.fillStyle='#ff4d6d';g.beginPath();g.arc(nx+90,230,9,0,PI*2);g.fill();T(String(aff),nx+90,230,10,'#fff','center')}}
+ hd('PROGRESS',276);
+ tbtn(nx,288,94,34,'ACHIEVEMENTS',()=>{scr='ach'},{c:'#57447e',f:9});tbtn(nx+102,288,94,34,'HISTORY',()=>{scr='history'},{c:'#3a4a66',f:11});tbtn(nx+204,288,94,34,'BOARDS',()=>{scr='boards'},{c:'#3a4a66',f:11});
+ hd('MORE',338);
+ tbtn(nx,350,94,34,'SETTINGS',openSettings,{c:'#3a3f66',f:11});tbtn(nx+102,350,94,34,'CREDITS',()=>{scr='credits'},{c:'#57447e',f:11});tbtn(nx+204,350,94,34,'HOW TO PLAY',openTutorial,{c:'#3a5a8a',f:10});
+ tbtn(nx,394,nw,36,'UPDATE LOG',openUpdates,{c:'#2f5d4a',f:14});if(updUnseen()){g.fillStyle='#ff4d6d';rr(nx+nw-62,402,50,20,6);g.fill();T('NEW',nx+nw-37,412,10,'#fff','center')}
+ g.fillStyle='rgba(12,16,31,.95)';rr(nx,440,nw,56,12);g.fill();T('TIP',nx+12,453,9,'#ffd34a','left');g.fillStyle='#cbd2e8';wrap(TITLE_TIPS[Math.floor(now/9000)%TITLE_TIPS.length],nx+12,462,nw-24,12,10);
+ T('Progress saves automatically  \u2022  ESC / SETTINGS',nx+nw/2,507,9,'#687896','center');
+ if(ST.hints)T(titleHint(),304,533,9,'#99a','center','');
+ if(S&&S.set&&S.set.rush)T('RUSH MODE ON',W-12,H-10,11,'#ffb347','right','');
+ if(!unlocked)T('Click anywhere to enable sound',W/2,12,11,'#ffd34a','center');else if(MERR)T('Audio: '+MERR,W/2,12,10,'#f88','center','');
+
+ TV2.focus=Math.min(TV2.focus,Math.max(0,TV2.btns.length-1));
+ if(TV2.hn>=0&&TV2.hn!==TV2.hover)sfx('blip');
+ TV2.hover=TV2.hn;
+}
+function drawTitle(now){if(ST.legacyTitle)drawTitleLegacy(now);else drawTitleNew(now)}
+
+function drawTitleLegacy(now){const t=now/1000;drawBackdrop(t);
  for(let i=0;i<48;i++){const x=(i*173+t*(8+i%4*3))%W,y=(i*83+Math.sin(t+i)*12)%H;g.globalAlpha=.12+.18*Math.abs(Math.sin(t*1.4+i));g.fillStyle=i%3?'#ffbd61':'#8feaff';g.beginPath();g.arc(x,y,1+i%3,0,PI*2);g.fill()}g.globalAlpha=1;
  if(!spot.key||now-spot.at>8000)rollSpot(now);
  const sl=statList(),sp=sl.find(s=>s.key===spot.key)||sl[0];
@@ -4679,7 +4868,7 @@ function drawPlayer(p,t){WSK=p.skin||'';const c=CH[p.ch],o=sm(p.id,p.x,p.y),walk
  g.fillStyle='rgba(0,0,0,.3)';g.beginPath();const pa0=p.ch==='pat'&&p.pst?p.pst:null,air0=pa0&&pa0[4]>=0?Math.sin(pa0[4]*PI)*26:0,slamS=pa0&&pa0[5]>0?.24*Math.pow(pa0[5]/.45,3):0;g.ellipse(o.x,o.y+36,26*(1-air0/60),8*(1-air0/60),0,0,PI*2);g.fill();
  const al=p.dead?.25:(p.jh?.42:(p.inv&&Math.floor(t*20)%2?.4:1));
  if(p.buf){g.strokeStyle='rgba(255,211,74,'+(.4+.3*Math.sin(t*20))+')';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,44,0,PI*2);g.stroke()}
- const stabLean=m1Stage===3?stabBodyLean(m1Prog):0,bodyX=o.x+Math.cos(m1Angle)*stabLean,bodyY=o.y+bob+Math.sin(m1Angle)*stabLean,stabStretch=m1Stage===3&&m1Prog>.22&&m1Prog<.68?.08:0; spr(k,bodyX,bodyY-air0,76,p.dead?PI/2:0,fl*(1+sq+stabStretch+slamS*.8),1-sq-stabStretch-slamS*1.3,al);if(p.ch==='jay'&&p.jh&&!p.dead)drawJayBox(o.x,o.y+4,t);
+ const stabLean=m1Stage===3?stabBodyLean(m1Prog):0,bodyX=o.x+Math.cos(m1Angle)*stabLean,bodyY=o.y+bob+Math.sin(m1Angle)*stabLean,stabStretch=m1Stage===3&&m1Prog>.22&&m1Prog<.68?.08:0; spr(k,bodyX,bodyY-air0,76*(skin&&skin.sc||1),p.dead?PI/2:0,fl*(1+sq+stabStretch+slamS*.8),1-sq-stabStretch-slamS*1.3,al);if(p.ch==='jay'&&p.jh&&!p.dead)drawJayBox(o.x,o.y+4,t);
  skinFx(p,o,t,bodyY-air0-22);
  if(!p.dead){const ca=Math.cos(p.ang),sa=Math.sin(p.ang),fy=ca<0?-1:1;if(p.sauce){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,35,62,.72)';g.lineWidth=2;g.beginPath();g.ellipse(o.x,o.y+20,27+Math.sin(t*9)*2,9,0,0,PI*2);g.stroke();for(let i=0;i<4;i++){g.fillStyle=i%2?'#ff2947':'#ffb3bc';g.fillRect(o.x-13+i*8+Math.sin(t*8+i)*2,o.y+22+(i%2)*4,3,4)}g.restore()}
   if(p.ch==='cg'){const d=30-p.kick*8;spr(wk('gun'),o.x+ca*d,o.y+8+sa*d,50,p.ang,1,fy);if(p.kick>.6){g.fillStyle='rgba(255,220,80,.9)';g.beginPath();g.arc(o.x+ca*62,o.y+8+sa*62,9*p.kick,0,PI*2);g.fill()}}
@@ -5024,7 +5213,7 @@ function applyPixel(p){
  const pc=PXC.getContext('2d');pc.imageSmoothingEnabled=false;pc.drawImage(cv,0,0,sw,sh);
  g.imageSmoothingEnabled=false;g.drawImage(PXC,0,0,sw,sh,0,0,W,H);
 }
-function render(now,dt){render0(now,dt);postUI(now,dt);if(ADM.open){BT=[];drawAdmin(now)}if(V&&V.pix>=0)applyPixel(V.pix/PIX_T);warnMiss();drawToasts();if(loaded<keysF.length){g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,H-30,W,30);g.fillStyle='#ffd34a';g.fillRect(0,H-30,W*loaded/keysF.length,30);T('Loading '+loaded+'/'+keysF.length+'...',W/2,H-15,14,'#fff','center')}}
+function render(now,dt){render0(now,dt);postUI(now,dt);if(V&&V.pix>=0)applyPixel(V.pix/PIX_T);warnMiss();drawToasts();if(loaded<keysF.length){g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,H-30,W,30);g.fillStyle='#ffd34a';g.fillRect(0,H-30,W*loaded/keysF.length,30);T('Loading '+loaded+'/'+keysF.length+'...',W/2,H-15,14,'#fff','center')}}
 function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];if(S&&host&&(S.st==='over'||S.st==='win')&&!S.histDone){S.histDone=1;saveRun();ghostSave()}
  if(scr==='title'){WM='title';music('title');drawTitle(now);return}
  if(scr==='credits'){WM='title';music('title');drawCredits(now);return}
@@ -5085,7 +5274,7 @@ const DEFST={master:100,music:100,sfx:100,bgMute:0,
  autoShoot:0,autoAbil:0,autoAim:0,aimStr:100,aimPri:0,aimMark:1,fireBtn:0,speed:100,autoPause:0,skipDlg:0,
  shake:100,flash:100,particles:100,glow:1,ambient:1,aura:1,vignette:1,hurtFx:1,lowHp:1,
  dmgNums:1,dmgSize:100,fps:0,hints:1,
- cross:1,crossSize:100,crossCol:0,hideCur:0};
+ cross:1,crossSize:100,crossCol:0,hideCur:0,legacyTitle:0};
 const ST=Object.assign({},DEFST),BINDS={};
 ACTS.forEach(a=>BINDS[a[0]]=a[2].slice());
 let MUSG=null,SFXG=null,winFocus=true,setOpen=false,setTab=0,setScroll=0,LISTEN=null,DRAGK=null,mHeld=false,HINT='',CONF=null,pausedBySet=false,AIMT=null,fpsA=60,NOTE=[];
@@ -5110,26 +5299,10 @@ function refreshMute(){const m=mute||(ST.bgMute&&!winFocus);Object.values(MA).fo
 function setMute(v){mute=!!v;refreshMute();saveSet()}
 addEventListener('focus',()=>{winFocus=true;refreshMute()});
 addEventListener('blur',()=>{winFocus=false;refreshMute();if(ST.autoPause&&host&&S&&S.st==='fight'&&nPl()===1&&!S.paused)S.paused=1});
-/* ----- Ghost reset and admin panel (F9). Changes only affect this browser's save. ----- */
+/* ----- Ghost reset and coin tools ----- */
 function resetGhosts(){GDB={v:3,runs:[]};GHP={};try{localStorage.removeItem(GKEY)}catch(e){}note('All ghost races deleted')}
-const ADM={open:false};
 function admGive(n){PROFILE.coins=Math.max(0,(PROFILE.coins|0)+n);saveSkinProfile();note((n>0?'+':'')+n+' Zach Coins')}
 function admSet(n){PROFILE.coins=Math.max(0,n|0);saveSkinProfile();note('Zach Coins set to '+PROFILE.coins)}
-function drawAdmin(now){
- const px=230,py=120,pw=500,ph=300;
- g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,0,W,H);
- panel(px,py,pw,ph,'rgba(255,211,74,.55)',18);
- T('ADMIN',W/2,py+30,24,'#ffd34a','center');
- T('ZACH COINS',W/2,py+72,11,'#8895b4','center');
- T(String(PROFILE.coins|0),W/2,py+102,34,'#ffffff','center');
- const bw=110,gap=14,x0=W/2-(4*bw+3*gap)/2,y=py+140;
- btn(x0,y,bw,36,'+100',()=>admGive(100),{c:'#2a6b3a',f:16});
- btn(x0+(bw+gap),y,bw,36,'+1000',()=>admGive(1000),{c:'#2a6b3a',f:16});
- btn(x0+2*(bw+gap),y,bw,36,'+10000',()=>admGive(10000),{c:'#2a6b3a',f:16});
- btn(x0+3*(bw+gap),y,bw,36,'SET 0',()=>admSet(0),{c:'#6b2a2a',f:16});
- btn(W/2-80,py+ph-70,160,38,'CLOSE',()=>{ADM.open=false},{c:'#2a2f4a',f:16});
- T('Saved to this browser only. Press F9 to hide.',W/2,py+ph-20,10,'#7d8aa8','center');
-}
 function openSettings(){if(setOpen)return;setOpen=true;setScroll=0;LISTEN=null;mdown=false;if(host&&S&&S.st==='fight'&&nPl()===1&&!S.paused){S.paused=1;pausedBySet=true}}
 function closeSettings(){setOpen=false;LISTEN=null;DRAGK=null;mdown=false;saveSet();if(pausedBySet&&S)S.paused=0;pausedBySet=false}
 function toggleFS(){const el=document.documentElement;try{document.fullscreenElement?document.exitFullscreen():(el.requestFullscreen&&el.requestFullscreen())}catch(e){}}
@@ -5201,6 +5374,8 @@ function rowsFor(t){
   Hd('PRESETS'),
   Bn('Performance Preset','Fewer particles, no glow, ambient, auras or vignette. Helps low-end PCs.',()=>{Object.assign(ST,{particles:30,glow:0,ambient:0,aura:0,vignette:0,shake:50});saveSet();note('Performance preset applied')}),
   Bn('Quality Preset','Turns every visual effect back to full.',()=>{Object.assign(ST,{particles:100,glow:1,ambient:1,aura:1,vignette:1,shake:100,flash:100,hurtFx:1,lowHp:1});saveSet();note('Quality preset applied')}),
+  Hd('MENUS'),
+  Bo('legacyTitle','Legacy Title Screen','Brings back the original title screen layout.'),
   Hd('SAVED DATA'),
   Bn('Reset Ghost Races','Deletes every saved ghost race for every boss and hero. Coins, skins and stats are kept.',()=>{if(confirm('Delete all saved ghost races? This cannot be undone.'))resetGhosts()})];
  const keyRows=ids=>ids.map(a=>({t:'key',a,h:'Click a slot, then press a key. Backspace clears it, Esc cancels.'}));
@@ -5293,10 +5468,9 @@ addEventListener('keydown',e=>{
  if(LISTEN){e.preventDefault();const c=e.code;if(c==='Escape'){LISTEN=null;return}
   if(c==='Backspace'||c==='Delete'){bindKey(LISTEN.a,LISTEN.s,'');LISTEN=null;return}
   bindKey(LISTEN.a,LISTEN.s,c);LISTEN=null;return}
- if(chatKey(e))return;
- if(e.code==='F9'){e.preventDefault();ADM.open=!ADM.open;return}
-if(ADM.open){if(e.code==='Escape')ADM.open=false;e.preventDefault();return}
-const c=e.code,k=e.key.toLowerCase();kc[c]=true;keys[k]=true;unlock();pwType(k);if(FGC.open){if(c==='Escape')closeFGC();e.preventDefault();return}if(PM.open&&!setOpen){if(c==='Escape')closePM();e.preventDefault();return}
+ if(scr==='title'&&!setOpen&&!ST.legacyTitle&&titleKey(e))return;
+if(chatKey(e))return;
+ const c=e.code,k=e.key.toLowerCase();kc[c]=true;keys[k]=true;unlock();pwType(k);if(FGC.open){if(c==='Escape')closeFGC();e.preventDefault();return}if(PM.open&&!setOpen){if(c==='Escape')closePM();e.preventDefault();return}
  if(setOpen){if(c==='Escape'||isAct('sets',c))closeSettings();e.preventDefault();return}
  if(!e.ctrlKey&&!e.metaKey&&!e.altKey&&([' ','arrowup','arrowdown','arrowleft','arrowright','tab'].includes(k)||ACTS.some(a=>isAct(a[0],c))))e.preventDefault();
  if(c==='Escape'){if(scr==='game')togglePM();else if(scr==='updates')scr='title';else openSettings();return}if(isAct('sets',c)){openSettings();return}
