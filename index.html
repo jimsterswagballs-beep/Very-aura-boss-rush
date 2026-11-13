@@ -5024,7 +5024,7 @@ function applyPixel(p){
  const pc=PXC.getContext('2d');pc.imageSmoothingEnabled=false;pc.drawImage(cv,0,0,sw,sh);
  g.imageSmoothingEnabled=false;g.drawImage(PXC,0,0,sw,sh,0,0,W,H);
 }
-function render(now,dt){render0(now,dt);postUI(now,dt);if(V&&V.pix>=0)applyPixel(V.pix/PIX_T);warnMiss();drawToasts();if(loaded<keysF.length){g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,H-30,W,30);g.fillStyle='#ffd34a';g.fillRect(0,H-30,W*loaded/keysF.length,30);T('Loading '+loaded+'/'+keysF.length+'...',W/2,H-15,14,'#fff','center')}}
+function render(now,dt){render0(now,dt);postUI(now,dt);if(ADM.open){BT=[];drawAdmin(now)}if(V&&V.pix>=0)applyPixel(V.pix/PIX_T);warnMiss();drawToasts();if(loaded<keysF.length){g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,H-30,W,30);g.fillStyle='#ffd34a';g.fillRect(0,H-30,W*loaded/keysF.length,30);T('Loading '+loaded+'/'+keysF.length+'...',W/2,H-15,14,'#fff','center')}}
 function render0(now,dt){const t=now/1000;g.clearRect(0,0,W,H);BT=[];if(S&&host&&(S.st==='over'||S.st==='win')&&!S.histDone){S.histDone=1;saveRun();ghostSave()}
  if(scr==='title'){WM='title';music('title');drawTitle(now);return}
  if(scr==='credits'){WM='title';music('title');drawCredits(now);return}
@@ -5110,6 +5110,26 @@ function refreshMute(){const m=mute||(ST.bgMute&&!winFocus);Object.values(MA).fo
 function setMute(v){mute=!!v;refreshMute();saveSet()}
 addEventListener('focus',()=>{winFocus=true;refreshMute()});
 addEventListener('blur',()=>{winFocus=false;refreshMute();if(ST.autoPause&&host&&S&&S.st==='fight'&&nPl()===1&&!S.paused)S.paused=1});
+/* ----- Ghost reset and admin panel (F9). Changes only affect this browser's save. ----- */
+function resetGhosts(){GDB={v:3,runs:[]};GHP={};try{localStorage.removeItem(GKEY)}catch(e){}note('All ghost races deleted')}
+const ADM={open:false};
+function admGive(n){PROFILE.coins=Math.max(0,(PROFILE.coins|0)+n);saveSkinProfile();note((n>0?'+':'')+n+' Zach Coins')}
+function admSet(n){PROFILE.coins=Math.max(0,n|0);saveSkinProfile();note('Zach Coins set to '+PROFILE.coins)}
+function drawAdmin(now){
+ const px=230,py=120,pw=500,ph=300;
+ g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,0,W,H);
+ panel(px,py,pw,ph,'rgba(255,211,74,.55)',18);
+ T('ADMIN',W/2,py+30,24,'#ffd34a','center');
+ T('ZACH COINS',W/2,py+72,11,'#8895b4','center');
+ T(String(PROFILE.coins|0),W/2,py+102,34,'#ffffff','center');
+ const bw=110,gap=14,x0=W/2-(4*bw+3*gap)/2,y=py+140;
+ btn(x0,y,bw,36,'+100',()=>admGive(100),{c:'#2a6b3a',f:16});
+ btn(x0+(bw+gap),y,bw,36,'+1000',()=>admGive(1000),{c:'#2a6b3a',f:16});
+ btn(x0+2*(bw+gap),y,bw,36,'+10000',()=>admGive(10000),{c:'#2a6b3a',f:16});
+ btn(x0+3*(bw+gap),y,bw,36,'SET 0',()=>admSet(0),{c:'#6b2a2a',f:16});
+ btn(W/2-80,py+ph-70,160,38,'CLOSE',()=>{ADM.open=false},{c:'#2a2f4a',f:16});
+ T('Saved to this browser only. Press F9 to hide.',W/2,py+ph-20,10,'#7d8aa8','center');
+}
 function openSettings(){if(setOpen)return;setOpen=true;setScroll=0;LISTEN=null;mdown=false;if(host&&S&&S.st==='fight'&&nPl()===1&&!S.paused){S.paused=1;pausedBySet=true}}
 function closeSettings(){setOpen=false;LISTEN=null;DRAGK=null;mdown=false;saveSet();if(pausedBySet&&S)S.paused=0;pausedBySet=false}
 function toggleFS(){const el=document.documentElement;try{document.fullscreenElement?document.exitFullscreen():(el.requestFullscreen&&el.requestFullscreen())}catch(e){}}
@@ -5180,7 +5200,9 @@ function rowsFor(t){
   Bo('hideCur','Hide System Cursor In Fights','Hides the normal mouse cursor during fights so only your crosshair shows.'),
   Hd('PRESETS'),
   Bn('Performance Preset','Fewer particles, no glow, ambient, auras or vignette. Helps low-end PCs.',()=>{Object.assign(ST,{particles:30,glow:0,ambient:0,aura:0,vignette:0,shake:50});saveSet();note('Performance preset applied')}),
-  Bn('Quality Preset','Turns every visual effect back to full.',()=>{Object.assign(ST,{particles:100,glow:1,ambient:1,aura:1,vignette:1,shake:100,flash:100,hurtFx:1,lowHp:1});saveSet();note('Quality preset applied')})];
+  Bn('Quality Preset','Turns every visual effect back to full.',()=>{Object.assign(ST,{particles:100,glow:1,ambient:1,aura:1,vignette:1,shake:100,flash:100,hurtFx:1,lowHp:1});saveSet();note('Quality preset applied')}),
+  Hd('SAVED DATA'),
+  Bn('Reset Ghost Races','Deletes every saved ghost race for every boss and hero. Coins, skins and stats are kept.',()=>{if(confirm('Delete all saved ghost races? This cannot be undone.'))resetGhosts()})];
  const keyRows=ids=>ids.map(a=>({t:'key',a,h:'Click a slot, then press a key. Backspace clears it, Esc cancels.'}));
  return[Hd('MOVEMENT'),...keyRows(['up','down','left','right']),Hd('COMBAT'),...keyRows(['ab0','ab1','ab2','shoot']),Hd('UPGRADE VOTING'),...keyRows(['up1','up2','up3']),Hd('TOGGLES & MENUS'),...keyRows(['tAuto','tAim','pause','mute','hitbox','tFps','sets']),{t:'n',l:'Esc always opens and closes this menu. Mouse left click is the default attack.'}]}
 function resetTab(){if(setTab===3)ACTS.forEach(a=>BINDS[a[0]]=a[2].slice());else rowsFor(setTab).forEach(r=>{if(r.t==='b'||r.t==='s'||r.t==='c'){if(r.k==='muted')mute=false;else if(r.k==='showHit')showHitboxes=false;else if(r.k in DEFST)ST[r.k]=DEFST[r.k]}});applyAudio();refreshMute();saveSet();note('Tab reset to defaults')}
@@ -5272,7 +5294,9 @@ addEventListener('keydown',e=>{
   if(c==='Backspace'||c==='Delete'){bindKey(LISTEN.a,LISTEN.s,'');LISTEN=null;return}
   bindKey(LISTEN.a,LISTEN.s,c);LISTEN=null;return}
  if(chatKey(e))return;
- const c=e.code,k=e.key.toLowerCase();kc[c]=true;keys[k]=true;unlock();pwType(k);if(FGC.open){if(c==='Escape')closeFGC();e.preventDefault();return}if(PM.open&&!setOpen){if(c==='Escape')closePM();e.preventDefault();return}
+ if(e.code==='F9'){e.preventDefault();ADM.open=!ADM.open;return}
+if(ADM.open){if(e.code==='Escape')ADM.open=false;e.preventDefault();return}
+const c=e.code,k=e.key.toLowerCase();kc[c]=true;keys[k]=true;unlock();pwType(k);if(FGC.open){if(c==='Escape')closeFGC();e.preventDefault();return}if(PM.open&&!setOpen){if(c==='Escape')closePM();e.preventDefault();return}
  if(setOpen){if(c==='Escape'||isAct('sets',c))closeSettings();e.preventDefault();return}
  if(!e.ctrlKey&&!e.metaKey&&!e.altKey&&([' ','arrowup','arrowdown','arrowleft','arrowright','tab'].includes(k)||ACTS.some(a=>isAct(a[0],c))))e.preventDefault();
  if(c==='Escape'){if(scr==='game')togglePM();else if(scr==='updates')scr='title';else openSettings();return}if(isAct('sets',c)){openSettings();return}
