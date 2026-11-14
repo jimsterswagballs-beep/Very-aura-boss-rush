@@ -95,8 +95,8 @@ const UP=[
  {n:'Executioner',d:'+50% damage to bosses below 30% HP',f:m=>m.exec+=.5},{n:'Featherweight',d:'+0.5s of invulnerability after being hit',f:m=>m.iframe+=.5},
  {n:'Padded Armor',d:'Take 15% less damage from everything',f:m=>m.armor+=.15},{n:'Overdrive',d:'Using an ability gives +30% attack speed for 4s',f:m=>m.od=1},
  {n:'Treasure Hunter',d:'+25% Zach Coins from every boss',tc:1,f:m=>{}},{n:'Critical Care',d:'Critical hits heal you for 2 HP',f:m=>m.cheal+=2},
- {n:'Payback',d:'Getting hit strikes the boss for 60 damage',c:1,f:m=>m.payback=1},{n:'Hungry Blade',d:'CURSED: +60% damage, but you take +25% damage',c:1,f:m=>{m.dmg*=1.6;m.taken=(m.taken||1)*1.25}},{n:'Overclock Curse',d:'CURSED: +50% attack speed, but -20 max HP',c:1,f:m=>{m.rate*=1.5;m.hp-=20}},{n:'Reckless Feet',d:'CURSED: +30% move speed, but -20% damage',c:1,f:m=>{m.spd*=1.3;m.dmg*=.8}}];
-const UPCAT={'Sharp Edge':'OFFENSE','Quick Hands':'OFFENSE','Lucky Strike':'OFFENSE','Piercing Rounds':'OFFENSE','Double Tap':'OFFENSE','Big Bite':'OFFENSE','Glass Cannon':'OFFENSE','Berserker':'OFFENSE','Golden Hour':'OFFENSE','Executioner':'OFFENSE','Overdrive':'OFFENSE','Critical Care':'OFFENSE','Thick Skin':'DEFENSE','Second Wind':'DEFENSE','Vampire':'DEFENSE','Iron Will':'DEFENSE','Bubble Shield':'DEFENSE','Padded Armor':'DEFENSE','Featherweight':'DEFENSE'};
+ {n:'Payback',d:'Getting hit strikes the boss for 60 damage',c:1,f:m=>m.payback=1},{n:'Hungry Blade',d:'CURSED: +60% damage, but you take +25% damage',c:1,f:m=>{m.dmg*=1.6;m.taken=(m.taken||1)*1.25}},{n:'Overclock Curse',d:'CURSED: +50% attack speed, but -20 max HP',c:1,f:m=>{m.rate*=1.5;m.hp-=20}},{n:'Reckless Feet',d:'CURSED: +30% move speed, but -20% damage',c:1,f:m=>{m.spd*=1.3;m.dmg*=.8}},{n:'Razor Wind',d:'+10% crit chance and +10% attack speed',f:m=>{m.crit+=.10;m.rate*=1.1}},{n:'Second Skin',d:'+25 max HP and regenerate 0.5 HP/s',f:m=>{m.hp+=25;m.regen+=.5}},{n:'Track Star',d:'+10% move speed and +10% attack speed',f:m=>{m.spd*=1.1;m.rate*=1.1}},{n:'Heavy Hitter',d:'+40% damage, but -15% attack speed',f:m=>{m.dmg*=1.4;m.rate*=.85}},{n:'Fortify',d:'Take 20% less damage and gain +10 max HP',f:m=>{m.armor+=.20;m.hp+=10}},{n:'Triple Trouble',d:'CURSED: +2 projectiles per attack, but -50% damage',c:1,f:m=>{m.multi+=2;m.dmg*=.5}},{n:'Blood Pact',d:'CURSED: +6% lifesteal, but -35 max HP',c:1,f:m=>{m.ls+=.06;m.hp-=35}},{n:'Sweet Tooth',d:'Ability snacks heal 4 more HP, and critical hits heal 1 HP',f:m=>{m.snack+=4;m.cheal+=1}}];
+const UPCAT={'Sharp Edge':'OFFENSE','Quick Hands':'OFFENSE','Lucky Strike':'OFFENSE','Piercing Rounds':'OFFENSE','Double Tap':'OFFENSE','Big Bite':'OFFENSE','Glass Cannon':'OFFENSE','Berserker':'OFFENSE','Golden Hour':'OFFENSE','Executioner':'OFFENSE','Overdrive':'OFFENSE','Critical Care':'OFFENSE','Thick Skin':'DEFENSE','Second Wind':'DEFENSE','Vampire':'DEFENSE','Iron Will':'DEFENSE','Bubble Shield':'DEFENSE','Padded Armor':'DEFENSE','Featherweight':'DEFENSE','Razor Wind':'OFFENSE','Heavy Hitter':'OFFENSE','Second Skin':'DEFENSE','Fortify':'DEFENSE','Track Star':'UTILITY','Sweet Tooth':'UTILITY'};
 const UPCOL={OFFENSE:'#ff7a5c',DEFENSE:'#5cc8ff',UTILITY:'#7dffa0',CRAZY:'#c05cff'};
 const upCat=u=>u.c?'CRAZY':(UPCAT[u.n]||'UTILITY');
 const upInit=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
@@ -839,7 +839,7 @@ function stepPl(p,dt){if(p.dead){p.boom=null;p.windup=0;p.hide=0;p.cs=0;p.jch=0;
  if(m.shield&&!p.sh){p.shT=(p.shT||0)+dt;if(p.shT>10){p.sh=1;p.shT=0}}
  const l=Math.hypot(i.kx,i.ky);p.walk=l>0?1:0;p.ang=i.ang;
  if(p.dash>0){p.dash-=dt;p.x+=p.dvx*dt*sauceMove;p.y+=p.dvy*dt*sauceMove;fx(['p',p.x,p.y,1,p.ch==='cg'?(p.skin==='cg-woman'?'#ff7ad9':'#8fd8ff'):'#ffe14a',30,.3,6]);if(p.skin==='cg-woman'&&p.ch==='cg')for(let k=0;k<2;k++)PT.push({x:p.x+rnd(-14,14),y:p.y+rnd(-14,14),vx:rnd(-30,30),vy:rnd(-30,30),l:.5,m:.5,c:'#ffd0f2',s:3,spin:6});
-  if(p.ch==='zach'&&!p.lh){const target=bossTargetAt(p.x,p.y,45);if(target){p.lh=1;hitB(p,40,target.x,target.y,'k',target.id);msLungeHit(p,target)}}}
+  if(p.ch==='zach'&&!p.lh){const target=bossTargetAt(p.x,p.y,45);if(target){p.lh=1;MSLG=1;hitB(p,40,target.x,target.y,'k',target.id);MSLG=0;msLungeHit(p,target)}}}
  else if(l>0){const sp=CH[p.ch].spd*m.spd*heatSpd(p)*adrSpd(p)*(p.rage>0?1+m.rush:1)*sauceMove*(p.windup>0?.35:1)*(p.jwind>0?.4:p.jch>0?.65:1)*(p.jslow>0?.5:1);p.x+=i.kx/l*sp*dt;p.y+=i.ky/l*sp*dt}
  p.x=cl(p.x,30,W-30);p.y=cl(p.y,100,H-85);
  if(p.whirl>0){p.wt-=dt;if(p.wt<=0){p.wt=.2;const rg=110*m.size;fx(['r',p.x,p.y,rg,'#ffe14a']);bossTargets().filter(q=>dist(p.x,p.y,q.x,q.y)<rg+q.r).forEach(q=>hitB(p,16,q.x,q.y,'k',q.id));msWhirlHit(p);S.pr.forEach(q=>{if(q.own==='b'&&dist(p.x,p.y,q.x,q.y)<rg)q.life=0})}}
@@ -4112,6 +4112,14 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'new-upgrades',title:'Eight New Upgrades',date:'Nov 14, 2026',sub:'Eight new upgrades, including two cursed ones with heavy drawbacks.',items:[
+  ['NEW','Razor Wind, Second Skin, Track Star, Heavy Hitter, Fortify and Sweet Tooth join the upgrade pool.'],
+  ['NEW','Cursed: Triple Trouble gives +2 projectiles per attack, but deals 50% less damage.'],
+  ['NEW','Cursed: Blood Pact gives +6% lifesteal, but costs 35 max HP.']]},
+ {id:'upgrade-screen',title:'New Upgrade Screen',date:'Nov 14, 2026',sub:'The upgrade picker has been redesigned with new transitions and effects.',items:[
+  ['CHANGED','The upgrade screen has an entrance sweep, cards that rise in one at a time, and a tilt and light sheen when you hover.'],
+  ['CHANGED','Voting has a burst of light and a ring on the card you pick. Team votes show each teammate on the card they chose.'],
+  ['CHANGED','The timer is a ring that pulses in red for the last five seconds. New upgrades pop into your build, and the countdown and tie screens animate in.']]},
  {id:'mastery-intro',title:'Character Mastery, Crimson Rush and a New Intro',date:'Nov 14, 2026',sub:'Prime Zach and The Coolest Guy get mastery quests, new move sets and domain expansions.',items:[
   ['NEW','Mastery for Prime Zach and The Coolest Guy: finish all 8 quests for each hero to unlock it. Progress saves on this device.'],
   ['NEW','Quest page: open it from the hero card in the lobby with VIEW QUESTS to see every quest and your progress.'],
@@ -5028,33 +5036,117 @@ function dialoguePortrait(who){const speaker=String(who||'').split('|')[0];const
 function drawDlg(D){const col=SC[D.who]||'#fff';g.fillStyle='rgba(0,0,0,.6)';g.fillRect(0,0,W,48);g.fillRect(0,H-175,W,175);g.fillStyle='#0b0b14';rr(40,H-155,W-80,135,12);g.fill();g.strokeStyle=col;g.lineWidth=3;g.stroke();
  const bob=Math.sin(performance.now()/200)*3;spr(dialoguePortrait(D.who),115,H-88+bob,100);T(D.who.split('|')[0],185,H-132,22,col);g.fillStyle='#fff';wrap(D.text.slice(0,Math.floor(D.t*45)),185,H-105,W-260,24,19);{const nn=Math.floor(D.t*45);if(nn!==lastN&&nn%3===0&&nn<D.text.length)sfx('blip');lastN=nn}if(host&&!D.noSkip)T('click to skip',W-60,H-30,11,'#889','right','')}
 function wrapC(s,cx,y,w,lh,sz){g.font='bold '+sz+'px monospace';const L=[];let line='';for(const wd of s.split(' ')){const tt=line?line+' '+wd:wd;if(g.measureText(tt).width>w&&line){L.push(line);line=wd}else line=tt}L.push(line);L.forEach((l,i)=>T(l,cx,y+i*lh,sz,'#cdd','center'))}
-function drawUp(v,now){const t=now/1000;
- g.fillStyle='rgba(5,5,12,.9)';g.fillRect(0,0,W,H);
- const vg=g.createRadialGradient(W/2,H/2,120,W/2,H/2,560);vg.addColorStop(0,'rgba(60,40,110,.28)');vg.addColorStop(1,'rgba(0,0,0,.55)');g.fillStyle=vg;g.fillRect(0,0,W,H);
- g.save();g.globalCompositeOperation='lighter';for(let i=0;i<36;i++){const x=(i*151+t*(6+i%4*3))%W,y=H-((i*67+t*(14+i%5*6))%H);g.globalAlpha=.1+.15*Math.abs(Math.sin(t+i));g.fillStyle=i%3?'#ffd34a':'#9fe8ff';g.fillRect(x,y,2+i%2,2+i%2)}g.restore();
- TS('CHOOSE YOUR UPGRADE',W/2,38,34,'#ffd34a');
- const left=Math.max(0,v.vt),frac=cl(left/20,0,1);
- g.fillStyle='#1b1d2c';rr(300,68,360,10,5);g.fill();g.fillStyle=left<5?'#ff5a5a':'#ffd34a';rr(300,68,Math.max(10,360*frac),10,5);g.fill();
- T(Math.ceil(left)+'s  \u2022  '+(v.n>1?'TEAM VOTE: MOST VOTES WINS, TIES ARE RANDOM':'CLICK A CARD OR PRESS 1 / 2 / 3'),W/2,92,11,'#aab','center');
+/* ----- Upgrade screen v2: entrance transition, card tilt and sheen, vote bursts, timer ring, build pops ----- */
+const UPX={key:'',t0:0,mine:undefined,mineT:-9,popT:-9,built:0,ov:null,ovT:0,parts:[],last:0};
+function upEase(x){x=cl(x,0,1);return 1-Math.pow(1-x,3)}
+function upBurst(x,y,col,n){for(let i=0;i<n;i++){const a=Math.random()*PI*2,s=140+Math.random()*340;UPX.parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.45+Math.random()*.45,max:.9,c:col,r:1.5+Math.random()*3})}}
+function drawUp(v,now){
+ const t=now/1000,dt=UPX.last?Math.min(.05,(now-UPX.last)/1000):0;UPX.last=now;
+ const key=v.opts.join('-')+'|'+v.ups.length;
+ if(key!==UPX.key){UPX.key=key;UPX.t0=t;UPX.mine=undefined}
+ const age=t-UPX.t0,mine=v.votes?v.votes[me]:undefined,mineSet=mine!=null;
+ if(mine!==UPX.mine){UPX.mine=mine;if(mineSet){UPX.mineT=t;const id=v.opts[mine];upBurst(70+mine*284+132,110+150,UPCOL[upCat(UP[id])],36)}}
+ if(v.ups.length>UPX.built)UPX.popT=t;UPX.built=v.ups.length;
+
+ // backdrop
+ g.fillStyle='rgba(5,5,12,.92)';g.fillRect(0,0,W,H);
+ const vg=g.createRadialGradient(W/2,H/2,120,W/2,H/2,600);vg.addColorStop(0,'rgba(70,40,120,.32)');vg.addColorStop(1,'rgba(0,0,0,.6)');g.fillStyle=vg;g.fillRect(0,0,W,H);
+ g.save();g.globalCompositeOperation='lighter';
+ for(let i=0;i<48;i++){const x=(i*151+t*(6+i%4*3))%W,y=H-((i*67+t*(14+i%5*6))%H);g.globalAlpha=.08+.14*Math.abs(Math.sin(t+i));g.fillStyle=i%3?'#ffd34a':'#9fe8ff';g.fillRect(x,y,2+i%2,2+i%2)}
+ g.restore();
+ // entrance: a gold band sweeps across the screen
+ const tr=cl(age/.7,0,1);
+ if(tr<1){const bx=-240+tr*(W+480);g.save();g.globalAlpha=1-tr;const bg=g.createLinearGradient(bx-170,0,bx+170,0);bg.addColorStop(0,'rgba(255,211,74,0)');bg.addColorStop(.5,'rgba(255,211,74,.35)');bg.addColorStop(1,'rgba(255,211,74,0)');g.fillStyle=bg;g.fillRect(bx-170,0,340,H);g.restore()}
+
+ TS('CHOOSE YOUR UPGRADE',W/2,40,34,'#ffd34a');
+ T(v.n>1?'TEAM VOTE: MOST VOTES WINS, TIES ARE RANDOM':'CLICK A CARD OR PRESS 1 / 2 / 3',W/2,78,11,'#aab','center');
+
+ // timer ring
+ const left=Math.max(0,v.vt),frac=cl(left/20,0,1),low=left<5,pulse=low?1+.08*Math.sin(t*12):1;
+ g.save();g.translate(64,40);g.scale(pulse,pulse);
+ g.strokeStyle='rgba(255,255,255,.12)';g.lineWidth=5;g.beginPath();g.arc(0,0,20,0,PI*2);g.stroke();
+ g.strokeStyle=low?'#ff5a5a':'#ffd34a';g.lineCap='round';g.beginPath();g.arc(0,0,20,-PI/2,-PI/2+PI*2*frac);g.stroke();g.lineCap='butt';
+ T(String(Math.ceil(left)),0,0,14,low?'#ff8a8a':'#fff','center');
+ g.restore();
+
+ // cards
  const cnt=[0,0,0];Object.values(v.votes).forEach(i=>cnt[i]++);
- v.opts.forEach((id,i)=>{const u=UP[id],cat=upCat(u),col=UPCOL[cat],x=70+i*284,w=264,h=322,mine=v.votes[me]===i,hv=mx>=x&&mx<=x+w&&my>=108&&my<=108+h&&v.vcd==null&&!v.rev,y=108-(hv?6:0),own=v.ups.filter(q=>q===id).length;
-  g.save();g.shadowColor=mine?'#ffd34a':col;g.shadowBlur=mine?26:hv?20:8;g.fillStyle=mine?'#232a48':'#141829';rr(x,y,w,h,16);g.fill();g.restore();
-  g.strokeStyle=mine?'#ffd34a':col;g.lineWidth=mine?4:hv?3:2;rr(x,y,w,h,16);g.stroke();
-  g.save();rr(x,y,w,38,16);g.clip();g.fillStyle=col+'33';g.fillRect(x,y,w,38);g.restore();
-  T(cat,x+16,y+19,12,col,'left');T('['+kn('up'+(i+1))+']',x+w-16,y+19,13,'#9aa','right');
-  glow(x+w/2,y+88,52,col);g.fillStyle='#0c0f1d';g.beginPath();g.arc(x+w/2,y+88,36,0,PI*2);g.fill();g.strokeStyle=col;g.lineWidth=3;g.stroke();T(upInit(u.n),x+w/2,y+88,26,'#fff','center');
-  T(u.n,x+w/2,y+150,fitSz(u.n,230,24,13),'#fff','center');
-  wrapC(u.d,x+w/2,y+184,224,22,15);
-  T(own?'OWNED x'+own+'  \u2022  STACKS':'NEW',x+w/2,y+h-82,11,own?'#ffd34a':'#7dffa0','center');
-  const vs=(v.pl||[]).filter(p=>v.votes[p.id]===i);vs.forEach((p,k)=>{const sk=p.skin&&skinById(p.skin);spr((sk?sk.i:CH[p.ch].i)[0],x+w/2+(k-(vs.length-1)/2)*34,y+h-48,32)});
-  T(cnt[i]?cnt[i]+(cnt[i]===1?' vote':' votes'):(v.n>1?'no votes yet':'pick me'),x+w/2,y+h-18,12,cnt[i]?'#6f6':'#667','center');
-  BT.push({x,y:108,w,h,fn:()=>vote(i)})});
+ v.opts.forEach((id,i)=>{
+  const u=UP[id],cat=upCat(u),col=UPCOL[cat],w=264,h=300,bx=70+i*284,by=110;
+  const ent=upEase((age-.15-i*.12)/.55);
+  if(ent<=0)return;
+  const hv=mx>=bx&&mx<=bx+w&&my>=by&&my<=by+h&&v.vcd==null&&!v.rev;
+  const isMine=mine===i,dim=mineSet&&!isMine,own=v.ups.filter(q=>q===id).length;
+  const cx=bx+w/2,cy=by+h/2,lift=(hv||isMine?-8:0)+(1-ent)*150;
+  const tx=hv?cl((mx-cx)/w,-1,1)*.07:0,ty=hv?cl((my-cy)/h,-1,1)*-.04:0,sc=1+(hv?.03:0)+(isMine?.02:0);
+  BT.push({x:bx,y:by,w,h,fn:()=>vote(i)});
+  const ra=ent*(dim?.42:1);
+  g.save();
+  g.globalAlpha=ra;
+  g.translate(cx,cy+lift);g.transform(1,ty,tx,1,0,0);g.scale(sc,sc);g.translate(-w/2,-h/2);
+  // body and glow
+  g.save();g.shadowColor=isMine?'#ffd34a':col;g.shadowBlur=isMine?30:hv?22:10;
+  const bodyG=g.createLinearGradient(0,0,0,h);bodyG.addColorStop(0,'#1d2240');bodyG.addColorStop(1,'#0c0f1d');
+  g.fillStyle=bodyG;rr(0,0,w,h,16);g.fill();g.restore();
+  g.save();rr(0,0,w,h,16);g.clip();
+  const hg=g.createLinearGradient(0,0,0,44);hg.addColorStop(0,col+'66');hg.addColorStop(1,col+'00');g.fillStyle=hg;g.fillRect(0,0,w,44);
+  if(hv){const sx=((t*1.4)%1.6-.3)*(w+160)-80;const sg=g.createLinearGradient(sx,0,sx+90,h);sg.addColorStop(0,'rgba(255,255,255,0)');sg.addColorStop(.5,'rgba(255,255,255,.16)');sg.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=sg;g.fillRect(0,0,w,h)}
+  g.restore();
+  // frame (crazy cards cycle through the spectrum)
+  const fc=cat==='CRAZY'?'hsl('+((t*90+i*40)%360)+',100%,62%)':col;
+  g.strokeStyle=isMine?'#ffd34a':fc;g.lineWidth=isMine?4:hv?3:2;rr(0,0,w,h,16);g.stroke();
+  // burst ring when I vote
+  if(isMine&&t-UPX.mineT<.7){const p=(t-UPX.mineT)/.7;g.save();g.globalAlpha=ra*(1-p);g.strokeStyle='#ffd34a';g.lineWidth=6*(1-p)+1;g.beginPath();g.arc(w/2,h/2,Math.max(1,w*.55*upEase(p)),0,PI*2);g.stroke();g.restore()}
+  T(cat,16,20,12,col,'left');T('['+kn('up'+(i+1))+']',w-16,20,13,'#9aa','right');
+  // medallion with pulse rings
+  const mx2=w/2,my2=96;
+  for(let k=0;k<2;k++){const p=((t*.9+k*.5)%1);g.save();g.globalAlpha=ra*(1-p)*.5;g.strokeStyle=col;g.lineWidth=2;g.beginPath();g.arc(mx2,my2,38+p*22,0,PI*2);g.stroke();g.restore()}
+  glow(mx2,my2,52,col);
+  g.fillStyle='#0c0f1d';g.beginPath();g.arc(mx2,my2,36,0,PI*2);g.fill();g.strokeStyle=col;g.lineWidth=3;g.stroke();
+  T(upInit(u.n),mx2,my2,26,'#fff','center');
+  T(u.n,mx2,150,fitSz(u.n,w-30,22,12),'#fff','center');
+  wrapC(u.d,mx2,178,w-44,20,14);
+  // ownership pips
+  for(let k=0;k<Math.min(own,8);k++){const px=mx2+(k-(Math.min(own,8)-1)/2)*12,py=h-104;g.fillStyle='#ffd34a';g.beginPath();g.moveTo(px,py-4);g.lineTo(px+4,py);g.lineTo(px,py+4);g.lineTo(px-4,py);g.closePath();g.fill()}
+  T(own?'OWNED x'+own+'  \u2022  STACKS':'NEW',mx2,h-82,11,own?'#ffd34a':'#7dffa0','center');
+  // voters bob in, then the count
+  const vs=(v.pl||[]).filter(p=>v.votes[p.id]===i);
+  vs.forEach((p,k)=>{const sk=p.skin&&skinById(p.skin);spr((sk?sk.i:CH[p.ch].i)[0],mx2+(k-(vs.length-1)/2)*34,h-48+Math.sin(t*5+k)*2,32)});
+  T(cnt[i]?cnt[i]+(cnt[i]===1?' vote':' votes'):(v.n>1?'no votes yet':'pick me'),mx2,h-18,12,cnt[i]?'#6f6':'#667','center');
+  g.restore();
+ });
+
+ // build tray; the newest upgrade pops in
  const cm={};v.ups.forEach(i=>cm[i]=(cm[i]||0)+1);const ids=Object.keys(cm);
- T('YOUR BUILD  ('+v.ups.length+')',70,448,11,'#ffd34a','left');
- if(!ids.length)T('Nothing yet. Pick your first upgrade!',190,448,10,'#667','left','');
- let cx=70,cy=470;ids.forEach(k=>{const u=UP[k],lab=u.n+(cm[k]>1?' x'+cm[k]:''),w=lab.length*6.4+16;if(cx+w>890){cx=70;cy+=24}if(cy>500)return;g.fillStyle='rgba(255,255,255,.07)';rr(cx,cy-9,w,18,9);g.fill();g.strokeStyle=UPCOL[upCat(u)];g.lineWidth=1;g.stroke();T(lab,cx+8,cy,10,'#dde','left');cx+=w+6});
- if(v.vcd!=null){g.fillStyle='rgba(0,0,0,.85)';g.fillRect(0,0,W,H);TS('ALL VOTES IN',W/2,H/2-120,30,'#ffd34a');TS('NEXT BOSS IN',W/2,H/2-70,22,'#fff');TS(String(Math.max(1,Math.ceil(v.vcd))),W/2,H/2+20,120,'#fff')}
- if(v.rev){const u=UP[v.rev.id];g.fillStyle='rgba(0,0,0,.88)';g.fillRect(0,0,W,H);TS('TIE!',W/2,H/2-110,44,'#ff9a3c');T(v.rev.n+' upgrades tied on votes',W/2,H/2-60,16,'#ccd','center');TS(u.n+' WINS',W/2,H/2-5,40,UPCOL[upCat(u)]);T(u.d,W/2,H/2+40,18,'#fff','center');T('Next boss starting...',W/2,H/2+90,14,'#889','center')}}
+ T('YOUR BUILD  ('+v.ups.length+')',70,432,11,'#ffd34a','left');
+ if(!ids.length)T('Nothing yet. Pick your first upgrade!',190,432,10,'#667','left','');
+ let cx=70,cy=452;const popA=cl((t-UPX.popT)/.4,0,1),popS=1+.35*(1-upEase(popA))*(popA<1?1:0);
+ ids.forEach((k,j)=>{const u=UP[k],lab=u.n+(cm[k]>1?' x'+cm[k]:''),w=lab.length*6.4+16;if(cx+w>890){cx=70;cy+=26}if(cy>500)return;
+  const last=j===ids.length-1,s=last&&popA<1?popS:1;
+  g.save();g.translate(cx+w/2,cy);g.scale(s,s);g.translate(-(cx+w/2),-cy);
+  g.fillStyle='rgba(255,255,255,.07)';rr(cx,cy-9,w,18,9);g.fill();g.strokeStyle=UPCOL[upCat(u)];g.lineWidth=1;g.stroke();T(lab,cx+8,cy,10,'#dde','left');
+  g.restore();cx+=w+6});
+ T('Upgrades stack. Your build carries over to the next boss.',70,520,10,'#556','left','');
+
+ // particles
+ UPX.parts.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.97;p.vy*=.97;p.life-=dt});
+ UPX.parts=UPX.parts.filter(p=>p.life>0);
+ g.save();g.globalCompositeOperation='lighter';
+ UPX.parts.forEach(p=>{g.globalAlpha=Math.max(0,p.life/p.max);g.fillStyle=p.c;g.fillRect(p.x-p.r/2,p.y-p.r/2,p.r,p.r)});
+ g.restore();
+
+ // overlays: all votes in, and ties
+ const ov=v.vcd!=null?'vcd':v.rev?'rev':null;
+ if(ov!==UPX.ov){UPX.ov=ov;UPX.ovT=t}
+ if(ov){
+  const oa=cl((t-UPX.ovT)/.35,0,1),oe=upEase(oa);
+  g.fillStyle='rgba(0,0,0,'+(.85*oa)+')';g.fillRect(0,0,W,H);
+  g.save();g.translate(W/2,H/2);g.scale(.8+.2*oe,.8+.2*oe);g.globalAlpha=oa;
+  if(ov==='vcd'){TS('ALL VOTES IN',0,-120,30,'#ffd34a');TS('NEXT BOSS IN',0,-70,22,'#fff');TS(String(Math.max(1,Math.ceil(v.vcd))),0,20,120,'#fff')}
+  else{const u=UP[v.rev.id];TS('TIE!',0,-110,44,'#ff9a3c');T(v.rev.n+' upgrades tied on votes',0,-60,16,'#ccd','center');TS(u.n+' WINS',0,-5,40,UPCOL[upCat(u)]);T(u.d,0,40,18,'#fff','center');T('Next boss starting...',0,90,14,'#889','center')}
+  g.restore();
+ }
+}
 function drawHud(v,dt){const mine=v.pl.find(p=>p.id===me);if(mine&&!mine.dead)msDrawHud(v,mine,dt);(v.bl||[]).forEach(drawLob);
  v.pl.forEach((p,i)=>{if(p.id===me&&v.n===1)return;T(p.name+' '+CH[p.ch].n,14,90+i*22,12,p.dead?'#f66':'#fff','left');g.fillStyle='#000a';g.fillRect(120,84+i*22,80,10);g.fillStyle='#6f6';g.fillRect(120,84+i*22,80*p.hp/p.max,10)});
  if(!mine)return;if(mine.ch==='bomb')drawFuseMeter(mine);if(mine.ch==='jam')drawJamOffer(mine);const c=CH[mine.ch];g.fillStyle='#000a';rr(14,H-44,230,28,8);g.fill();g.fillStyle=mine.hp/mine.max<.3?'#f55':'#5d5';rr(16,H-42,226*mine.hp/mine.max,24,7);g.fill();T(mine.hp+' / '+mine.max,129,H-30,15,'#fff','center');
@@ -7302,7 +7394,7 @@ const MS_Q={
   {n:'Burger Pick-Me-Up',d:'Heal 400 HP from Burger Break in one run.',g:400,sc:'run'},
   {n:'Quick Combo',d:'Land 3 Lunges, each within 3 seconds of the last.',g:3,sc:'best'},
   {n:'Bigger Bite',d:'Heal 1000 HP from Burger Break in one run.',g:1000,sc:'run'},
-  {n:'Lunge Focus',d:'Beat Jackson with at least 40% of your damage to him from Lunge.',g:40,sc:'ev',u:'%'},
+  {n:'Lunge Focus',d:'Beat Fella with at least 40% of your damage to him from Lunge.',g:40,sc:'ev',u:'%'},
   {n:'Hold On',d:'Beat any boss after boss 3 without dropping below 50% HP.',g:100,sc:'ev',u:'%'},
   {n:'Final: Evil Zach Rematch',d:'Beat Evil Zach Rematch solo. A medkit is allowed.',g:100,sc:'ev',u:'%',fin:1}],
  cg:[
@@ -7372,9 +7464,10 @@ function msStateClear(){if(['lobby','over','win','up','bfcut','survcut'].include
 function msBossDead(){msFightEnd();const bi=msBi();
  for(const p of Object.values(S.pl)){if(!MS_H.includes(p.ch)||p.msOn)continue;const q=msQS(p);
   if(p.ch==='zach'){if(bi>=3&&!p.dead&&q.minF>=.5)msQ(p,6,'done');if(bi===8&&!c17Rush()&&S.bs&&S.bs.idx===8&&nPl()===1&&!S.msMulti&&!p.dead)msQ(p,7,'done')}
-  else if(bi>=2&&!p.dead&&q.minF>=.5)msQ(p,5,'done')}}
+  else if(bi>=2&&!p.dead&&q.minF>=.5)msQ(p,5,'done')}
+ if(bi===5&&S.bs&&S.bs.idx===5)for(const p of Object.values(S.pl)){if(p.ch!=='zach'||p.msOn||p.dead)continue;const q=msQS(p);if(q.jt>0&&q.jl/q.jt>=.4)msQ(p,5,'done')}}
 function msC17Win(){if(nPl()!==1||S.msRunMulti)return;for(const p of Object.values(S.pl))if(p.ch==='cg'&&!p.msOn&&!p.dead)msQ(p,7,'done')}
-function msTriDown(q){if(q.name!=='Jackson'||!S.pl)return;for(const p of Object.values(S.pl)){if(p.ch!=='zach'||p.msOn)continue;const t=msQS(p);if(t.jt>0&&t.jl/t.jt>=.4)msQ(p,5,'done')}}
+function msTriDown(q){} /* Lunge Focus now completes on Fella: see msBossDead */
 function msSurvStart(){for(const p of Object.values(S.pl)){const q=msQS(p);q.svOn=1;q.svFail=0}}
 function msSurvPick(p){const q=msQS(p);if(q.svOn)q.svFail=1}
 function msSurvDone(){for(const p of Object.values(S.pl)){const q=msQS(p);if(q.svOn&&!q.svFail&&!p.dead&&p.ch==='cg'&&!p.msOn)msQ(p,4,'done');q.svOn=0}}
@@ -7392,7 +7485,7 @@ function msProjEnd(q){if(q.own!=='p'||!S.pl)return false;const p=S.pl[q.pid];if(
 function msWinCheck(p,w){if(w.end&&w.out<=0&&!w.done){w.done=1;if(w.miss===0&&w.fired>=10)msQ(p,2,'add',1)}}
 function msDmg(v,p,target){if(!p||!S)return;
  if(p.msOn){if(S.dom&&S.dom.pid===p.id)return;const e0=p.msE||0;p.msE=Math.min(100,e0+v*MS_RATE);if(e0<100&&p.msE>=100){X('msFull');fx(['mz','flash']);fx(['d',p.x,p.y-60,MS_I[p.ch].meter+' FULL','#fff',1]);fx(['r',p.x,p.y,110,MS_I[p.ch].c1])}return}
- if(p.ch==='zach'&&S.bs&&S.bs.idx===6&&target==='ally'){const q=msQS(p);q.jt+=v;if(MSLG)q.jl+=v}}
+ if(p.ch==='zach'&&S.bs&&S.bs.idx===5&&target==='main'){const q=msQS(p);q.jt+=v;if(MSLG)q.jl+=v}}
 /* plain per-player housekeeping (runs from stepPl) */
 function msPlStep(p,dt){if(!MS_H.includes(p.ch))return;const q=msQS(p);
  if(!p.msOn){
