@@ -4144,7 +4144,7 @@ const UPDATES=[
   ['NEW','Quest page: open it from the hero card in the lobby with VIEW QUESTS to see every quest and your progress.'],
   ['NEW','Mastery HUD: a quest panel top-right during fights (click the header to collapse it) and a meter for Cursed Energy or Cool Rating.'],
   ['NEW','Prime Zach: Knife Fan (Q) throws 5 knives in a spread. Knife Orbit (E) circles knives around you, and Crimson Rush (R) is the renamed Lunge.'],
-  ['NEW','The Coolest Guy: Punch-Punch-Snap Shot combo, Brick Rain (Q), Shades Beam (E, hold to focus), Rooftop Rush (R), a Cool Chain meter, and Cool Hour (F).'],
+  ['NEW','The Coolest Guy: Punch-Punch-Snap Shot combo, Skyfall Brick (Q), Shades Beam (E, hold to focus), Rooftop Rush (R, 8-brick swarm), a Cool Chain meter, and a faster, laser-heavy Cool Hour (F).'],
   ['NEW','Domain expansions: Knife Extravaganza for Prime Zach and Cool Hour for The Coolest Guy, each with a cutscene. Domains slow the boss music and distort it.'],
   ['NEW','Domain Clash: if you use a domain during Xiao Long Bao\'s domain, Evil Zach challenges you to a button-mash. Win to stun him.'],
   ['CHANGED','The intro now plays every time you open the game. Click or press any key to skip it, and press I on the title screen to replay it.'],
@@ -7462,7 +7462,7 @@ const MS_I={
   ab:[{k:'Q',n:'Knife Fan',d:'Throw 5 knives in a spread at your cursor. Each hit adds a mark.'},{k:'E',n:'Knife Orbit',d:'Six knives circle you 10s. They block shots and shred bosses. R flings 3; 3 marks rain knives.'},{k:'R',n:'Crimson Rush',d:'Dash stab. Press R again in the gold ring for BLACK FLASH. Chain: x3 pins, x4 Zone.'},{k:'F',n:'Domain Expansion',d:'100% energy: Knife Extravaganza, 12s. 60s cooldown.'}]},
  cg:{name:'The Coolest Guy',meter:'COOL RATING',c1:'#5fc8ff',c2:'#ff6ad5',rgb:'95,200,255',dom:'COOL HOUR',domName:'COOL HOUR',
   wp:'Cool Rating: damage up to +50%. Punch, Punch, Shades Snap Shot. Shades Parry counters hits (needs 10% rating).',
-  ab:[{k:'Q',n:'Brick Rain',d:'Throw a volley of bricks high. They fall on the target; each landed brick adds to your Cool Chain.'},{k:'E',n:'Shades Beam',d:'Hold to focus. Longer holds fire a wider, stronger laser; full charge flashes.'},{k:'R',n:'Rooftop Rush',d:'Dash into the boss and land a 3-hit flurry. At 20+ Cool Chain the finisher is a bigger slam with knockback.'},{k:'F',n:'Cool Hour',d:'100% rating: bricks rain in slow motion, 12s. 60s cooldown.'}]}
+  ab:[{k:'Q',n:'Skyfall Brick',d:'Call down one huge brick on the target for a heavy hit.'},{k:'E',n:'Shades Beam',d:'Hold to focus. Longer holds fire a wider, stronger laser; full charge flashes.'},{k:'R',n:'Rooftop Rush',d:'8 piercing bricks fly out in every direction, then swarm the boss after 1s. At 20+ Cool Chain the swarm hits harder.'},{k:'F',n:'Cool Hour',d:'100% rating: bricks rain in slow motion, 12s. 60s cooldown.'}]}
 };
 /* ---- quests. sc: life = accumulates forever, run/best = best single attempt, ev = completed by an event ---- */
 const MS_Q={
@@ -7585,7 +7585,7 @@ function msAbility(p,k){const m=p.m;
   if(k===2)return msRush(p);
   if(k===3){msDomainStart(p);return true}
   return true}
- if(k===0){if(cgRain(p))p.cd[0]=p.cdm[0]=6*m.cdr;return true}
+ if(k===0){cgSky(p);p.cd[0]=p.cdm[0]=5*m.cdr;return true}
  if(k===1){if(p.msBm)return true;p.msBm={ph:'charge',c:0,t:0,a:p.ang||0};X('msCharge');return true}
  if(k===2){if(cgRush(p))p.cd[2]=p.cdm[2]=6.5*m.cdr;return true}
  if(k===3){msDomainStart(p);return true}
@@ -7805,7 +7805,9 @@ function msM1Hit(p,h,dt){if(h.d>0){h.d-=dt;return}
  for(const q of S.pr){if(q.own==='b'&&q.life>0&&!q.pierce&&sectorContains(h,q.x,q.y,q.r+8)){q.life=0;fx(['p',q.x,q.y,5,'#fff',160,.2,3,'spark']);X('parry')}}}
 /* ---- Coolest Guy: skyfall brick, beam, slide ---- */
 function cgSky(p){const T=msNearT(p.x,p.y),tx=T?T.x:p.x+Math.cos(p.ang)*300,ty=T?T.y:p.y+Math.sin(p.ang)*300;
- S.msx.push({k:'sk',pid:p.id,tid:T?T.id:null,sx:p.x,sy:p.y,x:tx,y:ty,t:0,T:.95});X('throw');fx(['p',p.x,p.y-20,8,'#c25a2a',180,.35,4,'shard'])}
+ S.msx.push({k:'sk',pid:p.id,tid:T?T.id:null,sx:p.x,sy:p.y,x:tx,y:ty,t:0,T:.68});
+ X('throw');fx(['p',p.x,p.y-20,8,'#c25a2a',180,.35,4,'shard']);fx(['d',tx,ty-90,'SKYFALL BRICK','#8fe6ff',1]);fx(['mz','cam',.3,1.12,2]);
+ return true}
 function msBeamStep(p,dt){const b=p.msBm;if(!b)return;
  if(b.ph==='charge'){b.t+=dt;b.c=Math.min(1,b.c+dt/1.9);p.jslow=.12;b.a=p.ang||b.a;
   if(b.c>=1&&!b.full){b.full=1;X('msFull');fx(['s',10]);fx(['f','#8fe6ff']);fx(['r',p.x,p.y,70,'#8fe6ff']);fx(['d',p.x,p.y-60,'FULL LASER','#8fe6ff',1])}
@@ -7861,28 +7863,20 @@ function cgLaserFire(p){const a=p.msLaserA!=null?p.msLaserA:p.ang,ca=Math.cos(a)
  fx(['d',p.x,p.y-74,'SNAP SHOT','#8fe6ff',hit?1:0]);
  if(hit){S.hitStop=Math.max(S.hitStop||0,.07);fx(['r',ex,ey,64,'#8fe6ff']);fx(['r',ex,ey,34,'#ffffff']);for(let i=0;i<16;i++)fx(['p',ex+rnd(-30,30),ey+rnd(-30,30),4,i%3?'#8fe6ff':'#ffffff',240,.4,3+(i%3),'spark'])}}
 function cgRush(p){const T=msNearT(p.x,p.y);if(!T)return false;
- const dx=T.x-p.x,dy=T.y-p.y,d=Math.max(1,Math.hypot(dx,dy)),dur=.2;
- p.ang=Math.atan2(dy,dx);p.dash=dur;p.dvx=dx/d*Math.max(650,d/dur);p.dvy=dy/d*Math.max(650,d/dur);p.inv=Math.max(p.inv||0,dur+.25);
- p.msRushTid=T.id;p.msRushQ=[dur+.02,dur+.12,dur+.24];p.msRushN=0;
- X('whoosh');fx(['s',3]);fx(['p',p.x,p.y,10,'#8fe6ff',160,.25,4,'spark']);fx(['mz','cam',.22,1.1,2]);
+ X('throw');fx(['d',p.x,p.y-60,'ROOFTOP RUSH','#8fe6ff',1]);fx(['s',5]);fx(['mz','cam',.25,1.12,3]);
+ for(let i=0;i<8;i++){const a=i*(PI*2/8)+rnd(-.06,.06);
+  S.msx.push({k:'bs',pid:p.id,tid:T.id,x:p.x,y:p.y,vx:Math.cos(a)*560,vy:Math.sin(a)*560,t:0,hitO:0,last:i===7?1:0});
+  fx(['p',p.x+Math.cos(a)*18,p.y+Math.sin(a)*18,4,'#8fe6ff',160,.2,3,'spark']);
+ }
  return true}
-function cgRushStep(p,dt){const q=p.msRushQ;if(!q||!q.length)return;
- q[0]-=dt;if(q[0]>0)return;q.shift();p.msRushN=(p.msRushN||0)+1;
- const T=msTargetById(p.msRushTid);if(!T){p.msRushQ=null;return}
- p.x=cl(T.x-Math.cos(p.ang)*68,30,W-30);p.y=cl(T.y-Math.sin(p.ang)*68,110,H-40);
- const fin=!q.length,big=fin&&(p.msCh||0)>=20,dmg=(fin?30:20)*(1+.6*p.m.multi)*(big?1.6:1);
- hitB(p,dmg,T.x,T.y,'k',T.id);
- X(fin?'msCrack':'chop');fx(['p',T.x,T.y,fin?14:8,fin?'#ffffff':'#8fe6ff',fin?260:180,fin?.4:.26,fin?4:3,'spark']);fx(['s',fin?(big?10:6):2]);
- if(fin){fx(['r',T.x,T.y,big?130:70,big?'#ff6ad5':'#8fe6ff']);fx(['mz','cam',big?.5:.3,big?1.3:1.14,big?7:3]);
-  msKnock(T,p,big?26:14);fx(['d',p.x,p.y-74,big?'ROOFTOP RUSH!':'ROOFTOP RUSH','#8fe6ff',big?1:0]);
-  if(big)for(let i=0;i<16;i++)fx(['p',T.x+rnd(-36,36),T.y+rnd(-36,36),4,i%2?'#ff6ad5':'#8fe6ff',240,.4,3+(i%3),'spark']);
-  p.msRushQ=null}}
-function msDomLaser(p,d){const ts=bossTargets();if(!ts.length)return;const T=ts[Math.floor(R()*ts.length)];
- const side=R()<.5?-1:1,sx=side<0?-40:W+40,sy=rnd(120,H-60),ex=side<0?W+40:-40,ey=rnd(120,H-60);
- const seg=(x0,y0,x1,y1)=>{for(let k=0;k<=12;k++){const u=k/12;fx(['p',x0+(x1-x0)*u,y0+(y1-y0)*u,1,'#ff6ad5',60,.3,2,'spark'])}};
- seg(sx,sy,T.x,T.y);seg(T.x,T.y,ex,ey);fx(['r',ex,ey,36,'#ff6ad5']);fx(['p',ex,ey,6,'#ff6ad5',200,.3,3,'spark']);fx(['s',2]);
- X('msBeam');fx(['s',3]);fx(['r',T.x,T.y,46,'#ff6ad5']);
- hitB(p,16,T.x,T.y,'k',T.id);hitB(p,12,T.x,T.y,'k',T.id)}
+function msDomLaser(p,d){const ts=bossTargets();if(!ts.length)return;
+ const fire=side=>{const T=ts[Math.floor(R()*ts.length)];
+  const sx=side<0?-40:W+40,sy=rnd(120,H-60),ex=side<0?W+40:-40,ey=rnd(120,H-60);
+  const seg=(x0,y0,x1,y1)=>{for(let k=0;k<=12;k++){const u=k/12;fx(['p',x0+(x1-x0)*u,y0+(y1-y0)*u,1,'#ff6ad5',60,.3,2,'spark'])}};
+  seg(sx,sy,T.x,T.y);seg(T.x,T.y,ex,ey);fx(['r',ex,ey,36,'#ff6ad5']);fx(['p',ex,ey,6,'#ff6ad5',200,.3,3,'spark']);fx(['s',2]);
+  X('msBeam');fx(['s',3]);fx(['r',T.x,T.y,46,'#ff6ad5']);
+  hitB(p,16,T.x,T.y,'k',T.id);hitB(p,12,T.x,T.y,'k',T.id)};
+ fire(-1);fire(1)}
 /* ---- counters ---- */
 function msCounter(p,dmg){if(p.msCtCd>0||p.dead||dmg<8||S.st!=='fight'||(S.dom&&S.dom.ph==='cut'))return;const T=msNearT(p.x,p.y);
  if(p.ch==='zach'){p.msCtCd=1.7;
@@ -7913,8 +7907,17 @@ function msEntStep(dt){const L=S.msx;if(!L||!L.length)return;
    for(const T of bossTargets())if(dist(e.x,e.y,T.x,T.y)<T.r+10){e.life=0;hitB(p,22,T.x,T.y,'k',T.id);fx(['p',T.x,T.y,6,'#ff2a3d',220,.3,3,'spark']);X('msKnife');msMark(p,T);break}
    if(e.x<-60||e.x>W+60||e.y<-60||e.y>H+60)e.life=0}
   else if(e.k==='rn'){if(e.delay>0){e.delay-=dt;continue}e.fall+=dt/(e.T||.26);if(e.fall>=1){e.life=0;if(p){const T=bossTargetAt(e.x,e.y,26);if(T)hitB(p,30,T.x,T.y,'k',T.id);if(e.T){fx(['p',e.x,e.y,8,'#8fe6ff',240,.35,3,'spark']);fx(['p',e.x,e.y,4,'#c25a2a',180,.4,5,'shard']);fx(['r',e.x,e.y,34,'#8fe6ff']);fx(['s',2]);X('msBrick')}else{fx(['p',e.x,e.y,6,'#ffcf3a',200,.3,3,'spark']);fx(['r',e.x,e.y,40,'#ff2a3d']);X('msKnife')}}}}
-  else if(e.k==='sk'){e.t+=dt;const T=msTargetById(e.tid);if(T&&e.t<e.T-.2){e.x+=(T.x-e.x)*Math.min(1,dt*8);e.y+=(T.y-e.y)*Math.min(1,dt*8)}
-   if(e.t>=e.T){e.life=0;if(p){X('msBrick');fx(['s',12]);fx(['mz','blur']);fx(['r',e.x,e.y,100,'#8fe6ff']);fx(['p',e.x,e.y,22,'#c25a2a',340,.6,6,'shard']);fx(['p',e.x,e.y,10,'#8fe6ff',260,.4,4,'spark']);
+  else if(e.k==='bs'){e.t+=dt;
+  if(e.t<1){e.x+=e.vx*dt;e.y+=e.vy*dt;
+   if(!e.hitO){for(const q of bossTargets()){if(dist(e.x,e.y,q.x,q.y)<q.r+16){e.hitO=1;if(p)hitB(p,10*(1+.6*p.m.multi),q.x,q.y,'k',q.id);fx(['p',e.x,e.y,5,'#8fe6ff',140,.2,3,'spark']);break}}}
+  }else{const T=msTargetById(e.tid)||msNearT(e.x,e.y);if(!T){e.life=0;continue}
+   if(!e.locked){e.locked=1;X('whoosh')}
+   const dx=T.x-e.x,dy=T.y-e.y,d=Math.hypot(dx,dy)||1,sp=1150;e.x+=dx/d*sp*dt;e.y+=dy/d*sp*dt;
+   if(d<T.r+16||e.t>1.7){e.life=0;if(p){const big=e.last&&(p.msCh||0)>=20;hitB(p,(e.last?30:18)*(1+.6*p.m.multi)*(big?1.4:1),T.x,T.y,'k',T.id);fx(['p',T.x,T.y,e.last?14:8,'#8fe6ff',e.last?260:180,.3,e.last?4:3,'spark']);fx(['s',e.last?(big?9:5):2]);
+    if(e.last){fx(['r',T.x,T.y,big?120:70,big?'#ff6ad5':'#8fe6ff']);fx(['mz','cam',big?.5:.3,big?1.28:1.14,big?7:3]);msKnock(T,p,big?24:12);fx(['d',p.x,p.y-74,big?'ROOFTOP RUSH!':'ROOFTOP RUSH','#8fe6ff',big?1:0]);
+     if(big)for(let i=0;i<16;i++)fx(['p',T.x+rnd(-34,34),T.y+rnd(-34,34),4,i%2?'#ff6ad5':'#8fe6ff',230,.38,3+(i%3),'spark'])}}}}}
+ else if(e.k==='sk'){e.t+=dt;const T=msTargetById(e.tid);if(T&&e.t<e.T-.2){e.x+=(T.x-e.x)*Math.min(1,dt*8);e.y+=(T.y-e.y)*Math.min(1,dt*8)}
+   if(e.t>=e.T){e.life=0;if(p){X('msBrick');fx(['s',14]);fx(['mz','blur']);fx(['mz','cam',.4,1.22,5]);fx(['r',e.x,e.y,100,'#8fe6ff']);fx(['p',e.x,e.y,22,'#c25a2a',340,.6,6,'shard']);fx(['p',e.x,e.y,10,'#8fe6ff',260,.4,4,'spark']);
     S.msx.push({k:'ck',x:e.x,y:e.y,a:rnd(0,PI),age:0,life:1.1});
     for(const t of bossTargets())if(dist(e.x,e.y,t.x,t.y)<82+t.r)hitB(p,100,t.x,t.y,'k',t.id)}}}
   else if(e.k==='ck'){e.age+=S.msRdt||dt;if(e.age>=e.life)e.life=0;else e.life=Math.max(e.life,.01)}
@@ -7936,7 +7939,7 @@ function msDomLand(p,e,mul){e.life=0;e.dead=1;if(!p)return;const T=msTargetById(
  if(e.h==='zach'){fx(['p',e.lx,e.ly,mul>1?10:4,'#ffe9a0',220,.35,3,'spark']);if(T)hitB(p,15*mul,T.x,T.y,'k',T.id);if(Math.random()<.4)X('msKnife')}
  else{fx(['mz','flare',e.lx,e.ly]);fx(['p',e.lx,e.ly,8,'#8fe6ff',300,.5,4,'shard']);fx(['r',e.lx,e.ly,60,'#8fe6ff']);if(Math.random()<.5)X('msBrick');for(const t of bossTargets())if(dist(e.lx,e.ly,t.x,t.y)<62+t.r)hitB(p,22*mul,t.x,t.y,'k',t.id)}}
 function msDomStep(dt){const d=S.dom;if(!d||d.ph==='cut')return;const p=S.pl[d.pid];if(!p){S.dom=null;return}const rd=S.msRdt||dt;d.t+=rd;
- if(d.ph==='run'){const u=cl(d.t/d.dur,0,1),rate=d.h==='zach'?4+14*u:2.4+6.6*u;d.acc+=rd*rate;while(d.acc>=1){d.acc-=1;msDomSpawn(p,d,u)}if(d.h==='cg'){d.lz=(d.lz==null?.6:d.lz)-rd;if(d.lz<=0){d.lz=rnd(.45,.7);msDomLaser(p,d)}}
+ if(d.ph==='run'){const u=cl(d.t/d.dur,0,1),rate=d.h==='zach'?4+14*u:4+12*u;d.acc+=rd*rate;while(d.acc>=1){d.acc-=1;msDomSpawn(p,d,u)}if(d.h==='cg'){d.lz=(d.lz==null?.35:d.lz)-rd;if(d.lz<=0){d.lz=rnd(.22,.36);msDomLaser(p,d)}}
   if(d.t>=d.dur){d.ph='fade';d.t=0;X('msDomain')}}
  else if(d.ph==='fade'){S.msx.forEach(e=>{if(e.k==='dk')e.fr=1});if(d.t>=1){d.ph='drop';d.t=0;fx(['f','#ffffff']);fx(['s',16]);X('msTitle');for(const e of S.msx)if(e.k==='dk')msDomLand(p,e,1.5);fx(['r',480,300,420,MS_I[d.h].c1])}}
  else if(d.ph==='drop'){if(d.t>=.8){p.msDomCd=60;S.dom=null}}}
@@ -7968,7 +7971,7 @@ function msSnap(){const C=S.msc||{},cl={};MS_H.forEach(h=>{const o=C[h];cl[h]=o&
  const T=bossTargets();
  if(S.msSl){const a=[];for(const id in S.msSl){const t=T.find(q=>q.id===id);if(t)a.push([t.x|0,t.y|0,S.msSl[id].n,+S.msSl[id].t.toFixed(1)])}if(a.length)o.sl=a}
  if(S.msRm){const a=[];for(const id in S.msRm){const t=T.find(q=>q.id===id);if(t)a.push([t.x|0,t.y|0,S.msRm[id].n])}if(a.length)o.rm=a}
- if(S.msx&&S.msx.length)o.e=S.msx.map(e=>e.k==='kn'?[0,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='fk'?[5,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='rn'?[1,e.x|0,e.y|0,+Math.max(0,e.delay).toFixed(2),+e.fall.toFixed(2),e.cg?1:0]:e.k==='sk'?[2,e.x|0,e.y|0,+(e.t/e.T).toFixed(2),e.sx|0,e.sy|0]:e.k==='ck'?[3,e.x|0,e.y|0,+e.a.toFixed(2),+e.age.toFixed(2),e.life]:[4,e.sx|0,e.sy|0,e.lx|0,e.ly|0,+e.u.toFixed(2),e.fr,e.h==='cg'?1:0]);
+ if(S.msx&&S.msx.length)o.e=S.msx.map(e=>e.k==='kn'?[0,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='fk'?[5,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='rn'?[1,e.x|0,e.y|0,+Math.max(0,e.delay).toFixed(2),+e.fall.toFixed(2),e.cg?1:0]:e.k==='sk'?[2,e.x|0,e.y|0,+(e.t/e.T).toFixed(2),e.sx|0,e.sy|0]:e.k==='ck'?[3,e.x|0,e.y|0,+e.a.toFixed(2),+e.age.toFixed(2),e.life]:e.k==='bs'?[6,e.x|0,e.y|0,+e.t.toFixed(2),e.last?1:0]:[4,e.sx|0,e.sy|0,e.lx|0,e.ly|0,+e.u.toFixed(2),e.fr,e.h==='cg'?1:0]);
  return o}
 /* ---------------------------- small helpers ---------------------------- */
 const MSC={zach:{a:'255,205,60',b:'255,42,61'},cg:{a:'95,200,255',b:'255,106,213'}};
@@ -8049,6 +8052,7 @@ function msDrawWorld(v,t){const ms=v.ms;if(!ms)return;
   else{const yy=y-(1-fl)*320;spr('pzk',x,yy,54,PI);glow(x,yy,18,'rgba(255,205,60,1)')}}
   else if(k===2){const [,x,y,u,sx,sy]=e,h=Math.sin(u*PI)*230,px=sx+(x-sx)*u,py=sy+(y-sy)*u;g.strokeStyle='rgba(95,200,255,'+(.3+.6*u)+')';g.lineWidth=3;g.beginPath();g.arc(x,y,84*(1.05-u*.55),0,PI*2);g.stroke();g.strokeStyle='rgba(255,255,255,'+.4*u+')';g.beginPath();g.arc(x,y,84,0,PI*2);g.stroke();g.fillStyle='rgba(0,0,0,'+(.15+.25*u)+')';g.beginPath();g.ellipse(x,y,40*u+10,20*u+5,0,0,PI*2);g.fill();spr('brick',px,py-h,58+h*.1,u*14)}
   else if(k===3){const [,x,y,a,age,life]=e,u=age/life,al=1-u*u;g.save();g.translate(x,y);g.rotate(a);g.globalAlpha=al;g.strokeStyle='#1a0e08';g.lineWidth=4;g.lineCap='round';g.beginPath();for(const b of[[-52,0,52,4],[0,-34,6,36],[-26,-18,30,20],[10,8,40,-26],[-8,10,-36,30]]){g.moveTo(b[0],b[1]);g.lineTo(b[2],b[3])}g.stroke();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(143,230,255,'+al*.8+')';g.lineWidth=2;g.stroke();g.restore()}
+  else if(k===6){const [,x,y,tt,last]=e;g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(143,230,255,.5)';g.lineWidth=3;g.beginPath();g.moveTo(x-Math.cos(tt*4)*16,y-Math.sin(tt*4)*16);g.lineTo(x,y);g.stroke();g.restore();glow(x,y,last?30:17,last?'rgba(255,106,213,1)':'rgba(143,230,255,1)');spr('brick',x,y,last?48:34,tt*7)}
   else if(k===4){const [,sx,sy,lx,ly,u,fr,cg]=e;const uu=cg?u:u,px=sx+(lx-sx)*uu,py=sy+(ly-sy)*uu,h=(1-uu)*(cg?170:230);
    g.strokeStyle=cg?'rgba(95,230,255,'+(.25+.5*uu)+')':'rgba(255,42,61,'+(.25+.5*uu)+')';g.lineWidth=2;g.beginPath();g.ellipse(lx,ly,34*(1.3-uu*.6),17*(1.3-uu*.6),0,0,PI*2);g.stroke();
    g.save();g.globalCompositeOperation='lighter';g.strokeStyle=cg?'rgba(143,230,255,.18)':'rgba(255,205,60,.2)';g.lineWidth=3;g.beginPath();g.moveTo(px,py-h);g.lineTo(px-(lx-sx)*.12,py-h-(ly-sy)*.12-30*(cg?0:1));g.stroke();g.restore();
@@ -8361,7 +8365,7 @@ function msDrawClash(v,t,c){const sh=c.ph==='mash'?rnd(-3,3):0;g.save();g.transl
  g.restore()}
 /* ---------------------------- HUD ---------------------------- */
 function msHudSlots(v,mine){if(!msOn(mine))return false;const h=mine.ch,ms=mine.ms,dom=v.ms&&v.ms.dom;
- const S2=h==='zach'?[{k:0,l:'Q',n:'Knife Fan'},{k:1,l:'E',n:'Knife Orbit'},{k:2,l:'R',n:'Crimson Rush'},{k:3,l:'F',n:'Domain'}]:[{k:0,l:'Q',n:'Brick Rain'},{k:1,l:'E',n:'Shades Beam'},{k:2,l:'R',n:'Rooftop Rush'},{k:3,l:'F',n:'Cool Hour'}];
+ const S2=h==='zach'?[{k:0,l:'Q',n:'Knife Fan'},{k:1,l:'E',n:'Knife Orbit'},{k:2,l:'R',n:'Crimson Rush'},{k:3,l:'F',n:'Domain'}]:[{k:0,l:'Q',n:'Skyfall Brick'},{k:1,l:'E',n:'Shades Beam'},{k:2,l:'R',n:'Rooftop Rush'},{k:3,l:'F',n:'Cool Hour'}];
  const w=102,gp=8,tot=S2.length*w+(S2.length-1)*gp,x0=W/2-tot/2,y=H-52,c=MSC[h];
  S2.forEach((s,i)=>{const x=x0+i*(w+gp);const k=s.k;let cd=k<3?(mine.cd[k]||0):ms.dc,cdm=k<3?(mine.cdm[k]||1):60,rdy=cd<=0,lab=s.n,fill=0;
   if(k===3){rdy=ms.e>=100&&ms.dc<=0&&!dom;fill=rdy?1:Math.min(1,ms.e/100);lab=dom&&dom.pid===mine.id?'ACTIVE':ms.e>=100?(ms.dc>0?'COOLDOWN':'READY'):Math.floor(ms.e)+'%'}
