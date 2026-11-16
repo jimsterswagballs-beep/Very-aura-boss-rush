@@ -4144,7 +4144,7 @@ const UPDATES=[
   ['NEW','Quest page: open it from the hero card in the lobby with VIEW QUESTS to see every quest and your progress.'],
   ['NEW','Mastery HUD: a quest panel top-right during fights (click the header to collapse it) and a meter for Cursed Energy or Cool Rating.'],
   ['NEW','Prime Zach: Knife Fan (Q) throws 5 knives in a spread. Knife Orbit (E) circles knives around you, and Crimson Rush (R) is the renamed Lunge.'],
-  ['NEW','The Coolest Guy: Skyfall Brick (Q), Shades Beam (E, hold to charge), Cool Slide (R) with a shadow clone, and Cool Hour (F).'],
+  ['NEW','The Coolest Guy: Punch-Punch-Snap Shot combo, Brick Rain (Q), Shades Beam (E, hold to focus), Rooftop Rush (R), a Cool Chain meter, and Cool Hour (F).'],
   ['NEW','Domain expansions: Knife Extravaganza for Prime Zach and Cool Hour for The Coolest Guy, each with a cutscene. Domains slow the boss music and distort it.'],
   ['NEW','Domain Clash: if you use a domain during Xiao Long Bao\'s domain, Evil Zach challenges you to a button-mash. Win to stun him.'],
   ['CHANGED','The intro now plays every time you open the game. Click or press any key to skip it, and press I on the title screen to replay it.'],
@@ -7462,7 +7462,7 @@ const MS_I={
   ab:[{k:'Q',n:'Knife Fan',d:'Throw 5 knives in a spread at your cursor. Each hit adds a mark.'},{k:'E',n:'Knife Orbit',d:'Six knives circle you 10s. They block shots and shred bosses. R flings 3; 3 marks rain knives.'},{k:'R',n:'Crimson Rush',d:'Dash stab. Press R again in the gold ring for BLACK FLASH. Chain: x3 pins, x4 Zone.'},{k:'F',n:'Domain Expansion',d:'100% energy: Knife Extravaganza, 12s. 60s cooldown.'}]},
  cg:{name:'The Coolest Guy',meter:'COOL RATING',c1:'#5fc8ff',c2:'#ff6ad5',rgb:'95,200,255',dom:'COOL HOUR',domName:'COOL HOUR',
   wp:'Cool Rating: damage up to +50%. Punch, Punch, Shades Snap Shot. Shades Parry counters hits (needs 10% rating).',
-  ab:[{k:'Q',n:'Brick Rain',d:'Throw a volley of bricks high. They fall on the target; each landed brick adds to your Cool Chain.'},{k:'E',n:'Shades Beam',d:'Hold to focus. Longer holds fire a wider, stronger laser; full charge flashes.'},{k:'R',n:'Freeze Frame',d:'Freeze the boss for a moment. Costs 10 Cool Chain. Hits during the freeze deal 50% more.'},{k:'F',n:'Cool Hour',d:'100% rating: bricks rain in slow motion, 12s. 60s cooldown.'}]}
+  ab:[{k:'Q',n:'Brick Rain',d:'Throw a volley of bricks high. They fall on the target; each landed brick adds to your Cool Chain.'},{k:'E',n:'Shades Beam',d:'Hold to focus. Longer holds fire a wider, stronger laser; full charge flashes.'},{k:'R',n:'Rooftop Rush',d:'Dash into the boss and land a 3-hit flurry. At 20+ Cool Chain the finisher is a bigger slam with knockback.'},{k:'F',n:'Cool Hour',d:'100% rating: bricks rain in slow motion, 12s. 60s cooldown.'}]}
 };
 /* ---- quests. sc: life = accumulates forever, run/best = best single attempt, ev = completed by an event ---- */
 const MS_Q={
@@ -7536,7 +7536,7 @@ function msQL(p){const q=msQS(p),f=S.st==='fight'?msBossFrac():1,lost=cl((1-f)*1
  const bi=msBi();
  return[q.br,q.dg,-1,q.sk,q.svOn&&!q.svFail&&S.st==='survival'?cl(S.survElapsed/(S.survMax||93.179)*100,0,100):0,(bi>=2&&q.minF>=.5&&S.st==='fight')?lost:0,Math.min(15,q.au),(c17Rush()&&nPl()===1&&!S.msRunMulti)?cl(S.bi/BD.length*100,0,100):0]}
 function msFightStart(){for(const p of Object.values(S.pl||{}))p.msCh=0;S.msMulti=0;S.msFz=null;S.msSl={};S.msRm={};S.msx=[];S.dom=null;S.clash=null;S.msSlowT=0;S.msFzCd=0;
- for(const p of Object.values(S.pl)){const q=msQS(p);q.br=0;q.sk=0;q.jt=0;q.jl=0;q.minF=p.max?p.hp/p.max:1;q.win=null;q.ch=0;p.msOrb=null;p.msBf=null;p.msRush=null;p.msBm=null;p.msCl=null}}
+ for(const p of Object.values(S.pl)){const q=msQS(p);q.br=0;q.sk=0;q.jt=0;q.jl=0;q.minF=p.max?p.hp/p.max:1;q.win=null;q.ch=0;p.msOrb=null;p.msBf=null;p.msRush=null;p.msBm=null;p.msCl=null;p.msRushQ=null}}
 function msFightEnd(){const d=S.dom;if(d){const p=S.pl[d.pid];if(p)p.msDomCd=60}S.dom=null;S.clash=null;S.msx=[];S.msFz=null;S.msSl={};S.msRm={};S.msSlowT=0}
 function msStateClear(){if(['lobby','over','win','up','bfcut','survcut'].includes(S.st)&&(S.dom||S.clash||(S.msx&&S.msx.length)))msFightEnd()}
 function msBossDead(){msFightEnd();const bi=msBi();
@@ -7575,7 +7575,7 @@ function msPlStep(p,dt){if(!MS_H.includes(p.ch))return;const q=msQS(p);
  if(S.dom&&S.dom.pid===p.id){}else if(p.msDomCd>0)p.msDomCd-=dt;
  p.msCtCd=Math.max(0,(p.msCtCd||0)-dt);p.msMissT=Math.max(0,(p.msMissT||0)-dt);p.msCtT=Math.max(0,(p.msCtT||0)-dt);
  if(p.msOrb)msOrbStep(p,dt);if(p.ch==='zach')msBfStep(p,dt);
- if(p.ch==='cg'){msBeamStep(p,dt);msCloneStep(p,dt);msChainStep(p,dt);if(p.msLaserT>0){p.msLaserT-=dt;if(p.msLaserT<=0){p.msLaserT=0;cgLaserFire(p)}}}}
+ if(p.ch==='cg'){msBeamStep(p,dt);msCloneStep(p,dt);msChainStep(p,dt);cgRushStep(p,dt);if(p.msLaserT>0){p.msLaserT-=dt;if(p.msLaserT<=0){p.msLaserT=0;cgLaserFire(p)}}}}
 /* ---- mastery hooks inside existing attack / ability ---- */
 function msAttack(p){if(p.stunT>0)return true;return p.ch==='zach'?pzAttack(p):cgAttack(p)}
 function msAbility(p,k){const m=p.m;
@@ -7587,7 +7587,7 @@ function msAbility(p,k){const m=p.m;
   return true}
  if(k===0){if(cgRain(p))p.cd[0]=p.cdm[0]=6*m.cdr;return true}
  if(k===1){if(p.msBm)return true;p.msBm={ph:'charge',c:0,t:0,a:p.ang||0};X('msCharge');return true}
- if(k===2){if(cgFreeze(p))p.cd[2]=p.cdm[2]=6*m.cdr;return true}
+ if(k===2){if(cgRush(p))p.cd[2]=p.cdm[2]=6.5*m.cdr;return true}
  if(k===3){msDomainStart(p);return true}
  return true}
 /* ---- marks / pins ---- */
@@ -7839,7 +7839,7 @@ function msChainHit(p,base,x,y){const now=S.t||0;if(p.msChT==null||now-p.msChT>=
 function msChainStep(p,dt){if((p.msGapT||0)>0)p.msGapT=Math.max(0,p.msGapT-dt);if(!p.msCh)return;
  if((S.t||0)-(p.msChL||0)>2.5){p.msCh=0;fx(['r',p.x,p.y,50,'#8fe6ff']);fx(['s',2]);fx(['d',p.x,p.y-70,'CHAIN LOST','#8fe6ff',0])}}
 function cgRain(p){const T=msNearT(p.x,p.y);if(!T)return false;X('throw');fx(['d',T.x,T.y-90,'BRICK RAIN','#8fe6ff',1]);fx(['s',7]);fx(['mz','cam',.5,1.14,3]);
- for(let i=0;i<12;i++){const a=rnd(0,PI*2),r=rnd(0,T.r*1.1);S.msx.push({k:'rn',pid:p.id,tid:T.id,x:T.x+Math.cos(a)*r,y:T.y+Math.sin(a)*r*.7,delay:.1+i*.07+rnd(0,.08),fall:0,T:.5})}
+ for(let i=0;i<12;i++){const a=rnd(0,PI*2),r=rnd(0,T.r*1.1);S.msx.push({k:'rn',pid:p.id,tid:T.id,x:T.x+Math.cos(a)*r,y:T.y+Math.sin(a)*r*.7,delay:.1+i*.07+rnd(0,.08),fall:0,T:.5,cg:1})}
  return true}
 function cgFreeze(p){const T=msNearT(p.x,p.y);if(!T)return false;
  if((p.msCh||0)<10){fx(['d',p.x,p.y-60,'NEED 10 COOL CHAIN','#8fe6ff',0]);return false}
@@ -7860,6 +7860,23 @@ function cgLaserFire(p){const a=p.msLaserA!=null?p.msLaserA:p.ang,ca=Math.cos(a)
  fx(['r',ox,oy,34,'#8fe6ff']);fx(['p',ox,oy,10,'#ffffff',200,.3,4,'spark']);
  fx(['d',p.x,p.y-74,'SNAP SHOT','#8fe6ff',hit?1:0]);
  if(hit){S.hitStop=Math.max(S.hitStop||0,.07);fx(['r',ex,ey,64,'#8fe6ff']);fx(['r',ex,ey,34,'#ffffff']);for(let i=0;i<16;i++)fx(['p',ex+rnd(-30,30),ey+rnd(-30,30),4,i%3?'#8fe6ff':'#ffffff',240,.4,3+(i%3),'spark'])}}
+function cgRush(p){const T=msNearT(p.x,p.y);if(!T)return false;
+ const dx=T.x-p.x,dy=T.y-p.y,d=Math.max(1,Math.hypot(dx,dy)),dur=.2;
+ p.ang=Math.atan2(dy,dx);p.dash=dur;p.dvx=dx/d*Math.max(650,d/dur);p.dvy=dy/d*Math.max(650,d/dur);p.inv=Math.max(p.inv||0,dur+.25);
+ p.msRushTid=T.id;p.msRushQ=[dur+.02,dur+.12,dur+.24];p.msRushN=0;
+ X('whoosh');fx(['s',3]);fx(['p',p.x,p.y,10,'#8fe6ff',160,.25,4,'spark']);fx(['mz','cam',.22,1.1,2]);
+ return true}
+function cgRushStep(p,dt){const q=p.msRushQ;if(!q||!q.length)return;
+ q[0]-=dt;if(q[0]>0)return;q.shift();p.msRushN=(p.msRushN||0)+1;
+ const T=msTargetById(p.msRushTid);if(!T){p.msRushQ=null;return}
+ p.x=cl(T.x-Math.cos(p.ang)*68,30,W-30);p.y=cl(T.y-Math.sin(p.ang)*68,110,H-40);
+ const fin=!q.length,big=fin&&(p.msCh||0)>=20,dmg=(fin?30:20)*(1+.6*p.m.multi)*(big?1.6:1);
+ hitB(p,dmg,T.x,T.y,'k',T.id);
+ X(fin?'msCrack':'chop');fx(['p',T.x,T.y,fin?14:8,fin?'#ffffff':'#8fe6ff',fin?260:180,fin?.4:.26,fin?4:3,'spark']);fx(['s',fin?(big?10:6):2]);
+ if(fin){fx(['r',T.x,T.y,big?130:70,big?'#ff6ad5':'#8fe6ff']);fx(['mz','cam',big?.5:.3,big?1.3:1.14,big?7:3]);
+  msKnock(T,p,big?26:14);fx(['d',p.x,p.y-74,big?'ROOFTOP RUSH!':'ROOFTOP RUSH','#8fe6ff',big?1:0]);
+  if(big)for(let i=0;i<16;i++)fx(['p',T.x+rnd(-36,36),T.y+rnd(-36,36),4,i%2?'#ff6ad5':'#8fe6ff',240,.4,3+(i%3),'spark']);
+  p.msRushQ=null}}
 function msDomLaser(p,d){const ts=bossTargets();if(!ts.length)return;const T=ts[Math.floor(R()*ts.length)];
  const side=R()<.5?-1:1,sx=side<0?-40:W+40,sy=rnd(120,H-60),ex=side<0?W+40:-40,ey=rnd(120,H-60);
  const seg=(x0,y0,x1,y1)=>{for(let k=0;k<=12;k++){const u=k/12;fx(['p',x0+(x1-x0)*u,y0+(y1-y0)*u,1,'#ff6ad5',60,.3,2,'spark'])}};
@@ -7951,7 +7968,7 @@ function msSnap(){const C=S.msc||{},cl={};MS_H.forEach(h=>{const o=C[h];cl[h]=o&
  const T=bossTargets();
  if(S.msSl){const a=[];for(const id in S.msSl){const t=T.find(q=>q.id===id);if(t)a.push([t.x|0,t.y|0,S.msSl[id].n,+S.msSl[id].t.toFixed(1)])}if(a.length)o.sl=a}
  if(S.msRm){const a=[];for(const id in S.msRm){const t=T.find(q=>q.id===id);if(t)a.push([t.x|0,t.y|0,S.msRm[id].n])}if(a.length)o.rm=a}
- if(S.msx&&S.msx.length)o.e=S.msx.map(e=>e.k==='kn'?[0,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='fk'?[5,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='rn'?[1,e.x|0,e.y|0,+Math.max(0,e.delay).toFixed(2),+e.fall.toFixed(2)]:e.k==='sk'?[2,e.x|0,e.y|0,+(e.t/e.T).toFixed(2),e.sx|0,e.sy|0]:e.k==='ck'?[3,e.x|0,e.y|0,+e.a.toFixed(2),+e.age.toFixed(2),e.life]:[4,e.sx|0,e.sy|0,e.lx|0,e.ly|0,+e.u.toFixed(2),e.fr,e.h==='cg'?1:0]);
+ if(S.msx&&S.msx.length)o.e=S.msx.map(e=>e.k==='kn'?[0,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='fk'?[5,e.x|0,e.y|0,+e.rot.toFixed(2)]:e.k==='rn'?[1,e.x|0,e.y|0,+Math.max(0,e.delay).toFixed(2),+e.fall.toFixed(2),e.cg?1:0]:e.k==='sk'?[2,e.x|0,e.y|0,+(e.t/e.T).toFixed(2),e.sx|0,e.sy|0]:e.k==='ck'?[3,e.x|0,e.y|0,+e.a.toFixed(2),+e.age.toFixed(2),e.life]:[4,e.sx|0,e.sy|0,e.lx|0,e.ly|0,+e.u.toFixed(2),e.fr,e.h==='cg'?1:0]);
  return o}
 /* ---------------------------- small helpers ---------------------------- */
 const MSC={zach:{a:'255,205,60',b:'255,42,61'},cg:{a:'95,200,255',b:'255,106,213'}};
@@ -8024,7 +8041,12 @@ function msDrawWorld(v,t){const ms=v.ms;if(!ms)return;
  (ms.e||[]).forEach(e=>{const k=e[0];
   if(k===0){glow(e[1],e[2],26,'rgba(255,42,61,1)');spr('pzk',e[1],e[2],50,e[3]+PI/2)}
   else if(k===5){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,205,60,.35)';g.lineWidth=5;g.beginPath();g.moveTo(e[1],e[2]);g.lineTo(e[1]-Math.cos(e[3])*46,e[2]-Math.sin(e[3])*46);g.stroke();g.restore();glow(e[1],e[2],20,'rgba(255,205,60,1)');spr('pzk',e[1],e[2],46,e[3]+PI/2)}
-  else if(k===1){const [,x,y,dl,fl]=e;if(dl>0){const u=1-Math.min(1,dl/.9);g.fillStyle='rgba(0,0,0,'+.28*u+')';g.beginPath();g.ellipse(x,y,6+14*u,3+7*u,0,0,PI*2);g.fill();g.strokeStyle='rgba(255,42,61,'+.8*u+')';g.lineWidth=2;g.beginPath();g.ellipse(x,y,20,10,0,0,PI*2);g.stroke()}else{const yy=y-(1-fl)*320;spr('pzk',x,yy,54,PI);glow(x,yy,18,'rgba(255,205,60,1)')}}
+  else if(k===1){const [,x,y,dl,fl,bk]=e;const cgB=!!bk;
+  if(dl>0){const u=1-Math.min(1,dl/(cgB?.55:.9));g.fillStyle='rgba(0,0,0,'+.3*u+')';g.beginPath();g.ellipse(x,y,7+15*u,3+8*u,0,0,PI*2);g.fill();
+   g.strokeStyle=cgB?'rgba(143,230,255,'+.85*u+')':'rgba(255,42,61,'+.8*u+')';g.lineWidth=2;g.beginPath();g.ellipse(x,y,21,11,0,0,PI*2);g.stroke();
+   if(cgB){g.save();g.globalAlpha=.55*u;g.strokeStyle='#8fe6ff';g.lineWidth=1.5;g.beginPath();g.moveTo(x,y-300*u);g.lineTo(x,y-6);g.stroke();g.restore()}}
+  else if(cgB){const yy=y-(1-fl)*300;spr('brick',x,yy,52,fl*7);glow(x,yy,20,'rgba(143,230,255,1)')}
+  else{const yy=y-(1-fl)*320;spr('pzk',x,yy,54,PI);glow(x,yy,18,'rgba(255,205,60,1)')}}
   else if(k===2){const [,x,y,u,sx,sy]=e,h=Math.sin(u*PI)*230,px=sx+(x-sx)*u,py=sy+(y-sy)*u;g.strokeStyle='rgba(95,200,255,'+(.3+.6*u)+')';g.lineWidth=3;g.beginPath();g.arc(x,y,84*(1.05-u*.55),0,PI*2);g.stroke();g.strokeStyle='rgba(255,255,255,'+.4*u+')';g.beginPath();g.arc(x,y,84,0,PI*2);g.stroke();g.fillStyle='rgba(0,0,0,'+(.15+.25*u)+')';g.beginPath();g.ellipse(x,y,40*u+10,20*u+5,0,0,PI*2);g.fill();spr('brick',px,py-h,58+h*.1,u*14)}
   else if(k===3){const [,x,y,a,age,life]=e,u=age/life,al=1-u*u;g.save();g.translate(x,y);g.rotate(a);g.globalAlpha=al;g.strokeStyle='#1a0e08';g.lineWidth=4;g.lineCap='round';g.beginPath();for(const b of[[-52,0,52,4],[0,-34,6,36],[-26,-18,30,20],[10,8,40,-26],[-8,10,-36,30]]){g.moveTo(b[0],b[1]);g.lineTo(b[2],b[3])}g.stroke();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(143,230,255,'+al*.8+')';g.lineWidth=2;g.stroke();g.restore()}
   else if(k===4){const [,sx,sy,lx,ly,u,fr,cg]=e;const uu=cg?u:u,px=sx+(lx-sx)*uu,py=sy+(ly-sy)*uu,h=(1-uu)*(cg?170:230);
@@ -8339,7 +8361,7 @@ function msDrawClash(v,t,c){const sh=c.ph==='mash'?rnd(-3,3):0;g.save();g.transl
  g.restore()}
 /* ---------------------------- HUD ---------------------------- */
 function msHudSlots(v,mine){if(!msOn(mine))return false;const h=mine.ch,ms=mine.ms,dom=v.ms&&v.ms.dom;
- const S2=h==='zach'?[{k:0,l:'Q',n:'Knife Fan'},{k:1,l:'E',n:'Knife Orbit'},{k:2,l:'R',n:'Crimson Rush'},{k:3,l:'F',n:'Domain'}]:[{k:0,l:'Q',n:'Skyfall Brick'},{k:1,l:'E',n:'Shades Beam'},{k:2,l:'R',n:'Cool Slide'},{k:3,l:'F',n:'Cool Hour'}];
+ const S2=h==='zach'?[{k:0,l:'Q',n:'Knife Fan'},{k:1,l:'E',n:'Knife Orbit'},{k:2,l:'R',n:'Crimson Rush'},{k:3,l:'F',n:'Domain'}]:[{k:0,l:'Q',n:'Brick Rain'},{k:1,l:'E',n:'Shades Beam'},{k:2,l:'R',n:'Rooftop Rush'},{k:3,l:'F',n:'Cool Hour'}];
  const w=102,gp=8,tot=S2.length*w+(S2.length-1)*gp,x0=W/2-tot/2,y=H-52,c=MSC[h];
  S2.forEach((s,i)=>{const x=x0+i*(w+gp);const k=s.k;let cd=k<3?(mine.cd[k]||0):ms.dc,cdm=k<3?(mine.cdm[k]||1):60,rdy=cd<=0,lab=s.n,fill=0;
   if(k===3){rdy=ms.e>=100&&ms.dc<=0&&!dom;fill=rdy?1:Math.min(1,ms.e/100);lab=dom&&dom.pid===mine.id?'ACTIVE':ms.e>=100?(ms.dc>0?'COOLDOWN':'READY'):Math.floor(ms.e)+'%'}
