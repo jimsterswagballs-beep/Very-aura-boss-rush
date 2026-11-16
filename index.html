@@ -830,7 +830,7 @@ function reviveStep(p,dt){
   if(down.rvT<7.5)continue;
   down.dead=0;down.hp=Math.max(1,Math.round(down.max*.01));down.hpCap=down.hp;down.inv=2;down.dec=null;down.ls=0;down.stunT=0;down.sh=0;
   down.rvT=0;down.rvAt=-9;
-  fx(['r',down.x,down.y,110,'#7dffa0']);fx(['rv',down.x,down.y]);fx(['p',down.x,down.y,30,'#bfffd6',300,.7,4]);fx(['d',down.x,down.y-50,'REVIVED','#7dffa0',0]);X('revive');
+  fx(['rv',down.x|0,down.y|0,down.ch,down.id,down.skin||'',down.name||'']);fx(['p',down.x,down.y,30,'#bfffd6',300,.7,4]);fx(['s',6]);X('revDone');
  }
 }
 function stepPl(p,dt){if(p.dead){p.boom=null;p.windup=0;p.hide=0;p.cs=0;p.jch=0;p.jwind=0;return}c17PlStep(p,dt);msPlStep(p,dt);reviveStep(p,dt);const i=p.stunT>0?{kx:0,ky:0,ang:p.ang,d:0,a:[0,0,0]}:p.in,m=p.m,b=S.bs;p.cs=Math.max(0,(p.cs||0)-dt);
@@ -4044,7 +4044,7 @@ function particleShape(c,explicit){if(explicit)return explicit;const v=String(c|
 function procEv(a){for(const e of a)switch(e[0]){
  case'coin':awardZachCoins(e[1]);break;case'd':DN.push({x:e[1],y:e[2],t:0,s:''+e[3],c:e[4],b:e[5]});break;
  case'p':{const shape=particleShape(e[4],e[8]);for(let i=0;i<e[3]&&PT.length<900;i++){const an=R()*PI*2,sp=R()*e[5];PT.push({x:e[1],y:e[2],vx:Math.cos(an)*sp,vy:Math.sin(an)*sp,l:e[6]*(.5+R()),m:e[6],c:e[4],s:e[7],shape,rot:an,spin:rnd(-7,7)})}break}
- case'r':RG.push({x:e[1],y:e[2],R:e[3],l:.35,c:e[4]});if(e[3]>45)DC.push({x:e[1],y:e[2],r:e[3]*.55,l:8});break;case'z':addZFx(e);break;case'rv':RVB.push({x:e[1],y:e[2],l:.9,max:.9});break;case'bf':MBF.push({x:e[1],y:e[2],c:e[3],a:e[4]||0,l:1.25,max:1.25,s:Math.random()*999});break;case'ai':MAI.push({x:e[1],y:e[2],f:e[3],l:.3,max:.3});if(MAI.length>18)MAI.shift();break;case'q':msQEv(e);break;case'mz':msFxEv(e);break;case'x':sfx(e[1]);break;case's':SH=Math.max(SH,e[1]);break;case'f':FL=1;FLc=e[1]}}
+ case'r':RG.push({x:e[1],y:e[2],R:e[3],l:.35,c:e[4]});if(e[3]>45)DC.push({x:e[1],y:e[2],r:e[3]*.55,l:8});break;case'z':addZFx(e);break;case'rv':RVX.push({x:e[1],y:e[2],ch:e[3],pid:e[4],skin:e[5],name:e[6],l:1.4,max:1.4,s:Math.random()*999});break;case'bf':MBF.push({x:e[1],y:e[2],c:e[3],a:e[4]||0,l:1.25,max:1.25,s:Math.random()*999});break;case'ai':MAI.push({x:e[1],y:e[2],f:e[3],l:.3,max:.3});if(MAI.length>18)MAI.shift();break;case'q':msQEv(e);break;case'mz':msFxEv(e);break;case'x':sfx(e[1]);break;case's':SH=Math.max(SH,e[1]);break;case'f':FL=1;FLc=e[1]}}
 function updFx(dt){DC.forEach(d=>d.l-=dt);DC=DC.filter(d=>d.l>0);PT.forEach(p=>{p.l-=dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.96;p.vy*=.96;p.rot=(p.rot||0)+(p.spin||0)*dt});PT=PT.filter(p=>p.l>0);DN.forEach(d=>d.t+=dt);DN=DN.filter(d=>d.t<1);RG.forEach(r=>r.l-=dt);RG=RG.filter(r=>r.l>0);ZV.forEach(z=>z.l-=dt);ZV=ZV.filter(z=>z.l>0);SH=Math.max(0,SH-dt*30);FL=Math.max(0,FL-dt*2.5)}
 /* ---------- DRAW HELPERS ---------- */
 let ZV=[];const GCR=['rgba(255,190,70,1)','rgba(255,50,50,1)','rgba(65,230,255,1)','rgba(255,100,150,1)','rgba(249,232,76,1)','rgba(255,45,73,1)','rgba(157,255,176,1)','rgba(255,233,74,1)','rgba(255,90,140,1)'],GL={};
@@ -4113,6 +4113,12 @@ const fitSz=(s,w,max,min)=>cl(Math.floor(w/(String(s).length*.62)),min||10,max);
    Newest entry first. To add an update: put a new object at the TOP of UPDATES with a new unique id.
    Item tags: NEW, CHANGED, FIXED. The title-screen button shows a NEW badge until the newest id has been opened. */
 const UPDATES=[
+ {id:'revive-v2',title:'Revive Effects Remake',date:'Nov 15, 2026',sub:'Reviving a teammate looks and sounds new.',items:[
+  ['CHANGED','Downed players now have a faint ground sigil, a spirit hovering over their body, and a slow heartbeat trace.'],
+  ['CHANGED','While reviving: a segmented progress ring that flares as each segment lights, a rising light shaft, glowing lifelines from every rescuer carrying plus-sign packets, and a heartbeat that quickens with progress.'],
+  ['CHANGED','When the revive finishes the spirit drops back into the body with a flash, shockwaves, a pillar of light, and a REVIVED title with the player\'s name. If it is you, the screen edges pulse green.'],
+  ['FIXED','The rescuer speed bonus is shown correctly: one rescuer is +0%, two is +25%, and so on.'],
+  ['NEW','New sounds for connecting, each heartbeat, and the restart.']]},
  {id:'pz-orbit-flash',title:'Knife Orbit and Crimson Rush Remake',date:'Nov 14, 2026',sub:'Prime Zach gets a stronger Knife Orbit and a Black Flash chain.',items:[
   ['CHANGED','Knife Orbit: six knives in two counter-rotating rings. They cut down enemy shots, shred bosses in reach, and re-form after a hit. Crimson Rush flings the inner ring.'],
   ['CHANGED','Knife Orbit has new visuals: glowing trails, glyph rings, a spiral-out spawn, ghost knives while they re-form, and a flicker before it ends. Knife marks are now sigils that pulse at two.'],
@@ -4491,49 +4497,107 @@ function drawSandbox(now){
 }
 
 /* ----- Revive effects: a progress ring with rescue beams, a burst on revive, and an aura on downed players ----- */
-const RVB=[];
+/* ===== Revive v2: the spirit returns. Lifelines from rescuers, a quickening heartbeat, and a restart burst. ===== */
+const RVS={},RVX=[];let RVF=0;
+const rvSt=p=>{let s=RVS[p.id];if(!s)s=RVS[p.id]={ph:0,k:0,seg:0,fl:[],pu:[],seen:0};s.seen=RVF;return s};
+const rvNear=(x,y,r)=>{const m=V&&V.pl&&V.pl.find(q=>q.id===me);return !!m&&Math.hypot(m.x-x,m.y-y)<r};
+function rvKey(p,t){const f=Math.floor(t*2)%2;if(p.ms&&p.ms.on)return p.ch==='zach'?(f?'pzi2':'pzi1'):(f?'tci2':'tci1');const sk=p.skin&&skinById(p.skin);return (sk?sk.i:(CH[p.ch]||CH[Object.keys(CH)[0]]).i)[f]}
+// one heartbeat: small bump, sharp spike, dip, rounded recovery
+const rvEcg=u=>u<.12?0:u<.2?Math.sin((u-.12)/.08*PI)*.18:u<.36?0:u<.4?-(u-.36)/.04*.25:u<.46?-.25+(u-.4)/.06*1.25:u<.52?1-(u-.46)/.06*1.5:u<.57?-.5+(u-.52)/.05*.5:u<.72?0:u<.9?Math.sin((u-.72)/.18*PI)*.3:0;
+function rvDrawEcg(x,y,s,k,col){
+ const N=44,Wd=76,A=3+12*k;g.save();g.lineJoin='round';g.lineCap='round';
+ g.fillStyle='rgba(8,16,14,.72)';rr(x-Wd/2-6,y-16,Wd+12,32,8);g.fill();
+ g.beginPath();for(let i=0;i<=N;i++){const tau=s.ph-(N-i)/N*1.8,u=tau-Math.floor(tau),yy=-rvEcg(u)*A,px=x-Wd/2+i/N*Wd;i?g.lineTo(px,y+yy):g.moveTo(px,y+yy)}
+ g.strokeStyle=col;g.lineWidth=2;g.shadowColor=col;g.shadowBlur=8;g.stroke();g.restore()}
+// the spirit hovers over the body and sinks back into it as the revive completes. Returns its height.
+function rvSpirit(p,o,t,k){
+ const desc=msEase(cl((k-.62)/.38,0,1)),y=lerp(o.y-58,o.y-6,desc)+Math.sin(t*2.1)*3*(1-desc),al=.14+.5*k;
+ g.save();g.globalCompositeOperation='lighter';
+ const gr=g.createRadialGradient(o.x,y,4,o.x,y,46);gr.addColorStop(0,'rgba(150,255,210,'+(.1+.35*al)+')');gr.addColorStop(1,'rgba(150,255,210,0)');g.fillStyle=gr;g.beginPath();g.arc(o.x,y,46,0,PI*2);g.fill();
+ spr(rvKey(p,t),o.x,y,64*(1+.1*k),0,1,1,al);g.restore();return y}
+function drawDownAura(p,o,t){
+ const s=rvSt(p),dt=Math.min(.05,FDT||.016);s.ph+=.3*dt;s.k=0;s.seg=0;s.fl.length=0;
+ const pulse=.5+.5*Math.sin(t*2.2),sx=o.x,sy=o.y+22;
+ g.save();g.globalCompositeOperation='lighter';
+ g.strokeStyle='rgba(125,255,200,'+(.28+.12*pulse)+')';g.lineWidth=1.6;g.setLineDash([7,6]);g.lineDashOffset=-t*14;g.beginPath();g.ellipse(sx,sy,46,15,0,0,PI*2);g.stroke();g.setLineDash([]);
+ g.lineWidth=1.2;g.beginPath();g.ellipse(sx,sy,30,9.5,0,0,PI*2);g.stroke();
+ g.strokeStyle='rgba(190,255,225,'+(.3+.15*pulse)+')';g.lineWidth=2;g.beginPath();g.moveTo(sx-10,sy);g.lineTo(sx+10,sy);g.moveTo(sx,sy-3.5);g.lineTo(sx,sy+3.5);g.stroke();
+ const rp=(t*.42)%1;g.strokeStyle='rgba(125,255,200,'+(.22*(1-rp))+')';g.lineWidth=2;g.beginPath();g.ellipse(sx,sy,20+rp*40,7+rp*13,0,0,PI*2);g.stroke();
+ g.restore();
+ rvSpirit(p,o,t,0);
+ rvDrawEcg(o.x,o.y+46,s,0,'rgba(255,150,140,.9)');
+ const m=V&&V.pl&&V.pl.find(q=>q.id===me);if(m&&!m.dead&&Math.hypot(m.x-o.x,m.y-o.y)<230)T('STAND NEXT TO THEM TO REVIVE',o.x,o.y-94,9,'#bfffd6','center')}
+function drawRevive(p,o,t){
+ const s=rvSt(p),dt=Math.min(.05,FDT||.016),k=cl(p.rvp,0,1),ph0=s.ph;
+ s.ph+=lerp(.9,2.8,k)*dt;
+ const near=rvNear(o.x,o.y,150),mates=((V&&V.pl)||[]).filter(q=>q&&!q.dead&&q.id!==p.id&&Math.hypot(q.x-p.x,q.y-p.y)<50),segN=Math.floor(k*12);
+ if(s.k<=0&&k>0){s.pu.push({a:0,c:1});if(near)sfx('revLink')}
+ if(Math.floor(s.ph)>Math.floor(ph0)){s.pu.push({a:0,c:0});if(near)sfx('revBeat')}
+ for(let q=s.seg;q<segN;q++)s.fl.push({q,a:0});
+ s.seg=segN;s.k=k;
+ for(const u of s.pu)u.a+=dt;s.pu=s.pu.filter(u=>u.a<.6);for(const f of s.fl)f.a+=dt;s.fl=s.fl.filter(f=>f.a<.5);
+ const cx=o.x,cy=o.y+4,R=48,pulse=.5+.5*Math.sin(t*(6+k*14));
+ // ground sigil, brighter and faster as the revive builds
+ g.save();g.globalCompositeOperation='lighter';
+ g.strokeStyle='rgba(150,255,210,'+(.4+.3*k)+')';g.lineWidth=2;g.setLineDash([7,6]);g.lineDashOffset=-t*(14+50*k);g.beginPath();g.ellipse(o.x,o.y+22,46,15,0,0,PI*2);g.stroke();g.setLineDash([]);
+ g.lineWidth=1.4;g.beginPath();g.ellipse(o.x,o.y+22,30,9.5,0,0,PI*2);g.stroke();
+ // light shaft with rising motes
+ const h=40+170*k,sg=g.createLinearGradient(0,o.y+20,0,o.y+20-h);sg.addColorStop(0,'rgba(170,255,210,'+(.22+.2*k)+')');sg.addColorStop(1,'rgba(170,255,210,0)');g.fillStyle=sg;g.fillRect(o.x-20,o.y+20-h,40,h);
+ for(let i=0;i<8;i++){const q=(t*.5+i/8)%1;g.fillStyle='rgba(200,255,225,'+(.8*(1-q))+')';g.fillRect(o.x+Math.sin(i*2.3+t)*(10+6*k)-1,o.y+20-q*h,2,2)}
+ // heartbeat and link rings
+ for(const u of s.pu){const f=u.a/.6;g.strokeStyle=u.c?'rgba(255,236,160,'+(.9*(1-f))+')':'rgba(170,255,205,'+(.8*(1-f))+')';g.lineWidth=4*(1-f)+1;g.beginPath();g.arc(cx,cy,18+f*70,0,PI*2);g.stroke()}
+ g.restore();
+ // twelve-segment progress ring
+ g.save();g.lineCap='round';
+ for(let q=0;q<12;q++){const a0=-PI/2+q*PI/6+.07,a1=a0+PI/6-.14;
+  g.strokeStyle='rgba(125,255,200,.16)';g.lineWidth=7;g.beginPath();g.arc(cx,cy,R,a0,a1);g.stroke();
+  const lit=q<segN?1:(q===segN?k*12-segN:0);
+  if(lit>0){g.save();g.globalAlpha=Math.min(1,.35+lit*.65);g.shadowColor='#7dffb0';g.shadowBlur=12;g.strokeStyle='#d9ffe9';g.lineWidth=6;g.beginPath();g.arc(cx,cy,R,a0,a0+(a1-a0)*Math.max(.2,lit));g.stroke();g.restore()}}
+ g.restore();
+ g.save();g.globalCompositeOperation='lighter';
+ for(const f of s.fl){const a=-PI/2+f.q*PI/6+PI/12,fx_=cx+Math.cos(a)*R,fy_=cy+Math.sin(a)*R,u=f.a/.5,r=10+26*u,gr=g.createRadialGradient(fx_,fy_,0,fx_,fy_,r);gr.addColorStop(0,'rgba(255,255,255,'+(1-u)+')');gr.addColorStop(1,'rgba(150,255,200,0)');g.fillStyle=gr;g.beginPath();g.arc(fx_,fy_,r,0,PI*2);g.fill()}
+ g.restore();
+ // spirit above the body, tethered to it
+ const sy=rvSpirit(p,o,t,k);
+ g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(190,255,225,.4)';g.lineWidth=1.5;g.setLineDash([3,5]);g.lineDashOffset=-t*30;g.beginPath();g.moveTo(o.x,sy+16);g.lineTo(o.x,o.y-2);g.stroke();g.setLineDash([]);g.restore();
+ // lifelines: two strands twisting between each rescuer and the body, carrying plus-sign packets
+ mates.forEach((m,mi)=>{
+  const x0=m.x,y0=m.y-12,x1=o.x,y1=o.y-4,dd=Math.hypot(x1-x0,y1-y0),nW=Math.max(1.5,dd/24),amp=2.5+Math.min(4,dd*.03),mx_=(x0+x1)/2,my_=(y0+y1)/2-(14+Math.min(34,dd*.45))-6*Math.sin(t*2+mi);
+  const B=u=>{const w=1-u;return[w*w*x0+2*w*u*mx_+u*u*x1,w*w*y0+2*w*u*my_+u*u*y1]};
+  g.save();g.globalCompositeOperation='lighter';g.lineJoin='round';
+  g.strokeStyle='rgba(150,255,190,.35)';g.lineWidth=1.5;g.beginPath();g.ellipse(m.x,m.y+22,22,7,0,0,PI*2);g.stroke();
+  for(let st=0;st<2;st++){g.beginPath();for(let i=0;i<=26;i++){const u=i/26,b0=B(u),b1=B(Math.min(1,u+.01)),dx=b1[0]-b0[0],dy=b1[1]-b0[1],l=Math.hypot(dx,dy)||1,off=Math.sin(u*PI*nW-t*7+st*PI)*amp*Math.sin(u*PI),px=b0[0]-dy/l*off,py=b0[1]+dx/l*off;i?g.lineTo(px,py):g.moveTo(px,py)}
+   g.strokeStyle=st?'rgba(255,246,200,.8)':'rgba(125,255,190,.9)';g.lineWidth=2;g.stroke()}
+  for(let j=0;j<3;j++){const u=(t*.85+j/3+mi*.17)%1,b0=B(u),a=Math.sin(u*PI);g.fillStyle='rgba(215,255,232,'+(.9*a)+')';g.fillRect(b0[0]-4,b0[1]-1,8,2);g.fillRect(b0[0]-1,b0[1]-4,2,8);
+   const gr=g.createRadialGradient(b0[0],b0[1],0,b0[0],b0[1],9);gr.addColorStop(0,'rgba(190,255,215,'+(.6*a)+')');gr.addColorStop(1,'rgba(190,255,215,0)');g.fillStyle=gr;g.beginPath();g.arc(b0[0],b0[1],9,0,PI*2);g.fill()}
+  g.restore()});
+ rvDrawEcg(o.x,o.y+46,s,k,k>.85?'#fff6c8':'#7dffa0');
+ // label
+ const lx=o.x,ly=o.y-98,w=104;
+ g.save();g.fillStyle='rgba(8,18,14,.84)';rr(lx-w/2,ly-12,w,24,12);g.fill();g.strokeStyle='rgba(125,255,190,.65)';g.lineWidth=1.5;g.stroke();g.fillStyle='rgba(125,255,190,.9)';rr(lx-w/2+4,ly+4,(w-8)*k,5,2.5);g.fill();g.restore();
+ T('REVIVING '+Math.round(k*100)+'%',lx,ly-3,10,'#bfffd6','center');
+ if(mates.length>=2)T('x'+mates.length+' RESCUERS  +'+25*(mates.length-1)+'% SPEED',lx,ly-24,9,'#fff6c8','center')}
+// Restart burst when the revive completes: flash, shockwaves, a pillar of light, the spirit dropping in, and a title.
 function drawRevBursts(t){
  const dt=Math.min(.05,Math.max(0,t-(drawRevBursts.last||t)));drawRevBursts.last=t;
- RVB.forEach(b=>b.l-=dt);
- for(let i=RVB.length-1;i>=0;i--)if(RVB[i].l<=0)RVB.splice(i,1);
- for(const b of RVB){
-  const k=1-b.l/b.max,a=Math.max(0,b.l/b.max);
+ RVF++;for(const id in RVS)if(RVS[id].seen<RVF-3)delete RVS[id];
+ for(const b of RVX)b.l-=dt;for(let i=RVX.length-1;i>=0;i--)if(RVX[i].l<=0)RVX.splice(i,1);
+ const fk=(ST.flash==null?100:ST.flash)/100;
+ for(const b of RVX){const age=b.max-b.l,k=age/b.max;
   g.save();g.globalCompositeOperation='lighter';
-  const cg=g.createLinearGradient(0,b.y-260*k,0,b.y);cg.addColorStop(0,'rgba(125,255,160,0)');cg.addColorStop(1,'rgba(200,255,220,'+(.5*a)+')');
-  g.fillStyle=cg;g.fillRect(b.x-26*(1-k*.5),b.y-260*k,52*(1-k*.5),260*k);
-  for(let r=0;r<2;r++){const rk=Math.min(1,k*1.4-r*.25);if(rk>0){g.strokeStyle='rgba(125,255,160,'+(a*.9)+')';g.lineWidth=5*a+1;g.beginPath();g.ellipse(b.x,b.y+10,20+rk*110,8+rk*34,0,0,PI*2);g.stroke()}}
-  for(let i=0;i<14;i++){const an=i*2.399,rad=(10+(i%5)*12)*(1-k*.3),x=b.x+Math.cos(an+k*4)*rad,y=b.y-k*160*(.4+(i%4)*.2)+Math.sin(an)*4;g.fillStyle='rgba(190,255,214,'+(a*.9)+')';g.beginPath();g.arc(x,y,2+(i%3),0,PI*2);g.fill()}
+  if(age<.16){const f=age/.16,r=40+f*170,gr=g.createRadialGradient(b.x,b.y,0,b.x,b.y,r);gr.addColorStop(0,'rgba(255,255,255,'+(.95*(1-f)*fk)+')');gr.addColorStop(.5,'rgba(190,255,215,'+(.5*(1-f)*fk)+')');gr.addColorStop(1,'rgba(125,255,170,0)');g.fillStyle=gr;g.beginPath();g.arc(b.x,b.y,r,0,PI*2);g.fill()}
+  for(let r=0;r<3;r++){const a=age-r*.08;if(a<=0||a>.7)continue;const f=a/.7,rx=30+mdOut(f)*(250+r*60),al=1-f;g.strokeStyle=r===0?'rgba(255,255,255,'+(al*.95)+')':r===1?'rgba(170,255,205,'+(al*.8)+')':'rgba(255,230,150,'+(al*.7)+')';g.lineWidth=7*(1-f)+1.5;g.beginPath();g.ellipse(b.x,b.y+14,rx,rx*.3,0,0,PI*2);g.stroke()}
+  {const f=Math.min(1,age/.25),al=age<.25?f:Math.max(0,1-(age-.25)/.9),h=340*mdOut(f),w=62*(1-.35*k),gr=g.createLinearGradient(0,b.y+14,0,b.y+14-h);gr.addColorStop(0,'rgba(255,255,255,'+(.8*al)+')');gr.addColorStop(.4,'rgba(170,255,210,'+(.45*al)+')');gr.addColorStop(1,'rgba(125,255,190,0)');g.fillStyle=gr;g.fillRect(b.x-w/2,b.y+14-h,w,h)}
+  if(age<.5){const f=age/.5,sk=b.skin&&skinById(b.skin);spr((sk?sk.i:CH[b.ch]?CH[b.ch].i:['cgi1'])[0],b.x,b.y,76*(1+.9*mdOut(f)),0,1,1,.7*(1-f))}
+  for(let i=0;i<28;i++){const a=mdN(b.s+i*3.1)*PI*2,sp=90+mdN(b.s+i*1.7)*260,d=sp*mdOut(Math.min(1,age/.9)),x=b.x+Math.cos(a)*d*.9,y=b.y+Math.sin(a)*d*.5-age*(40+mdN(b.s+i)*90),al=Math.max(0,1-age/1.1);
+   g.fillStyle=i%3===0?'rgba(255,236,160,'+al+')':'rgba(190,255,215,'+al+')';
+   if(i%2){g.fillRect(x-4,y-1,8,2);g.fillRect(x-1,y-4,2,8)}else g.fillRect(x-1.5,y-1.5,3,3)}
   g.restore();
- }
-}
-function drawDownAura(p,o){
- const t=performance.now()/1000,pulse=.5+.5*Math.sin(t*2.5);
- g.save();g.globalCompositeOperation='lighter';
- const rg=g.createRadialGradient(o.x,o.y+20,8,o.x,o.y+20,70);rg.addColorStop(0,'rgba(125,255,160,'+(.12+.1*pulse)+')');rg.addColorStop(1,'rgba(125,255,160,0)');
- g.fillStyle=rg;g.beginPath();g.arc(o.x,o.y+20,70,0,PI*2);g.fill();
- for(let i=0;i<4;i++){const ph=(t*.6+i*.25)%1,x=o.x+Math.sin(i*2.1+t)*20,y=o.y+20-ph*70;g.fillStyle='rgba(191,255,214,'+(.7*(1-ph))+')';g.beginPath();g.arc(x,y,2,0,PI*2);g.fill()}
- g.restore();
-}
-function drawRevive(p,o){
- const t=performance.now()/1000,k=Math.max(0,Math.min(1,p.rvp)),pulse=.5+.5*Math.sin(t*(6+k*14));
- const mates=((V&&V.pl)||[]).filter(q=>q&&!q.dead&&q.id!==p.id&&Math.hypot(q.x-p.x,q.y-p.y)<50);
- g.save();
- // rescue beams from each nearby teammate, flowing toward the downed player
- g.setLineDash([8,10]);g.lineDashOffset=-t*60;g.lineWidth=2.5;g.strokeStyle='rgba(125,255,160,.7)';
- mates.forEach(m=>{g.beginPath();g.moveTo(m.x,m.y-24);g.lineTo(o.x,o.y);g.stroke()});
- g.setLineDash([]);
- // glow, track, and progress ring
- const hg=g.createRadialGradient(o.x,o.y+8,10,o.x,o.y+8,64);hg.addColorStop(0,'rgba(125,255,160,'+(.35+.25*pulse)+')');hg.addColorStop(1,'rgba(125,255,160,0)');
- g.fillStyle=hg;g.beginPath();g.arc(o.x,o.y+8,64,0,PI*2);g.fill();
- g.strokeStyle='rgba(125,255,160,.18)';g.lineWidth=9;g.beginPath();g.arc(o.x,o.y+8,48,0,PI*2);g.stroke();
- g.shadowColor='#7dffa0';g.shadowBlur=14+6*pulse;g.strokeStyle='#bfffd6';g.lineWidth=7;g.lineCap='round';
- g.beginPath();g.arc(o.x,o.y+8,48,-PI/2,-PI/2+PI*2*k);g.stroke();g.shadowBlur=0;g.lineCap='butt';
- // orbiting sparks that tighten as the revive completes
- for(let i=0;i<6;i++){const an=t*(3+k*3)+i*PI/3,rad=56-k*14+Math.sin(t*5+i)*3;g.fillStyle='rgba(220,255,235,'+(.6+.4*pulse)+')';g.beginPath();g.arc(o.x+Math.cos(an)*rad,o.y+8+Math.sin(an)*rad*.6,2.5,0,PI*2);g.fill()}
- T('REVIVING '+Math.round(k*100)+'%',o.x,o.y-62,13,'#7dffa0','center');
- T(mates.length?'Rescuers x'+(mates.length+1)+'  (+'+(25*mates.length)+'% speed)':'Stand next to them to revive',o.x,o.y-48,9,'#bfffd6','center');
- g.restore();
-}
+  if(b.pid===me&&age<.6){const a=.4*(1-age/.6)*fk,gr=g.createRadialGradient(W/2,H/2,H*.35,W/2,H/2,H*.85);gr.addColorStop(0,'rgba(125,255,170,0)');gr.addColorStop(1,'rgba(125,255,170,'+a+')');g.fillStyle=gr;g.fillRect(-30,-30,W+60,H+60)}
+  const ta=age<.9?1:Math.max(0,1-(age-.9)/.5);
+  if(ta>0){g.save();g.globalAlpha=ta;g.translate(cl(b.x,110,W-110),cl(b.y-84-age*28,60,H-90));const sc=1+.6*Math.max(0,1-age/.12);g.scale(sc,sc);g.textAlign='center';g.textBaseline='middle';g.lineJoin='round';
+   g.font=MD_FONT(34);g.lineWidth=9;g.strokeStyle='#000000';g.strokeText('REVIVED',0,0);g.fillStyle='#7dffa0';g.fillText('REVIVED',0,0);g.lineWidth=2;g.strokeStyle='rgba(255,255,255,.9)';g.strokeText('REVIVED',0,0);g.restore();
+   if(b.name){g.save();g.globalAlpha=ta;T(String(b.name).toUpperCase(),cl(b.x,110,W-110),cl(b.y-84-age*28,60,H-90)+28,11,'#d9ffe9','center');g.restore()}}}}
 function drawTitleLegacy(now){const t=now/1000;drawBackdrop(t);
  for(let i=0;i<48;i++){const x=(i*173+t*(8+i%4*3))%W,y=(i*83+Math.sin(t+i)*12)%H;g.globalAlpha=.12+.18*Math.abs(Math.sin(t*1.4+i));g.fillStyle=i%3?'#ffbd61':'#8feaff';g.beginPath();g.arc(x,y,1+i%3,0,PI*2);g.fill()}g.globalAlpha=1;
  if(!spot.key||now-spot.at>8000)rollSpot(now);
@@ -5009,6 +5073,7 @@ function drawPlayer(p,t){WSK=p.skin||'';const c=CH[p.ch],o=sm(p.id,p.x,p.y),walk
  if(p.buf){g.strokeStyle='rgba(255,211,74,'+(.4+.3*Math.sin(t*20))+')';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,44,0,PI*2);g.stroke()}
  const stabLean=m1Stage===3?stabBodyLean(m1Prog):0,bodyX=o.x+Math.cos(m1Angle)*stabLean,bodyY=o.y+bob+Math.sin(m1Angle)*stabLean,stabStretch=m1Stage===3&&m1Prog>.22&&m1Prog<.68?.08:0; spr(k,bodyX,bodyY-air0,76*(skin&&skin.sc||1),p.dead?PI/2:0,fl*(1+sq+stabStretch+slamS*.8),1-sq-stabStretch-slamS*1.3,al);if(p.ch==='jay'&&p.jh&&!p.dead)drawJayBox(o.x,o.y+4,t);
  skinFx(p,o,t,bodyY-air0-22);msPlayerFx(p,o,t);
+ if(p.dead&&!(p.rvp>0))drawDownAura(p,o,t);if(p.rvp>0)drawRevive(p,o,t);
  if(!p.dead){const ca=Math.cos(p.ang),sa=Math.sin(p.ang),fy=ca<0?-1:1;if(p.sauce){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(255,35,62,.72)';g.lineWidth=2;g.beginPath();g.ellipse(o.x,o.y+20,27+Math.sin(t*9)*2,9,0,0,PI*2);g.stroke();for(let i=0;i<4;i++){g.fillStyle=i%2?'#ff2947':'#ffb3bc';g.fillRect(o.x-13+i*8+Math.sin(t*8+i)*2,o.y+22+(i%2)*4,3,4)}g.restore()}
   if(p.ms&&p.ms.on){msWeapon(p,o,t,m1Stage,m1Prog,m1Angle,ca,sa)}else if(p.ch==='cg'){const d=30-p.kick*8;spr(wk('gun'),o.x+ca*d,o.y+8+sa*d,50,p.ang,1,fy);if(p.kick>.6){g.fillStyle='rgba(255,220,80,.9)';g.beginPath();g.arc(o.x+ca*62,o.y+8+sa*62,9*p.kick,0,PI*2);g.fill()}}
   else if(p.ch==='terry'){spr('tgun',o.x+ca*30,o.y+8+sa*30,44,p.ang,1,fy)}
@@ -5019,7 +5084,7 @@ function drawPlayer(p,t){WSK=p.skin||'';const c=CH[p.ch],o=sm(p.id,p.x,p.y),walk
   else if(p.stab>0){const ph=1-p.stab/.2,d=34+Math.sin(ph*PI)*62;spr(wk('knife'),o.x+ca*d,o.y+sa*d,58,p.ang+PI/2);g.strokeStyle='rgba(255,255,255,'+(1-ph)*.9+')';g.lineWidth=8;g.beginPath();g.arc(o.x,o.y,86,p.ang-.9*p.sd+ph*1.8*p.sd,p.ang-.9*p.sd+ph*1.8*p.sd+.5*p.sd,p.sd<0);g.stroke()}
   else if(p.ch==='adr')drawAdrStick(p,o,t);else if(p.ch!=='pat'&&p.ch!=='jam')spr(wk('knife'),o.x+ca*34+Math.sin(t*3)*2,o.y+sa*34+8,52,p.ang+PI/2+Math.sin(t*3)*.1);
   if(p.cs){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(125,255,154,'+(.55+.35*Math.sin(t*16))+')';g.lineWidth=4;g.beginPath();g.arc(o.x,o.y,44,0,PI*2);g.stroke();g.restore()}
-  if(p.sh){g.strokeStyle='rgba(100,200,255,.7)';g.lineWidth=3;g.beginPath();g.arc(o.x,o.y,42,0,PI*2);g.stroke()}if(p.ch==='jam')drawJamPlayerFx(p,o,t);if(p.ch==='adr')drawAdrPlayerFx(p,o,t);if(p.ch==='bomb')drawBombFx(p,o,t);if(p.dead&&!(p.rvp>0))drawDownAura(p,o);if(p.rvp>0)drawRevive(p,o);
+  if(p.sh){g.strokeStyle='rgba(100,200,255,.7)';g.lineWidth=3;g.beginPath();g.arc(o.x,o.y,42,0,PI*2);g.stroke()}if(p.ch==='jam')drawJamPlayerFx(p,o,t);if(p.ch==='adr')drawAdrPlayerFx(p,o,t);if(p.ch==='bomb')drawBombFx(p,o,t);
   for(let j=0;j<p.orb;j++){const a=p.oa+j*2*PI/p.orb;spr('brick',o.x+Math.cos(a)*70,o.y+Math.sin(a)*70,32,a*2)}}
  g.fillStyle='#000a';g.fillRect(o.x-24,o.y-52,48,6);g.fillStyle=p.id===me?'#6f6':'#6cf';g.fillRect(o.x-24,o.y-52,48*p.hp/p.max,6);T(p.id===me?'YOU':p.name,o.x,o.y-62,11,p.id===me?'#ffd34a':'#fff','center')}
 // Skin idle effects: Bald Coolguy's head glint, Not So Cool's sweat when low, Rice Zach's steam.
@@ -7537,7 +7602,7 @@ function msSlash(p,t){if((S.msFzCd||0)>0)return;const M=S.msSl||(S.msSl={}),m=M[
  if(m.n>=3){delete M[t.id];msFreeze(1,'lock',t.id);S.msFzCd=5;fx(['f','#ff2a3d']);fx(['s',16]);fx(['r',t.x,t.y,150,'#ff2a3d']);X('msLock');S.hitStop=Math.max(S.hitStop||0,.1);fx(['d',t.x,t.y-70,'SLASH LOCK','#ff2a3d',1])}}
 /* ===== Prime Zach v2: Knife Orbit (two rings that guard and shred) and Crimson Rush (Black Flash and the chain) ===== */
 const MS_BF_A=.38,MS_BF_B=.64,MS_BF_CD=5;
-Object.assign(SFX,{bfReady:[['sine',1500,1900,.09,.1]],bfMiss:[['sawtooth',220,90,.18,.14],['n',.08,.12,1200]]});
+Object.assign(SFX,{bfReady:[['sine',1500,1900,.09,.1]],bfMiss:[['sawtooth',220,90,.18,.14],['n',.08,.12,1200]],revLink:[['sine',660,990,.16,.1],['sine',990,1320,.2,.06]],revBeat:[['sine',95,48,.14,.2]],revDone:[['sine',392,784,.5,.2],['sine',587,1175,.6,.15],['n',.3,.14,6500]]});
 for(let i=1;i<=5;i++)SFX['bf'+i]=[['n',.3,.55,7000],['sine',75,24,.8,.6],['sawtooth',2000,160,.28,.18],['sine',500+i*120,900+i*180,.35,.16+.02*i]];
 const MBF=[],MAI=[];
 const msBfS=p=>p.msBf||(p.msBf={ch:0,ct:0,win:null,zone:0});
