@@ -7575,7 +7575,7 @@ function msPlStep(p,dt){if(!MS_H.includes(p.ch))return;const q=msQS(p);
  if(S.dom&&S.dom.pid===p.id){}else if(p.msDomCd>0)p.msDomCd-=dt;
  p.msCtCd=Math.max(0,(p.msCtCd||0)-dt);p.msMissT=Math.max(0,(p.msMissT||0)-dt);p.msCtT=Math.max(0,(p.msCtT||0)-dt);
  if(p.msOrb)msOrbStep(p,dt);if(p.ch==='zach')msBfStep(p,dt);
- if(p.ch==='cg'){msBeamStep(p,dt);msCloneStep(p,dt);msChainStep(p,dt);cgRushStep(p,dt);if(p.msLaserT>0){p.msLaserT-=dt;if(p.msLaserT<=0){p.msLaserT=0;cgLaserFire(p)}}}}
+ if(p.ch==='cg'){msBeamStep(p,dt);msCloneStep(p,dt);msChainStep(p,dt);if(p.msLaserT>0){p.msLaserT-=dt;if(p.msLaserT<=0){p.msLaserT=0;cgLaserFire(p)}}}}
 /* ---- mastery hooks inside existing attack / ability ---- */
 function msAttack(p){if(p.stunT>0)return true;return p.ch==='zach'?pzAttack(p):cgAttack(p)}
 function msAbility(p,k){const m=p.m;
