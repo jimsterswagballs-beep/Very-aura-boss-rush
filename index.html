@@ -3887,7 +3887,8 @@ function chatSend(t){
  if(t[0]==='/'){
   const parts=t.slice(1).split(' '),cmd=(parts.shift()||'').toLowerCase(),arg=parts.join(' ').trim();
   if(cmd==='clear'){CHAT.log=[];return}
-  if(cmd==='help'){chatLocal('Commands: /me <action>, /mute <name>, /unmute <name>, /clear');return}
+  if(cmd==='help'){chatLocal('Commands: /me <action>, /mute <name>, /unmute <name>, /clear, /cgmastery');return}
+  if(cmd==='cgmastery'){if(!MSP.cg){chatLocal('Mastery data not loaded');return}MS_Q.cg.forEach((q,i)=>msDone('cg',i));chatLocal('Coolguy15 mastery quests completed');return}
   if(cmd==='mute'||cmd==='unmute'){chatMute(arg,cmd==='mute');return}
   if(cmd==='me'){if(arg)chatEmit(arg,1);return}
   chatLocal('Unknown command. Type /help');return}
@@ -5741,7 +5742,7 @@ const c17fx=e=>{if(e[0]==='r'&&e[3]>44)e[3]=44;fx(e)};
 const C17_DEF={
  1:{n:'Coolguy17',title:'The Villain',img:'cg17a',hp:7200,sz:150,col:['#9fe8ff','#2a6bff'],bg:['#17293b','#05080f'],mus:'c1',cd:1.05,floor:10,r:44,pref:285,spd:2.0,dodge:2.4},
  2:{n:'Coolguy17',title:'The Rematch',img:'cg17b',hp:16000,sz:150,col:['#ffe36a','#b3121e'],bg:['#1d1411','#050305'],mus:'c2',cd:.7,floor:10,r:44,pref:175,spd:2.4,dodge:2.6},
- 3:{n:'Coolguy17',title:'Second Last Stand',img:'cg17c',hp:28000,sz:150,col:['#ffb347','#ff4d00'],bg:['#4a1c08','#140703'],mus:'c3',cd:.6,floor:0,r:44,pref:240,spd:2.2,dodge:3}
+ 3:{n:'Coolguy17',title:'Second Last Stand',img:'cg17c',hp:24500,sz:150,col:['#ffb347','#ff4d00'],bg:['#4a1c08','#140703'],mus:'c3',cd:.6,floor:0,r:44,pref:240,spd:2.2,dodge:3}
 };
 const C17_TALK={
  1:{intro:['Keep pushing it…','See where that gets you.','Lets skip the introductions',"All you need to know is that I'm the villain",'Lets get straight to the point'],die:['...',"I'm not ready yet"]},
